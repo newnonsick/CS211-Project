@@ -11,13 +11,15 @@ public class EventManagerApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXRouter.bind(this, stage, "Event Manager");
         configRoute();
-        FXRouter.goTo("register");
+        FXRouter.goTo("login");
     }
 
     public static void configRoute()
     {
         String viewPath = "cs211/project/views/";
         FXRouter.when("register", viewPath + "register.fxml");
+        FXRouter.when("mainPage", viewPath + "mainPage.fxml");
+        FXRouter.when("login", viewPath + "login.fxml");
 
     }
 
