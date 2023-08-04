@@ -7,6 +7,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import java.nio.charset.StandardCharsets;
 import java.io.*;
+import java.util.ArrayList;
 
 public class RegisterController {
     private String filePath = "data/username_password.csv";
@@ -45,7 +46,7 @@ public class RegisterController {
                 StandardCharsets.UTF_8
         );
         BufferedReader bufferRead = new BufferedReader(inputStreamReader);
-
+        ArrayList<String> userPass = new ArrayList<String>();
         String line = "";
         try {
             while ((line = bufferRead.readLine()) != null) {
@@ -59,6 +60,7 @@ public class RegisterController {
                     usernameTextField.setText("");
                     return;
                 }
+                userPass.add(line);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -74,9 +76,14 @@ public class RegisterController {
                 StandardCharsets.UTF_8
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
-        line = username + "," + password;
+        String newAcc = username + "," + password;
         try {
-            bufferWrite.append(line);
+            for(String acc : userPass) {
+                bufferWrite.append(acc);
+                bufferWrite.append('\n');
+            }
+            bufferWrite.append(newAcc);
+            bufferWrite.append('\n');
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
