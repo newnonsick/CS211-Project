@@ -20,7 +20,6 @@ public class EventManagerApplication extends Application {
         FXRouter.when("register", viewPath + "register.fxml");
         FXRouter.when("mainPage", viewPath + "mainPage.fxml");
         FXRouter.when("login", viewPath + "login.fxml");
-
     }
 
     public static void main(String[] args) {

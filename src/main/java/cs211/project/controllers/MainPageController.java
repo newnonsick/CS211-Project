@@ -1,9 +1,6 @@
 package cs211.project.controllers;
-
-import cs211.project.services.FXRouter;
+import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -15,16 +12,33 @@ public class MainPageController {
     @FXML
     StackPane content;
     @FXML
-    public void goToTestPage1() throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/cs211/project/views/testpage1.fxml"));
-        content.getChildren().removeAll();
-        content.getChildren().setAll(fxml);
+    public void initialize() {
+        FXRouterPane.bind(this, content, "Event Manager");
+        configRoute();
+    }
+    public static void configRoute()
+    {
+        String viewPath = "cs211/project/views/";
+        FXRouterPane.when("mainPage", viewPath + "mainPage.fxml");
+        FXRouterPane.when("testpage1", viewPath + "testpage1.fxml");
+        FXRouterPane.when("testpage2", viewPath + "testpage2.fxml");
+    }
+    @FXML
+    public void goToTestPage1()  {
+        try {
+            FXRouterPane.goTo("testpage1");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
-    public void goToTestPage2() throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("/cs211/project/views/testpage2.fxml"));
-        content.getChildren().removeAll();
-        content.getChildren().setAll(fxml);
+    public void goToTestPage2() {
+        try {
+            FXRouterPane.goTo("testpage2");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
