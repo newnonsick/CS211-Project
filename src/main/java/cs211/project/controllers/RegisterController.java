@@ -5,12 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
+import java.nio.charset.StandardCharsets;
 import java.io.*;
-import java.util.Scanner;
 
 public class RegisterController {
-    private String filePath = "src/main/resources/data/username_password.csv";
+    private String filePath = "data/username_password.csv";
     @FXML
     TextField usernameTextField;
     @FXML
@@ -27,44 +26,68 @@ public class RegisterController {
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
         String fullName = nameTextField.getText();
-        //Check if username already exist
+        File file = new File(filePath);
+        FileInputStream fileInputStream = null;
+
+        if (!password.equals(password2)) {
+            errorLabel.setText("Please make sure to type the correct passwords");
+            passwordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
+        }
         try {
-            String USERNAME;
-            String PASS;
-            Scanner x = new Scanner(new File(filePath));
-            x.useDelimiter("[,\n]");
-            //Traversing through csv file
-            while (x.hasNext()) {
-                USERNAME = x.next();
-                PASS = x.next();
-                if (USERNAME.trim().equals(username)) {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        InputStreamReader inputStreamReader = new InputStreamReader(
+                fileInputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedReader bufferRead = new BufferedReader(inputStreamReader);
+
+        String line = "";
+        try {
+            while ((line = bufferRead.readLine()) != null) {
+                if (line.equals("")) continue;
+
+                String[] data = line.split(",");
+
+                String id = data[0].trim();
+                if (id.equals(username)) {
                     errorLabel.setText("Username already exist!");
                     usernameTextField.setText("");
                     return;
                 }
             }
-
-        } catch (Exception e) {
-        }
-        //Check if password and confirm password the same or no
-        if(!password.equals(password2)){
-            errorLabel.setText("Please make sure you type the correct passwords.");
-            passwordTextField.setText("");
-            confirmPasswordTextField.setText("");
-            return;
-        }
-        //Writing down to csv
-        try {
-            FileWriter fw = new FileWriter(filePath, true);
-            BufferedWriter bw =  new BufferedWriter(fw);
-            PrintWriter pw = new PrintWriter(bw);
-
-            pw.println(username+","+password);
-            pw.flush();
-            pw.close();
-            goToLogin();
         } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                fileOutputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
+        line = username + "," + password;
+        try {
+            bufferWrite.append(line);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                bufferWrite.flush();
+                bufferWrite.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        goToLogin();
     }
     @FXML
     private void goToLogin() {

@@ -5,13 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
+import java.io.*;
 
 public class LoginController {
-    private String filePath = "src/main/resources/data/username_password.csv";
+    private String filePath = "data/username_password.csv";
     @FXML
     TextField usernameTextField;
     @FXML
@@ -20,32 +18,40 @@ public class LoginController {
     Label errorLabel;
 
     @FXML
-    //In the future, we will make it be able to return a user object to identify who is currently using the app
     public void login() {
-        String USERNAME;
-        String PASS;
+        File file = new File(filePath);
+        FileInputStream fileInputStream = null;
+        String user = usernameTextField.getText();
+        String pass = passwordTextField.getText();
         try {
-            Scanner x = new Scanner(new File(filePath));
-            x.useDelimiter("[,\n]");
-            //Traversing through csv to find the right username and password
-            while (x.hasNext()) {
-                USERNAME = x.next();
-                PASS = x.next();
-                if(USERNAME.trim().equals(usernameTextField.getText()) && PASS.trim().equals(passwordTextField.getText())) {
-                    try {
-                        FXRouter.goTo("mainPage");
-                        return;
-                    }
-                    catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-            errorLabel.setText("Wrong ID or password!");
-            usernameTextField.setText("");
-            passwordTextField.setText("");
-        } catch (Exception e) {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
+
+        InputStreamReader inputStreamReader = new InputStreamReader(
+                fileInputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedReader buffer = new BufferedReader(inputStreamReader);
+
+        String line = "";
+        try {
+            while ( (line = buffer.readLine()) != null ){
+                if (line.equals("")) continue;
+                String[] data = line.split(",");
+
+                String username = data[0].trim();
+                String password = data[1].trim();
+                if(user.equals(username) && pass.equals(password)) {
+                    FXRouter.goTo("mainPage");
+                }
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
     @FXML
     private void goToRegister() {
