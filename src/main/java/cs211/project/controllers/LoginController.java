@@ -51,7 +51,9 @@ public class LoginController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        errorLabel.setText("Username or password is wrong!");
+        usernameTextField.setText("");
+        passwordTextField.setText("");
     }
     @FXML
     private void goToRegister() {
