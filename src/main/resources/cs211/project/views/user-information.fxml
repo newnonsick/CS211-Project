@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.UserInformationController">
+   <children>
+      <Label layoutX="237.0" layoutY="35.0" text="User Information">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="usernameLabel" layoutX="859.0" layoutY="57.0" text="usenameLabel">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="nameLabel" layoutX="237.0" layoutY="84.0" text="nameLabel">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="237.0" layoutY="154.0" text="อีเวนต์ที่กำลังเข้าร่วม">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="639.0" layoutY="154.0" text="อีเวนต์ที่เคยเข้าร่วม">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Line endX="344.4518737792969" layoutX="480.0" layoutY="424.0" rotate="90.0" startX="-100.0" />
+      <TableView fx:id="activeEventTableView" layoutX="234.0" layoutY="201.0" prefHeight="445.0" prefWidth="334.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+      <TableView fx:id="eventHistoryTableView" layoutX="639.0" layoutY="201.0" prefHeight="445.0" prefWidth="334.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="C1" />
+            <TableColumn prefWidth="75.0" text="C2" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>
