@@ -14,9 +14,9 @@ import java.util.HashMap;
 
 public final class FXRouterPane {
     private static final String WINDOW_TITLE = "";
-    private static final Double WINDOW_WIDTH = 800.0D;
-    private static final Double WINDOW_HEIGHT = 600.0D;
-    private static final Double FADE_ANIMATION_DURATION = 800.0D;
+    private static final Double WINDOW_WIDTH = 1180.0D;
+    private static final Double WINDOW_HEIGHT = 800.0D;
+    private static final Double FADE_ANIMATION_DURATION = 1180.0D;
     private static FXRouterPane router;
     private static Object mainRef;
     private static String windowTitle;

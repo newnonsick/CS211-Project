@@ -9,13 +9,34 @@ import java.nio.charset.StandardCharsets;
 import java.io.*;
 
 public class LoginController {
-    private String filePath = "data/username_password.csv";
+    private String directoryName = "data";
+    private String fileName = "username_password.csv";
+    private String filePath = directoryName + File.separator + fileName;
     @FXML
     TextField usernameTextField;
     @FXML
     PasswordField passwordTextField;
     @FXML
     Label errorLabel;
+
+    public LoginController() {
+        checkFileIsExisted();
+    }
+
+    private void checkFileIsExisted() {
+        File file = new File(directoryName);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        file = new File(filePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     @FXML
     public void login() {

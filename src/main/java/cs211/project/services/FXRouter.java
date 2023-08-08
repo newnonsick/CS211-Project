@@ -13,9 +13,9 @@ import java.util.HashMap;
 
 public final class FXRouter {
     private static final String WINDOW_TITLE = "";
-    private static final Double WINDOW_WIDTH = 800.0D;
-    private static final Double WINDOW_HEIGHT = 600.0D;
-    private static final Double FADE_ANIMATION_DURATION = 800.0D;
+    private static final Double WINDOW_WIDTH = 1280.0D;
+    private static final Double WINDOW_HEIGHT = 800.D;
+    private static final Double FADE_ANIMATION_DURATION = 1280.0D;
     private static FXRouter router;
     private static Object mainRef;
     private static Stage window;
