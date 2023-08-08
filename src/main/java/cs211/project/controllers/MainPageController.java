@@ -1,4 +1,5 @@
 package cs211.project.controllers;
+import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
@@ -15,6 +16,11 @@ public class MainPageController {
     public void initialize() {
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
+        try {
+            FXRouterPane.goTo("event-management");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static void configRoute()
     {
@@ -22,6 +28,8 @@ public class MainPageController {
         FXRouterPane.when("mainPage", viewPath + "mainPage.fxml");
         FXRouterPane.when("testpage1", viewPath + "testpage1.fxml");
         FXRouterPane.when("testpage2", viewPath + "testpage2.fxml");
+        FXRouterPane.when("event-management", viewPath + "event-management.fxml");
+        FXRouterPane.when("event-participant-management", viewPath + "event-participant-management.fxml");
     }
     @FXML
     public void goToTestPage1()  {

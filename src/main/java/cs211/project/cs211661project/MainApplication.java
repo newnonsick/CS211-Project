@@ -16,11 +16,11 @@ public class MainApplication extends Application {
 
     public static void configRoute()
     {
+        //ถ้าจะเพิ่มหน้าให้เพิ่มไว้ที่ MainPageController.java FX.RouterPane.when("<>", viewPath + "<>.fxml");
         String viewPath = "cs211/project/views/";
         FXRouter.when("register", viewPath + "register.fxml");
         FXRouter.when("mainPage", viewPath + "mainPage.fxml");
         FXRouter.when("login", viewPath + "login.fxml");
-        FXRouter.when("event-management", viewPath + "event-management.fxml");
 
     }
 
