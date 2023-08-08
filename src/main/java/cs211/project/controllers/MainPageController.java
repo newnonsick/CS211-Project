@@ -29,6 +29,7 @@ public class MainPageController {
         FXRouterPane.when("event-management", viewPath + "event-management.fxml");
         FXRouterPane.when("event-participant-management", viewPath + "event-participant-management.fxml");
         FXRouter.when("user-information", viewPath + "user-information.fxml");
+        FXRouter.when("create-event", viewPath + "create-event.fxml");
     }
     @FXML
     public void goToEventManagement()  {
