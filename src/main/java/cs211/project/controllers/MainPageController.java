@@ -26,27 +26,16 @@ public class MainPageController {
     {
         String viewPath = "cs211/project/views/";
         FXRouterPane.when("mainPage", viewPath + "mainPage.fxml");
-        FXRouterPane.when("testpage1", viewPath + "testpage1.fxml");
-        FXRouterPane.when("testpage2", viewPath + "testpage2.fxml");
         FXRouterPane.when("event-management", viewPath + "event-management.fxml");
         FXRouterPane.when("event-participant-management", viewPath + "event-participant-management.fxml");
     }
     @FXML
-    public void goToTestPage1()  {
+    public void goToEventManagement()  {
         try {
-            FXRouterPane.goTo("testpage1");
+            FXRouterPane.goTo("event-management");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @FXML
-    public void goToTestPage2() {
-        try {
-            FXRouterPane.goTo("testpage2");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 }
