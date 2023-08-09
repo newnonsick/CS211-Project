@@ -9,54 +9,54 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.CreateEventController">
    <children>
-      <Label layoutX="237.0" layoutY="35.0" text="Create Event">
+      <Label layoutX="237.0" layoutY="37.0" text="Create Event">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="100.0" text="ชื่อ">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="143.0" text="รายละเอียด">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="235.0" text="หมวดหมู่">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="290.0" text="อัพโหลดรูป">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="eventNameTextField" layoutX="350.0" layoutY="101.0" prefHeight="25.0" prefWidth="384.0" />
+      <TextField fx:id="eventNameTextField" layoutX="350.0" layoutY="103.0" prefHeight="25.0" prefWidth="384.0" />
       <TextField fx:id="eventInfoTextField" layoutX="350.0" layoutY="143.0" prefHeight="75.0" prefWidth="384.0" />
       <Label layoutX="237.0" layoutY="350.0" text="สถานที่จัดอีเวนต์">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="400.0" text="กำหนดการเริ่มอีเวนต์">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="450.0" text="กำหนดการสิ้นสุดอีเวนต์">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="placeTextField" layoutX="441.0" layoutY="351.0" prefHeight="25.0" prefWidth="176.0" />
-      <DatePicker fx:id="startDatePicker" layoutX="441.0" layoutY="400.0" prefHeight="27.0" prefWidth="176.0" />
-      <DatePicker fx:id="endDatePicker" layoutX="441.0" layoutY="450.0" prefHeight="27.0" prefWidth="176.0" />
-      <Button layoutX="638.0" layoutY="518.0" mnemonicParsing="false" onAction="#createEventButton" text="Create Event">
+      <TextField fx:id="placeTextField" layoutX="441.0" layoutY="353.0" prefHeight="25.0" prefWidth="176.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="441.0" layoutY="402.0" prefHeight="27.0" prefWidth="176.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="441.0" layoutY="452.0" prefHeight="27.0" prefWidth="176.0" />
+      <Button layoutX="643.0" layoutY="518.0" mnemonicParsing="false" onAction="#createEventButton" text="Create Event">
          <font>
-            <Font size="14.0" />
+            <Font size="16.0" />
          </font>
       </Button>
    </children>
