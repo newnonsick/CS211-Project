@@ -1,24 +1,24 @@
 package cs211.project.services;
 
 import javafx.animation.FadeTransition;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.HashMap;
 
-public final class FXRouter {
+public final class FXRouterPane {
     private static final String WINDOW_TITLE = "";
-    private static final Double WINDOW_WIDTH = 1280.0D;
-    private static final Double WINDOW_HEIGHT = 800.D;
-    private static final Double FADE_ANIMATION_DURATION = 1280.0D;
-    private static FXRouter router;
+    private static final Double WINDOW_WIDTH = 1180.0D;
+    private static final Double WINDOW_HEIGHT = 800.0D;
+    private static final Double FADE_ANIMATION_DURATION = 1180.0D;
+    private static FXRouterPane router;
     private static Object mainRef;
-    private static Stage window;
     private static String windowTitle;
     private static Double windowWidth;
     private static Double windowHeight;
@@ -26,43 +26,46 @@ public final class FXRouter {
     private static Double animationDuration;
     private static AbstractMap<String, RouteScene> routes = new HashMap();
     private static RouteScene currentRoute;
+    @FXML
+    static
+    StackPane content;
 
-    private FXRouter() {
+    private FXRouterPane() {
     }
 
-    public static void bind(Object ref, Stage win) {
-        checkInstances(ref, win);
+    public static void bind(Object ref, StackPane cnt) {
+        checkInstances(ref, cnt);
     }
 
-    public static void bind(Object ref, Stage win, String winTitle) {
-        checkInstances(ref, win);
+    public static void bind(Object ref, StackPane cnt, String winTitle) {
+        checkInstances(ref, cnt);
         windowTitle = winTitle;
     }
 
-    public static void bind(Object ref, Stage win, double winWidth, double winHeight) {
-        checkInstances(ref, win);
+    public static void bind(Object ref, StackPane cnt, double winWidth, double winHeight) {
+        checkInstances(ref, cnt);
         windowWidth = winWidth;
         windowHeight = winHeight;
     }
 
-    public static void bind(Object ref, Stage win, String winTitle, double winWidth, double winHeight) {
-        checkInstances(ref, win);
+    public static void bind(Object ref, StackPane cnt, String winTitle, double winWidth, double winHeight) {
+        checkInstances(ref, cnt);
         windowTitle = winTitle;
         windowWidth = winWidth;
         windowHeight = winHeight;
     }
 
-    private static void checkInstances(Object ref, Stage win) {
+    private static void checkInstances(Object ref, StackPane cnt) {
         if (mainRef == null) {
             mainRef = ref;
         }
 
         if (router == null) {
-            router = new FXRouter();
+            router = new FXRouterPane();
         }
 
-        if (window == null) {
-            window = win;
+        if (content == null) {
+            content = cnt;
         }
 
     }
@@ -103,9 +106,8 @@ public final class FXRouter {
         String scenePath = "/" + route.scenePath;
         Parent resource = (Parent)FXMLLoader.load((new Object() {
         }).getClass().getResource(scenePath));
-        window.setTitle(route.windowTitle);
-        window.setScene(new Scene(resource, route.sceneWidth, route.sceneHeight));
-        window.show();
+        content.getChildren().removeAll();
+        content.getChildren().setAll(resource);
         routeAnimation(resource);
     }
 
@@ -178,15 +180,15 @@ public final class FXRouter {
         }
 
         private static String getWindowTitle() {
-            return FXRouter.windowTitle != null ? FXRouter.windowTitle : "";
+            return FXRouterPane.windowTitle != null ? FXRouterPane.windowTitle : "";
         }
 
         private static double getWindowWidth() {
-            return FXRouter.windowWidth != null ? FXRouter.windowWidth : FXRouter.WINDOW_WIDTH;
+            return FXRouterPane.windowWidth != null ? FXRouterPane.windowWidth : FXRouterPane.WINDOW_WIDTH;
         }
 
         private static double getWindowHeight() {
-            return FXRouter.windowHeight != null ? FXRouter.windowHeight : FXRouter.WINDOW_HEIGHT;
+            return FXRouterPane.windowHeight != null ? FXRouterPane.windowHeight : FXRouterPane.WINDOW_HEIGHT;
         }
     }
 }
