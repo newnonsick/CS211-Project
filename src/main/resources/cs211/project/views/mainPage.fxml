@@ -12,9 +12,10 @@
          <left>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#goToEventManagement" prefHeight="100.0" prefWidth="116.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="116.0" text="Button" />
-                  <Button mnemonicParsing="false" prefHeight="100.0" prefWidth="116.0" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="116.0" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="116.0" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#goToYourCreatedEvents" prefHeight="100.0" prefWidth="116.0" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#goToUserInformation" prefHeight="100.0" prefWidth="116.0" text="Button" />
                </children>
             </VBox>
          </left>
