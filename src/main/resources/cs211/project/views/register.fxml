@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -10,43 +11,45 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.RegisterController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.RegisterController">
    <children>
-      <Label layoutX="390.0" layoutY="45.0" text="Sign Up">
+      <Label layoutX="977.0" layoutY="40.0" text="Sign Up">
          <font>
             <Font name="Calibri" size="46.0" />
          </font>
       </Label>
-      <Label layoutX="274.0" layoutY="128.0" text="Name *" textFill="#656565">
+      <Label layoutX="859.0" layoutY="295.0" text="Name *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Line endX="-100.0" endY="458.0" layoutX="326.0" layoutY="42.0" startX="-100.0" startY="-42.0" />
-      <TextField fx:id="nameTextField" alignment="CENTER" layoutX="274.0" layoutY="158.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your name" />
-      <Label layoutX="274.0" layoutY="195.0" text="Username *" textFill="#656565">
+      <Line endX="-100.0" endY="614.5" layoutX="900.0" layoutY="186.0" startX="-100.0" startY="-186.0">
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis></Line>
+      <TextField fx:id="nameTextField" alignment="CENTER" layoutX="859.0" layoutY="325.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your name" />
+      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="859.0" layoutY="389.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your username" />
+      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="861.0" layoutY="458.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password" />
+      <PasswordField fx:id="confirmPasswordTextField" alignment="CENTER" layoutX="861.0" layoutY="525.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password again" />
+      <Button layoutX="1171.0" layoutY="585.0" mnemonicParsing="false" onAction="#signUp" text="SIGN UP" />
+      <Hyperlink layoutX="859.0" layoutY="586.0" onAction="#goToLogin" text="Already have an account?" textFill="#000001" />
+      <Label layoutX="859.0" layoutY="362.0" text="Username *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="274.0" layoutY="261.0" text="Password *" textFill="#656565">
+      <Label layoutX="859.0" layoutY="428.0" text="Password *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="274.0" layoutY="330.0" text="Confirm password *" textFill="#656565">
+      <Label layoutX="859.0" layoutY="497.0" text="Confirm password *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Hyperlink layoutX="274.0" layoutY="419.0" onAction="#goToLogin" text="Already have an account?" textFill="#000001" />
-      <Button layoutX="586.0" layoutY="418.0" mnemonicParsing="false" onAction="#signUp" text="SIGN UP" />
       <Label fx:id="errorLabel" layoutX="274.0" layoutY="394.0" textFill="RED" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="17.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="65.0" layoutY="234.0" prefHeight="54.0" prefWidth="105.0" text="Upload your profile&#10;picture (optional)" />
-      <Button layoutX="90.0" layoutY="291.0" mnemonicParsing="false" text="Upload" />
-      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="276.0" layoutY="291.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password" />
-      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="274.0" layoutY="222.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your username" />
-      <PasswordField fx:id="confirmPasswordTextField" alignment="CENTER" layoutX="276.0" layoutY="358.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password again" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="948.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
