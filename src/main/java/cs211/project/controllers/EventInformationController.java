@@ -1,8 +1,10 @@
 package cs211.project.controllers;
 
+import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import java.io.IOException;
 
 public class EventInformationController {
     @FXML private Label eventNameLabel;
@@ -17,11 +19,11 @@ public class EventInformationController {
     @FXML
     public void handleBackToEventPage() {
         // ไปหน้ารวมอีเวนต์
-//        try {
-//            FXRouterPane.goTo("");
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            FXRouterPane.goTo("event-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

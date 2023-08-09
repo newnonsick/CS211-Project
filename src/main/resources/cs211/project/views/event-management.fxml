@@ -71,11 +71,19 @@
             <Font size="18.0" />
          </font>
       </Label>
+<<<<<<< HEAD
       <Button layoutX="434.0" layoutY="595.0" mnemonicParsing="false" onAction="#EventPartiManagementButton" text="จัดการผู้เข้าร่วม">
          <font>
             <Font size="18.0" />
          </font></Button>
       <Button layoutX="261.0" layoutY="595.0" mnemonicParsing="false" text="จัดการทีม">
+=======
+      <Button layoutX="434.0" layoutY="595.0" mnemonicParsing="false" text="จัดการทีม">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <Button layoutX="261.0" layoutY="595.0" mnemonicParsing="false" onAction="#EventPartiManagementButton" text="จัดการผู้เข้าร่วม">
+>>>>>>> 91562fe8b4bc1d60a513cdaf29ae1290eeb2142f
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -104,5 +112,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button layoutX="33.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToYourCreatedEvents" text="Back" />
    </children>
 </AnchorPane>

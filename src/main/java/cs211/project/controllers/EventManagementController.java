@@ -8,12 +8,16 @@ import cs211.project.services.FXRouterPane;
 import java.io.IOException;
 
 public class EventManagementController {
-    @FXML private DatePicker editStartDatePicker;
-    @FXML private DatePicker editEndDatePicker;
-    @FXML private TextField numberOfParticipantTextField;
-    @FXML private DatePicker starJoinDatePicker;
-    @FXML private DatePicker closingJoinDatePicker;
-
+    @FXML
+    private DatePicker editStartDatePicker;
+    @FXML
+    private DatePicker editEndDatePicker;
+    @FXML
+    private TextField numberOfParticipantTextField;
+    @FXML
+    private DatePicker starJoinDatePicker;
+    @FXML
+    private DatePicker closingJoinDatePicker;
 
 
     @FXML
@@ -24,4 +28,15 @@ public class EventManagementController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    public void backToYourCreatedEvents() {
+        try {
+            FXRouterPane.goTo("your-created-events");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
+
