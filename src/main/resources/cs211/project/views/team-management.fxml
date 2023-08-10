@@ -9,16 +9,16 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.TeamManagementController">
    <children>
       <Line endX="-100.0" endY="800.0" layoutX="690.0" startX="-100.0" />
-      <TableView layoutX="50.0" layoutY="100.0" prefHeight="609.0" prefWidth="500.0">
+      <TableView fx:id="teamMemberTableView" layoutX="50.0" layoutY="100.0" prefHeight="609.0" prefWidth="500.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <TableView layoutX="625.0" layoutY="100.0" prefHeight="450.0" prefWidth="500.0">
+      <TableView fx:id="activityTableView" layoutX="625.0" layoutY="100.0" prefHeight="450.0" prefWidth="500.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
@@ -34,17 +34,17 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="465.0" layoutY="732.0" mnemonicParsing="false" text="ระงับสิทธิ์">
+      <Button layoutX="465.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleBanMemberButton" text="ระงับสิทธิ์">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="1017.0" layoutY="734.0" mnemonicParsing="false" text="สิ้นสุดกิจกรรม">
+      <Button layoutX="1017.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleEndActivityButton" text="สิ้นสุดกิจกรรม">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="625.0" layoutY="732.0" mnemonicParsing="false" text="เพิ่มกิจกรรม">
+      <Button layoutX="625.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleAddActivityButton" text="เพิ่มกิจกรรม">
          <font>
             <Font size="18.0" />
          </font>
@@ -59,9 +59,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="726.0" layoutY="562.0" prefHeight="35.0" prefWidth="399.0" />
-      <TextField layoutX="773.0" layoutY="622.0" prefHeight="91.0" prefWidth="352.0" />
-      <Button layoutX="825.0" layoutY="732.0" mnemonicParsing="false" text="ลบกิจกรรม">
+      <TextField fx:id="avtivityNameTextField" layoutX="726.0" layoutY="562.0" prefHeight="35.0" prefWidth="399.0" />
+      <TextField fx:id="activityDescriptionTextField" layoutX="773.0" layoutY="622.0" prefHeight="91.0" prefWidth="352.0" />
+      <Button layoutX="825.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleRemoveActivityButton" text="ลบกิจกรรม">
          <font>
             <Font size="18.0" />
          </font>
