@@ -44,6 +44,10 @@ public class LoginController {
         FileInputStream fileInputStream = null;
         String user = usernameTextField.getText();
         String pass = passwordTextField.getText();
+        String destination = "mainPage";
+        if(user.equals("admin211")) {
+            destination = "adminPage";
+        }
         try {
             fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
@@ -65,7 +69,7 @@ public class LoginController {
                 String username = data[0].trim();
                 String password = data[1].trim();
                 if(user.equals(username) && pass.equals(password)) {
-                    FXRouter.goTo("mainPage");
+                    FXRouter.goTo(destination);
                 }
 
             }

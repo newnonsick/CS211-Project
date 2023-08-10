@@ -21,6 +21,7 @@ public class MainApplication extends Application {
         FXRouter.when("register", viewPath + "register.fxml");
         FXRouter.when("mainPage", viewPath + "mainPage.fxml");
         FXRouter.when("login", viewPath + "login.fxml");
+        FXRouter.when("adminPage", viewPath + "adminPage.fxml");
 
     }
 
