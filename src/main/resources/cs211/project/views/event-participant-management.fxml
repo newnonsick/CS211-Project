@@ -34,5 +34,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button layoutX="762.0" layoutY="669.0" mnemonicParsing="false" onAction="#goToEditParticipant" text="Edit Participant" />
    </children>
 </AnchorPane>
