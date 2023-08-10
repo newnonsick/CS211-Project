@@ -38,5 +38,14 @@ public class EventManagementController {
         }
     }
 
+    @FXML
+    public void handleManageTeamButton(){
+        try {
+            FXRouterPane.goTo("event-team-management");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 

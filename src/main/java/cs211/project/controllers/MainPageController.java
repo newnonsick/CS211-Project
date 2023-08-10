@@ -33,6 +33,12 @@ public class MainPageController {
         FXRouterPane.when("create-event", viewPath + "create-event.fxml");
         FXRouterPane.when("event-information", viewPath + "event-information.fxml");
         FXRouterPane.when("your-created-events", viewPath + "your-created-events.fxml");
+        FXRouterPane.when("event-team-management", viewPath + "event-team-management.fxml");
+        FXRouterPane.when("create-team", viewPath + "create-team.fxml");
+        FXRouterPane.when("team-list", viewPath + "team-list.fxml");
+        FXRouterPane.when("myteam-list", viewPath + "myteam-list.fxml");
+        FXRouterPane.when("team-communication", viewPath + "team-communication.fxml");
+        FXRouterPane.when("team-management", viewPath + "team-management.fxml");
     }
     @FXML
     public void goToEventList()  {
@@ -65,6 +71,15 @@ public class MainPageController {
     public void goToUserInformation()  {
         try {
             FXRouterPane.goTo("user-information");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void handleMyTeamButton(){
+        try {
+            FXRouterPane.goTo("myteam-list");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
