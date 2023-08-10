@@ -9,11 +9,10 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Line endX="-100.0" endY="800.0" layoutX="690.0" startX="-100.0" />
-      <TableView layoutX="50.0" layoutY="100.0" prefHeight="450.0" prefWidth="500.0">
+      <TableView layoutX="50.0" layoutY="100.0" prefHeight="609.0" prefWidth="500.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
@@ -35,7 +34,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button layoutX="465.0" layoutY="566.0" mnemonicParsing="false" text="ระงับสิทธิ์">
+      <Button layoutX="465.0" layoutY="732.0" mnemonicParsing="false" text="ระงับสิทธิ์">
          <font>
             <Font size="18.0" />
          </font>

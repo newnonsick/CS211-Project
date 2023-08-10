@@ -14,12 +14,12 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="eventsYouCreatedTableView" layoutX="255.0" layoutY="104.0" prefHeight="491.0" prefWidth="664.0">
+      <TableView fx:id="eventsYouCreatedTableView" layoutX="99.0" layoutY="104.0" prefHeight="539.0" prefWidth="980.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
-      <Button layoutX="855.0" layoutY="657.0" mnemonicParsing="false" onAction="#goToEventManagement" prefHeight="35.0" prefWidth="166.0" text="Edit Your Event" />
+      <Button layoutX="913.0" layoutY="657.0" mnemonicParsing="false" onAction="#goToEventManagement" prefHeight="35.0" prefWidth="166.0" text="Edit Your Event" />
    </children>
 </AnchorPane>

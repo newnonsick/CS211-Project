@@ -10,14 +10,14 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
    <children>
-      <Label layoutX="493.0" layoutY="172.0" text="Event List">
+      <Label layoutX="494.0" layoutY="33.0" text="Event List">
          <font>
             <Font name="System Bold" size="43.0" />
          </font>
       </Label>
-      <TextField fx:id="searchTextField" layoutX="243.0" layoutY="56.0" prefHeight="49.0" prefWidth="625.0" />
-      <Button fx:id="searchButton" layoutX="867.0" layoutY="56.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="67.0" text="Search" />
-      <TableView fx:id="eventListTableView" layoutX="246.0" layoutY="260.0" prefHeight="418.0" prefWidth="688.0">
+      <TextField fx:id="searchTextField" layoutX="119.0" layoutY="121.0" prefHeight="26.0" prefWidth="888.0" />
+      <Button fx:id="searchButton" layoutX="1007.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Search" />
+      <TableView fx:id="eventListTableView" layoutX="119.0" layoutY="147.0" prefHeight="569.0" prefWidth="943.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
