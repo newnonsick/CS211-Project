@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
@@ -11,17 +12,17 @@
    <children>
       <Label layoutX="237.0" layoutY="35.0" text="User Information">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="usernameLabel" layoutX="859.0" layoutY="57.0" text="usenameLabel">
+      <Label fx:id="usernameLabel" layoutX="859.0" layoutY="58.0" text="usernameLabel">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Label fx:id="nameLabel" layoutX="237.0" layoutY="84.0" text="nameLabel">
          <font>
-            <Font size="20.0" />
+            <Font size="22.0" />
          </font>
       </Label>
       <Label layoutX="237.0" layoutY="154.0" text="อีเวนต์ที่กำลังเข้าร่วม">
@@ -47,5 +48,6 @@
             <TableColumn prefWidth="75.0" text="C2" />
          </columns>
       </TableView>
+      <ImageView fx:id="profileImageView" fitHeight="130.0" fitWidth="130.0" layoutX="991.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

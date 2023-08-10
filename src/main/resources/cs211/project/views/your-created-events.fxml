@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -8,16 +9,17 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.YourCreatedEventsController">
    <children>
-      <Label layoutX="237.0" layoutY="35.0" text="Events You Created">
+      <Label layoutX="427.0" layoutY="36.0" text="Events You Created">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="eventsYouCreatedTableView" layoutX="237.0" layoutY="104.0" prefHeight="491.0" prefWidth="664.0">
+      <TableView fx:id="eventsYouCreatedTableView" layoutX="99.0" layoutY="104.0" prefHeight="539.0" prefWidth="980.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
         </columns>
       </TableView>
+      <Button layoutX="913.0" layoutY="657.0" mnemonicParsing="false" onAction="#goToEventManagement" prefHeight="35.0" prefWidth="166.0" text="Edit Your Event" />
    </children>
 </AnchorPane>

@@ -14,7 +14,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="eventParticipantTableView" layoutX="173.0" layoutY="136.0" prefHeight="462.0" prefWidth="639.0">
+      <TableView fx:id="eventParticipantTableView" layoutX="175.0" layoutY="177.0" prefHeight="462.0" prefWidth="639.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
           <TableColumn prefWidth="75.0" text="C2" />
@@ -24,10 +24,16 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Label layoutX="183.0" layoutY="92.0" text="Event Participant List" textFill="BLUE">
+      <Label layoutX="183.0" layoutY="139.0" text="Event Participant List" textFill="BLUE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
+      <Label fx:id="eventName" layoutX="183.0" layoutY="100.0" text="eventName">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="762.0" layoutY="669.0" mnemonicParsing="false" onAction="#goToEditParticipant" text="Edit Participant" />
    </children>
 </AnchorPane>
