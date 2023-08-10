@@ -11,8 +11,6 @@ public class MyTeamListController {
 
     @FXML Label teamNameLabel;
     @FXML Label numPeopleLabel;
-    @FXML Label startDateLabel;
-    @FXML Label endDateLabel;
     @FXML TableView myTeamListTableView;
 
     @FXML

@@ -20,50 +20,40 @@
                 <Font name="System Bold" size="30.0" />
             </font>
         </Label>
-        <Label layoutX="748.0" layoutY="142.0" text="ชื่อทีม :">
+        <Label layoutX="749.0" layoutY="199.0" text="ชื่อทีม :">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Label layoutX="748.0" layoutY="215.0" text="จำนวนคน :">
+        <Label layoutX="749.0" layoutY="263.0" text="จำนวนคน :">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Label layoutX="748.0" layoutY="289.0" text="กำหนดการเปิดรับสมัครทีม :">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Label layoutX="748.0" layoutY="373.0" text="กำหนดการปิดรับสมัครทีม :">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Button layoutX="886.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleViewTeamButton" text="View This Team">
+        <Button layoutX="851.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleViewTeamButton" text="View This Team">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label fx:id="teamNameLabel" layoutX="834.0" layoutY="142.0" text="teamNameLabel">
+        <Label fx:id="teamNameLabel" layoutX="835.0" layoutY="199.0" text="teamNameLabel">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Label fx:id="numPeopleLabel" layoutX="871.0" layoutY="215.0" text="numPeopleLabel">
+        <Label fx:id="numPeopleLabel" layoutX="872.0" layoutY="263.0" text="numPeopleLabel">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Label fx:id="startDateLabel" layoutX="1006.0" layoutY="289.0" text="startDateLabel">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
-        <Label fx:id="endDateLabel" layoutX="1006.0" layoutY="373.0" text="endDateLabel">
-            <font>
-                <Font size="24.0" />
-            </font>
-        </Label>
+      <Label fx:id="eventNameLabel" layoutX="835.0" layoutY="134.0" text="eventNameLabel">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="749.0" layoutY="134.0" text="Event :">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
