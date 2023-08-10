@@ -19,5 +19,12 @@ public class EventParticipantManagementController {
             throw new RuntimeException(e);
         }
     }
-
+    @FXML
+    public void goToEditParticipant() {
+        try {
+            FXRouterPane.goTo("edit-participant");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
