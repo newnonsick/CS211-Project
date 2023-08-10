@@ -15,7 +15,7 @@
             <Font name="System Bold" size="43.0" />
          </font>
       </Label>
-      <TextField fx:id="searchTextField" layoutX="119.0" layoutY="121.0" prefHeight="26.0" prefWidth="888.0" />
+      <TextField fx:id="searchTextField" layoutX="119.0" layoutY="121.0" prefHeight="26.0" prefWidth="888.0" promptText="For a Sample of Autocomplete Try to Type New or Tarn or Ice or Nutt"/>
       <Button fx:id="searchButton" layoutX="1007.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Search" />
       <TableView fx:id="eventListTableView" layoutX="119.0" layoutY="147.0" prefHeight="569.0" prefWidth="943.0">
         <columns>
