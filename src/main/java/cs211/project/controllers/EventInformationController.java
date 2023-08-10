@@ -30,4 +30,13 @@ public class EventInformationController {
     public void joinEventButton() {
         // เข้าร่วมอีเวนต์
     }
+
+    @FXML
+    public void handleVisitTeamButton(){
+        try {
+            FXRouterPane.goTo("team-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

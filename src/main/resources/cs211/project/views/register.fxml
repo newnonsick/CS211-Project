@@ -48,8 +48,12 @@
             <Font size="18.0" />
          </font>
       </Label>
+<<<<<<< HEAD
       <Label fx:id="errorLabel" layoutX="859.0" layoutY="560.0" prefHeight="17.0" prefWidth="271.0" textFill="RED" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="17.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" />
+=======
+      <Label fx:id="errorLabel" layoutX="862.0" layoutY="561.0" text="errorLabel" textFill="RED" />
+>>>>>>> feature/event_team
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="948.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
