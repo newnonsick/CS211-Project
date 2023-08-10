@@ -84,7 +84,12 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="237.0" layoutY="718.0" mnemonicParsing="false" onAction="#handleBackToEventPage" text="Back">
+      <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBackToEventPage" text="Back">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="handleVisitTeamButton" layoutX="237.0" layoutY="718.0" mnemonicParsing="false" text="Visit Our Teams">
          <font>
             <Font size="16.0" />
          </font>

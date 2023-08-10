@@ -19,7 +19,7 @@ public class LoginController {
     @FXML
     Label errorLabel;
 
-    public LoginController() {
+    public void initialize() {
         checkFileIsExisted();
     }
 
@@ -72,7 +72,7 @@ public class LoginController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        errorLabel.setText("Username or password is wrong!");
+        errorLabel.setText("username or password is incorrect!");
         usernameTextField.setText("");
         passwordTextField.setText("");
     }

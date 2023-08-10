@@ -21,6 +21,12 @@ public class RegisterController {
     TextField nameTextField;
     @FXML
     Label errorLabel;
+
+    @FXML
+    public void initialize(){
+        errorLabel.setText("");
+    }
+
     @FXML
     private void signUp() {
         String username = usernameTextField.getText();

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MainPageController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MainPageController">
    <children>
       <BorderPane fx:id="window" prefHeight="500.0" prefWidth="700.0">
          <left>
@@ -16,11 +16,12 @@
                   <Button mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="116.0" text="Button" />
                   <Button mnemonicParsing="false" onAction="#goToYourCreatedEvents" prefHeight="100.0" prefWidth="116.0" text="Button" />
                   <Button mnemonicParsing="false" onAction="#goToUserInformation" prefHeight="100.0" prefWidth="116.0" text="Button" />
+                  <Button mnemonicParsing="false" onAction="#handleMyTeamButton" prefHeight="100.0" prefWidth="116.0" text="Button" />
                </children>
             </VBox>
          </left>
          <center>
-            <StackPane fx:id="content" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="content" prefHeight="762.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
