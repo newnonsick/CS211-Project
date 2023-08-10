@@ -21,7 +21,15 @@ public class EventTeamManagementContrller {
         }
     }
 
-    //FXRouterPane.goTo("team-management");
+    //ทำปุ่มไว้ส่งงาน ตอนจริงใช้คลิกใน TableView
+    @FXML
+    public void handleManageTeamButton(){
+        try {
+            FXRouterPane.goTo("team-management");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
 }
