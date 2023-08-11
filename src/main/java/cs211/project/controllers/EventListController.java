@@ -33,11 +33,9 @@ public class EventListController {
         int totalMatched = 0;
         for (String suggestion : SUGGESTIONS_ARRAY) {
             if (suggestion.toLowerCase().startsWith(enteredText.toLowerCase())) {
-                if (totalMatched > 1) {
-                    break;
-                }
                 matchedSuggestion = suggestion;
                 totalMatched++;
+                break;
             }
          }
 
@@ -49,15 +47,12 @@ public class EventListController {
         if (totalMatched == 0){
             for (String suggestion : SUGGESTIONS_ARRAY) {
                 if (suggestion.toLowerCase().contains(enteredText.toLowerCase())) {
-                    if (totalMatched > 1) {
-                        break;
-                    }
                     matchedSuggestion = suggestion;
-                    totalMatched++;
+                    break;
                 }
             }
 
-            if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
+            if (matchedSuggestion != null && !matchedSuggestion.equals(enteredText) && matchedSuggestion.indexOf(enteredText) != matchedSuggestion.length()-1) {
                 searchTextField.setText(matchedSuggestion);
                 searchTextField.selectRange(matchedSuggestion.indexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
             }
