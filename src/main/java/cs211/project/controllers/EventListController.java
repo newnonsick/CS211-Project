@@ -7,6 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class EventListController {
     @FXML
     TableView eventListTableView;
@@ -17,11 +20,12 @@ public class EventListController {
 
     public void initialize() {
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
+        Arrays.sort(SUGGESTIONS_ARRAY); //Array must be sorted
     }
 
     private void handleAutoComplete(KeyEvent event) {
         String enteredText = searchTextField.getText();
-        if (event.getCode() == KeyCode.BACK_SPACE || enteredText.isEmpty()) {
+        if (event.getCode() == KeyCode.BACK_SPACE || enteredText.isEmpty() ) {
             return;
         }
 
@@ -29,21 +33,40 @@ public class EventListController {
         int totalMatched = 0;
         for (String suggestion : SUGGESTIONS_ARRAY) {
             if (suggestion.toLowerCase().startsWith(enteredText.toLowerCase())) {
-                matchedSuggestion = suggestion;
-                totalMatched++;
                 if (totalMatched > 1) {
                     break;
                 }
+                matchedSuggestion = suggestion;
+                totalMatched++;
             }
-        }
+         }
 
         if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
             searchTextField.setText(matchedSuggestion);
             searchTextField.selectRange(enteredText.length(), matchedSuggestion.length());
         }
-    }
 
-    private static final String[] SUGGESTIONS_ARRAY = {
+        if (totalMatched == 0){
+            for (String suggestion : SUGGESTIONS_ARRAY) {
+                if (suggestion.toLowerCase().contains(enteredText.toLowerCase())) {
+                    if (totalMatched > 1) {
+                        break;
+                    }
+                    matchedSuggestion = suggestion;
+                    totalMatched++;
+                }
+            }
+
+            if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
+                searchTextField.setText(matchedSuggestion);
+                searchTextField.selectRange(matchedSuggestion.indexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
+            }
+        }
+
+
+    }
+    
+    private static String[] SUGGESTIONS_ARRAY = {
             "New", "Tarn", "Ice", "Nutt"
     };
 }
