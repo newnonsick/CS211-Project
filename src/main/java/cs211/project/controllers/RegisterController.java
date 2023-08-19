@@ -2,9 +2,13 @@ package cs211.project.controllers;
 
 import cs211.project.services.FXRouter;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.util.ArrayList;
@@ -21,6 +25,8 @@ public class RegisterController {
     TextField nameTextField;
     @FXML
     Label errorLabel;
+    @FXML
+    Button upLoadImageButton;
 
     @FXML
     public void initialize(){
@@ -110,6 +116,18 @@ public class RegisterController {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    public void upLoadImage() {
+        choosePhotoFile();
+    }
+    private void choosePhotoFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open a file");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")+ "/Desktop"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPEG Image","*.jpg"), new FileChooser.ExtensionFilter("PNG Image", "*.png"), new FileChooser.ExtensionFilter("All image files","*.jpg","*.png"));
+        Stage stage = (Stage) upLoadImageButton.getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(stage);
     }
 }
 

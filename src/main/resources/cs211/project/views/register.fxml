@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -13,12 +14,12 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.RegisterController">
    <children>
-      <Label layoutX="977.0" layoutY="40.0" text="Sign Up">
+      <Label layoutX="989.0" layoutY="45.0" text="Sign Up">
          <font>
             <Font name="Calibri" size="46.0" />
          </font>
       </Label>
-      <Label layoutX="859.0" layoutY="295.0" text="Name *" textFill="#656565">
+      <Label layoutX="873.0" layoutY="380.0" text="Name *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
@@ -27,28 +28,34 @@
          <rotationAxis>
             <Point3D />
          </rotationAxis></Line>
-      <TextField fx:id="nameTextField" alignment="CENTER" layoutX="859.0" layoutY="325.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your name" />
-      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="859.0" layoutY="389.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your username" />
-      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="861.0" layoutY="458.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password" />
-      <PasswordField fx:id="confirmPasswordTextField" alignment="CENTER" layoutX="861.0" layoutY="525.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password again" />
-      <Button layoutX="1171.0" layoutY="585.0" mnemonicParsing="false" onAction="#signUp" text="SIGN UP" />
-      <Hyperlink layoutX="859.0" layoutY="586.0" onAction="#goToLogin" text="Already have an account?" textFill="#000001" />
-      <Label layoutX="859.0" layoutY="362.0" text="Username *" textFill="#656565">
+      <TextField fx:id="nameTextField" alignment="CENTER" layoutX="873.0" layoutY="410.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your name" />
+      <TextField fx:id="usernameTextField" alignment="CENTER" layoutX="873.0" layoutY="474.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your username" />
+      <PasswordField fx:id="passwordTextField" alignment="CENTER" layoutX="875.0" layoutY="543.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password" />
+      <PasswordField fx:id="confirmPasswordTextField" alignment="CENTER" layoutX="875.0" layoutY="610.0" prefHeight="25.0" prefWidth="374.0" promptText="Enter your password again" />
+      <Button layoutX="1185.0" layoutY="670.0" mnemonicParsing="false" onAction="#signUp" text="SIGN UP" />
+      <Hyperlink layoutX="873.0" layoutY="671.0" onAction="#goToLogin" text="Already have an account?" textFill="#000001" />
+      <Label layoutX="873.0" layoutY="447.0" text="Username *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="859.0" layoutY="428.0" text="Password *" textFill="#656565">
+      <Label layoutX="873.0" layoutY="513.0" text="Password *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="859.0" layoutY="497.0" text="Confirm password *" textFill="#656565">
+      <Label layoutX="873.0" layoutY="582.0" text="Confirm password *" textFill="#656565">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="errorLabel" layoutX="859.0" layoutY="560.0" prefHeight="17.0" prefWidth="271.0" textFill="RED" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="17.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="errorLabel" layoutX="873.0" layoutY="645.0" prefHeight="17.0" prefWidth="271.0" textFill="RED" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="985.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../data/profile_picture/default.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="upLoadImageButton" layoutX="1019.0" layoutY="302.0" mnemonicParsing="false" onAction="#upLoadImage" text="Upload image" />
+      <Label layoutX="1113.0" layoutY="306.0" style="-fx-opacity: 50%;" text="*optional" />
    </children>
 </AnchorPane>
