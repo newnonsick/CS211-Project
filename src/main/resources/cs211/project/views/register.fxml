@@ -14,7 +14,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.RegisterController">
    <children>
-      <Label layoutX="989.0" layoutY="45.0" text="Sign Up">
+      <Label layoutX="1014.0" layoutY="42.0" text="Sign Up">
          <font>
             <Font name="Calibri" size="46.0" />
          </font>
@@ -50,7 +50,7 @@
          </font>
       </Label>
       <Label fx:id="errorLabel" layoutX="873.0" layoutY="645.0" prefHeight="17.0" prefWidth="271.0" textFill="RED" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="985.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="profileImageView" fitHeight="150.0" fitWidth="200.0" layoutX="985.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../../data/profile_picture/default.png" />
          </image>
