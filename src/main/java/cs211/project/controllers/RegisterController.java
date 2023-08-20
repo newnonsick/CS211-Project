@@ -119,17 +119,19 @@ public class RegisterController {
                 throw new RuntimeException(e);
             }
         }
-        //upload the profile picture
-        String selectedImagePath = selectedImage.getAbsolutePath();
-        String targetDirectoryPath = "data/profile_picture";
-        Path targetDirectory = Path.of(targetDirectoryPath);
-        String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-        //errorLabel.setText(fileType);
-        Path targetFilePath = targetDirectory.resolve(username+"."+(fileType.substring(6)));
-        try {
-            Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(selectedImage != null) {
+            //upload the profile picture
+            String selectedImagePath = selectedImage.getAbsolutePath();
+            String targetDirectoryPath = "data/profile_picture";
+            Path targetDirectory = Path.of(targetDirectoryPath);
+            String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
+            //errorLabel.setText(fileType);
+            Path targetFilePath = targetDirectory.resolve(username + "." + (fileType.substring(6)));
+            try {
+                Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         goToLogin();
