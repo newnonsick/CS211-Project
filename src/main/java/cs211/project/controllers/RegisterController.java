@@ -20,7 +20,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 public class RegisterController {
-    private String filePath = "data/username_password.csv";
     @FXML
     TextField usernameTextField;
     @FXML
@@ -44,11 +43,13 @@ public class RegisterController {
 
     @FXML
     private void signUp() throws IOException {
+        //Possible future bug fix : making it impossible to create an account id "Default"
         //checking and register
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
         String fullName = nameTextField.getText();
+        String filePath = "data/username_password.csv";
         File file = new File(filePath);
         FileInputStream fileInputStream = null;
         if(username.isEmpty() || password.isEmpty() || password2.isEmpty() || fullName.isEmpty()) {
@@ -119,17 +120,19 @@ public class RegisterController {
                 throw new RuntimeException(e);
             }
         }
-        //upload the profile picture
-        String selectedImagePath = selectedImage.getAbsolutePath();
-        String targetDirectoryPath = "data/profile_picture";
-        Path targetDirectory = Path.of(targetDirectoryPath);
-        String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-        //errorLabel.setText(fileType);
-        Path targetFilePath = targetDirectory.resolve(username+"."+(fileType.substring(6)));
-        try {
-            Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(selectedImage != null) {
+            //upload the profile picture
+            String selectedImagePath = selectedImage.getAbsolutePath();
+            String targetDirectoryPath = "data/profile_picture";
+            Path targetDirectory = Path.of(targetDirectoryPath);
+            String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
+            //errorLabel.setText(fileType);
+            Path targetFilePath = targetDirectory.resolve(username + "." + (fileType.substring(6)));
+            try {
+                Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         goToLogin();
@@ -148,6 +151,7 @@ public class RegisterController {
         choosePhotoFile();
         if(selectedImage != null) {
             Image profileImage = new Image(selectedImage.toURI().toString());
+            errorLabel.setText(selectedImage.toURI().toString());
             profileImageView.setImage(profileImage);
         }
     }
