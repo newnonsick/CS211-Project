@@ -120,6 +120,12 @@ public class RegisterController {
                 throw new RuntimeException(e);
             }
         }
+        //Another way to write file
+        filePath = "data/userData.csv";
+        FileWriter fileWriter = new FileWriter(filePath);
+        PrintWriter printWriter = new PrintWriter(new BufferedWriter(fileWriter));
+        printWriter.println(username + "," + fullName);
+        printWriter.flush();
         if(selectedImage != null) {
             //upload the profile picture
             String selectedImagePath = selectedImage.getAbsolutePath();
