@@ -34,12 +34,11 @@ public class EventListController {
         for (String suggestion : SUGGESTIONS_ARRAY) {
             if (suggestion.toLowerCase().startsWith(enteredText.toLowerCase())) {
                 matchedSuggestion = suggestion;
-                totalMatched++;
                 break;
             }
          }
 
-        if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
+        if (matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
             searchTextField.setText(matchedSuggestion);
             searchTextField.selectRange(enteredText.length(), matchedSuggestion.length());
         }
@@ -57,7 +56,8 @@ public class EventListController {
 
             if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText) && matchedSuggestion.indexOf(enteredText) != matchedSuggestion.length()-1) {
                 searchTextField.setText(matchedSuggestion);
-                searchTextField.selectRange(matchedSuggestion.indexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
+//                searchTextField.selectRange(matchedSuggestion.lastIndexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
+                searchTextField.selectRange(matchedSuggestion.length() ,matchedSuggestion.length());
             }
         }
 
@@ -65,6 +65,6 @@ public class EventListController {
     }
     
     private static String[] SUGGESTIONS_ARRAY = {
-            "New", "Tarn", "Ice", "Nutt"
+            "Newa", "Tarn", "Ice", "Nutt"
     };
 }
