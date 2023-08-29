@@ -3,21 +3,20 @@ package cs211.project.models;
 import java.util.ArrayList;
 
 public class Users {
-    private ArrayList<User> Users;
+    private ArrayList<User> users;
 
     public void addUser(User user) {
-        Users.add(user);
+        users.add(user);
     }
+
     public void addUser(String username) {
-        if(User.checkUserExistence(username)) {
-            User user = new User(username);
-            Users.add(user);
-        }
+        User user = new User(username);
+        users.add(user);
     }
 
     public boolean findUser(User user) {
-        for(User aUser : this.Users) {
-            if(user.getUsername().equals(aUser.getUsername())) {
+        for (User aUser : this.users) {
+            if (user.getUsername().equals(aUser.getUsername())) {
                 return true;
             }
         }
@@ -25,8 +24,8 @@ public class Users {
     }
 
     public boolean findUser(String username) {
-        for(User aUser : this.Users) {
-            if(username.equals(aUser.getUsername())) {
+        for (User aUser : this.users) {
+            if (username.equals(aUser.getUsername())) {
                 return true;
             }
         }
@@ -34,6 +33,6 @@ public class Users {
     }
 
     public ArrayList<User> getUsers() {
-        return this.Users;
+        return this.users;
     }
 }
