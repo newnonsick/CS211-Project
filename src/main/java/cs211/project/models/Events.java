@@ -15,7 +15,7 @@ public class Events {
         placeEvent = placeEvent.trim();
 
         if (!eventName.equals("") && !eventInformation.equals("") && !eventCategory.equals("") && !placeEvent.equals("")) {
-            Event existingEvent = findEventByEventName(eventName);
+            Event existingEvent = findEvent(eventName);
             if (existingEvent == null) {
                 Event newEvent = new Event(eventName, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate);
                 events.add(newEvent);
@@ -24,13 +24,21 @@ public class Events {
 
     }
 
-    public Event findEventByEventName(String eventName) {
-        for (Event event : this.events) {
-            if (event.getEventName().equals(eventName)) {
-                return event;
+    public boolean findEvent(String eventName) {
+        for (Event anEvent : this.events) {
+            if (eventName.equals(anEvent.getEventName())) {
+                return true;
             }
-        }
-        return null;
+        } return false;
+    }
+
+    public boolean findEvent(Event event) {
+        for (Event anEvent : this.events) {
+            if (event.getEventName().equals(anEvent.getEventName())) {
+                return true;
+            }
+        } return false;
+
     }
 
     public ArrayList<Event> getEvents(){
