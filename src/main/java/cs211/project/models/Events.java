@@ -1,5 +1,6 @@
 package cs211.project.models;
 import java.util.ArrayList;
+
 public class Events {
     private ArrayList<Event> events;
 
@@ -7,7 +8,10 @@ public class Events {
         events = new ArrayList<>();
     }
 
-    public void addNewEvent(String eventName, String eventInformation, String eventCategory, String placeEvent, String eventStartDate,
+    public void addEvent(Event event) {
+        events.add(event);
+    }
+    public void addEvent(String eventName, String eventInformation, String eventCategory, String placeEvent, String eventStartDate,
                             String eventEndDate) {
         eventName = eventName.trim();
         eventInformation = eventInformation.trim();
@@ -15,13 +19,11 @@ public class Events {
         placeEvent = placeEvent.trim();
 
         if (!eventName.equals("") && !eventInformation.equals("") && !eventCategory.equals("") && !placeEvent.equals("")) {
-            Event existingEvent = findEvent(eventName);
-            if (existingEvent == null) {
+            if (!findEvent(eventName)) {
                 Event newEvent = new Event(eventName, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate);
                 events.add(newEvent);
             }
         }
-
     }
 
     public boolean findEvent(String eventName) {
