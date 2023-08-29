@@ -1,5 +1,4 @@
 package cs211.project.models;
-import cs211.project.models.User;
 
 import java.util.ArrayList;
 
@@ -9,8 +8,14 @@ public class Users {
     public void addUser(User user) {
         Users.add(user);
     }
+    public void addUser(String username) {
+        if(User.checkUserExistence(username)) {
+            User user = new User(username);
+            Users.add(user);
+        }
+    }
 
-    public boolean checkUser(User user) {
+    public boolean findUser(User user) {
         for(User aUser : this.Users) {
             if(user.getUsername().equals(aUser.getUsername())) {
                 return true;
@@ -19,7 +24,7 @@ public class Users {
         return false;
     }
 
-    public boolean checkUser(String username) {
+    public boolean findUser(String username) {
         for(User aUser : this.Users) {
             if(username.equals(aUser.getUsername())) {
                 return true;
