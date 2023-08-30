@@ -61,5 +61,10 @@
       <TextField fx:id="sendMessageTextField" layoutX="734.0" layoutY="654.0" prefHeight="35.0" prefWidth="417.0" promptText="พิมพ์ข้อความ..." />
       <Button layoutX="1126.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleDecreaseFontButton" prefHeight="25.0" prefWidth="25.0" text="-" />
       <Button layoutX="1102.0" layoutY="67.0" mnemonicParsing="false" onAction="#handleIncreaseFontButton" text="+" />
+      <Button fx:id="manageTeamButton" layoutX="1080.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="จัดการทีม">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

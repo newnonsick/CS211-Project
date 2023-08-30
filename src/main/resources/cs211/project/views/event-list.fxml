@@ -19,9 +19,9 @@
       </Label>
       <TextField fx:id="searchTextField" layoutX="119.0" layoutY="121.0" prefHeight="26.0" prefWidth="888.0" promptText="For a Sample of Autocomplete Try to Type New or Tarn or Ice or Nutt" />
       <Button fx:id="searchButton" layoutX="1007.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Search" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="223.0" layoutY="147.0" prefHeight="606.0" prefWidth="733.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="122.0" layoutY="147.0" prefHeight="606.0" prefWidth="888.0">
          <content>
-            <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="606.0" prefWidth="734.0">
+            <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="606.0" prefWidth="875.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
