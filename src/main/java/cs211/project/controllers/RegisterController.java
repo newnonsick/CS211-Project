@@ -168,7 +168,7 @@ public class RegisterController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")+ "/Desktop"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPEG Image","*.jpg"), new FileChooser.ExtensionFilter("PNG Image", "*.png"), new FileChooser.ExtensionFilter("All image files","*.jpg","*.png"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg", "*.webp",  "*.jfif" , "*.pjpeg" , "*.pjp"));
         Stage stage = (Stage) upLoadImageButton.getScene().getWindow();
         selectedImage = fileChooser.showOpenDialog(stage);
     }
