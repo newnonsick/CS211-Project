@@ -1,11 +1,11 @@
 package cs211.project.controllers;
 
+import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Font;
+
+import java.io.IOException;
 
 public class TeamCommunicationController {
     @FXML Label avtivityNameLabel;
@@ -13,6 +13,13 @@ public class TeamCommunicationController {
     @FXML TableView activityTableView;
     @FXML TextArea messageTextArea;
     @FXML TextField sendMessageTextField;
+    @FXML Button manageTeamButton;
+
+    @FXML
+    public void initialize(){
+        messageTextArea.setEditable(false);
+        //manageTeamButton.setVisible(false);
+    }
 
     @FXML
     public void handleSendMessageButton() {
@@ -33,6 +40,16 @@ public class TeamCommunicationController {
     public void handleDecreaseFontButton(){
         Font font = messageTextArea.getFont();
         messageTextArea.setFont(new Font(font.getName(), font.getSize() - 2));
+    }
+
+    //ตอนจริงจะเห็นปุ่มแค่คนที่เป็นหัวหน้าทีม
+    @FXML
+    public void handleManageTeamButton(){
+        try {
+            FXRouterPane.goTo("team-management");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
