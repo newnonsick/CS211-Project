@@ -16,11 +16,13 @@
       </Label>
       <TableView fx:id="eventParticipantTableView" layoutX="175.0" layoutY="177.0" prefHeight="462.0" prefWidth="639.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+            <TableColumn fx:id="partiNameColumn" prefWidth="247.1999969482422" text="Name" />
+            <TableColumn fx:id="partiUsernameColumn" minWidth="0.0" prefWidth="180.79998779296875" text="Username" />
+            <TableColumn fx:id="approvedColumn" minWidth="2.4000244140625" prefWidth="113.5999755859375" text=" Approved Status" />
+            <TableColumn fx:id="approvedActionColumn" prefWidth="98.4000244140625" text="Update Status" />
         </columns>
       </TableView>
-      <Button layoutX="55.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleBackToEventManagementBotton" text="Back">
+      <Button layoutX="55.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleBackToEventManagementButton" text="Back">
          <font>
             <Font size="18.0" />
          </font></Button>

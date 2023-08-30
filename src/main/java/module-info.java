@@ -10,6 +10,8 @@ module cs211.project {
     exports cs211.project.cs211661project;
     opens cs211.project.cs211661project to javafx.fxml;
 
+
+    opens cs211.project.models;
     //exports cs211.project.models;
     //opens cs211.project.models to javafx.fxml;
 }
