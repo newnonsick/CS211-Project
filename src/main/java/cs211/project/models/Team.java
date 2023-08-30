@@ -11,7 +11,7 @@ public class Team {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
-    private ArrayList<TeamActivity> teamActivities;
+    private ArrayList<Activity> teamActivities;
     private ArrayList<String> teamMembers;
     private String teamChatPath;
     private String teamParticipantsPath;
@@ -49,7 +49,7 @@ public class Team {
         return closingJoinDate;
     }
 
-    public ArrayList<TeamActivity> getTeamActivities() {
+    public ArrayList<Activity> getTeamActivities() {
         return teamActivities;
     }
     public ArrayList<String> getTeamMembers() {

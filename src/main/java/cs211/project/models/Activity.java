@@ -1,11 +1,11 @@
 package cs211.project.models;
 
-public class TeamActivity {
+public class Activity {
     private String activityName;
     private String activityInformation;
     private boolean isActivityAvailable;
 
-    public TeamActivity(String activityName, String activityInformation) {
+    public Activity(String activityName, String activityInformation) {
         this.activityName = activityName;
         this.activityInformation = activityInformation;
         this.isActivityAvailable = true;
