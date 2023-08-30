@@ -1,5 +1,6 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Team;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,6 +15,8 @@ public class TeamCommunicationController {
     @FXML TextArea messageTextArea;
     @FXML TextField sendMessageTextField;
     @FXML Button manageTeamButton;
+
+    private Team team;
 
     @FXML
     public void initialize(){

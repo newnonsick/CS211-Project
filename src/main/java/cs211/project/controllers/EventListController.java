@@ -34,9 +34,25 @@ public class EventListController {
     GridPane eventGrid;
 
     public void initialize() {
+        checkFileIsExisted("eventList.csv");
         showList();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
         Arrays.sort(SUGGESTIONS_ARRAY); //Array must be sorted
+    }
+    private void checkFileIsExisted(String fileName) {
+        File file = new File("data");
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        String filePath = "data" + File.separator + fileName;
+        file = new File(filePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
     //Auto completion
     private void handleAutoComplete(KeyEvent event) {
