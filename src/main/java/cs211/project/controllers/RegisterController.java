@@ -34,6 +34,8 @@ public class RegisterController {
     Button upLoadImageButton;
     @FXML
     ImageView profileImageView;
+    @FXML
+    Button cancelUploadButton;
     File selectedImage = null;
 
     @FXML
@@ -122,7 +124,7 @@ public class RegisterController {
         }
         //Another way to write file
         filePath = "data/userData.csv";
-        FileWriter fileWriter = new FileWriter(filePath);
+        FileWriter fileWriter = new FileWriter(filePath, true);
         PrintWriter printWriter = new PrintWriter(new BufferedWriter(fileWriter));
         printWriter.println(username + "," + fullName);
         printWriter.flush();
@@ -157,9 +159,10 @@ public class RegisterController {
         choosePhotoFile();
         if(selectedImage != null) {
             Image profileImage = new Image(selectedImage.toURI().toString());
-            errorLabel.setText(selectedImage.toURI().toString());
             profileImageView.setImage(profileImage);
         }
+        cancelUploadButton.setVisible(true);
+        cancelUploadButton.setDisable(false);
     }
     private void choosePhotoFile() {
         FileChooser fileChooser = new FileChooser();
@@ -168,6 +171,16 @@ public class RegisterController {
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("JPEG Image","*.jpg"), new FileChooser.ExtensionFilter("PNG Image", "*.png"), new FileChooser.ExtensionFilter("All image files","*.jpg","*.png"));
         Stage stage = (Stage) upLoadImageButton.getScene().getWindow();
         selectedImage = fileChooser.showOpenDialog(stage);
+    }
+    @FXML
+    private void cancelUpload() {
+        String filePath = "data/profile_picture/default.png";
+        File file = new File(filePath);
+        selectedImage = null;
+        Image image = new Image(file.toURI().toString());
+        profileImageView.setImage(image);
+        cancelUploadButton.setDisable(true);
+        cancelUploadButton.setVisible(false);
     }
 }
 
