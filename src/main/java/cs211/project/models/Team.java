@@ -11,25 +11,19 @@ public class Team {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
-    private ArrayList<Activity> teamActivities;
-    private ArrayList<String> teamMembers;
+    private ActivityList teamActivities;
+    private Users teamMembers;
     private ArrayList<String> teamChat;
-    private String teamChatPath;
-    private String teamParticipantsPath;
-    private String teamActivityPath;
 
-    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
+    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, Users teamMembers, ArrayList<String> teamChat) {
         this.eventOfTeamName = eventOfTeamName;
         this.teamName = teamName;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
-        this.teamActivities = new ArrayList<>();
-        this.teamMembers = new ArrayList<>();
-        this.teamChat = new ArrayList<>();
-        this.teamChatPath = "data" + File.separator + eventOfTeamName + File.separator + teamName + File.separator + "teamChat.csv";
-        this.teamParticipantsPath = "data" + File.separator + eventOfTeamName + File.separator + teamName + File.separator + "teamParticipants.csv";
-        this.teamActivityPath = "data" + File.separator + eventOfTeamName + File.separator + teamName + File.separator + "teamActivity.csv";
+        this.teamActivities = teamActivities;
+        this.teamMembers = teamMembers;
+        this.teamChat = teamChat;
     }
 
     public String getEventOfTeamName() {
@@ -51,25 +45,14 @@ public class Team {
         return closingJoinDate;
     }
 
-    public ArrayList<Activity> getTeamActivities() {
+    public ActivityList getTeamActivities() {
         return teamActivities;
     }
-    public ArrayList<String> getTeamMembers() {
+    public Users getTeamMembers() {
         return teamMembers;
     }
     public String getHeadOfTeamName() {
         return headOfTeamName;
-    }
-
-    public String getTeamChatPath() {
-        return teamChatPath;
-    }
-
-    public String getTeamParticipantsPath() {
-        return teamParticipantsPath;
-    }
-    public String getTeamActivityPath() {
-        return teamActivityPath;
     }
 
     public ArrayList<String> getTeamChat() {
