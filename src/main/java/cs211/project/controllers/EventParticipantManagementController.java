@@ -16,6 +16,7 @@ public class EventParticipantManagementController {
     @FXML private TableView eventParticipantTableView;
     @FXML private Button goToEditParticipant;
     @FXML private Label eventName;
+    @FXML private Label eventName2;
     @FXML private TableView activityParticipantTableView;
     @FXML private TextField avtivityNameTextField;
     @FXML private TextField activityPartiDetailsTextField;

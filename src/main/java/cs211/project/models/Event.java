@@ -13,17 +13,9 @@ public class Event {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
+    private ArrayList<Activity> eventActivity;
 
 
-    public Event(String eventName, String eventInformation, String eventCategory, String placeEvent,
-                 LocalDate eventStartDate, LocalDate eventEndDate) {
-        this.eventName = eventName;
-        this.eventInformation = eventInformation;
-        this.eventCategory = eventCategory;
-        this.placeEvent = placeEvent;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
-    }
 
     public Event(String eventName, String eventInformation, String eventCategory, String placeEvent,
                  LocalDate eventStartDate, LocalDate eventEndDate, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
@@ -33,9 +25,20 @@ public class Event {
         this.placeEvent = placeEvent;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
+    }
+
+    public Event(String eventName, String eventInformation, String eventCategory, String placeEvent,
+                 LocalDate eventStartDate, LocalDate eventEndDate) {
+        this.eventName = eventName;
+        this.eventInformation = eventInformation;
+        this.eventCategory = eventCategory;
+        this.placeEvent = placeEvent;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
+        this.eventActivity = new ArrayList<>();
     }
 
     public boolean isEvent(String eventName) {

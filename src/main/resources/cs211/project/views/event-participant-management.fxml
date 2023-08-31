@@ -32,7 +32,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventName" layoutX="75.0" layoutY="98.0" text="eventName">
+      <Label fx:id="eventName2" layoutX="75.0" layoutY="98.0" text="eventName">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
