@@ -2,7 +2,7 @@ package cs211.project.models;
 
 import java.util.ArrayList;
 
-public class Users {
+public class UserList {
     private ArrayList<User> users;
 
     public void addUser(User user) {
