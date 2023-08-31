@@ -11,8 +11,9 @@ public class Team {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
-    private ArrayList<TeamActivity> teamActivities;
+    private ArrayList<Activity> teamActivities;
     private ArrayList<String> teamMembers;
+    private ArrayList<String> teamChat;
     private String teamChatPath;
     private String teamParticipantsPath;
     private String teamActivityPath;
@@ -25,6 +26,7 @@ public class Team {
         this.closingJoinDate = closingJoinDate;
         this.teamActivities = new ArrayList<>();
         this.teamMembers = new ArrayList<>();
+        this.teamChat = new ArrayList<>();
         this.teamChatPath = "data" + File.separator + eventOfTeamName + File.separator + teamName + File.separator + "teamChat.csv";
         this.teamParticipantsPath = "data" + File.separator + eventOfTeamName + File.separator + teamName + File.separator + "teamParticipants.csv";
         this.teamActivityPath = "data" + File.separator + eventOfTeamName + File.separator + teamName + File.separator + "teamActivity.csv";
@@ -49,7 +51,7 @@ public class Team {
         return closingJoinDate;
     }
 
-    public ArrayList<TeamActivity> getTeamActivities() {
+    public ArrayList<Activity> getTeamActivities() {
         return teamActivities;
     }
     public ArrayList<String> getTeamMembers() {
@@ -68,6 +70,10 @@ public class Team {
     }
     public String getTeamActivityPath() {
         return teamActivityPath;
+    }
+
+    public ArrayList<String> getTeamChat() {
+        return teamChat;
     }
 
     public void setHeadOfTeamName(String headOfTeamName) {

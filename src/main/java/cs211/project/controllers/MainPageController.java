@@ -12,6 +12,7 @@ public class MainPageController {
     BorderPane window;
     @FXML
     StackPane content;
+
     @FXML
     public void initialize() {
         FXRouterPane.bind(this, content, "Event Manager");
@@ -19,7 +20,7 @@ public class MainPageController {
         try {
             FXRouterPane.goTo("event-list");
         } catch (IOException e) {
-        throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
     public static void configRoute()

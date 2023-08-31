@@ -1,4 +1,5 @@
 package cs211.project.models;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Events {
@@ -11,8 +12,8 @@ public class Events {
     public void addEvent(Event event) {
         events.add(event);
     }
-    public void addEvent(String eventName, String eventInformation, String eventCategory, String placeEvent, String eventStartDate,
-                            String eventEndDate) {
+    public void addEvent(String eventName, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
+                         LocalDate eventEndDate) {
         eventName = eventName.trim();
         eventInformation = eventInformation.trim();
         eventCategory = eventCategory.trim();
@@ -40,13 +41,21 @@ public class Events {
                 return true;
             }
         } return false;
-
     }
+
+    public Event findEventByEventName(String eventName){
+        for (Event anEvent : this.events) {  //for-each loop
+            if (eventName.equals(anEvent.getEventName())) {
+                return anEvent;
+            }
+        }
+        return null;
+    }
+
 
     public ArrayList<Event> getEvents(){
         return events;
     }
 
+}
 
-
-    }
