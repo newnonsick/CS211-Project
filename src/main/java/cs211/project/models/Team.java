@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Team {
-    private User headOfTeamName;
+    private String headOfTeamUsername;
     private String eventOfTeamName;
     private String teamName;
     private int maxParticipants;
@@ -51,15 +51,15 @@ public class Team {
     public Users getTeamMembers() {
         return teamMembers;
     }
-    public User getHeadOfTeamName() {
-        return headOfTeamName;
+    public String getHeadOfTeamUsername() {
+        return headOfTeamUsername;
     }
 
     public ArrayList<String> getTeamChat() {
         return teamChat;
     }
 
-    public void setHeadOfTeamName(User headOfTeamName) {
-        this.headOfTeamName = headOfTeamName;
+    public void setHeadOfTeamUsername(String headOfTeamUsername) {
+        this.headOfTeamUsername = headOfTeamUsername;
     }
 }
