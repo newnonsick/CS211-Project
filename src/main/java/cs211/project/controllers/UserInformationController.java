@@ -18,10 +18,10 @@ public class UserInformationController {
     @FXML private TableView eventHistoryTableview;
     @FXML private ImageView profileImageView;
 
-    private CurrentUser currentUser;
-
     public void initialize() {
+
         checkFileIsExisted("userData.csv");
+        showUser();
     }
 
     private void checkFileIsExisted(String fileName) {
@@ -40,8 +40,8 @@ public class UserInformationController {
         }
     }
 
-    private void showUser(CurrentUser currentUser) {
-        User user = currentUser.getUser();
+    private void showUser() {
+        User user = CurrentUser.getUser();
         nameLabel.setText(user.getName());
         usernameLabel.setText(user.getUsername());
         // profile picture
