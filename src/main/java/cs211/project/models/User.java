@@ -25,7 +25,7 @@ public class User {
 
     public static boolean checkUserExistence(String username) {
         try {
-            FileReader fileReader = new FileReader("data/userData");
+            FileReader fileReader = new FileReader("data/userData.csv");
             BufferedReader buffer = new BufferedReader(fileReader);
             String line = "";
             try {
