@@ -1,5 +1,6 @@
 package cs211.project.controllers;
 
+import cs211.project.models.User;
 import cs211.project.services.CurrentUser;
 import cs211.project.services.FXRouter;
 import javafx.fxml.FXML;
@@ -70,7 +71,7 @@ public class LoginController {
                 String username = data[0].trim();
                 String password = data[1].trim();
                 if(user.equals(username) && pass.equals(password)) {
-                    //CurrentUser.setUser(user);
+                    CurrentUser.setUser(new User(user));
                     FXRouter.goTo(destination);
                 }
 
