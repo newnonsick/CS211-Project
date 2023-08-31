@@ -1,5 +1,6 @@
 package cs211.project.controllers;
 
+import cs211.project.Main;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -16,7 +17,7 @@ public class MyTeamListController {
     @FXML
     public void handleViewTeamButton(){
         try {
-            FXRouterPane.goTo("team-communication");
+            FXRouterPane.goTo("team-communication"); //เหลือส่งข้อมูลไปยังหน้า team-communication
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
