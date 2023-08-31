@@ -39,4 +39,13 @@ public class Activity {
     public void setTeamAvailable(boolean isTeamAvailable) {
         this.isActivityAvailable = isTeamAvailable;
     }
+    public LocalTime getActivityStartTime() {
+        return activityStartTime;
+    }
+
+
+    public Activity(LocalTime activityEndTime) {
+        this.activityEndTime = activityEndTime;
+    }
+
 }
