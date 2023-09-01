@@ -15,14 +15,14 @@ public class TeamList {
     public ArrayList<Team> getTeams() {
         return teams;
     }
-    public void addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
+    public void addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, Users teamMembers, ArrayList<String> teamChat) {
         //เหลือ read event มาเช็คว่ามี event นี้อยู่จริงไหม
         eventOfTeamName = eventOfTeamName.trim();
         teamName = teamName.trim();
         if (!eventOfTeamName.equals("") && !teamName.equals("") && maxParticipants > 0 && startJoinDate != null && closingJoinDate != null) {
             Team exist = findTeamByNameAndEvent(eventOfTeamName, teamName);
             if (exist == null) {
-                teams.add(new Team(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate));
+                teams.add(new Team(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, teamActivities, teamMembers, teamChat));
             }
         }
     }

@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -75,23 +74,23 @@ public class EventListController {
             searchTextField.selectRange(enteredText.length(), matchedSuggestion.length());
         }
 
-        if (totalMatched == 0){
-            for (String suggestion : SUGGESTIONS_ARRAY) {
-                if (suggestion.toLowerCase().contains(enteredText.toLowerCase())) {
-                    if (totalMatched > 1){
-                        break;
-                    }
-                    matchedSuggestion = suggestion;
-                    totalMatched++;
-                }
-            }
 
-            if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText) && matchedSuggestion.indexOf(enteredText) != matchedSuggestion.length()-1) {
-                searchTextField.setText(matchedSuggestion);
-//                searchTextField.selectRange(matchedSuggestion.lastIndexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
-                searchTextField.selectRange(matchedSuggestion.length() ,matchedSuggestion.length());
+        for (String suggestion : SUGGESTIONS_ARRAY) {
+            if (suggestion.toLowerCase().contains(enteredText.toLowerCase())) {
+                if (totalMatched > 1){
+                    break;
+                }
+                matchedSuggestion = suggestion;
+                totalMatched++;
             }
         }
+
+        if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText) && matchedSuggestion.indexOf(enteredText) != matchedSuggestion.length()-1) {
+            searchTextField.setText(matchedSuggestion);
+//                searchTextField.selectRange(matchedSuggestion.lastIndexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
+            searchTextField.selectRange(matchedSuggestion.length() ,matchedSuggestion.length());
+        }
+
     }
 
     public void showList() {

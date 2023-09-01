@@ -33,7 +33,7 @@ public class TeamCommunicationController {
         datasource = new TeamListFileDatasource("data" + File.separator + team.getEventOfTeamName() + File.separator + team.getTeamName(), team.getTeamName() + ".csv");
         teamList = datasource.readData();
         team = teamList.findTeamByNameAndEvent(team_b.getEventOfTeamName(), team_b.getTeamName());
-        if (team.getHeadOfTeamName().equals(CurrentUser.getUser().getName())){
+        if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getName())){
             manageTeamButton.setVisible(true);
         }
     }

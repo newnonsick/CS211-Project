@@ -64,7 +64,9 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 LocalDate startJoinDate = LocalDate.parse(data[3].trim());
                 LocalDate closingJoinDate = LocalDate.parse(data[4].trim());
 
-                teams.addNewTeam(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate);
+                //เหลือ teamActivities, teamMembers, teamChat ที่ยังไม่แน่ใตว่าเก็บไฟล์เป็นยังไง
+
+                //teams.addNewTeam(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, teamActivities, teamMembers, teamChat);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

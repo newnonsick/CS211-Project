@@ -25,6 +25,9 @@ public class Event {
         this.placeEvent = placeEvent;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
+        this.maxParticipants = maxParticipants;
+        this.startJoinDate = startJoinDate;
+        this.closingJoinDate = closingJoinDate;
     }
 
     public Event(String eventName, String eventInformation, String eventCategory, String placeEvent,
@@ -35,9 +38,6 @@ public class Event {
         this.placeEvent = placeEvent;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
-        this.maxParticipants = maxParticipants;
-        this.startJoinDate = startJoinDate;
-        this.closingJoinDate = closingJoinDate;
         this.eventActivity = new ArrayList<>();
     }
 
