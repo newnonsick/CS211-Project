@@ -38,7 +38,7 @@
       <TextField fx:id="numPeopleTextField" layoutX="541.0" layoutY="315.0" prefHeight="35.0" prefWidth="250.0" />
       <DatePicker fx:id="startDateDatePicker" layoutX="617.0" layoutY="396.0" prefHeight="35.0" prefWidth="174.0" />
       <DatePicker fx:id="endDateDatePicker" layoutX="617.0" layoutY="485.0" prefHeight="35.0" prefWidth="174.0" />
-      <Button fx:id="handleCreateTeamButton" layoutX="663.0" layoutY="574.0" mnemonicParsing="false" text="Create New Team">
+      <Button  layoutX="663.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleCreateTeamButton" text="Create New Team">
          <font>
             <Font size="14.0" />
          </font>
