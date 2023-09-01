@@ -1,12 +1,12 @@
 package cs211.project.services;
 
-import cs211.project.models.Events;
+import cs211.project.models.EventList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
-public class EventListFileDatasource implements Datasource<Events> {
+public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;
     private String fileName;
 
@@ -35,8 +35,8 @@ public class EventListFileDatasource implements Datasource<Events> {
 
 
     @Override
-    public Events readData() {
-        Events events = new Events();
+    public EventList readData() {
+        EventList events = new EventList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
@@ -78,7 +78,7 @@ public class EventListFileDatasource implements Datasource<Events> {
     }
 
     @Override
-    public void writeData(Events events) {
+    public void writeData(EventList events) {
 
     }
 }

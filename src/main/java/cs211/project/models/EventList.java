@@ -2,10 +2,10 @@ package cs211.project.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Events {
+public class EventList {
     private ArrayList<Event> events;
 
-    public Events() {
+    public EventList() {
         events = new ArrayList<>();
     }
 
