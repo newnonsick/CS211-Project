@@ -12,10 +12,10 @@ public class Team {
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
     private ActivityList teamActivities;
-    private Users teamMembers;
+    private UserList teamMembers;
     private ArrayList<String> teamChat;
 
-    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, Users teamMembers, ArrayList<String> teamChat) {
+    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, UserList teamMembers, ArrayList<String> teamChat) {
         this.eventOfTeamName = eventOfTeamName;
         this.teamName = teamName;
         this.maxParticipants = maxParticipants;
@@ -48,7 +48,7 @@ public class Team {
     public ActivityList getTeamActivities() {
         return teamActivities;
     }
-    public Users getTeamMembers() {
+    public UserList getTeamMembers() {
         return teamMembers;
     }
     public String getHeadOfTeamUsername() {
