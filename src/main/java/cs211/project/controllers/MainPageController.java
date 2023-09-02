@@ -2,8 +2,10 @@ package cs211.project.controllers;
 import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -12,11 +14,14 @@ public class MainPageController {
     BorderPane window;
     @FXML
     StackPane content;
+    @FXML
+    Button testAddClass;
 
     @FXML
     public void initialize() {
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
+        testAddClass.getStyleClass().add("upsize-button");
         try {
             FXRouterPane.goTo("event-list");
         } catch (IOException e) {

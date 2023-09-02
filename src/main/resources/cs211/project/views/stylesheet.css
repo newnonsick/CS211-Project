@@ -1,0 +1,7 @@
+.button {
+    -fx-background-color: red;
+}
+
+.upsize-button {
+    -fx-font-size: 40px;
+}

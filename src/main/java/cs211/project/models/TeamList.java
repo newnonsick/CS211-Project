@@ -15,7 +15,7 @@ public class TeamList {
     public ArrayList<Team> getTeams() {
         return teams;
     }
-    public void addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, Users teamMembers, ArrayList<String> teamChat) {
+    public void addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, UserList teamMembers, ArrayList<String> teamChat) {
         //เหลือ read event มาเช็คว่ามี event นี้อยู่จริงไหม
         eventOfTeamName = eventOfTeamName.trim();
         teamName = teamName.trim();
