@@ -1,5 +1,6 @@
 package cs211.project.controllers;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.services.FXRouter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,7 +52,7 @@ public class RegisterController {
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
         String fullName = nameTextField.getText();
-        String filePath = "data/username_password.csv";
+        String filePath = "data/userData.csv";
         File file = new File(filePath);
         FileInputStream fileInputStream = null;
         if(username.isEmpty() || password.isEmpty() || password2.isEmpty() || fullName.isEmpty()) {
@@ -76,6 +77,8 @@ public class RegisterController {
         BufferedReader bufferRead = new BufferedReader(inputStreamReader);
         ArrayList<String> userPass = new ArrayList<String>();
         String line = "";
+        String encryptPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+
         try {
             while ((line = bufferRead.readLine()) != null) {
                 if (line.equals("")) continue;
@@ -104,7 +107,7 @@ public class RegisterController {
                 StandardCharsets.UTF_8
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
-        String newAcc = username + "," + password;
+        String newAcc = username + "," + encryptPassword + "," + fullName;
         try {
             for(String acc : userPass) {
                 bufferWrite.append(acc);
@@ -122,12 +125,6 @@ public class RegisterController {
                 throw new RuntimeException(e);
             }
         }
-        //Another way to write file
-        filePath = "data/userData.csv";
-        FileWriter fileWriter = new FileWriter(filePath, true);
-        PrintWriter printWriter = new PrintWriter(new BufferedWriter(fileWriter));
-        printWriter.println(username + "," + fullName);
-        printWriter.flush();
         if(selectedImage != null) {
             //upload the profile picture
             String selectedImagePath = selectedImage.getAbsolutePath();

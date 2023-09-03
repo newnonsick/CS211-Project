@@ -12,7 +12,7 @@
          <left>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="testAddClass" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="116.0" styleClass="xdd" text="Event" />
+                  <Button fx:id="testAddClass" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="116.0" text="Event" />
                   <Button mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="116.0" text="Create Event" />
                   <Button mnemonicParsing="false" onAction="#goToYourCreatedEvents" prefHeight="100.0" prefWidth="116.0" text="My Events" />
                   <Button mnemonicParsing="false" onAction="#handleMyTeamButton" prefHeight="100.0" prefWidth="116.0" text="My Teams" />

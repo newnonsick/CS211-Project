@@ -1,5 +1,6 @@
 package cs211.project.controllers;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
 import cs211.project.services.CurrentUser;
 import cs211.project.services.FXRouter;
@@ -12,7 +13,7 @@ import java.io.*;
 
 public class LoginController {
     private String directoryName = "data";
-    private String fileName = "username_password.csv";
+    private String fileName = "userData.csv";
     private String filePath = directoryName + File.separator + fileName;
     @FXML
     TextField usernameTextField;
@@ -45,7 +46,7 @@ public class LoginController {
         File file = new File(filePath);
         FileInputStream fileInputStream = null;
         String user = usernameTextField.getText();
-        String pass = passwordTextField.getText();
+        String inputPassword = passwordTextField.getText();
         String destination = "mainPage";
         if(user.equals("admin211")) {
             destination = "adminPage";
@@ -65,14 +66,21 @@ public class LoginController {
         String line = "";
         try {
             while ( (line = buffer.readLine()) != null ){
-                if (line.equals("")) continue;
+                if (line.isEmpty()) continue;
                 String[] data = line.split(",");
 
                 String username = data[0].trim();
                 String password = data[1].trim();
-                if(user.equals(username) && pass.equals(password)) {
-                    CurrentUser.setUser(new User(user));
-                    FXRouter.goTo(destination);
+                String name = data[2].trim();
+                if(user.equals(username)) {
+                    BCrypt.Result result = BCrypt.verifyer().verify(inputPassword.toCharArray(), password);
+                    if(result.verified) {
+                        CurrentUser.setUser(new User(user));
+                        FXRouter.goTo(destination);
+                    }
+                    else {
+                        break;
+                    }
                 }
 
             }
