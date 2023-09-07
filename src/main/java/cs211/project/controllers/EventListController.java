@@ -5,6 +5,7 @@ import cs211.project.models.EventList;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouter;
+import cs211.project.services.FXRouterPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -142,6 +143,13 @@ public class EventListController {
 
             EventElementController event_ = fxmlLoader.getController();
             event_.setPage(event.getEventName(), event.getEventPicture());
+            anchorPane.setOnMouseClicked(event1 -> {
+                try {
+                    FXRouterPane.goTo("event-information", event.getEventName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             eventGrid.add(anchorPane, column, row);
             column++;
 

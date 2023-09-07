@@ -1,10 +1,20 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Event;
+import cs211.project.models.EventList;
+import cs211.project.services.Datasource;
+import cs211.project.services.EventListFileDatasource;
+import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 public class EventInformationController {
     @FXML private Label eventNameLabel;
@@ -15,6 +25,28 @@ public class EventInformationController {
     @FXML private Label endDateLabel;
     @FXML private Label maxParticipantsLabel;
     @FXML private Label closingJoinDateLabel;
+
+    private Datasource<EventList> datasource;
+    private EventList eventList;
+    private Event event;
+
+    @FXML
+    public void initialize() {
+        datasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = datasource.readData();
+        String eventName = (String) FXRouterPane.getData();
+        event = eventList.findEventByEventName(eventName);
+        eventNameLabel.setText(event.getEventName());
+        eventInfoLabel.setText(event.getEventInformation());
+        placeLabel.setText(event.getPlaceEvent());
+        startDateLabel.setText("" + event.getEventStartDate());
+        endDateLabel.setText("" + event.getEventEndDate());
+        maxParticipantsLabel.setText("" + event.getMaxParticipants());
+        closingJoinDateLabel.setText("" + event.getClosingJoinDate());
+        String filePath = "data/eventPicture/" + event.getEventPicture();
+        File file = new File(filePath);
+        eventImageView.setImage(new Image(file.toURI().toString()));
+    }
 
     @FXML
     public void handleBackToEventPage() {
