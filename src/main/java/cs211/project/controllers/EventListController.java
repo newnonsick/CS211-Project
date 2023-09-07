@@ -45,8 +45,6 @@ public class EventListController {
     ScrollPane eventScrollPane;
 
     public void initialize() {
-        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
-        currentDate = LocalDate.now(thaiTimeZone);
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
@@ -133,10 +131,6 @@ public class EventListController {
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
-            long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
-            if (daysBetween < 0) {
-                continue;
-            }
             if(column == 3) {
                 row++;
                 column = 0;
@@ -174,8 +168,7 @@ public class EventListController {
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
-            long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
-            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase()) || daysBetween < 0) {
+            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
                 continue;
             }
             if(column == 3) {
