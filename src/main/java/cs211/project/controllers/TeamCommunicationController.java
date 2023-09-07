@@ -29,13 +29,13 @@ public class TeamCommunicationController {
     public void initialize(){
         Team team_b = (Team) FXRouterPane.getData();
         messageTextArea.setEditable(false);
-        manageTeamButton.setVisible(false);
-        datasource = new TeamListFileDatasource("data" + File.separator + team.getEventOfTeamName() + File.separator + team.getTeamName(), team.getTeamName() + ".csv");
-        teamList = datasource.readData();
-        team = teamList.findTeamByNameAndEvent(team_b.getEventOfTeamName(), team_b.getTeamName());
-        if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getName())){
-            manageTeamButton.setVisible(true);
-        }
+        manageTeamButton.setVisible(true);
+//        datasource = new TeamListFileDatasource("data" + File.separator + team.getEventOfTeamName() + File.separator + team.getTeamName(), team.getTeamName() + ".csv");
+//        teamList = datasource.readData();
+//        team = teamList.findTeamByNameAndEvent(team_b.getEventOfTeamName(), team_b.getTeamName());
+//        if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getName())){
+//            manageTeamButton.setVisible(true);
+//        }
     }
 
     @FXML

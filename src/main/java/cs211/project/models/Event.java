@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 public class Event {
     private String eventName;
+    private String eventPicture;
     private String eventInformation;
     private String eventCategory;
     private String placeEvent;
@@ -17,9 +18,10 @@ public class Event {
 
 
 
-    public Event(String eventName, String eventInformation, String eventCategory, String placeEvent,
+    public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
                  LocalDate eventStartDate, LocalDate eventEndDate, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
         this.eventName = eventName;
+        this.eventPicture = eventPicture;
         this.eventInformation = eventInformation;
         this.eventCategory = eventCategory;
         this.placeEvent = placeEvent;
@@ -30,9 +32,10 @@ public class Event {
         this.closingJoinDate = closingJoinDate;
     }
 
-    public Event(String eventName, String eventInformation, String eventCategory, String placeEvent,
+    public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
                  LocalDate eventStartDate, LocalDate eventEndDate) {
         this.eventName = eventName;
+        this.eventPicture = eventPicture;
         this.eventInformation = eventInformation;
         this.eventCategory = eventCategory;
         this.placeEvent = placeEvent;
@@ -57,6 +60,10 @@ public class Event {
     public LocalDate getEventEndDate() { return eventEndDate; }
 
     public int getMaxParticipants() { return maxParticipants; }
+
+    public String getEventPicture() {
+        return eventPicture;
+    }
 
     public void setMaxParticipant(int maxParticipants) {
         this.maxParticipants = maxParticipants;
