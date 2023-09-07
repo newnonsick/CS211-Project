@@ -23,7 +23,7 @@ public class MainPageController {
         configRoute();
         testAddClass.getStyleClass().add("upsize-button");
         try {
-            FXRouterPane.goTo("event-list");
+            FXRouterPane.goTo("event-list","First Run");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

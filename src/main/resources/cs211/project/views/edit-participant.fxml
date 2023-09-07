@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1180.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EditParticipantController">
+<AnchorPane prefHeight="800.0" prefWidth="1180.0"  xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EditParticipantController">
    <children>
       <Button layoutX="61.0" layoutY="49.0" mnemonicParsing="false" onAction="#backToEventParticipantManagement" text="Back">
          <font>
