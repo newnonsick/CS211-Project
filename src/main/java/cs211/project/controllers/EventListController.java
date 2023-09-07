@@ -65,7 +65,14 @@ public class EventListController {
                 double currentVvalue = newValue.doubleValue();
 
                 if (currentVvalue >= maxVvalue) {
-                    System.out.println(1);
+                    if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
+                        maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
+                    }
+                    else if (maxRow < (int) Math.round(eventListData.getEvents().size() / 3.0 )){
+                        maxRow += maxRow;
+                        eventGrid.getChildren().clear();
+                        showList();
+                    }
                 }
             }
         });
@@ -133,6 +140,9 @@ public class EventListController {
             if(column == 3) {
                 row++;
                 column = 0;
+            }
+            if (row == maxRow) {
+                break;
             }
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
