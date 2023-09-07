@@ -25,7 +25,7 @@ public final class FXRouterPane {
     private static String animationType;
     private static Double animationDuration;
     private static AbstractMap<String, RouteScene> routes = new HashMap();
-    private static RouteScene currentRoute;
+    private static RouteScene currentRoute = new RouteScene("cs211/project/views/event-list.fxml");
     @FXML
     static
     StackPane content;
@@ -102,13 +102,27 @@ public final class FXRouterPane {
     }
 
     private static void loadNewRoute(RouteScene route) throws IOException {
-        currentRoute = route;
         String scenePath = "/" + route.scenePath;
+        RouteScene prevRoute = currentRoute;
+        currentRoute = route;
+        String eventList = "cs211/project/views/event-list.fxml";
         Parent resource = (Parent)FXMLLoader.load((new Object() {
         }).getClass().getResource(scenePath));
-        content.getChildren().removeAll();
-        content.getChildren().setAll(resource);
+        if(prevRoute.scenePath.equals(eventList) && !currentRoute.scenePath.equals(eventList)) {
+            content.getChildren().add(resource);
+        }
+        else if(!prevRoute.scenePath.equals(currentRoute.scenePath) && !currentRoute.scenePath.equals(eventList)) {
+            content.getChildren().remove(1);
+            content.getChildren().add(resource);
+        }
+        else if(currentRoute.scenePath.equals(eventList) && !prevRoute.scenePath.equals(eventList)) {
+            content.getChildren().remove(1);
+        }
+        else if(prevRoute.scenePath.equals(eventList) && currentRoute.scenePath.equals(eventList)) {
+            content.getChildren().add(resource);
+        }
         routeAnimation(resource);
+
     }
 
     public static void startFrom(String routeLabel) throws Exception {

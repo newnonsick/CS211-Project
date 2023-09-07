@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
+<AnchorPane prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
    <children>
       <Label layoutX="494.0" layoutY="33.0" text="Event List">
          <font>
