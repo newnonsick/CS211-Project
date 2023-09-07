@@ -20,16 +20,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class EventListController {
     private String[] eventList;
     private int maxRow = 4;
     private Datasource<EventList> datasource;
     private EventList eventListData;
-    @FXML
-    TableView eventListTableView;
+    private LocalDate currentDate;
+
     @FXML
     TextField searchTextField;
     @FXML
@@ -40,6 +44,8 @@ public class EventListController {
     ScrollPane eventScrollPane;
 
     public void initialize() {
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        currentDate = LocalDate.now(thaiTimeZone);
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
@@ -117,6 +123,10 @@ public class EventListController {
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
+            long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
+            if (daysBetween < 0) {
+                continue;
+            }
             if(column == 3) {
                 row++;
                 column = 0;
@@ -144,12 +154,13 @@ public class EventListController {
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
+            long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
+            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase()) || daysBetween < 0) {
+                continue;
+            }
             if(column == 3) {
                 row++;
                 column = 0;
-            }
-            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
-                continue;
             }
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
