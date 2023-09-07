@@ -12,7 +12,7 @@ public class EventList {
     public void addEvent(Event event) {
         events.add(event);
     }
-    public void addEvent(String eventName, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
+    public void addEvent(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
                          LocalDate eventEndDate) {
         eventName = eventName.trim();
         eventInformation = eventInformation.trim();
@@ -21,7 +21,7 @@ public class EventList {
 
         if (!eventName.equals("") && !eventInformation.equals("") && !eventCategory.equals("") && !placeEvent.equals("")) {
             if (!findEvent(eventName)) {
-                Event newEvent = new Event(eventName, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate);
+                Event newEvent = new Event(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate);
                 events.add(newEvent);
             }
         }

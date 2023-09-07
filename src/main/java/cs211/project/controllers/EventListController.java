@@ -1,12 +1,16 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Event;
+import cs211.project.models.EventList;
+import cs211.project.services.Datasource;
+import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouter;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import cs211.project.controllers.EventElementController;
@@ -20,7 +24,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class EventListController {
-    private String[] SUGGESTIONS_ARRAY = { };
+    private String[] eventList;
+    private int maxRow = 4;
+    private Datasource<EventList> datasource;
+    private EventList eventListData;
     @FXML
     TableView eventListTableView;
     @FXML
@@ -29,12 +36,32 @@ public class EventListController {
     Button searchButton;
     @FXML
     GridPane eventGrid;
+    @FXML
+    ScrollPane eventScrollPane;
 
     public void initialize() {
-        checkFileIsExisted("eventList.csv");
-        showList();
+        datasource = new EventListFileDatasource("data", "eventList.csv");
+        eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
-        Arrays.sort(SUGGESTIONS_ARRAY); //Array must be sorted
+        eventList = eventListData.getEvents().stream()
+                .map(Event::getEventName)
+                .toArray(String[]::new);
+        Arrays.sort(eventList);
+        showList();
+        eventScrollPane.vvalueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                // Calculate the maximum Vvalue (maximum scroll position)
+                double maxVvalue = eventScrollPane.getVmax();
+
+                // Calculate the current Vvalue (current scroll position)
+                double currentVvalue = newValue.doubleValue();
+
+                if (currentVvalue >= maxVvalue) {
+                    System.out.println(1);
+                }
+            }
+        });
     }
 
     @FXML
@@ -42,24 +69,10 @@ public class EventListController {
         if (!searchTextField.getText().isEmpty()) {
             eventGrid.getChildren().clear();
             showList(searchTextField.getText());
+            searchTextField.clear();
         }
     }
 
-    private void checkFileIsExisted(String fileName) {
-        File file = new File("data");
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        String filePath = "data" + File.separator + fileName;
-        file = new File(filePath);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
     //Auto completion
     private void handleAutoComplete(KeyEvent event) {
         String enteredText = searchTextField.getText();
@@ -69,7 +82,7 @@ public class EventListController {
 
         String matchedSuggestion = null;
         int totalMatched = 0;
-        for (String suggestion : SUGGESTIONS_ARRAY) {
+        for (String suggestion : eventList) {
             if (suggestion.toLowerCase().startsWith(enteredText.toLowerCase())) {
                 matchedSuggestion = suggestion;
                 break;
@@ -82,7 +95,7 @@ public class EventListController {
         }
 
 
-        for (String suggestion : SUGGESTIONS_ARRAY) {
+        for (String suggestion : eventList) {
             if (suggestion.toLowerCase().contains(enteredText.toLowerCase())) {
                 if (totalMatched > 1){
                     break;
@@ -101,87 +114,60 @@ public class EventListController {
     }
 
     public void showList() {
-        File file = new File("data/eventList.csv");
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                fileInputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedReader buffer = new BufferedReader(inputStreamReader);
         int row = 0;
         int column = 0;
-        String line = "";
-        try {
-            while ( (line = buffer.readLine()) != null ){
-                if (line.isEmpty()) continue;
-                String[] data = line.split(",");
-                if(column == 3) {
-                    row++;
-                    column = 0;
-                }
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                EventElementController event = fxmlLoader.getController();
-                event.setPage(data[0], data[1].trim());
-                eventGrid.add(anchorPane, column, row);
-                column++;
-
-                GridPane.setMargin(anchorPane, new Insets(10));
+        for (Event event : eventListData.getEvents()) {
+            if(column == 3) {
+                row++;
+                column = 0;
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            EventElementController event_ = fxmlLoader.getController();
+            event_.setPage(event.getEventName(), event.getEventPicture());
+            eventGrid.add(anchorPane, column, row);
+            column++;
+
+            GridPane.setMargin(anchorPane, new Insets(10));
         }
+
     }
 
     public void showList(String eventName) {
-        File file = new File("data/eventList.csv");
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                fileInputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedReader buffer = new BufferedReader(inputStreamReader);
         int row = 0;
         int column = 0;
-        String line = "";
-        try {
-            while ( (line = buffer.readLine()) != null ){
-                if (line.isEmpty()) continue;
-                String[] data = line.split(",");
-                if(column == 3) {
-                    row++;
-                    column = 0;
-                }
-                if(!data[0].toLowerCase().contains(eventName.toLowerCase())) {
-                    continue;
-                }
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                EventElementController event = fxmlLoader.getController();
-                event.setPage(data[0], data[1].trim());
-                eventGrid.add(anchorPane, column, row);
-                column++;
-
-                GridPane.setMargin(anchorPane, new Insets(10));
+        for (Event event : eventListData.getEvents()) {
+            if(column == 3) {
+                row++;
+                column = 0;
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
+                continue;
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            EventElementController event_ = fxmlLoader.getController();
+            event_.setPage(event.getEventName(), event.getEventPicture());
+            eventGrid.add(anchorPane, column, row);
+            column++;
+
+            GridPane.setMargin(anchorPane, new Insets(10));
         }
     }
+
+
 }
