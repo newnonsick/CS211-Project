@@ -22,4 +22,12 @@ public class EventElementController {
         eventNameLabel.setText(name);
         eventImageView.setImage(eventImage);
     }
+    @FXML
+    public void mouseEnter() {
+        eventNameLabel.setStyle("-fx-background-color: blue;");
+    }
+
+    public void mouseExit() {
+        eventNameLabel.setStyle("-fx-background-color: transparent;");
+    }
 }
