@@ -89,7 +89,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="handleVisitTeamButton" layoutX="237.0" layoutY="718.0" mnemonicParsing="false" text="Visit Our Teams">
+      <Button layoutX="237.0" layoutY="718.0" mnemonicParsing="false" onAction="#handleVisitTeamButton" text="Visit Our Teams">
          <font>
             <Font size="16.0" />
          </font>

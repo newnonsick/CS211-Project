@@ -77,6 +77,8 @@ public class EventListController {
             eventGrid.getChildren().clear();
             showList(searchTextField.getText());
             searchTextField.clear();
+        } else if (searchTextField.getText().isEmpty() && eventGrid.getChildren().size() == 0) {
+            showList();
         }
     }
 
@@ -181,6 +183,13 @@ public class EventListController {
 
             EventElementController event_ = fxmlLoader.getController();
             event_.setPage(event.getEventName(), event.getEventPicture());
+            anchorPane.setOnMouseClicked(event1 -> {
+                try {
+                    FXRouterPane.goTo("event-information", event.getEventName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             eventGrid.add(anchorPane, column, row);
             column++;
 
