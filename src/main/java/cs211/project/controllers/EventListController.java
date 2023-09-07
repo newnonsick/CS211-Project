@@ -20,9 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class EventListController {
-    private static String[] SUGGESTIONS_ARRAY = {
-            "New", "Tarn", "Ice", "Nutt"
-    };
+    private String[] SUGGESTIONS_ARRAY = { };
     @FXML
     TableView eventListTableView;
     @FXML
@@ -38,6 +36,15 @@ public class EventListController {
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
         Arrays.sort(SUGGESTIONS_ARRAY); //Array must be sorted
     }
+
+    @FXML
+    public void handleSearchButton(){
+        if (!searchTextField.getText().isEmpty()) {
+            eventGrid.getChildren().clear();
+            showList(searchTextField.getText());
+        }
+    }
+
     private void checkFileIsExisted(String fileName) {
         File file = new File("data");
         if (!file.exists()) {
@@ -117,6 +124,50 @@ public class EventListController {
                 if(column == 3) {
                     row++;
                     column = 0;
+                }
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
+                AnchorPane anchorPane = fxmlLoader.load();
+
+                EventElementController event = fxmlLoader.getController();
+                event.setPage(data[0], data[1].trim());
+                eventGrid.add(anchorPane, column, row);
+                column++;
+
+                GridPane.setMargin(anchorPane, new Insets(10));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void showList(String eventName) {
+        File file = new File("data/eventList.csv");
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        InputStreamReader inputStreamReader = new InputStreamReader(
+                fileInputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedReader buffer = new BufferedReader(inputStreamReader);
+        int row = 0;
+        int column = 0;
+        String line = "";
+        try {
+            while ( (line = buffer.readLine()) != null ){
+                if (line.isEmpty()) continue;
+                String[] data = line.split(",");
+                if(column == 3) {
+                    row++;
+                    column = 0;
+                }
+                if(!data[0].toLowerCase().contains(eventName.toLowerCase())) {
+                    continue;
                 }
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
