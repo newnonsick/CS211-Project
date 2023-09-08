@@ -41,7 +41,7 @@ public class MainPageController {
         FXRouterPane.when("your-created-events", viewPath + "your-created-events.fxml");
         FXRouterPane.when("event-team-management", viewPath + "event-team-management.fxml");
         FXRouterPane.when("create-team", viewPath + "create-team.fxml");
-        FXRouterPane.when("team-list", viewPath + "team-list.fxml");
+        FXRouterPane.when("teamofevent-list", viewPath + "teamofevent-list.fxml");
         FXRouterPane.when("myteam-list", viewPath + "myteam-list.fxml");
         FXRouterPane.when("team-communication", viewPath + "team-communication.fxml");
         FXRouterPane.when("team-management", viewPath + "team-management.fxml");

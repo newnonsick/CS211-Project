@@ -18,7 +18,7 @@ public class EventElementController {
     public void setPage(String name, String imgName) {
         String filePath = "data/eventPicture/" + imgName;
         File file = new File(filePath);
-        Image eventImage = new Image(file.toURI().toString(),149,129,false,false);
+        Image eventImage = new Image(file.toURI().toString(),176,129,false,false);
         eventNameLabel.setText(name);
         eventImageView.setImage(eventImage);
     }

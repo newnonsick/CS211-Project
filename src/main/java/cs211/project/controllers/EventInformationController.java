@@ -29,12 +29,13 @@ public class EventInformationController {
     private Datasource<EventList> datasource;
     private EventList eventList;
     private Event event;
+    private String eventName;
 
     @FXML
     public void initialize() {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
-        String eventName = (String) FXRouterPane.getData();
+        eventName = (String) FXRouterPane.getData();
         event = eventList.findEventByEventName(eventName);
         eventNameLabel.setText(event.getEventName());
         eventInfoLabel.setText(event.getEventInformation());
@@ -66,7 +67,7 @@ public class EventInformationController {
     @FXML
     public void handleVisitTeamButton(){
         try {
-            FXRouterPane.goTo("team-list");
+            FXRouterPane.goTo("teamofevent-list", eventName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -11,19 +11,13 @@ public class Team {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
-    private ActivityList teamActivities;
-    private UserList teamMembers;
-    private ArrayList<String> teamChat;
 
-    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, ActivityList teamActivities, UserList teamMembers, ArrayList<String> teamChat) {
+    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
         this.eventOfTeamName = eventOfTeamName;
         this.teamName = teamName;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
-        this.teamActivities = teamActivities;
-        this.teamMembers = teamMembers;
-        this.teamChat = teamChat;
     }
 
     public String getEventOfTeamName() {
@@ -45,21 +39,21 @@ public class Team {
         return closingJoinDate;
     }
 
-    public ActivityList getTeamActivities() {
-        return teamActivities;
-    }
-    public UserList getTeamMembers() {
-        return teamMembers;
-    }
     public String getHeadOfTeamUsername() {
         return headOfTeamUsername;
     }
 
-    public ArrayList<String> getTeamChat() {
-        return teamChat;
-    }
 
     public void setHeadOfTeamUsername(String headOfTeamUsername) {
         this.headOfTeamUsername = headOfTeamUsername;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Team) {
+            Team team = (Team) obj;
+            return team.getTeamName().equals(this.getTeamName()) && team.getEventOfTeamName().equals(this.getEventOfTeamName());
+        }
+        return false;
     }
 }

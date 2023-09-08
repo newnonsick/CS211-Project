@@ -1,5 +1,6 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Team;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,11 +12,14 @@ public class EventTeamManagementContrller {
     @FXML TableView teamListTableView;
     @FXML Label eventNameLabel;
 
+    private Team team;
+    private String eventName;
+
 
     @FXML
     public void handleCreateTeamButton(){
         try {
-            FXRouterPane.goTo("create-team");
+            FXRouterPane.goTo("create-team", eventName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

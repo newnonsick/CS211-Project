@@ -1,5 +1,6 @@
 package cs211.project.services;
 
+import cs211.project.models.Team;
 import cs211.project.models.TeamList;
 
 import java.io.*;
@@ -64,9 +65,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 LocalDate startJoinDate = LocalDate.parse(data[3].trim());
                 LocalDate closingJoinDate = LocalDate.parse(data[4].trim());
 
-                //เหลือ teamActivities, teamMembers, teamChat ที่ยังไม่แน่ใจว่าเก็บไฟล์เป็นยังไง
-
-                //teams.addNewTeam(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, teamActivities, teamMembers, teamChat);
+                teams.addNewTeam(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -77,6 +76,39 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
 
     @Override
     public void writeData(TeamList teamList) {
-        ;
+        String filePath = directoryName + File.separator + fileName;
+        File file = new File(filePath);
+
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                fileOutputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
+
+        try {
+            for (Team team : teamList.getTeams()) {
+                String line = team.getEventOfTeamName() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate();
+                buffer.append(line);
+                buffer.append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                buffer.flush();
+                buffer.close();
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

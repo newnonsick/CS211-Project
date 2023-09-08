@@ -3,9 +3,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane onMouseDragEntered="#mouseEnter" onMouseDragExited="#mouseExit" prefHeight="213.0" prefWidth="178.0" style="-fx-border-radius: 30;" styleClass="pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
-      <Label fx:id="eventNameLabel" layoutX="58.0" layoutY="14.0" text="Event name" />
-      <ImageView fx:id="eventImageView" fitHeight="129.0" fitWidth="149.0" layoutX="15.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white;">
+<AnchorPane onMouseDragEntered="#mouseEnter" onMouseDragExited="#mouseExit" prefHeight="202.0" prefWidth="281.0" style="-fx-border-radius: 30;" styleClass="pane" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
+   <VBox alignment="CENTER" layoutY="-1.0" prefHeight="202.0" prefWidth="281.0">
+      <children>
+            <Label fx:id="eventNameLabel" text="Event name">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+            <ImageView fx:id="eventImageView" fitHeight="129.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white;">
       </ImageView>
+      </children>
+   </VBox>
 </AnchorPane>
