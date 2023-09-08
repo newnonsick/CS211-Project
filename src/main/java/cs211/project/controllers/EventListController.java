@@ -14,19 +14,13 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import cs211.project.controllers.EventElementController;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 
 public class EventListController {
     private String[] eventList;
@@ -66,7 +60,7 @@ public class EventListController {
                 // Calculate the current Vvalue (current scroll position)
                 double currentVvalue = newValue.doubleValue();
 
-                if (currentVvalue >= maxVvalue && !isSearch) {
+                if (currentVvalue >= maxVvalue * 0.95 && !isSearch) {
                     if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
                         maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
                     }
@@ -81,7 +75,6 @@ public class EventListController {
 
     @FXML
     public void handleSearchButton(){
-        searchTextField.clear();
         eventGrid.getChildren().clear();
         eventScrollPane.setVvalue(0);
         if (!searchTextField.getText().isEmpty()) {
@@ -93,6 +86,7 @@ public class EventListController {
             showList();
             isSearch = false;
         }
+        searchTextField.clear();
     }
 
     //Auto completion
