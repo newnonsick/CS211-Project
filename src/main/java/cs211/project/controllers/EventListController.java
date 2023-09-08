@@ -88,6 +88,7 @@ public class EventListController {
             showList(searchTextField.getText());
             isSearch = true;
         } else {
+            maxRow = 4;
             eventScrollPane.setVvalue(0);
             showList();
             isSearch = false;

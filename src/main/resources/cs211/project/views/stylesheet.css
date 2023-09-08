@@ -7,5 +7,5 @@
 }
 
 .pane:hover {
-    -fx-background-color: red;
+    -fx-background-color: #DCDCDC;
 }
