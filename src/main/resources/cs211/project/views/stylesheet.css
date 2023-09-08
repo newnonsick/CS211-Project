@@ -5,3 +5,7 @@
 .upsize-button {
     -fx-font-size: 40px;
 }
+
+.pane:hover {
+    -fx-background-color: red;
+}

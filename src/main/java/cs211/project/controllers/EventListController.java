@@ -184,8 +184,7 @@ public class EventListController {
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
-            long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
-            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase()) || daysBetween < 0) {
+            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
                 continue;
             }
             if(column == 3) {
