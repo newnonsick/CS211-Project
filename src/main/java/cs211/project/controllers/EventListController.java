@@ -34,6 +34,7 @@ public class EventListController {
     private Datasource<EventList> datasource;
     private EventList eventListData;
     private LocalDate currentDate;
+    private boolean isSearch;
 
     @FXML
     TextField searchTextField;
@@ -45,6 +46,7 @@ public class EventListController {
     ScrollPane eventScrollPane;
 
     public void initialize() {
+        isSearch = false;
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         datasource = new EventListFileDatasource("data", "eventList.csv");
@@ -64,13 +66,12 @@ public class EventListController {
                 // Calculate the current Vvalue (current scroll position)
                 double currentVvalue = newValue.doubleValue();
 
-                if (currentVvalue >= maxVvalue) {
+                if (currentVvalue >= maxVvalue && !isSearch) {
                     if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
                         maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
                     }
                     else if (maxRow < (int) Math.round(eventListData.getEvents().size() / 3.0 )){
-                        maxRow += maxRow;
-                        eventGrid.getChildren().clear();
+                        maxRow += 4;
                         showList();
                     }
                 }
@@ -80,12 +81,16 @@ public class EventListController {
 
     @FXML
     public void handleSearchButton(){
+        searchTextField.clear();
+        eventGrid.getChildren().clear();
+        eventScrollPane.setVvalue(0);
         if (!searchTextField.getText().isEmpty()) {
-            eventGrid.getChildren().clear();
             showList(searchTextField.getText());
-            searchTextField.clear();
-        } else if (searchTextField.getText().isEmpty() && eventGrid.getChildren().size() == 0) {
+            isSearch = true;
+        } else {
+            eventScrollPane.setVvalue(0);
             showList();
+            isSearch = false;
         }
     }
 
@@ -130,9 +135,14 @@ public class EventListController {
     }
 
     public void showList() {
-        int row = 0;
+        int row = maxRow - 4;
         int column = 0;
+        int i = 0;
         for (Event event : eventListData.getEvents()) {
+            if (i < (maxRow - 4) * 3) {
+                i++;
+                continue;
+            }
             long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
             if (daysBetween < 0) {
                 continue;
