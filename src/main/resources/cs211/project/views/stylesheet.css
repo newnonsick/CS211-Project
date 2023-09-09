@@ -21,8 +21,8 @@
 }
 
 .search-box{
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 100;
+    -fx-border-color: #D7D7D7;
+    -fx-border-radius: 100;
 }
 
 .search-button{
