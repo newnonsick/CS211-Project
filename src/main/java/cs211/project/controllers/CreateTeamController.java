@@ -40,7 +40,7 @@ public class CreateTeamController {
         }
         try {
             //teamList.addNewTeam(eventName, teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue());
-            teamList.addNewTeam("test", teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue());
+            teamList.addNewTeam("test", teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue(), "null");
             datasource.writeData(teamList);
             FXRouterPane.goTo("event-team-management");
         } catch (IOException e) {

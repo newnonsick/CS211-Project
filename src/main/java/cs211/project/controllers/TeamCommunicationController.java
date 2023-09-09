@@ -1,11 +1,9 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Team;
+import cs211.project.models.TeamChatList;
 import cs211.project.models.TeamList;
-import cs211.project.services.CurrentUser;
-import cs211.project.services.Datasource;
-import cs211.project.services.FXRouterPane;
-import cs211.project.services.TeamListFileDatasource;
+import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
@@ -25,24 +23,25 @@ public class TeamCommunicationController {
 
     private TeamList teamList;
     private Datasource<TeamList> datasource;
+    private TeamChatList teamChatList;
     private Team team;
+    private Datasource<TeamChatList> teamChatListDatasource;
     @FXML
     public void initialize(){
         team = (Team) FXRouterPane.getData();
         messageTextArea.setEditable(false);
-        manageTeamButton.setVisible(true);
+        manageTeamButton.setVisible(false);
 //        datasource = new TeamListFileDatasource("data", "team_list.csv");
 //        teamList = datasource.readData();
-        try {
-            if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getName())){
-                manageTeamButton.setVisible(true);
-            }
-        } catch (NullPointerException e){
-            manageTeamButton.setVisible(false);
+        if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getUsername())){
+            manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
         avtivityNameLabel.setText("");
         activityDescriptionLabel.setText("");
+        teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
+        teamChatList = teamChatListDatasource.readData();
+        showChat();
     }
 
     @FXML
@@ -51,6 +50,9 @@ public class TeamCommunicationController {
         if (!text.isEmpty()){
             messageTextArea.appendText(CurrentUser.getUser().getUsername() + " : " + sendMessageTextField.getText() + "\n");
             sendMessageTextField.clear();
+            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
+            teamChatListDatasource.writeData(teamChatList);
+            showChat();
         }
     }
 
@@ -72,6 +74,14 @@ public class TeamCommunicationController {
             FXRouterPane.goTo("team-management", team);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void showChat(){
+        messageTextArea.clear();
+        ArrayList<String> chat = teamChatList.getChats(team.getEventOfTeamName(), team.getTeamName());
+        for (String message : chat){
+            messageTextArea.appendText(message + "\n");
         }
     }
 

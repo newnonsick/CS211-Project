@@ -74,12 +74,12 @@ public class EventListController {
 
     @FXML
     public void handleSearchButton(){
-        eventGrid.getChildren().clear();
         eventScrollPane.setVvalue(0);
         if (!searchTextField.getText().isEmpty()) {
+            eventGrid.getChildren().clear();
             showList(searchTextField.getText());
             isSearch = true;
-        } else {
+        } else if (isSearch){
             maxRow = 4;
             eventScrollPane.setVvalue(0);
             showList();

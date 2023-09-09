@@ -1,17 +1,19 @@
 package cs211.project.services;
 
 import cs211.project.models.Team;
+import cs211.project.models.TeamChat;
+import cs211.project.models.TeamChatList;
 import cs211.project.models.TeamList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
-public class TeamListFileDatasource implements Datasource<TeamList>{
+public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
     private String directoryName;
     private String fileName;
 
-    public TeamListFileDatasource(String directoryName, String fileName) {
+    public TeamChatListFileDatasource(String directoryName, String fileName) {
         this.directoryName = directoryName;
         this.fileName = fileName;
         checkFileIsExisted();
@@ -31,9 +33,10 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
             }
         }
     }
+
     @Override
-    public TeamList readData() {
-        TeamList teams = new TeamList();
+    public TeamChatList readData() {
+        TeamChatList teamChats = new TeamChatList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
@@ -59,24 +62,22 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
 
                 String[] data = line.split(",");
 
-                String eventOfTeamName = data[0].trim();
+                String eventName = data[0].trim();
                 String teamName = data[1].trim();
-                int maxParticipants = Integer.parseInt(data[2].trim());
-                LocalDate startJoinDate = LocalDate.parse(data[3].trim());
-                LocalDate closingJoinDate = LocalDate.parse(data[4].trim());
-                String headOfTeamUsername = data[5].trim();
+                String username = data[2].trim();
+                String message = data[3].trim();
 
-                teams.addNewTeam(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, headOfTeamUsername);
+                teamChats.addNewChat(eventName, teamName, username, message);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return teams;
+        return teamChats;
     }
 
     @Override
-    public void writeData(TeamList teamList) {
+    public void writeData(TeamChatList teamChatList) {
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
@@ -95,8 +96,8 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
 
         try {
-            for (Team team : teamList.getTeams()) {
-                String line = team.getEventOfTeamName() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getHeadOfTeamUsername();
+            for (TeamChat teamChat : teamChatList.getTeamChats()) {
+                String line = teamChat.getEventName() + "," + teamChat.getTeamName() + "," + teamChat.getUsername() + "," + teamChat.getMessage();
                 buffer.append(line);
                 buffer.append("\n");
             }

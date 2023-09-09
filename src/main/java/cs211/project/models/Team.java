@@ -12,12 +12,15 @@ public class Team {
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
 
-    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
+    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String headOfTeamUsername) {
         this.eventOfTeamName = eventOfTeamName;
         this.teamName = teamName;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
+        if (headOfTeamUsername != "null") {
+            this.headOfTeamUsername = headOfTeamUsername;
+        }
     }
 
     public String getEventOfTeamName() {
