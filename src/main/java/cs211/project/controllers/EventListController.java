@@ -82,6 +82,7 @@ public class EventListController {
         } else if (isSearch){
             maxRow = 4;
             eventScrollPane.setVvalue(0);
+            eventGrid.getChildren().clear();
             showList();
             isSearch = false;
         }
