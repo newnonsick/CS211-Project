@@ -7,16 +7,16 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MyTeamListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MyTeamListController">
     <children>
         <Label layoutX="72.0" layoutY="64.0" text="My Team List">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Label>
-      <ScrollPane fx:id="teamListScrollPane" layoutX="72.0" layoutY="134.0" prefHeight="569.0" prefWidth="1045.0">
+      <ScrollPane fx:id="teamListScrollPane" layoutX="72.0" layoutY="134.0" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
          <content>
-            <GridPane fx:id="teamListGridPane" prefHeight="569.0" prefWidth="1030.0">
+            <GridPane fx:id="teamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

@@ -16,13 +16,23 @@ public class MainPageController {
     @FXML
     StackPane content;
     @FXML
-    Button testAddClass;
+    Button eventButton;
+    @FXML
+    Button createEventButton;
+    @FXML
+    Button myEventButton;
+    @FXML
+    Button myTeamButton;
+    @FXML
+    Button userInfoButton;
+
+
 
     @FXML
     public void initialize() {
+        changeStyleClassButton(eventButton);
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
-        testAddClass.getStyleClass().add("upsize-button");
         try {
             FXRouterPane.goTo("event-list","First Run");
         } catch (IOException e) {
@@ -51,6 +61,7 @@ public class MainPageController {
     @FXML
     public void goToEventList()  {
         try {
+            changeStyleClassButton(eventButton);
             FXRouterPane.goTo("event-list");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -60,6 +71,7 @@ public class MainPageController {
     @FXML
     public void goToCreateEvent()  {
         try {
+            changeStyleClassButton(createEventButton);
             FXRouterPane.goTo("create-event");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -69,6 +81,7 @@ public class MainPageController {
     @FXML
     public void goToYourCreatedEvents()  {
         try {
+            changeStyleClassButton(myEventButton);
             FXRouterPane.goTo("your-created-events");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -78,6 +91,7 @@ public class MainPageController {
     @FXML
     public void goToUserInformation()  {
         try {
+            changeStyleClassButton(userInfoButton);
             FXRouterPane.goTo("user-information");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -87,10 +101,19 @@ public class MainPageController {
     @FXML
     public void handleMyTeamButton(){
         try {
+            changeStyleClassButton(myTeamButton);
             FXRouterPane.goTo("myteam-list");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public void changeStyleClassButton(Button button){
+        eventButton.getStyleClass().remove("selected_navigation-button");
+        createEventButton.getStyleClass().remove("selected_navigation-button");
+        myEventButton.getStyleClass().remove("selected_navigation-button");
+        myTeamButton.getStyleClass().remove("selected_navigation-button");
+        userInfoButton.getStyleClass().remove("selected_navigation-button");
+        button.getStyleClass().add("selected_navigation-button");
+    }
 }
