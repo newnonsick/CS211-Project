@@ -38,7 +38,6 @@ public class TeamOfEventListController {
         currentDate = LocalDate.now(thaiTimeZone);
         datasource = new TeamListFileDatasource("data", "team_list.csv");
         teamList = datasource.readData();
-        teamGridPane.setGridLinesVisible(true);
         showTeam();
     }
 

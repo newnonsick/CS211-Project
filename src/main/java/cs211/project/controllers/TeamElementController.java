@@ -12,16 +12,23 @@ public class TeamElementController {
     @FXML
     Label maxParticipantsLabel;
     @FXML
-    Label startJoinDateLabel;
-    @FXML
-    Label closingJoinDateLabel;
+    Label remaindaysLabel;
 
     public void setPage(String eventName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
         eventNameLabel.setText(eventName);
         teamNameLabel.setText(teamName);
         maxParticipantsLabel.setText(String.valueOf(maxParticipants));
-        startJoinDateLabel.setText("" + startJoinDate);
-        closingJoinDateLabel.setText("" + closingJoinDate);
+        remaindaysLabel.setText(startJoinDate.toString() + " - " + closingJoinDate.toString());
+    }
+
+    @FXML
+    public void mouseEnter() {
+        eventNameLabel.setStyle("-fx-background-color: blue;");
+    }
+
+    @FXML
+    public void mouseExit() {
+        eventNameLabel.setStyle("-fx-background-color: transparent;");
     }
 
 }

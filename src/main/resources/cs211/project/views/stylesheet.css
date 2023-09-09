@@ -1,11 +1,13 @@
 .button {
-    -fx-background-color: red;
+    -fx-background-color: #FF8C00;
 }
 
-.upsize-button {
-    -fx-font-size: 40px;
+/*.upsize-button {*/
+/*    -fx-font-size: 40px;*/
+/*}*/
+.pane{
+    -fx-background-color: #FF8C00;
 }
-
 .pane:hover {
-    -fx-background-color: #DCDCDC;
+    -fx-background-color: #FFA500;
 }

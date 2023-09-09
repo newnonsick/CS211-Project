@@ -27,6 +27,7 @@ public class EventElementController {
         eventNameLabel.setStyle("-fx-background-color: blue;");
     }
 
+    @FXML
     public void mouseExit() {
         eventNameLabel.setStyle("-fx-background-color: transparent;");
     }

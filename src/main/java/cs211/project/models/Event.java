@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 public class Event {
+    private String eventOwnerUsername;
     private String eventName;
     private String eventPicture;
     private String eventInformation;
@@ -33,7 +34,7 @@ public class Event {
     }
 
     public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
-                 LocalDate eventStartDate, LocalDate eventEndDate) {
+                 LocalDate eventStartDate, LocalDate eventEndDate, String eventOwnerUsername) {
         this.eventName = eventName;
         this.eventPicture = eventPicture;
         this.eventInformation = eventInformation;
@@ -42,6 +43,7 @@ public class Event {
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventActivity = new ArrayList<>();
+        this.eventOwnerUsername = eventOwnerUsername;
     }
 
     public boolean isEvent(String eventName) {

@@ -67,9 +67,10 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 String placeEvent = data[4].trim();
                 LocalDate eventStartDate = LocalDate.parse(data[5].trim());
                 LocalDate eventEndDate = LocalDate.parse(data[6].trim());
+                String eventOwnerUsername = data[7].trim();
 
                 // add data to the list
-                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate);
+                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
