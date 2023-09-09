@@ -21,14 +21,4 @@ public class TeamElementController {
         remaindaysLabel.setText(startJoinDate.toString() + " - " + closingJoinDate.toString());
     }
 
-    @FXML
-    public void mouseEnter() {
-        eventNameLabel.setStyle("-fx-background-color: blue;");
-    }
-
-    @FXML
-    public void mouseExit() {
-        eventNameLabel.setStyle("-fx-background-color: transparent;");
-    }
-
 }
