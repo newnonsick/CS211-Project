@@ -50,11 +50,7 @@
          </font>
       </Label>
       <Label fx:id="errorLabel" layoutX="873.0" layoutY="645.0" prefHeight="17.0" prefWidth="271.0" textFill="RED" />
-      <ImageView fx:id="profileImageView" fitHeight="179.0" fitWidth="231.0" layoutX="949.0" layoutY="110.0" pickOnBounds="true" smooth="false">
-         <image>
-            <Image url="@../../../../../data/profile_picture/default.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="profileImageView" fitHeight="179.0" fitWidth="231.0" layoutX="949.0" layoutY="110.0" pickOnBounds="true" smooth="false"/>
       <Button fx:id="upLoadImageButton" layoutX="1015.0" layoutY="307.0" mnemonicParsing="false" onAction="#upLoadImage" text="Upload image" />
       <Label layoutX="1113.0" layoutY="313.0" style="-fx-opacity: 50%;" text="*optional" />
       <Button fx:id="cancelUploadButton" disable="true" layoutX="979.0" layoutY="307.0" mnemonicParsing="false" onAction="#cancelUpload" prefHeight="26.0" prefWidth="29.0" text="X" visible="false" />

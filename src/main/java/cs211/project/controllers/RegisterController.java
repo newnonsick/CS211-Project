@@ -41,7 +41,9 @@ public class RegisterController {
 
     @FXML
     public void initialize(){
+
         errorLabel.setText("");
+        profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
     }
 
     @FXML
@@ -171,11 +173,8 @@ public class RegisterController {
     }
     @FXML
     private void cancelUpload() {
-        String filePath = "data/profile_picture/default.png";
-        File file = new File(filePath);
         selectedImage = null;
-        Image image = new Image(file.toURI().toString());
-        profileImageView.setImage(image);
+        profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
         cancelUploadButton.setDisable(true);
         cancelUploadButton.setVisible(false);
     }

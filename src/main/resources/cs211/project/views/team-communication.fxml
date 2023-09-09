@@ -23,7 +23,7 @@
          <font>
             <Font size="18.0" />
          </font></TextArea>
-      <Button layoutX="1053.0" layoutY="704.0" mnemonicParsing="false" onAction="#handleSendMessageButton" text="ส่งข้อความ">
+      <Button defaultButton="true" layoutX="1053.0" layoutY="704.0" mnemonicParsing="false" onAction="#handleSendMessageButton" text="ส่งข้อความ">
          <font>
             <Font size="18.0" />
          </font>

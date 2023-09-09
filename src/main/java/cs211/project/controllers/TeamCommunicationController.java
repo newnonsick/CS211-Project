@@ -48,11 +48,10 @@ public class TeamCommunicationController {
     public void handleSendMessageButton() {
         String text = sendMessageTextField.getText();
         if (!text.isEmpty()){
-            messageTextArea.appendText(CurrentUser.getUser().getUsername() + " : " + sendMessageTextField.getText() + "\n");
+            messageTextArea.appendText(CurrentUser.getUser().getUsername() + " : " + text + "\n");
             sendMessageTextField.clear();
             teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
             teamChatListDatasource.writeData(teamChatList);
-            showChat();
         }
     }
 
