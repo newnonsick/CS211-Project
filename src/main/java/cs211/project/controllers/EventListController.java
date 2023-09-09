@@ -4,7 +4,6 @@ import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
-import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

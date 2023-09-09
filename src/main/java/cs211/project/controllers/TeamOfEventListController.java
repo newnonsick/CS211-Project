@@ -1,19 +1,15 @@
 package cs211.project.controllers;
 
-import cs211.project.models.Event;
 import cs211.project.models.Team;
 import cs211.project.models.TeamList;
-import cs211.project.services.Datasource;
-import cs211.project.services.FXRouterPane;
-import cs211.project.services.TeamListFileDatasource;
+import cs211.project.models.TeamParticipantList;
+import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -42,7 +38,7 @@ public class TeamOfEventListController {
         currentDate = LocalDate.now(thaiTimeZone);
         datasource = new TeamListFileDatasource("data", "team_list.csv");
         teamList = datasource.readData();
-        //showTeam(teamList);
+        teamGridPane.setGridLinesVisible(true);
         showTeam();
     }
 
@@ -78,18 +74,23 @@ public class TeamOfEventListController {
                 alert.setHeaderText("Do you want to join this team?");
                 Optional<ButtonType> result = alert.showAndWait();
 
-                if(result.isEmpty()){
-                    System.out.println("Alert closed");
-                } else if(result.get() == ButtonType.OK){
-                    System.out.println("OK!");
-                } else if(result.get() == ButtonType.CANCEL){
-                    System.out.println("Never!");
-                }
+               if(result.get() == ButtonType.OK) {
+                   Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
+                   TeamParticipantList teamParticipantList = datasourceParticipant.readData();
+                   teamParticipantList.addNewTeamParticipant(CurrentUser.getUser().getUsername(), team.getEventOfTeamName(), team.getTeamName());
+                   datasourceParticipant.writeData(teamParticipantList);
+                    try {
+                        FXRouterPane.goTo("team-communication", team);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+               }
             });
             teamGridPane.add(anchorPane, column, row);
             column++;
 
             GridPane.setMargin(anchorPane, new Insets(10));
         }
+
     }
 }

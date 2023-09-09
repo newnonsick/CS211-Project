@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class TeamCommunicationController {
     @FXML Label avtivityNameLabel;
     @FXML Label activityDescriptionLabel;
+    @FXML Label teamNameLabel;
     @FXML TableView activityTableView;
     @FXML TextArea messageTextArea;
     @FXML TextField sendMessageTextField;
@@ -27,22 +28,28 @@ public class TeamCommunicationController {
     private Team team;
     @FXML
     public void initialize(){
-        Team team_b = (Team) FXRouterPane.getData();
+        team = (Team) FXRouterPane.getData();
         messageTextArea.setEditable(false);
         manageTeamButton.setVisible(true);
-//        datasource = new TeamListFileDatasource("data" + File.separator + team.getEventOfTeamName() + File.separator + team.getTeamName(), team.getTeamName() + ".csv");
+//        datasource = new TeamListFileDatasource("data", "team_list.csv");
 //        teamList = datasource.readData();
-//        team = teamList.findTeamByNameAndEvent(team_b.getEventOfTeamName(), team_b.getTeamName());
-//        if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getName())){
-//            manageTeamButton.setVisible(true);
-//        }
+        try {
+            if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getName())){
+                manageTeamButton.setVisible(true);
+            }
+        } catch (NullPointerException e){
+            manageTeamButton.setVisible(false);
+        }
+        teamNameLabel.setText(team.getTeamName());
+        avtivityNameLabel.setText("");
+        activityDescriptionLabel.setText("");
     }
 
     @FXML
     public void handleSendMessageButton() {
         String text = sendMessageTextField.getText();
         if (!text.isEmpty()){
-            messageTextArea.appendText("%username% : " + sendMessageTextField.getText() + "\n");
+            messageTextArea.appendText(CurrentUser.getUser().getUsername() + " : " + sendMessageTextField.getText() + "\n");
             sendMessageTextField.clear();
         }
     }
@@ -59,11 +66,10 @@ public class TeamCommunicationController {
         messageTextArea.setFont(new Font(font.getName(), font.getSize() - 2));
     }
 
-    //ตอนจริงจะเห็นปุ่มแค่คนที่เป็นหัวหน้าทีม
     @FXML
     public void handleManageTeamButton(){
         try {
-            FXRouterPane.goTo("team-management");
+            FXRouterPane.goTo("team-management", team);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
