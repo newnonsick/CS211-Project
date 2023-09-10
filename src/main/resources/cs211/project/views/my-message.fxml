@@ -22,7 +22,7 @@
             <HBox fx:id="hBox" alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="417.0" spacing="15.0" styleClass="transparent">
                <children>
                   <Pane prefHeight="40.0" prefWidth="9.0" />
-                  <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="341.0" styleClass="message-box" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa37" wrapText="true">
+                  <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="341.0" styleClass="my-message-box" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa37" wrapText="true">
                      <font>
                         <Font size="18.0" />
                      </font>

@@ -1,14 +1,14 @@
 .button {
-    -fx-background-color: #FF8C00;
+    -fx-background-color: #FF9900;
 }
 
 /*.upsize-button {*/
 /*    -fx-font-size: 40px;*/
 /*}*/
-.pane{
-    -fx-background-color: #FF8C00;
+.element{
+    -fx-background-color: #FFFFFF;
 }
-.pane:hover {
+.element:hover {
     -fx-background-color: #FFA500;
 }
 
@@ -21,17 +21,19 @@
 }
 
 .search-box{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 100;
     -fx-border-color: #D7D7D7;
     -fx-border-radius: 100;
 }
 
 .search-button{
-    -fx-background-color: #FF8C00;
+    -fx-background-color: #FF9900;
     -fx-background-radius: 30;
 }
 
 .navigation-list{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #DCDCDC;
 }
 
 .navigation-button{
@@ -51,10 +53,20 @@
     -fx-border-radius: 30;
 }
 
-.message-box{
+.my-message-box{
+    -fx-background-color: #FF9900;
+    -fx-background-radius: 30;
+    -fx-background-insets: -5;
+    -fx-border-insets: -5;
+    -fx-border-color: #FF9900;
+    -fx-border-radius: 30;
+}
+
+.other-message-box{
     -fx-background-color: rgba(0,0,0,0);
+    -fx-background-radius: 30;
+    -fx-background-insets: -5;
     -fx-border-insets: -5;
     -fx-border-color: #D7D7D7;
     -fx-border-radius: 30;
-
 }
