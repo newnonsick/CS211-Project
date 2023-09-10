@@ -50,6 +50,8 @@ public class TeamCommunicationController {
             public void changed(ObservableValue observable, Activity oldValue, Activity newValue) {
                 if (newValue != null) {
                     if (newValue.getActivityStatus().equals("Ended")){
+                        avtivityNameLabel.setText("");
+                        activityDescriptionLabel.setText("");
                         return;
                     }
                     avtivityNameLabel.setText(newValue.getActivityName());
@@ -114,9 +116,9 @@ public class TeamCommunicationController {
         activityStatusColumn.setCellValueFactory(new PropertyValueFactory<>("activityStatus"));
 
         activityTableView.getColumns().clear();
+        activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getColumns().add(activityNameColumn);
         activityTableView.getColumns().add(activityInformationColumn);
-        activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getItems().clear();
 
         if (activityList.getActivities().size() == 0){

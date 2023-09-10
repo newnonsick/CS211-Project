@@ -71,7 +71,20 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        activities.getActivities().sort(
+                (o1, o2) -> {
+                    if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
+                        return 0;
+                    }
+                    if (o1.getActivityStatus().equals("Ended")){
+                        return 1;
+                    }
+                    if (o2.getActivityStatus().equals("Ended")){
+                        return -1;
+                    }
+                    return 0;
+                }
+        );
         return activities;
     }
     //addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation)
@@ -93,6 +106,21 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
+
+        activityList.getActivities().sort(
+                (o1, o2) -> {
+                    if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
+                        return 0;
+                    }
+                    if (o1.getActivityStatus().equals("Ended")){
+                        return 1;
+                    }
+                    if (o2.getActivityStatus().equals("Ended")){
+                        return -1;
+                    }
+                    return 0;
+                }
+        );
 
         try {
             for (Activity activity : activityList.getActivities()) {
