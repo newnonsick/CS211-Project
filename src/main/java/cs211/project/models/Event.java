@@ -3,7 +3,7 @@ package cs211.project.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
-public class Event {
+public class Event implements Comparable {
     private String eventOwnerUsername;
     private String eventName;
     private String eventPicture;
@@ -87,4 +87,14 @@ public class Event {
         this.closingJoinDate = closingJoinDate;
     }
 
+    @Override
+    public int compareTo(Object o) {
+        Event event = (Event) o;
+        try{
+            return Integer.parseInt(this.eventName) - Integer.parseInt(event.eventName);
+        }
+        catch (NumberFormatException e){
+            return this.eventName.compareTo(event.eventName);
+        }
+    }
 }

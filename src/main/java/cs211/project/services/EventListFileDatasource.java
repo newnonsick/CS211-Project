@@ -5,6 +5,9 @@ import cs211.project.models.EventList;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;
@@ -75,7 +78,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        Collections.sort(events.getEvents());
         return events;
     }
 
