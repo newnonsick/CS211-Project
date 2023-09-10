@@ -67,6 +67,12 @@ public class RegisterController {
             confirmPasswordTextField.setText("");
             return;
         }
+        if (username.equals("Default")) {
+            errorLabel.setText("That user name is not allowed.");
+            passwordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
+        }
         try {
             fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
