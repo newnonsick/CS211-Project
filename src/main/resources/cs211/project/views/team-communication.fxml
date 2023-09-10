@@ -24,8 +24,8 @@
       </TableView>
       <HBox alignment="CENTER_RIGHT" layoutX="699.0" layoutY="654.0" prefHeight="35.0" prefWidth="450.0" styleClass="search-box">
          <children>
-            <TextField fx:id="sendMessageTextField" prefHeight="35.0" prefWidth="337.0" promptText="พิมพ์ข้อความ..." styleClass="transparent" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="56.0" prefWidth="100.0" styleClass="radius" text="ส่งข้อความ">
+            <TextField fx:id="sendMessageTextField" prefHeight="35.0" prefWidth="380.0" promptText="พิมพ์ข้อความ..." styleClass="transparent" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="39.0" prefWidth="51.0" styleClass="radius" text="ส่ง">
                <font>
                   <Font size="18.0" />
                </font>
@@ -37,7 +37,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="teamNameLabel" layoutX="452.0" layoutY="14.0" text="teamNameLabel">
+      <Label fx:id="teamNameLabel" alignment="CENTER" layoutX="452.0" layoutY="14.0" text="teamNameLabel">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>

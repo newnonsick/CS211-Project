@@ -18,7 +18,7 @@ public class MyMessageController {
     @FXML Label usernameLabel;
     public void setPage(String message, String username) {
         int length = message.length();
-        int theshold = length / 39;
+        int theshold = length / 43;
         try {
             messageLabel.setPrefHeight(30 + theshold * 30);
             vBox.setPrefHeight(42 + theshold * 42);
