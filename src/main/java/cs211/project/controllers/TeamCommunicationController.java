@@ -5,13 +5,19 @@ import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TeamCommunicationController {
     @FXML Label avtivityNameLabel;
@@ -21,6 +27,8 @@ public class TeamCommunicationController {
     @FXML TextArea messageTextArea;
     @FXML TextField sendMessageTextField;
     @FXML Button manageTeamButton;
+    @FXML GridPane teamChatGridPane;
+    @FXML ScrollPane messageScrollPane;
 
     private TeamChatList teamChatList;
     private Team team;
@@ -30,7 +38,6 @@ public class TeamCommunicationController {
     @FXML
     public void initialize(){
         team = (Team) FXRouterPane.getData();
-        messageTextArea.setEditable(false);
         manageTeamButton.setVisible(false);
         if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getUsername())){
             manageTeamButton.setVisible(true);
@@ -69,11 +76,12 @@ public class TeamCommunicationController {
     public void handleSendMessageButton() {
         String text = sendMessageTextField.getText();
         if (!text.isEmpty()){
-            messageTextArea.appendText(CurrentUser.getUser().getUsername() + " : " + text + "\n");
             sendMessageTextField.clear();
             teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
             teamChatListDatasource.writeData(teamChatList);
+            showChat();
         }
+        messageScrollPane.setVvalue(1.0);
     }
 
     @FXML
@@ -97,13 +105,50 @@ public class TeamCommunicationController {
         }
     }
 
-    public void showChat(){
-        messageTextArea.clear();
-        ArrayList<String> chat = teamChatList.getChats(team.getEventOfTeamName(), team.getTeamName());
-        for (String message : chat){
-            messageTextArea.appendText(message + "\n");
+
+    public void showChat() {
+        teamChatGridPane.getChildren().clear();
+        int row = 0;
+        for (TeamChat teamChat : teamChatList.getTeamChats()) {
+            if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
+                continue;
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            if (teamChat.getUsername().equals(CurrentUser.getUser().getUsername())) {
+                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/my-message.fxml"));
+                AnchorPane anchorPane = null;
+                try {
+                    anchorPane = fxmlLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                MyMessageController messageController = fxmlLoader.getController();
+                messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
+                teamChatGridPane.add(anchorPane, 0, row);
+                row++;
+
+                GridPane.setMargin(anchorPane, new Insets(10));
+            } else {
+                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/other-message.fxml"));
+                AnchorPane anchorPane = null;
+                try {
+                    anchorPane = fxmlLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                OtherMessageController messageController = fxmlLoader.getController();
+                messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
+                teamChatGridPane.add(anchorPane, 0, row);
+                row++;
+
+                GridPane.setMargin(anchorPane, new Insets(10));
+            }
         }
+        messageScrollPane.setVvalue(1.0);
     }
+
+
+
 
     public void showActivity(ActivityList activityList){
         TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");

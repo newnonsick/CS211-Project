@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="417.0" styleClass="transparent" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MyMessageController">
+   <children>
+      <VBox fx:id="vBox" alignment="TOP_RIGHT" prefHeight="42.0" prefWidth="417.0" spacing="3.0">
+         <children>
+            <HBox alignment="TOP_RIGHT" prefHeight="2.0" prefWidth="417.0">
+               <children>
+                  <Label fx:id="usernameLabel" text="Label" />
+                  <Pane prefHeight="17.0" prefWidth="49.0" />
+               </children>
+            </HBox>
+            <HBox fx:id="hBox" alignment="TOP_RIGHT" prefHeight="40.0" prefWidth="417.0" spacing="15.0" styleClass="transparent">
+               <children>
+                  <Pane prefHeight="40.0" prefWidth="9.0" />
+                  <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="341.0" styleClass="message-box" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa37" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="userImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/default.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

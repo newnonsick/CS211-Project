@@ -45,3 +45,16 @@
 .selected_navigation-button{
     -fx-background-color: #F5F5F5;
 }
+
+.radius{
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+}
+
+.message-box{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-border-insets: -5;
+    -fx-border-color: #D7D7D7;
+    -fx-border-radius: 30;
+
+}
