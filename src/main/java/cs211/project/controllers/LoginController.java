@@ -8,13 +8,19 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
 import java.nio.charset.StandardCharsets;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 
 public class LoginController {
     private String directoryName = "data";
     private String fileName = "userData.csv";
     private String filePath = directoryName + File.separator + fileName;
+    private String loginFilePath = directoryName + File.separator + "logInfo.csv";
     @FXML
     TextField usernameTextField;
     @FXML
@@ -29,9 +35,21 @@ public class LoginController {
     private void checkFileIsExisted() {
         File file = new File(directoryName);
         if (!file.exists()) {
-            file.mkdirs();
+            file.mkdir();
         }
         file = new File(filePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        file = new File(directoryName);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        file = new File(loginFilePath);
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -44,11 +62,13 @@ public class LoginController {
     @FXML
     public void login() {
         File file = new File(filePath);
+        File logInfoFile = new File(loginFilePath);
         FileInputStream fileInputStream = null;
         String user = usernameTextField.getText();
         String inputPassword = passwordTextField.getText();
         String destination = "mainPage";
-        if(user.equals("admin211")) {
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        if (user.equals("admin211")) {
             destination = "adminPage";
         }
         try {
@@ -65,20 +85,35 @@ public class LoginController {
 
         String line = "";
         try {
-            while ( (line = buffer.readLine()) != null ){
+            while ((line = buffer.readLine()) != null) {
                 if (line.isEmpty()) continue;
                 String[] data = line.split(",");
 
                 String username = data[0].trim();
                 String password = data[1].trim();
-                String name = data[2].trim();
-                if(user.equals(username)) {
+                if (user.equals(username)) {
                     BCrypt.Result result = BCrypt.verifyer().verify(inputPassword.toCharArray(), password);
-                    if(result.verified) {
+                    if (result.verified) {
                         CurrentUser.setUser(new User(user));
+                        String date = LocalDate.now(thaiTimeZone).toString();
+                        String time = LocalTime.now(thaiTimeZone).toString().substring(0,8);
+                        String log = user + "," + date + "," + time;
+                        FileWriter fileWriter = null;
+                        PrintWriter out = null;
+                        try {
+                            fileWriter = new FileWriter(logInfoFile,true);
+                            out = new PrintWriter(new BufferedWriter(fileWriter));
+                            out.println(log);
+                            out.flush();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } finally {
+                            if (out != null) {
+                                out.close();
+                            }
+                        }
                         FXRouter.goTo(destination);
-                    }
-                    else {
+                    } else {
                         break;
                     }
                 }
@@ -91,12 +126,12 @@ public class LoginController {
         usernameTextField.setText("");
         passwordTextField.setText("");
     }
+
     @FXML
     private void goToRegister() {
         try {
             FXRouter.goTo("register");
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
