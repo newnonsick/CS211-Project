@@ -14,7 +14,7 @@
             <VBox prefHeight="200.0" prefWidth="150.0" styleClass="navigation-list" BorderPane.alignment="CENTER">
                <children>
                   <Pane prefHeight="121.0" prefWidth="150.0" />
-                  <Button fx:id="eventButton" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="218.0" styleClass="navigation-button" text="Event" />
+                  <Button fx:id="eventButton" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="150.0" styleClass="navigation-button" text="Event" />
                   <Button fx:id="createEventButton" mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="Create Event" />
                   <Button fx:id="myEventButton" mnemonicParsing="false" onAction="#goToYourCreatedEvents" prefHeight="100.0" prefWidth="205.0" styleClass="navigation-button" text="My Events" />
                   <Button fx:id="myTeamButton" mnemonicParsing="false" onAction="#handleMyTeamButton" prefHeight="100.0" prefWidth="203.0" styleClass="navigation-button" text="My Teams" />

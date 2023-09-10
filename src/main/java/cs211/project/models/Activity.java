@@ -8,22 +8,21 @@ public class Activity {
     private String teamOfActivityName;
     private String activityName;
     private String activityInformation;
-    private boolean isActivityAvailable;
+    private String activityStatus;
     private LocalTime activityStartTime;
     private LocalTime activityEndTime;
 
-    public Activity(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation) {
+    public Activity(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
         this.eventOfActivityName = eventOfActivityName;
         this.teamOfActivityName = teamOfActivityName;
         this.activityName = activityName;
         this.activityInformation = activityInformation;
-        this.isActivityAvailable = true;
+        this.activityStatus = activityStatus;
     }
 
-    public Activity(String activityName, String activityInformation, boolean isActivityAvailable, LocalTime activityStartTime, LocalTime activityEndTime) {
+    public Activity(String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime) {
         this.activityName = activityName;
         this.activityInformation = activityInformation;
-        this.isActivityAvailable = isActivityAvailable;
         this.activityStartTime = activityStartTime;
         this.activityEndTime = activityEndTime;
     }
@@ -44,21 +43,19 @@ public class Activity {
         return teamOfActivityName;
     }
 
-    public boolean isActivityAvailable() {
-        return isActivityAvailable;
-    }
 
     public LocalTime getActivityEndTime() {
         return activityEndTime;
     }
 
-    public boolean isTeamAvailable() {
-        return isActivityAvailable;
+    public String getActivityStatus() {
+        return activityStatus;
     }
 
-    public void setTeamAvailable(boolean isTeamAvailable) {
-        this.isActivityAvailable = isTeamAvailable;
+    public void setActivityStatus(String activityStatus) {
+        this.activityStatus = activityStatus;
     }
+
     public LocalTime getActivityStartTime() {
         return activityStartTime;
     }

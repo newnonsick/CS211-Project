@@ -13,15 +13,15 @@ public class ActivityList {
         return activities;
     }
 
-    public void addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation) {
+    public void addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
         eventOfActivityName = eventOfActivityName.trim();
         teamOfActivityName = teamOfActivityName.trim();
         activityName = activityName.trim();
         activityInformation = activityInformation.trim();
         if (!eventOfActivityName.equals("") && !teamOfActivityName.equals("") && !activityName.equals("") && !activityInformation.equals("")) {
-            Activity exist = findActivityTeamByObject(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation));
+            Activity exist = findActivityTeamByObject(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation, activityStatus));
             if (exist == null) {
-                activities.add(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation));
+                activities.add(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation, activityStatus));
             }
         }
     }
