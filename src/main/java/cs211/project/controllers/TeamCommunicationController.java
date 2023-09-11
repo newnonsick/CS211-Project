@@ -2,6 +2,7 @@ package cs211.project.controllers;
 
 import cs211.project.models.*;
 import cs211.project.services.*;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -50,7 +51,7 @@ public class TeamCommunicationController {
         activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
         activityList = activityListDatasource.readData();
         showActivity(activityList);
-        showChat();
+        showChat(true);
 
         activityTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
             @Override
@@ -79,9 +80,8 @@ public class TeamCommunicationController {
             sendMessageTextField.clear();
             teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
             teamChatListDatasource.writeData(teamChatList);
-            showChat();
+            showChat(false);
         }
-        messageScrollPane.setVvalue(1.0);
     }
 
     @FXML
@@ -106,12 +106,52 @@ public class TeamCommunicationController {
     }
 
 
-    public void showChat() {
-        teamChatGridPane.getChildren().clear();
+    public void showChat(boolean isShowAll) {
         int row = 0;
-        for (TeamChat teamChat : teamChatList.getTeamChats()) {
+        if (isShowAll){
+            teamChatGridPane.getChildren().clear();
+            for (TeamChat teamChat : teamChatList.getTeamChats()) {
+                if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
+                    continue;
+                }
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                if (teamChat.getUsername().equals(CurrentUser.getUser().getUsername())) {
+                    fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/my-message.fxml"));
+                    AnchorPane anchorPane = null;
+                    try {
+                        anchorPane = fxmlLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    MyMessageController messageController = fxmlLoader.getController();
+                    messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
+                    teamChatGridPane.add(anchorPane, 0, row);
+                    row++;
+
+                    GridPane.setMargin(anchorPane, new Insets(10));
+                } else {
+                    fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/other-message.fxml"));
+                    AnchorPane anchorPane = null;
+                    try {
+                        anchorPane = fxmlLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    OtherMessageController messageController = fxmlLoader.getController();
+                    messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
+                    teamChatGridPane.add(anchorPane, 0, row);
+                    row++;
+
+                    GridPane.setMargin(anchorPane, new Insets(10));
+                }
+            }
+            messageScrollPane.setVvalue(1.0);
+        }
+        else {
+            TeamChat teamChat = teamChatList.getTeamChats().get(teamChatList.getTeamChats().size() - 1);
+            row = teamChatGridPane.getRowCount();
             if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
-                continue;
+                return;
             }
             FXMLLoader fxmlLoader = new FXMLLoader();
             if (teamChat.getUsername().equals(CurrentUser.getUser().getUsername())) {
@@ -125,7 +165,6 @@ public class TeamCommunicationController {
                 MyMessageController messageController = fxmlLoader.getController();
                 messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
                 teamChatGridPane.add(anchorPane, 0, row);
-                row++;
 
                 GridPane.setMargin(anchorPane, new Insets(10));
             } else {
@@ -139,12 +178,12 @@ public class TeamCommunicationController {
                 OtherMessageController messageController = fxmlLoader.getController();
                 messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
                 teamChatGridPane.add(anchorPane, 0, row);
-                row++;
 
                 GridPane.setMargin(anchorPane, new Insets(10));
+
             }
+            Platform.runLater(() -> messageScrollPane.setVvalue(1.0));
         }
-        messageScrollPane.setVvalue(1.0);
     }
 
 

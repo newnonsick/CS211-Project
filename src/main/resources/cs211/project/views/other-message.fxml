@@ -18,7 +18,7 @@
                   <Image url="@../images/default.png" />
                </image>
             </ImageView>
-            <VBox fx:id="vBox" prefHeight="42.0" prefWidth="417.0" spacing="3.0">
+            <VBox fx:id="vBox" prefHeight="42.0" prefWidth="417.0" spacing="5.0">
                <children>
                   <Label fx:id="usernameLabel" text="Label" />
                   <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="341.0" styleClass="other-message-box" text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa37" wrapText="true">
