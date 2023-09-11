@@ -94,6 +94,11 @@ public class Event implements Comparable {
             return Integer.parseInt(this.eventName) - Integer.parseInt(event.eventName);
         }
         catch (NumberFormatException e){
+            if (this.eventName.compareTo(event.eventName) < 0){
+                if (this.eventName.length() > event.eventName.length()){
+                    return 1;
+                }
+            }
             return this.eventName.compareTo(event.eventName);
         }
     }
