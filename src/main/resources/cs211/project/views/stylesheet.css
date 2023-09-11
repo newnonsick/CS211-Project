@@ -77,8 +77,36 @@
     -fx-border-radius: 15;
 }
 
-.image-view{
-    -fx-background-color: rgba(0,0,0,0);
+.textFlow{
+    /*-fx-background-color: linear-gradient(to left, #ff512f, #dd2476);*/
+    /*บน ขวา ล่าง ซ้าย*/
+    -fx-background-color: #FF9900;
+    -fx-background-insets: -5 -10 -5 -10;
+    /*-fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),2,1.0,0.5,0.5);*/
     -fx-background-radius: 15;
-    -fx-border-radius: 15;
+
+}
+
+.textFlowFlipped{
+    /*-fx-background-color: linear-gradient(to left, #4776e6, #8e54e9);*/
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: -5 -10 -5 -10;
+    /*-fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),2,1.0,-0.5,-0.5);*/
+    -fx-background-radius: 15;
+}
+
+.hbox{
+    -fx-padding: 12px;
+}
+
+
+.usernameText{
+    -fx-fill: #FF9900;
+    -fx-font-size: 12px;
+}
+
+.message{
+    -fx-fill: #191919;
+    -fx-font-size: 16px;
+    -fx-font-weight: 300;
 }

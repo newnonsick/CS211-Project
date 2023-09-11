@@ -7,8 +7,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -90,13 +88,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="messageScrollPane" layoutX="699.0" layoutY="88.0" prefHeight="566.0" prefWidth="450.0" styleClass="transparent">
+      <ScrollPane fx:id="chatBoxScrollPane" layoutX="699.0" layoutY="88.0" prefHeight="566.0" prefWidth="450.0" styleClass="transparent">
          <content>
-            <GridPane fx:id="teamChatGridPane" prefHeight="566.0" prefWidth="435.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-            </GridPane>
+            <VBox fx:id="chatBoxVBox" prefHeight="566.0" prefWidth="435.0" />
          </content>
       </ScrollPane>
    </children>

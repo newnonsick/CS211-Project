@@ -6,30 +6,27 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class TeamCommunicationController {
     @FXML Label avtivityNameLabel;
     @FXML Label activityDescriptionLabel;
     @FXML Label teamNameLabel;
     @FXML TableView activityTableView;
-    @FXML TextArea messageTextArea;
     @FXML TextField sendMessageTextField;
     @FXML Button manageTeamButton;
-    @FXML GridPane teamChatGridPane;
-    @FXML ScrollPane messageScrollPane;
+    @FXML VBox chatBoxVBox;
+    @FXML ScrollPane chatBoxScrollPane;
 
     private TeamChatList teamChatList;
     private Team team;
@@ -51,7 +48,7 @@ public class TeamCommunicationController {
         activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
         activityList = activityListDatasource.readData();
         showActivity(activityList);
-        showChat(true);
+        newShowChat();
 
         activityTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
             @Override
@@ -80,20 +77,9 @@ public class TeamCommunicationController {
             sendMessageTextField.clear();
             teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
             teamChatListDatasource.writeData(teamChatList);
-            showChat(false);
+            update(CurrentUser.getUser().getUsername(),text);
         }
-    }
-
-    @FXML
-    public void handleIncreaseFontButton(){
-        Font font = messageTextArea.getFont();
-        messageTextArea.setFont(new Font(font.getName(), font.getSize() + 2));
-    }
-
-    @FXML
-    public void handleDecreaseFontButton(){
-        Font font = messageTextArea.getFont();
-        messageTextArea.setFont(new Font(font.getName(), font.getSize() - 2));
+        Platform.runLater(() -> chatBoxScrollPane.setVvalue(1.0));
     }
 
     @FXML
@@ -106,84 +92,58 @@ public class TeamCommunicationController {
     }
 
 
-    public void showChat(boolean isShowAll) {
-        int row = 0;
-        if (isShowAll){
-            teamChatGridPane.getChildren().clear();
-            for (TeamChat teamChat : teamChatList.getTeamChats()) {
-                if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
-                    continue;
-                }
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                if (teamChat.getUsername().equals(CurrentUser.getUser().getUsername())) {
-                    fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/my-message.fxml"));
-                    AnchorPane anchorPane = null;
-                    try {
-                        anchorPane = fxmlLoader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    MyMessageController messageController = fxmlLoader.getController();
-                    messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
-                    teamChatGridPane.add(anchorPane, 0, row);
-                    row++;
-
-                    GridPane.setMargin(anchorPane, new Insets(10));
-                } else {
-                    fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/other-message.fxml"));
-                    AnchorPane anchorPane = null;
-                    try {
-                        anchorPane = fxmlLoader.load();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    OtherMessageController messageController = fxmlLoader.getController();
-                    messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
-                    teamChatGridPane.add(anchorPane, 0, row);
-                    row++;
-
-                    GridPane.setMargin(anchorPane, new Insets(10));
-                }
-            }
-            messageScrollPane.setVvalue(1.0);
-        }
-        else {
-            TeamChat teamChat = teamChatList.getTeamChats().get(teamChatList.getTeamChats().size() - 1);
-            row = teamChatGridPane.getRowCount();
+    public void newShowChat(){
+        chatBoxVBox.getChildren().clear();
+        for (TeamChat teamChat : teamChatList.getTeamChats()) {
             if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
-                return;
+                continue;
             }
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            if (teamChat.getUsername().equals(CurrentUser.getUser().getUsername())) {
-                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/my-message.fxml"));
-                AnchorPane anchorPane = null;
-                try {
-                    anchorPane = fxmlLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                MyMessageController messageController = fxmlLoader.getController();
-                messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
-                teamChatGridPane.add(anchorPane, 0, row);
-
-                GridPane.setMargin(anchorPane, new Insets(10));
-            } else {
-                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/other-message.fxml"));
-                AnchorPane anchorPane = null;
-                try {
-                    anchorPane = fxmlLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                OtherMessageController messageController = fxmlLoader.getController();
-                messageController.setPage(teamChat.getMessage(), teamChat.getUsername());
-                teamChatGridPane.add(anchorPane, 0, row);
-
-                GridPane.setMargin(anchorPane, new Insets(10));
-
-            }
-            Platform.runLater(() -> messageScrollPane.setVvalue(1.0));
+            update(teamChat.getUsername(),teamChat.getMessage());
         }
+    }
+    public void update(String username,String message){
+        Text text = new Text(message);
+        text.getStyleClass().add("message");
+        TextFlow flow = new TextFlow();
+        Circle img = new Circle(32,32,16);
+
+        if (!CurrentUser.getUser().getUsername().equals(username)){
+            Text usernameText = new Text(username + "\n");
+            usernameText.getStyleClass().add("usernameText");
+            flow.getChildren().add(usernameText);
+
+            String path = new File("data/profile_picture/default.png").toURI().toString();
+            img.setFill(new ImagePattern(new Image(path)));
+        }
+
+        flow.getChildren().add(text);
+        flow.setMaxWidth(280);
+
+        HBox hbox = new HBox(20);
+
+        if(!CurrentUser.getUser().getUsername().equals(username)){
+            flow.getStyleClass().add("textFlowFlipped");
+            hbox.setAlignment(Pos.TOP_LEFT);
+            hbox.getChildren().add(img);
+            hbox.getChildren().add(flow);
+
+        }else{
+            Pane pane = new Pane();
+            flow.getStyleClass().add("textFlow");
+            hbox.setAlignment(Pos.TOP_RIGHT);
+            hbox.getChildren().add(flow);
+            hbox.getChildren().add(pane);
+        }
+
+        hbox.getStyleClass().add("hbox");
+        chatBoxVBox.getChildren().addAll(hbox);
+        Platform.runLater(() -> {
+            chatBoxScrollPane.setVvalue(1.0);
+            chatBoxScrollPane.setVvalue(1.0);
+            chatBoxScrollPane.setVvalue(1.0);
+            chatBoxScrollPane.setVvalue(1.0);
+            chatBoxScrollPane.setVvalue(1.0);
+        });
     }
 
 
