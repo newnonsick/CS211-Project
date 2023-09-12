@@ -138,8 +138,7 @@ public class EventListController {
                 i++;
                 continue;
             }
-            long daysBetween = ChronoUnit.DAYS.between(currentDate, event.getEventEndDate());
-            if (daysBetween < 0) {
+            if (event.getEventEndDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 3) {

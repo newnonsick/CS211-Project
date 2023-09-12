@@ -24,7 +24,7 @@
       </Label>
    </children>
    <styleClass>
-      <String fx:value="pane" />
+      <String fx:value="element" />
       <String fx:value="shadow" />
    </styleClass>
 </AnchorPane>

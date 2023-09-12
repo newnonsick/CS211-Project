@@ -1,14 +1,18 @@
 .button {
-    -fx-background-color: #FF8C00;
+    -fx-background-color: #FF9900;
+}
+
+.button:pressed{
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
 /*.upsize-button {*/
 /*    -fx-font-size: 40px;*/
 /*}*/
-.pane{
-    -fx-background-color: #FF8C00;
+.element{
+    -fx-background-color: #FFFFFF;
 }
-.pane:hover {
+.element:hover {
     -fx-background-color: #FFA500;
 }
 
@@ -21,17 +25,19 @@
 }
 
 .search-box{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 100;
     -fx-border-color: #D7D7D7;
     -fx-border-radius: 100;
 }
 
 .search-button{
-    -fx-background-color: #FF8C00;
+    -fx-background-color: #FF9900;
     -fx-background-radius: 30;
 }
 
 .navigation-list{
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #DCDCDC;
 }
 
 .navigation-button{
@@ -40,8 +46,67 @@
 
 .navigation-button:hover{
     -fx-background-color: #F5F5F5;
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
 }
 
 .selected_navigation-button{
     -fx-background-color: #F5F5F5;
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+}
+
+.radius{
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+}
+
+.my-message-box{
+    -fx-background-color: #FF9900;
+    -fx-background-radius: 15;
+    -fx-background-insets: -5;
+    -fx-border-insets: -5;
+    -fx-border-color: #FF9900;
+    -fx-border-radius: 15;
+}
+
+.other-message-box{
+    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-radius: 15;
+    -fx-background-insets: -5;
+    -fx-border-insets: -5;
+    -fx-border-color: #D7D7D7;
+    -fx-border-radius: 15;
+}
+
+.textFlow{
+    /*-fx-background-color: linear-gradient(to left, #ff512f, #dd2476);*/
+    /*บน ขวา ล่าง ซ้าย*/
+    -fx-background-color: #FF9900;
+    -fx-background-insets: -5 -10 -5 -10;
+    /*-fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),2,1.0,0.5,0.5);*/
+    -fx-background-radius: 15;
+
+}
+
+.textFlowFlipped{
+    /*-fx-background-color: linear-gradient(to left, #4776e6, #8e54e9);*/
+    -fx-background-color: #FFFFFF;
+    -fx-background-insets: -5 -10 -5 -10;
+    /*-fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),2,1.0,-0.5,-0.5);*/
+    -fx-background-radius: 15;
+}
+
+.hbox{
+    -fx-padding: 12px;
+}
+
+
+.usernameText{
+    -fx-fill: #FF9900;
+    -fx-font-size: 12px;
+}
+
+.message{
+    -fx-fill: #191919;
+    -fx-font-size: 16px;
+    -fx-font-weight: 300;
 }

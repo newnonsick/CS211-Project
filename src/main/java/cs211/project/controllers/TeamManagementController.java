@@ -100,9 +100,9 @@ public class TeamManagementController {
         activityStatusColumn.setCellValueFactory(new PropertyValueFactory<>("activityStatus"));
 
         activityTableView.getColumns().clear();
+        activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getColumns().add(activityNameColumn);
         activityTableView.getColumns().add(activityInformationColumn);
-        activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getItems().clear();
 
         if (activityList.getActivities().size() == 0){

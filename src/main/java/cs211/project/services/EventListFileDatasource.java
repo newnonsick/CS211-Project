@@ -1,10 +1,14 @@
 package cs211.project.services;
 
+import cs211.project.models.Event;
 import cs211.project.models.EventList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;
@@ -75,12 +79,48 @@ public class EventListFileDatasource implements Datasource<EventList> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        Collections.sort(events.getEvents());
         return events;
     }
 
     @Override
-    public void writeData(EventList events) {
+    public void writeData(EventList eventList) {
+        String filePath = directoryName + File.separator + fileName;
+        File file = new File(filePath);
 
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                fileOutputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
+
+        try {
+            for (Event event : eventList.getEvents()) {
+                String line = event.getEventName() + "," + event.getEventPicture() + ","
+                        + event.getEventInformation() + "," + event.getEventCategory()  + "," +
+                        event.getPlaceEvent() + "," + event.getEventStartDate() + "," +
+                        event.getEventEndDate() + "," + CurrentUser.getUser();
+                buffer.append(line);
+                buffer.append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                buffer.flush();
+                buffer.close();
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

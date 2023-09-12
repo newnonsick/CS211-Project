@@ -6,6 +6,7 @@ import cs211.project.models.TeamList;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class TeamListFileDatasource implements Datasource<TeamList>{
     private String directoryName;
@@ -71,7 +72,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        Collections.sort(teams.getTeams());
         return teams;
     }
 
@@ -93,7 +94,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-
+        Collections.sort(teamList.getTeams());
         try {
             for (Team team : teamList.getTeams()) {
                 String line = team.getEventOfTeamName() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getHeadOfTeamUsername();

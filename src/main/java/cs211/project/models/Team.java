@@ -4,7 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Team {
+public class Team implements Comparable {
     private String headOfTeamUsername;
     private String eventOfTeamName;
     private String teamName;
@@ -58,5 +58,23 @@ public class Team {
             return team.getTeamName().equals(this.getTeamName()) && team.getEventOfTeamName().equals(this.getEventOfTeamName());
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Team) {
+            Team team = (Team) o;
+            try {
+                if (this.getEventOfTeamName().equals(team.getEventOfTeamName())) {
+                    return Integer.parseInt(this.getTeamName()) - Integer.parseInt(team.getTeamName());
+                }
+            } catch (NumberFormatException e) {
+                if (this.getEventOfTeamName().equals(team.getEventOfTeamName())) {
+                    return this.getTeamName().compareTo(team.getTeamName());
+                }
+                return this.getEventOfTeamName().compareTo(team.getEventOfTeamName());
+            }
+        }
+        return 0;
     }
 }
