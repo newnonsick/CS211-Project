@@ -58,7 +58,7 @@ public class TeamManagementController {
 
     @FXML
     public void handleEndActivityButton(){
-        activityList.findActivityTeamByObject(selectedActivity).setActivityStatus("Ended");
+        activityList.findActivityByObject(selectedActivity).setActivityStatus("Ended");
         activityListDatasource.writeData(activityList);
         showActivity(activityList);
         selectedActivity = null;

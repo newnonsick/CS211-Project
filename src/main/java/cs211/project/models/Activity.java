@@ -61,11 +61,11 @@ public class Activity {
     }
 
 
-    public Activity(LocalTime activityEndTime) {
-        this.activityEndTime = activityEndTime;
+    public LocalTime activityEndTime(){
+        return activityEndTime;
     }
 
-    public boolean isActivityOfTeam(Activity activity) {
+    public boolean isActivity(Activity activity) {
         if (activity.getActivityName().equals(this.getActivityName()) && activity.getEventOfActivityName().equals(this.getEventOfActivityName()) && activity.getTeamOfActivityName().equals(this.getTeamOfActivityName())) {
             return true;
         }

@@ -1,5 +1,6 @@
 package cs211.project.models;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ActivityList {
@@ -19,16 +20,27 @@ public class ActivityList {
         activityName = activityName.trim();
         activityInformation = activityInformation.trim();
         if (!eventOfActivityName.equals("") && !teamOfActivityName.equals("") && !activityName.equals("") && !activityInformation.equals("")) {
-            Activity exist = findActivityTeamByObject(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation, activityStatus));
+            Activity exist = findActivityByObject(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation, activityStatus));
             if (exist == null) {
                 activities.add(new Activity(eventOfActivityName,teamOfActivityName,activityName, activityInformation, activityStatus));
             }
         }
     }
 
-    public Activity findActivityTeamByObject(Activity activity) {
+    public void addNewActivityParticipant(String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime){
+        activityName = activityName.trim();
+        activityInformation = activityInformation.trim();
+        if(!activityName.equals("") && !activityInformation.equals("")){
+            Activity newActivity = findActivityByObject(new Activity(activityName, activityInformation, activityStartTime, activityEndTime));
+            if (newActivity == null) {
+                activities.add(new Activity(activityName, activityInformation, activityStartTime, activityEndTime));
+            }
+        }
+    }
+
+    public Activity findActivityByObject(Activity activity) {
         for (Activity activity1 : activities) {
-            if (activity1.isActivityOfTeam(activity)) {
+            if (activity1.isActivity(activity)) {
                 return activity1;
             }
         }

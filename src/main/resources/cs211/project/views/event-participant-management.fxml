@@ -44,9 +44,10 @@
       <Line endX="-100.0" endY="800.0" layoutX="700.0" layoutY="10.0" startX="-100.0" />
       <TableView fx:id="activityParticipantTableView" layoutX="635.0" layoutY="110.0" prefHeight="450.0" prefWidth="500.0">
          <columns>
-            <TableColumn prefWidth="101.60003662109375" text="วันที่" />
-            <TableColumn prefWidth="92.7999267578125" text="เวลา" />
-            <TableColumn prefWidth="305.5999755859375" text="รายละเอียด" />
+            <TableColumn prefWidth="76.79998779296875" text="เริ่ม" />
+            <TableColumn prefWidth="73.60003662109375" text="สิ้นสุด" />
+            <TableColumn prefWidth="120.0" text="ชื่อกิจกรรม" />
+            <TableColumn prefWidth="228.0" text="รายละเอียดกิจกรรม" />
          </columns>
       </TableView>
       <Button layoutX="1027.0" layoutY="744.0" mnemonicParsing="false" onAction="#handleEndActivityPartiButton" text="สิ้นสุดกิจกรรม">
