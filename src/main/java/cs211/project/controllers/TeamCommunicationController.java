@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class TeamCommunicationController {
     private Datasource<TeamChatList> teamChatListDatasource;
     private Datasource<ActivityList> activityListDatasource;
     private ActivityList activityList;
+    private String beforeSend = "";
+
     @FXML
     public void initialize(){
         team = (Team) FXRouterPane.getData();
@@ -118,13 +121,16 @@ public class TeamCommunicationController {
         });
     }
     public void update(String username,String message){
+        chatBoxVBox.setSpacing(-5);
         Text text = new Text(message);
         text.getStyleClass().add("message");
         TextFlow flow = new TextFlow();
         Circle img = new Circle(32,32,16);
 
+        VBox messageVBox = new VBox(-5);
+        messageVBox.setAlignment(Pos.TOP_LEFT);
+        Text usernameText = new Text();
         if (!CurrentUser.getUser().getUsername().equals(username)){
-            Text usernameText;
             if (team.getHeadOfTeamUsername().equals(username)){
                 usernameText = new Text(username + " (Leader)" + "\n");
             }
@@ -132,25 +138,49 @@ public class TeamCommunicationController {
                 usernameText = new Text(username + "\n");
             }
             usernameText.getStyleClass().add("usernameText");
-            flow.getChildren().add(usernameText);
+            messageVBox.getChildren().add(usernameText);
 
             String path = new File("data/profile_picture/default.png").toURI().toString();
             img.setFill(new ImagePattern(new Image(path)));
+
         }
 
         flow.getChildren().add(text);
         flow.setMaxWidth(280);
+        messageVBox.getChildren().add(flow);
 
-        HBox hbox = new HBox(20);
+        HBox hbox = new HBox(10);
 
+        Pane pane = new Pane();
         if(!CurrentUser.getUser().getUsername().equals(username)){
-            flow.getStyleClass().add("textFlowFlipped");
-            hbox.setAlignment(Pos.TOP_LEFT);
-            hbox.getChildren().add(img);
-            hbox.getChildren().add(flow);
+            if (beforeSend.equals(username)){
+                messageVBox.getChildren().remove(0);
+                flow.getStyleClass().add("textFlowFlipped");
+                hbox.setAlignment(Pos.TOP_LEFT);
+                pane.setMinWidth(42);
+                hbox.getChildren().add(pane);
+                hbox.getChildren().add(messageVBox);
+            }
+            else{
+                Pane pane2 = new Pane();
+                pane2.setMinWidth(10);
+                pane.setMaxWidth(usernameText.getLayoutBounds().getWidth());
+                beforeSend = username;
+                messageVBox.getChildren().remove(1);
+                HBox temp = new HBox();
+                temp.getChildren().add(pane2);
+                temp.getChildren().add(flow);
+                temp.getChildren().add(pane);
+                messageVBox.getChildren().add(temp);
+                flow.getStyleClass().add("textFlowFlipped");
+                hbox.setAlignment(Pos.TOP_LEFT);
+                hbox.getChildren().add(img);
+                hbox.getChildren().add(messageVBox);
+            }
+
 
         }else{
-            Pane pane = new Pane();
+            beforeSend = "";
             flow.getStyleClass().add("textFlow");
             hbox.setAlignment(Pos.TOP_RIGHT);
             hbox.getChildren().add(flow);
