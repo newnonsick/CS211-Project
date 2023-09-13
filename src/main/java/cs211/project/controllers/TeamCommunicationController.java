@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
     @FXML Label avtivityNameLabel;
@@ -137,12 +138,14 @@ public class TeamCommunicationController {
 
         hbox.getStyleClass().add("hbox");
         chatBoxVBox.getChildren().addAll(hbox);
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         Platform.runLater(() -> {
             chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
+
         });
     }
 

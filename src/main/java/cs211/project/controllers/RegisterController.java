@@ -38,10 +38,10 @@ public class RegisterController {
     @FXML
     Button cancelUploadButton;
     File selectedImage = null;
+    boolean upFile = false;
 
     @FXML
     public void initialize(){
-
         errorLabel.setText("");
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
     }
@@ -55,6 +55,7 @@ public class RegisterController {
         String password2 = confirmPasswordTextField.getText();
         String fullName = nameTextField.getText();
         String filePath = "data/userData.csv";
+        String profilePic = "";
         File file = new File(filePath);
         FileInputStream fileInputStream = null;
         if(username.isEmpty() || password.isEmpty() || password2.isEmpty() || fullName.isEmpty()) {
@@ -63,6 +64,12 @@ public class RegisterController {
         }
         if (!password.equals(password2)) {
             errorLabel.setText("Please make sure to type the correct passwords");
+            passwordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
+        }
+        if (username.equals("Default")) {
+            errorLabel.setText("That user name is not allowed.");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
@@ -109,7 +116,13 @@ public class RegisterController {
                 StandardCharsets.UTF_8
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
-        String newAcc = username + "," + encryptPassword + "," + fullName;
+        if(!upFile) {
+            profilePic = "default.png";
+        }
+        else {
+            profilePic = username + "." + (Files.probeContentType(Paths.get(selectedImage.getAbsolutePath())).substring(6));
+        }
+        String newAcc = username + "," + encryptPassword + "," + fullName + "," + profilePic;
         try {
             for(String acc : userPass) {
                 bufferWrite.append(acc);
@@ -162,6 +175,7 @@ public class RegisterController {
         }
         cancelUploadButton.setVisible(true);
         cancelUploadButton.setDisable(false);
+        upFile = true;
     }
     private void choosePhotoFile() {
         FileChooser fileChooser = new FileChooser();
@@ -177,6 +191,7 @@ public class RegisterController {
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
         cancelUploadButton.setDisable(true);
         cancelUploadButton.setVisible(false);
+        upFile = false;
     }
 }
 
