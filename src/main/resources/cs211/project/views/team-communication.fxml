@@ -88,7 +88,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="chatBoxScrollPane" layoutX="699.0" layoutY="88.0" prefHeight="566.0" prefWidth="450.0" styleClass="transparent">
+      <ScrollPane fx:id="chatBoxScrollPane" hbarPolicy="NEVER" layoutX="699.0" layoutY="88.0" prefHeight="566.0" prefWidth="450.0" styleClass="transparent" vvalue="1.0">
          <content>
             <VBox fx:id="chatBoxVBox" prefHeight="566.0" prefWidth="435.0" />
          </content>

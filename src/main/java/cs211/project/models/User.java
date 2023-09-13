@@ -7,11 +7,14 @@ import java.io.IOException;
 public class User {
     private String username;
     private String name;
+    private String pic;
 
-    //We will later make it using only username and then read data from csv file to fill the rest
     public User(String username) {
-        if(checkUserExistence(username)) {
+        String info = checkUserExistence(username);
+        if(info != null) {
             this.username = username;
+            this.name = info.split(":")[0];
+            this.pic = info.split(":")[1];
         }
     }
 
@@ -23,7 +26,9 @@ public class User {
         return this.name;
     }
 
-    public static boolean checkUserExistence(String username) {
+    public String getPic() { return this.pic;}
+
+    public static String checkUserExistence(String username) {
         try {
             FileReader fileReader = new FileReader("data/userData.csv");
             BufferedReader buffer = new BufferedReader(fileReader);
@@ -34,10 +39,10 @@ public class User {
                     String[] data = line.split(",");
                     String usernameInData = data[0].trim();
                     if (username.equals(usernameInData)) {
-                        return true;
+                        return data[2].trim() + ":" + data[3].trim();
                     }
                 }
-                return false;
+                return null;
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
