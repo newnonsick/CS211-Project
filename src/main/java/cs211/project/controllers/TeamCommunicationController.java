@@ -17,6 +17,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
     @FXML Label avtivityNameLabel;
@@ -79,7 +80,14 @@ public class TeamCommunicationController {
             teamChatListDatasource.writeData(teamChatList);
             update(CurrentUser.getUser().getUsername(),text);
         }
-        Platform.runLater(() -> chatBoxScrollPane.setVvalue(1.0));
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Platform.runLater(() -> {
+            chatBoxScrollPane.setVvalue(1.0);
+        });
     }
 
     @FXML
@@ -100,6 +108,14 @@ public class TeamCommunicationController {
             }
             update(teamChat.getUsername(),teamChat.getMessage());
         }
+        try {
+            TimeUnit.MILLISECONDS.sleep(250);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Platform.runLater(() -> {
+            chatBoxScrollPane.setVvalue(1.0);
+        });
     }
     public void update(String username,String message){
         Text text = new Text(message);
@@ -108,7 +124,13 @@ public class TeamCommunicationController {
         Circle img = new Circle(32,32,16);
 
         if (!CurrentUser.getUser().getUsername().equals(username)){
-            Text usernameText = new Text(username + "\n");
+            Text usernameText;
+            if (team.getHeadOfTeamUsername().equals(username)){
+                usernameText = new Text(username + " (Leader)" + "\n");
+            }
+            else{
+                usernameText = new Text(username + "\n");
+            }
             usernameText.getStyleClass().add("usernameText");
             flow.getChildren().add(usernameText);
 
@@ -136,12 +158,9 @@ public class TeamCommunicationController {
         }
 
         hbox.getStyleClass().add("hbox");
+
         chatBoxVBox.getChildren().addAll(hbox);
         Platform.runLater(() -> {
-            chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
-            chatBoxScrollPane.setVvalue(1.0);
             chatBoxScrollPane.setVvalue(1.0);
         });
     }

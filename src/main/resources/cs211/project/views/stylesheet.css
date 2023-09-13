@@ -1,8 +1,9 @@
+
 .button {
     -fx-background-color: #FF9900;
 }
 
-.button:pressed{
+.button:pressed {
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
@@ -106,7 +107,7 @@
 }
 
 .message{
-    -fx-fill: #191919;
+    -fx-fill: #212121;
     -fx-font-size: 16px;
     -fx-font-weight: 300;
 }

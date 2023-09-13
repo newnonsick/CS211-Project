@@ -25,8 +25,10 @@ public class TeamOfEventListController {
     @FXML
     Label eventNameLabel;
 
-    private Datasource<TeamList> datasource;
+    private Datasource<TeamList> teamListDatasource;
+    private Datasource<TeamParticipantList> teamParticipantListDatasource;
     private TeamList teamList;
+    private TeamParticipantList teamParticipantList;
     private String eventName;
     private LocalDate currentDate;
 
@@ -36,8 +38,10 @@ public class TeamOfEventListController {
         eventNameLabel.setText(eventName);
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
-        datasource = new TeamListFileDatasource("data", "team_list.csv");
-        teamList = datasource.readData();
+        teamListDatasource = new TeamListFileDatasource("data", "team_list.csv");
+        teamList = teamListDatasource.readData();
+        teamParticipantListDatasource = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
+        teamParticipantList = teamParticipantListDatasource.readData();
         showTeam();
     }
 
@@ -49,11 +53,13 @@ public class TeamOfEventListController {
             if (!team.getEventOfTeamName().equals(eventName)) {
                 continue;
             }
-            long daysBetween = ChronoUnit.DAYS.between(currentDate, team.getClosingJoinDate());
-            if (daysBetween < 0) {
+            if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
-            if(column == 2) {
+            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(team.getEventOfTeamName(), team.getTeamName()) >= team.getMaxParticipants()){
+                continue;
+            }
+            if (column == 2) {
                 row++;
                 column = 0;
             }
