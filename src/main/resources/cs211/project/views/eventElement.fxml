@@ -8,13 +8,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
-<AnchorPane onMouseDragEntered="#mouseEnter" onMouseDragExited="#mouseExit" prefHeight="202.0" prefWidth="256.0" style="-fx-background-radius: 30;" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
-   <VBox alignment="CENTER" layoutY="-1.0" prefHeight="218.0" prefWidth="256.0">
-=======
 <AnchorPane onMouseDragEntered="#mouseEnter" onMouseDragExited="#mouseExit" prefHeight="202.0" prefWidth="256.0" style="-fx-background-radius: 30;" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
-   <VBox alignment="CENTER" layoutY="-1.0" prefHeight="202.0" prefWidth="256.0">
->>>>>>> 48d58b9b72f80e46f31f173378bfd879a9ceee2c
+   <VBox alignment="CENTER" layoutY="-1.0" prefHeight="218.0" prefWidth="256.0">
       <children>
             <Label fx:id="eventNameLabel" text="Event name">
             <font>

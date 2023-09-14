@@ -25,6 +25,7 @@ public class EventInformationController {
     @FXML private Label endDateLabel;
     @FXML private Label maxParticipantsLabel;
     @FXML private Label closingJoinDateLabel;
+    @FXML private Label categoryLabel;
 
     private Datasource<EventList> datasource;
     private EventList eventList;
@@ -44,6 +45,7 @@ public class EventInformationController {
         endDateLabel.setText("" + event.getEventEndDate());
         maxParticipantsLabel.setText("" + event.getMaxParticipants());
         closingJoinDateLabel.setText("" + event.getClosingJoinDate());
+        categoryLabel.setText(event.getEventCategory());
         String filePath = "data/eventPicture/" + event.getEventPicture();
         File file = new File(filePath);
         eventImageView.setImage(new Image(file.toURI().toString()));
