@@ -79,7 +79,7 @@ public class TeamCommunicationController {
         String text = sendMessageTextField.getText();
         if (!text.isEmpty()){
             sendMessageTextField.clear();
-            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
+            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text.replace(",", "//comma//"));
             teamChatListDatasource.writeData(teamChatList);
             update(CurrentUser.getUser().getUsername(),text);
         }
@@ -109,7 +109,7 @@ public class TeamCommunicationController {
             if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
                 continue;
             }
-            update(teamChat.getUsername(),teamChat.getMessage());
+            update(teamChat.getUsername(),teamChat.getMessage().replace("//comma//", ","));
         }
         try {
             TimeUnit.MILLISECONDS.sleep(250);
@@ -149,17 +149,17 @@ public class TeamCommunicationController {
         flow.setMaxWidth(280);
         messageVBox.getChildren().add(flow);
 
-        HBox hbox = new HBox(10);
+        HBox hBoxMessage = new HBox(10);
 
         Pane pane = new Pane();
         if(!CurrentUser.getUser().getUsername().equals(username)){
             if (beforeSend.equals(username)){
                 messageVBox.getChildren().remove(0);
                 flow.getStyleClass().add("textFlowFlipped");
-                hbox.setAlignment(Pos.TOP_LEFT);
+                hBoxMessage.setAlignment(Pos.TOP_LEFT);
                 pane.setMinWidth(42);
-                hbox.getChildren().add(pane);
-                hbox.getChildren().add(messageVBox);
+                hBoxMessage.getChildren().add(pane);
+                hBoxMessage.getChildren().add(messageVBox);
             }
             else{
                 Pane pane2 = new Pane();
@@ -167,29 +167,29 @@ public class TeamCommunicationController {
                 pane.setMaxWidth(usernameText.getLayoutBounds().getWidth());
                 beforeSend = username;
                 messageVBox.getChildren().remove(1);
-                HBox temp = new HBox();
-                temp.getChildren().add(pane2);
-                temp.getChildren().add(flow);
-                temp.getChildren().add(pane);
-                messageVBox.getChildren().add(temp);
+                HBox tempHBox = new HBox();
+                tempHBox.getChildren().add(pane2);
+                tempHBox.getChildren().add(flow);
+                tempHBox.getChildren().add(pane);
+                messageVBox.getChildren().add(tempHBox);
                 flow.getStyleClass().add("textFlowFlipped");
-                hbox.setAlignment(Pos.TOP_LEFT);
-                hbox.getChildren().add(img);
-                hbox.getChildren().add(messageVBox);
+                hBoxMessage.setAlignment(Pos.TOP_LEFT);
+                hBoxMessage.getChildren().add(img);
+                hBoxMessage.getChildren().add(messageVBox);
             }
 
 
         }else{
             beforeSend = "";
             flow.getStyleClass().add("textFlow");
-            hbox.setAlignment(Pos.TOP_RIGHT);
-            hbox.getChildren().add(flow);
-            hbox.getChildren().add(pane);
+            hBoxMessage.setAlignment(Pos.TOP_RIGHT);
+            hBoxMessage.getChildren().add(flow);
+            hBoxMessage.getChildren().add(pane);
         }
 
-        hbox.getStyleClass().add("hbox");
+        hBoxMessage.getStyleClass().add("hBoxMessage");
 
-        chatBoxVBox.getChildren().addAll(hbox);
+        chatBoxVBox.getChildren().addAll(hBoxMessage);
         Platform.runLater(() -> {
             chatBoxScrollPane.setVvalue(1.0);
         });
