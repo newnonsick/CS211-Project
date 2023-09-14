@@ -74,6 +74,12 @@ public class RegisterController {
             confirmPasswordTextField.setText("");
             return;
         }
+        if (username.contains(",")) {
+            errorLabel.setText("Comma \",\" is not allowed is username");
+            passwordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
+        }
         try {
             fileInputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
