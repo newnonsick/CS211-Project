@@ -1,8 +1,9 @@
+
 .button {
     -fx-background-color: #FF9900;
 }
 
-.button:pressed{
+.button:pressed {
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
@@ -95,7 +96,7 @@
     -fx-background-radius: 15;
 }
 
-.hbox{
+.hBoxMessage{
     -fx-padding: 12px;
 }
 
@@ -106,7 +107,7 @@
 }
 
 .message{
-    -fx-fill: #191919;
+    -fx-fill: #212121;
     -fx-font-size: 16px;
     -fx-font-weight: 300;
 }
@@ -115,5 +116,5 @@
     -fx-background-color: #bb0ebb;
     -fx-background-radius: 20px;
     -fx-padding: 5px;
-    margin-top: 20px;
+    margin-top: 20gpx;
 }

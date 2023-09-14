@@ -26,7 +26,7 @@
             <HBox alignment="CENTER" prefHeight="39.0" prefWidth="875.0" styleClass="search-box">
                <children>
                   <TextField fx:id="searchTextField" prefHeight="36.0" prefWidth="819.0" promptText="Search" styleClass="transparent" />
-                  <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="26.0" prefWidth="55.0" styleClass="search-button" text="Search" />
+                  <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="26.0" prefWidth="55.0" styleClass="search-button" text="Search" />
                </children>
             </HBox>
             <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">

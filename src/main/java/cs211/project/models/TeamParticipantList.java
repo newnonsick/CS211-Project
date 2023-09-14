@@ -31,6 +31,16 @@ public class TeamParticipantList{
         return null;
     }
 
+    public int getTeamParticipantCountByEventAndTeamName(String eventName, String teamName) {
+        int count = 0;
+        for (TeamParticipant teamParticipant : teamParticipants) {
+            if (teamParticipant.getEventName().equals(eventName) && teamParticipant.getTeamName().equals(teamName)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     public ArrayList<TeamParticipant> getTeamParticipants() {
         return teamParticipants;
     }

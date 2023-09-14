@@ -7,6 +7,8 @@ import cs211.project.models.TeamChatList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
     private String directoryName;
@@ -71,20 +73,21 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        activities.getActivities().sort(
-                (o1, o2) -> {
-                    if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
-                        return 0;
-                    }
-                    if (o1.getActivityStatus().equals("Ended")){
-                        return 1;
-                    }
-                    if (o2.getActivityStatus().equals("Ended")){
-                        return -1;
-                    }
+        Collections.sort(activities.getActivities(), new Comparator<Activity>() {
+            @Override
+            public int compare(Activity o1, Activity o2) {
+                if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
                     return 0;
                 }
-        );
+                if (o1.getActivityStatus().equals("Ended")){
+                    return 1;
+                }
+                if (o2.getActivityStatus().equals("Ended")){
+                    return -1;
+                }
+                return o1.getActivityName().compareTo(o2.getActivityName());
+            }
+        });
         return activities;
     }
     //addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation)
@@ -107,20 +110,21 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
 
-        activityList.getActivities().sort(
-                (o1, o2) -> {
-                    if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
+        Collections.sort(activityList.getActivities(), new Comparator<Activity>() {
+            @Override
+            public int compare(Activity o1, Activity o2) {
+                if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
                         return 0;
                     }
-                    if (o1.getActivityStatus().equals("Ended")){
-                        return 1;
-                    }
-                    if (o2.getActivityStatus().equals("Ended")){
-                        return -1;
-                    }
-                    return 0;
+                if (o1.getActivityStatus().equals("Ended")){
+                    return 1;
                 }
-        );
+                if (o2.getActivityStatus().equals("Ended")){
+                    return -1;
+                }
+                return o1.getActivityName().compareTo(o2.getActivityName());
+            }
+        });
 
         try {
             for (Activity activity : activityList.getActivities()) {

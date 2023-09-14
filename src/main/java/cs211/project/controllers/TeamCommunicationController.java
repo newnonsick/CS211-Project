@@ -14,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class TeamCommunicationController {
     private Datasource<TeamChatList> teamChatListDatasource;
     private Datasource<ActivityList> activityListDatasource;
     private ActivityList activityList;
+    private String beforeSend = "";
+
     @FXML
     public void initialize(){
         team = (Team) FXRouterPane.getData();
@@ -76,11 +79,18 @@ public class TeamCommunicationController {
         String text = sendMessageTextField.getText();
         if (!text.isEmpty()){
             sendMessageTextField.clear();
-            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text);
+            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text.replace(",", "//comma//"));
             teamChatListDatasource.writeData(teamChatList);
             update(CurrentUser.getUser().getUsername(),text);
         }
-        Platform.runLater(() -> chatBoxScrollPane.setVvalue(1.0));
+        try {
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        Platform.runLater(() -> {
+            chatBoxScrollPane.setVvalue(1.0);
+        });
     }
 
     @FXML
@@ -99,53 +109,89 @@ public class TeamCommunicationController {
             if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
                 continue;
             }
-            update(teamChat.getUsername(),teamChat.getMessage());
+            update(teamChat.getUsername(),teamChat.getMessage().replace("//comma//", ","));
         }
-    }
-    public void update(String username,String message){
-        Text text = new Text(message);
-        text.getStyleClass().add("message");
-        TextFlow flow = new TextFlow();
-        Circle img = new Circle(32,32,16);
-
-        if (!CurrentUser.getUser().getUsername().equals(username)){
-            Text usernameText = new Text(username + "\n");
-            usernameText.getStyleClass().add("usernameText");
-            flow.getChildren().add(usernameText);
-
-            String path = new File("data/profile_picture/default.png").toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
-        }
-
-        flow.getChildren().add(text);
-        flow.setMaxWidth(280);
-
-        HBox hbox = new HBox(20);
-
-        if(!CurrentUser.getUser().getUsername().equals(username)){
-            flow.getStyleClass().add("textFlowFlipped");
-            hbox.setAlignment(Pos.TOP_LEFT);
-            hbox.getChildren().add(img);
-            hbox.getChildren().add(flow);
-
-        }else{
-            Pane pane = new Pane();
-            flow.getStyleClass().add("textFlow");
-            hbox.setAlignment(Pos.TOP_RIGHT);
-            hbox.getChildren().add(flow);
-            hbox.getChildren().add(pane);
-        }
-
-        hbox.getStyleClass().add("hbox");
-        chatBoxVBox.getChildren().addAll(hbox);
         try {
-            TimeUnit.MILLISECONDS.sleep(500);
+            TimeUnit.MILLISECONDS.sleep(250);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
         Platform.runLater(() -> {
             chatBoxScrollPane.setVvalue(1.0);
+        });
+    }
+    public void update(String username,String message){
+        chatBoxVBox.setSpacing(-5);
+        Text text = new Text(message);
+        text.getStyleClass().add("message");
+        TextFlow flow = new TextFlow();
+        Circle img = new Circle(32,32,16);
 
+        VBox messageVBox = new VBox(-5);
+        messageVBox.setAlignment(Pos.TOP_LEFT);
+        Text usernameText = new Text();
+        if (!CurrentUser.getUser().getUsername().equals(username)){
+            if (team.getHeadOfTeamUsername().equals(username)){
+                usernameText = new Text(username + " (Leader)" + "\n");
+            }
+            else{
+                usernameText = new Text(username + "\n");
+            }
+            usernameText.getStyleClass().add("usernameText");
+            messageVBox.getChildren().add(usernameText);
+
+            String path = new File("data/profile_picture/default.png").toURI().toString();
+            img.setFill(new ImagePattern(new Image(path)));
+
+        }
+
+        flow.getChildren().add(text);
+        flow.setMaxWidth(280);
+        messageVBox.getChildren().add(flow);
+
+        HBox hBoxMessage = new HBox(10);
+
+        Pane pane = new Pane();
+        if(!CurrentUser.getUser().getUsername().equals(username)){
+            if (beforeSend.equals(username)){
+                messageVBox.getChildren().remove(0);
+                flow.getStyleClass().add("textFlowFlipped");
+                hBoxMessage.setAlignment(Pos.TOP_LEFT);
+                pane.setMinWidth(42);
+                hBoxMessage.getChildren().add(pane);
+                hBoxMessage.getChildren().add(messageVBox);
+            }
+            else{
+                Pane pane2 = new Pane();
+                pane2.setMinWidth(10);
+                pane.setMaxWidth(usernameText.getLayoutBounds().getWidth());
+                beforeSend = username;
+                messageVBox.getChildren().remove(1);
+                HBox tempHBox = new HBox();
+                tempHBox.getChildren().add(pane2);
+                tempHBox.getChildren().add(flow);
+                tempHBox.getChildren().add(pane);
+                messageVBox.getChildren().add(tempHBox);
+                flow.getStyleClass().add("textFlowFlipped");
+                hBoxMessage.setAlignment(Pos.TOP_LEFT);
+                hBoxMessage.getChildren().add(img);
+                hBoxMessage.getChildren().add(messageVBox);
+            }
+
+
+        }else{
+            beforeSend = "";
+            flow.getStyleClass().add("textFlow");
+            hBoxMessage.setAlignment(Pos.TOP_RIGHT);
+            hBoxMessage.getChildren().add(flow);
+            hBoxMessage.getChildren().add(pane);
+        }
+
+        hBoxMessage.getStyleClass().add("hBoxMessage");
+
+        chatBoxVBox.getChildren().addAll(hBoxMessage);
+        Platform.runLater(() -> {
+            chatBoxScrollPane.setVvalue(1.0);
         });
     }
 
