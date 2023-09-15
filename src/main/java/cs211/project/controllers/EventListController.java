@@ -252,6 +252,84 @@ public class EventListController {
         }
 
     }
+    @FXML
+    public void searchByCategoryOne() {
+        searchByCategory("คอนเสิร์ต / แฟนมีตติ้ง");
+    }
+    @FXML
+    public void searchByCategoryTwo() {
+        searchByCategory("งานประชุม / งานสัมมนา");
+    }
+    @FXML
+    public void searchByCategoryThree() {
+        searchByCategory("งานเทศกาล");
+    }
+    @FXML
+    public void searchByCategoryFour() {
+        searchByCategory("หนังสือ");
+    }
+    @FXML
+    public void searchByCategoryFive() {
+        searchByCategory("ศิลปะ");
+    }
+    @FXML
+    public void searchByCategorySix() {
+        searchByCategory("กีฬา");
+    }
+    @FXML
+    public void searchByCategorySeven() {
+        searchByCategory("อีสปอร์ต");
+    }
+    @FXML
+    public void searchByCategoryEight() {
+        searchByCategory("งานแสดงสินค้า");
+    }
+    @FXML
+    public void searchByCategoryNine() {
+        searchByCategory("การกุศล");
+    }
+    @FXML
+    public void searchByCategoryTen() {
+        searchByCategory("อื่น ๆ");
+    }
+
+    public void searchByCategory(String category) {
+        eventGrid.getChildren().clear();
+        int row = 0;
+        int column = 0;
+        for (Event event : eventListData.getEvents()) {
+            if (!event.getEventCategory().equals(category)) {
+                continue;
+            }
+            if(column == 3) {
+                row++;
+                column = 0;
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            EventElementController event_ = fxmlLoader.getController();
+            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            anchorPane.setOnMouseClicked(event1 -> {
+                try {
+                    FXRouterPane.goTo("event-information", event.getEventName());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            eventGrid.add(anchorPane, column, row);
+            column++;
+
+            GridPane.setMargin(anchorPane, new Insets(10));
+        }
+    }
+
 
 
 }

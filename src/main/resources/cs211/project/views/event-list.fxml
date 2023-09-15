@@ -38,52 +38,52 @@
                      <children>
                         <HBox prefHeight="26.0" prefWidth="875.0">
                            <children>
-                              <Button mnemonicParsing="false" text="คอนเสิร์ต / แฟนมีตติ้ง">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryOne" text="คอนเสิร์ต / แฟนมีตติ้ง">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="งานประชุม / งานสัมมนา">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryTwo" text="งานประชุม / งานสัมมนา">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="งานเทศกาล">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryThree" text="งานเทศกาล">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="หนังสือ">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryFour" text="หนังสือ">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="ศิลปะ">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryFive" text="ศิลปะ">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="กีฬา">
+                              <Button mnemonicParsing="false" onAction="#searchByCategorySix" text="กีฬา">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="อีสปอร์ต">
+                              <Button mnemonicParsing="false" onAction="#searchByCategorySeven" text="อีสปอร์ต">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="งานแสดงสินค้า">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryEight" text="งานแสดงสินค้า">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="การกุศล">
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryNine" text="การกุศล">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="อื่น ๆ" />
+                              <Button mnemonicParsing="false" onAction="#searchByCategoryTen" text="อื่น ๆ" />
                            </children>
                         </HBox>
                      </children></Pane>
