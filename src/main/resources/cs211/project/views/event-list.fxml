@@ -24,105 +24,54 @@
                   <Font name="System Bold" size="43.0" />
                </font>
             </Label>
-            <Pane layoutY="100.0" minWidth="-Infinity" prefWidth="890.0" styleClass="search-box">
+            <HBox alignment="CENTER" layoutY="100.0" prefHeight="38.0" prefWidth="890.0" spacing="10.0" styleClass="search-box">
                <children>
-                  <TextField fx:id="searchTextField" prefHeight="36.0" prefWidth="744.0" promptText="Search" styleClass="transparent" />
-                  <Button fx:id="searchButton" defaultButton="true" layoutX="747.0" layoutY="6.0" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="26.0" prefWidth="55.0" styleClass="search-button" text="Search" />
-                  <Button layoutX="818.0" layoutY="6.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#categoryPaneOpen" prefWidth="64.0" styleClass="search-button" text="Category" />
+                  <TextField fx:id="searchTextField" prefHeight="36.0" prefWidth="719.0" promptText="Search" styleClass="transparent" />
+                  <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="26.0" prefWidth="55.0" styleClass="search-button" text="Search" />
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#categoryPaneOpen" prefWidth="64.0" styleClass="search-button" text="Category" />
                </children>
-            </Pane>
+            </HBox>
             <VBox layoutY="136.8000030517578">
                <children>
                   <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="888.0" />
                   <Pane fx:id="categoryPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" prefWidth="888.0" visible="false">
                      <children>
                         <ScrollPane prefHeight="50.0" prefWidth="874.0" styleClass="transparent" vbarPolicy="NEVER">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1350.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1200.0">
                                  <children>
-                                    <HBox prefHeight="26.0" prefWidth="1350.0">
+                                    <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="1200.0" spacing="5.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryOne" text="งานแสดงสินค้า">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryTwo" text="เทศกาล">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryThree" text="อบรมสัมนา">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryFour" text="บ้านและของแต่งบ้าน">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryFive" text="อาหารและเครื่องดื่ม">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategorySix" text="บันเทิง">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategorySeven" text="คอนเสิร์ต/แฟนมีตติ้ง">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryEight" text="ท่องเที่ยว">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryNine" text="ศิลปะ/นิทรรศการ/ถ่ายภาพ">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryTen" text="กีฬา">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryEleven" text="ศาสนา">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryTwelve" text="สัตว์เลี้ยง">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryThirteen" text="ธุรกิจ/อาชีพ/การศึกษา">
-                                             <HBox.margin>
-                                                <Insets right="20.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#searchByCategoryFourteen" text="อื่น ๆ" />
+                                          <Button fx:id="allCategoryButton" mnemonicParsing="false" onAction="#handleAllCategoryButton" text="ทั้งหมด" />
+                                          <Button fx:id="categoryExpoButton" mnemonicParsing="false" onAction="#handleCategoryExpoButton" text="งานแสดงสินค้า" />
+                                          <Button fx:id="categoryFestivalButton" mnemonicParsing="false" onAction="#handleCategoryFestivalButton" text="เทศกาล" />
+                                          <Button fx:id="categorySeminarButton" mnemonicParsing="false" onAction="#handleCategorySeminarButton" text="อบรมสัมมนา" />
+                                          <Button fx:id="categoryHouseButton" mnemonicParsing="false" onAction="#handleCategoryHouseButton" text="บ้านและของแต่งบ้าน" />
+                                          <Button fx:id="categoryFoodButton" mnemonicParsing="false" onAction="#handleCategoryFoodButton" text="อาหารและเครื่องดื่ม" />
+                                          <Button fx:id="categoryEntertainmentButton" mnemonicParsing="false" onAction="#handleCategoryEntertainmentButton" text="บันเทิง" />
+                                          <Button fx:id="categoryConcertButton" mnemonicParsing="false" onAction="#handleCategoryConcertButton" text="คอนเสิร์ต/แฟนมีตติ้ง" />
+                                          <Button fx:id="categoryTravelButton" mnemonicParsing="false" onAction="#handleCategoryTravelButton" text="ท่องเที่ยว" />
+                                          <Button fx:id="categoryArtButton" mnemonicParsing="false" onAction="#handleCategoryArtButton" text="ศิลปะ/นิทรรศการ/ถ่ายภาพ" />
+                                          <Button fx:id="categorySportButton" mnemonicParsing="false" onAction="#handleCategorySportButton" text="กีฬา" />
+                                          <Button fx:id="categoryReligionButton" mnemonicParsing="false" onAction="#handleCategoryReligionButton" text="ศาสนา" />
+                                          <Button fx:id="categoryPetButton" mnemonicParsing="false" onAction="#handleCategoryPetButton" text="สัตว์เลี้ยง" />
+                                          <Button fx:id="categoryEducationButton" mnemonicParsing="false" onAction="#handleCategoryEducationButton" text="ธุรกิจ/อาชีพ/การศึกษา" />
+                                          <Button fx:id="categoryOtherButton" mnemonicParsing="false" onAction="#handleCategoryOtherButton" text="อื่น ๆ" />
                                        </children>
                                     </HBox>
                                  </children>
                               </AnchorPane>
-                          </content>
+                           </content>
                         </ScrollPane>
                      </children></Pane>
                   <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">
                      <content>
                         <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="664.0" prefWidth="873.0">
-                          <columnConstraints>
+                           <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
+                           </columnConstraints>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -136,6 +85,5 @@
             </VBox>
          </children>
       </Pane>
-      <Label fx:id="logLabel" layoutX="96.0" layoutY="22.0" />
    </children>
 </AnchorPane>

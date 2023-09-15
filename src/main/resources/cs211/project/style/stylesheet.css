@@ -101,3 +101,7 @@
     -fx-padding: 5px;
     margin-top: 20gpx;
 }
+
+.category-button-selected {
+    -fx-background-color: #DCDCDC;
+}

@@ -36,6 +36,7 @@ public class EventListController {
     private EventList eventListData;
     private LocalDate currentDate;
     private boolean isSearch;
+    private String selectedCategory;
     @FXML
     Pane categoryPane;
     @FXML
@@ -46,11 +47,26 @@ public class EventListController {
     GridPane eventGrid;
     @FXML
     ScrollPane eventScrollPane;
-    @FXML
-    Label logLabel;
+    @FXML Button allCategoryButton;
+    @FXML Button categoryExpoButton;
+    @FXML Button categoryFestivalButton;
+    @FXML Button categorySeminarButton;
+    @FXML Button categoryHouseButton;
+    @FXML Button categoryFoodButton;
+    @FXML Button categoryEntertainmentButton;
+    @FXML Button categoryConcertButton;
+    @FXML Button categoryTravelButton;
+    @FXML Button categoryArtButton;
+    @FXML Button categorySportButton;
+    @FXML Button categoryReligionButton;
+    @FXML Button categoryPetButton;
+    @FXML Button categoryEducationButton;
+    @FXML Button categoryOtherButton;
+
     boolean categoryOn = false;
 
     public void initialize() {
+        allCategoryButton.getStyleClass().add("category-button-selected");
         isSearch = false;
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
@@ -71,7 +87,7 @@ public class EventListController {
                 // Calculate the current Vvalue (current scroll position)
                 double currentVvalue = newValue.doubleValue();
 
-                if (currentVvalue >= maxVvalue * 0.95 && !isSearch) {
+                if (selectedCategory == null && currentVvalue >= maxVvalue * 0.95 && !isSearch) {
                     if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
                         maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
                     }
@@ -95,7 +111,12 @@ public class EventListController {
             maxRow = 4;
             eventScrollPane.setVvalue(0);
             eventGrid.getChildren().clear();
-            showList();
+            if (selectedCategory != null) {
+                showList("");
+            }
+            else {
+                showList();
+            }
             isSearch = false;
         }
         searchTextField.clear();
@@ -187,10 +208,17 @@ public class EventListController {
     }
 
     public void showList(String eventName) {
+        eventGrid.getChildren().clear();
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
-            if (!event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
+            if (eventName != "" && !event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
+                continue;
+            }
+            if (event.getEventEndDate().isBefore(currentDate)) {
+                continue;
+            }
+            if (selectedCategory != null && !event.getEventCategory().equals(selectedCategory)) {
                 continue;
             }
             if(column == 3) {
@@ -253,95 +281,115 @@ public class EventListController {
 
     }
     @FXML
-    public void searchByCategoryOne() {searchByCategory("งานแสดงสินค้า");}
-    @FXML
-    public void searchByCategoryTwo() {
-        searchByCategory("เทศกาล");
-    }
-    @FXML
-    public void searchByCategoryThree() {
-        searchByCategory("อบรมสัมนา");
-    }
-    @FXML
-    public void searchByCategoryFour() {
-        searchByCategory("บ้านและของแต่งบ้าน");
-    }
-    @FXML
-    public void searchByCategoryFive() {
-        searchByCategory("อาหารและเครื่องดื่ม");
-    }
-    @FXML
-    public void searchByCategorySix() {
-        searchByCategory("บันเทิง");
-    }
-    @FXML
-    public void searchByCategorySeven() {
-        searchByCategory("คอนเสิร์ต/แฟนมีตติ้ง");
-    }
-    @FXML
-    public void searchByCategoryEight() {
-        searchByCategory("ท่องเที่ยว");
-    }
-    @FXML
-    public void searchByCategoryNine() {
-        searchByCategory("ศิลปะ/นิทรรศการ/ถ่ายภาพ");
-    }
-    @FXML
-    public void searchByCategoryTen() {
-        searchByCategory("กีฬา");
-    }
-    @FXML
-    public void searchByCategoryEleven() {
-        searchByCategory("ศาสนา");
-    }
-    @FXML
-    public void searchByCategoryTwelve() {
-        searchByCategory("สัตว์เลี้ยง");
-    }
-    @FXML
-    public void searchByCategoryThirteen() {
-        searchByCategory("ธุรกิจ/อาชีพ/การศึกษา");
-    }
-    @FXML
-    public void searchByCategoryFourteen() {
-        searchByCategory("อื่น ๆ");
-    }
-
-    public void searchByCategory(String category) {
+    public void handleAllCategoryButton() {
+        maxRow = 4;
+        selectedCategory = null;
         eventGrid.getChildren().clear();
-        int row = 0;
-        int column = 0;
-        for (Event event : eventListData.getEvents()) {
-            if (!event.getEventCategory().equals(category)) {
-                continue;
-            }
-            if(column == 3) {
-                row++;
-                column = 0;
-            }
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
-            AnchorPane anchorPane = null;
-            try {
-                anchorPane = fxmlLoader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        showList();
+        changeStyleClassCategoryButton(allCategoryButton);
+    }
+    @FXML
+    public void handleCategoryExpoButton() {
+        selectedCategory = "งานแสดงสินค้า";
+        changeStyleClassCategoryButton(categoryExpoButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryFestivalButton() {
+        selectedCategory = "เทศกาล";
+        changeStyleClassCategoryButton(categoryFestivalButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategorySeminarButton() {
+        selectedCategory = "อบรมสัมนา";
+        changeStyleClassCategoryButton(categorySeminarButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryHouseButton() {
+        selectedCategory = "บ้านและของแต่งบ้าน";
+        changeStyleClassCategoryButton(categoryHouseButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryFoodButton() {
+        selectedCategory = "อาหารและเครื่องดื่ม";
+        changeStyleClassCategoryButton(categoryFoodButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryEntertainmentButton() {
+        selectedCategory = "บันเทิง";
+        changeStyleClassCategoryButton(categoryEntertainmentButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryConcertButton() {
+        selectedCategory = "คอนเสิร์ต/แฟนมีตติ้ง";
+        changeStyleClassCategoryButton(categoryConcertButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryTravelButton() {
+        selectedCategory = "ท่องเที่ยว";
+        changeStyleClassCategoryButton(categoryTravelButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryArtButton() {
+        selectedCategory = "ศิลปะ/นิทรรศการ/ถ่ายภาพ";
+        changeStyleClassCategoryButton(categoryArtButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategorySportButton() {
+        selectedCategory = "กีฬา";
+        changeStyleClassCategoryButton(categorySportButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryReligionButton() {
+        selectedCategory = "ศาสนา";
+        changeStyleClassCategoryButton(categoryReligionButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryPetButton() {
+        selectedCategory = "สัตว์เลี้ยง";
+        changeStyleClassCategoryButton(categoryPetButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryEducationButton() {
+        selectedCategory = "ธุรกิจ/อาชีพ/การศึกษา";
+        changeStyleClassCategoryButton(categoryEducationButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryOtherButton() {
+        selectedCategory = "อื่น ๆ";
+        changeStyleClassCategoryButton(categoryOtherButton);
+        showList("");
+    }
 
-            EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
-            anchorPane.setOnMouseClicked(event1 -> {
-                try {
-                    FXRouterPane.goTo("event-information", event.getEventName());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            eventGrid.add(anchorPane, column, row);
-            column++;
-
-            GridPane.setMargin(anchorPane, new Insets(10));
-        }
+    public void changeStyleClassCategoryButton(Button button){
+        allCategoryButton.getStyleClass().remove("category-button-selected");
+        categoryExpoButton.getStyleClass().remove("category-button-selected");
+        categoryFestivalButton.getStyleClass().remove("category-button-selected");
+        categorySeminarButton.getStyleClass().remove("category-button-selected");
+        categoryHouseButton.getStyleClass().remove("category-button-selected");
+        categoryFoodButton.getStyleClass().remove("category-button-selected");
+        categoryEntertainmentButton.getStyleClass().remove("category-button-selected");
+        categoryConcertButton.getStyleClass().remove("category-button-selected");
+        categoryTravelButton.getStyleClass().remove("category-button-selected");
+        categoryArtButton.getStyleClass().remove("category-button-selected");
+        categorySportButton.getStyleClass().remove("category-button-selected");
+        categoryReligionButton.getStyleClass().remove("category-button-selected");
+        categoryPetButton.getStyleClass().remove("category-button-selected");
+        categoryEducationButton.getStyleClass().remove("category-button-selected");
+        categoryOtherButton.getStyleClass().remove("category-button-selected");
+        button.getStyleClass().add("category-button-selected");
     }
 
 
