@@ -61,7 +61,11 @@
             <Font size="16.0" />
          </font>
       </Button>
+<<<<<<< HEAD
       <Label fx:id="errorLabel" layoutX="987.0" layoutY="673.0" text="errorLabel" textFill="RED">
+=======
+      <Label fx:id="errorLabel" layoutX="859.0" layoutY="744.0" text="errorLabel" textFill="RED">
+>>>>>>> e332d902fe0d29f26d250868c136d956894a9eb8
          <font>
             <Font size="16.0" />
          </font>
