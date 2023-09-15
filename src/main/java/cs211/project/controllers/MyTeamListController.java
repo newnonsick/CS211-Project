@@ -50,8 +50,7 @@ public class MyTeamListController {
             if (!teamParticipant.getUsername().equals(CurrentUser.getUser().getUsername())) {
                 continue;
             }
-            long daysBetween = ChronoUnit.DAYS.between(currentDate, team.getClosingJoinDate());
-            if (daysBetween < 0) {
+            if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 2) {
