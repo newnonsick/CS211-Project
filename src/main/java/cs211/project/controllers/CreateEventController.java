@@ -32,14 +32,14 @@ public class CreateEventController {
     @FXML private ImageView eventImageView;
     @FXML private Button uploadImageButton;
     @FXML private ChoiceBox<String> eventChoiceBox;
-    @FXML private Label showDataLabel;
     File selectedImage = null;
 
     private Datasource<EventList> datasource;
     private Event event;
     private EventList eventList;
-    private String[] eventCategories = {"คอนเสิร์ต / แฟนมีตติ้ง", "งานประชุม / งานสัมมนา","งานเทศกาล", "หนังสือ",
-            "ศิลปะ", "กีฬา", "อีสปอร์ต" ,"งานแสดงสินค้า", "การกุศล", "อื่น ๆ"};
+    private String[] eventCategories = {"งานแสดงสินค้า", "เทศกาล", "อบรมสัมนา", "บ้านและของแต่งบ้าน"
+            ,"อาหารและเครื่องดื่ม", "บันเทิง","คอนเสิร์ต/แฟนมีตติ้ง", "ท่องเที่ยว", "ศิลปะ/นิทรรศการ/ถ่ายภาพ", "งานวิ่ง", "กีฬา"
+            , "ศาสนา", "สัตว์เลี้ยง", "ธุรกิจ/อาชีพ/การศึกษา", "อื่น ๆ"};
 
     @FXML
     public void initialize() {
@@ -67,17 +67,19 @@ public class CreateEventController {
 
         String eventOwner = CurrentUser.getUser().getUsername();
 
-        showDataLabel.setText(eventName + "," + eventImage + "," + eventInfo + "," + eventCategory + "," + place
-                + "," + startDate + "," + endDate + "," + eventOwner);
-
         String filePath = "data/eventList.csv";
         File file = new File(filePath);
         FileInputStream fileInputStream = null;
 
         if (eventName.equals("") || selectedImage==null || eventInfo.equals("") || eventCategory.equals("")
-                || place.equals("") || startDate.equals("") || endDate.equals("")) {
-            if (selectedImage==null) errorLabel.setText("No image");
-            else errorLabel.setText("Please fill in the required information.");
+                || place.equals("") || localStartDate==null || localEndDate==null) {
+            if (localEndDate.isBefore(localStartDate))
+                errorLabel.setText("End date should be greater than start date.");
+            else
+                errorLabel.setText("Please fill in the required information.");
+
+            if (selectedImage==null)
+                eventImageErrorLabel.setText("*Please upload the event image.");
             return;
         }
 
@@ -162,13 +164,13 @@ public class CreateEventController {
             }
         }
 
-        goToEventInformation(eventName);
+        goToMyEvents();
     }
 
     @FXML
-    private void goToEventInformation(String eventName) {
+    private void goToMyEvents() {
         try {
-            FXRouterPane.goTo("event-information", eventName);
+            FXRouterPane.goTo("my-events");
         }
         catch (IOException e) {
             throw new RuntimeException(e);

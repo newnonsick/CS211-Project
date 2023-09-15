@@ -61,7 +61,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" layoutX="987.0" layoutY="675.0" text="errorLabel" textFill="RED">
+      <Label fx:id="errorLabel" layoutX="987.0" layoutY="673.0" text="errorLabel" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>
@@ -78,6 +78,5 @@
          </font>
       </Label>
       <ChoiceBox fx:id="eventChoiceBox" layoutX="350.0" layoutY="238.0" prefWidth="150.0" />
-      <Label fx:id="showDataLabel" layoutX="880.0" layoutY="372.0" text="showDataLabel" />
    </children>
 </AnchorPane>

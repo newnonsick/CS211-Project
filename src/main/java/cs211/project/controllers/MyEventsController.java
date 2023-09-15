@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 
 import java.io.IOException;
 
-public class YourCreatedEventsController {
+public class MyEventsController {
     @FXML private TableView eventsYouCreatedTableView;
 
     @FXML
