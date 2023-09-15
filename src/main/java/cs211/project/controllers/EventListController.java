@@ -158,7 +158,7 @@ public class EventListController {
             }
 
             EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture());
+            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("event-information", event.getEventName());
@@ -195,7 +195,7 @@ public class EventListController {
             }
 
             EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture());
+            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("event-information", event.getEventName());
