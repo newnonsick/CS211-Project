@@ -19,10 +19,11 @@
             <ImageView fx:id="eventImageView" fitHeight="129.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white;">
       </ImageView>
          <Pane prefHeight="8.0" prefWidth="256.0" />
-         <Label styleClass="catBox" text="Category :" textFill="WHITE">
-            <font>
-               <Font size="7.0" />
-            </font>
+         <Label fx:id="categoryLabel" text="Category :" textFill="WHITE">
+            <styleClass>
+               <String fx:value="catBox" />
+               <String fx:value="shadow" />
+            </styleClass>
          </Label>
       </children>
    </VBox>
