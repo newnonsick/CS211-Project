@@ -87,6 +87,8 @@ public class Event implements Comparable {
         this.closingJoinDate = closingJoinDate;
     }
 
+    public String getEventOwnerUsername() { return eventOwnerUsername; }
+
     @Override
     public int compareTo(Object o) {
         Event event = (Event) o;

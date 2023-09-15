@@ -79,7 +79,7 @@ public class MainPageController {
     }
 
     @FXML
-    public void goToYourCreatedEvents()  {
+    public void goToMyEvents()  {
         try {
             changeStyleClassButton(myEventButton);
             FXRouterPane.goTo("my-events");
