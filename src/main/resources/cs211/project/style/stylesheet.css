@@ -60,23 +60,6 @@
     -fx-border-radius: 30;
 }
 
-.my-message-box{
-    -fx-background-color: #FF9900;
-    -fx-background-radius: 15;
-    -fx-background-insets: -5;
-    -fx-border-insets: -5;
-    -fx-border-color: #FF9900;
-    -fx-border-radius: 15;
-}
-
-.other-message-box{
-    -fx-background-color: rgba(0,0,0,0);
-    -fx-background-radius: 15;
-    -fx-background-insets: -5;
-    -fx-border-insets: -5;
-    -fx-border-color: #D7D7D7;
-    -fx-border-radius: 15;
-}
 
 .textFlow{
     /*-fx-background-color: linear-gradient(to left, #ff512f, #dd2476);*/
