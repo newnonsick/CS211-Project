@@ -22,10 +22,12 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.security.Key;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class EventListController {
     private String[] eventList;
@@ -46,6 +48,7 @@ public class EventListController {
     ScrollPane eventScrollPane;
     @FXML
     Label logLabel;
+    boolean categoryOn = false;
 
     public void initialize() {
         isSearch = false;
@@ -221,15 +224,32 @@ public class EventListController {
     @FXML
     public void categoryPaneOpen() {
         Timeline timeline = new Timeline();
-        double initHeight = categoryPane.getPrefHeight();
-        double targetHeight = 50;
+        if(!categoryOn) {
+            double targetHeight = 50;
 
-        KeyValue keyValue = new KeyValue(categoryPane.prefHeightProperty(), targetHeight);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+            KeyValue keyValue = new KeyValue(categoryPane.prefHeightProperty(), targetHeight);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
 
-        timeline.getKeyFrames().add(keyFrame);
-        categoryPane.setVisible(true);
-        timeline.play();
+            timeline.getKeyFrames().add(keyFrame);
+            categoryPane.setVisible(true);
+            timeline.play();
+            categoryOn = true;
+        }
+        else {
+            double targetHeight = 0;
+
+            KeyValue keyValue = new KeyValue(categoryPane.prefHeightProperty(), targetHeight);
+            KeyValue keyValue2 = new KeyValue(categoryPane.visibleProperty(), false);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+            KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.3), keyValue2);
+
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.getKeyFrames().add(keyFrame2);
+            timeline.play();
+
+            categoryPane.setVisible(false);
+            categoryOn = false;
+        }
 
     }
 
