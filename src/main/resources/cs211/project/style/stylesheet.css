@@ -99,7 +99,7 @@
     -fx-background-color: #bb0ebb;
     -fx-background-radius: 20px;
     -fx-padding: 5px;
-    margin-top: 20gpx;
+    /*margin-top: 20gpx;*/
 }
 
 .category-button-selected {
