@@ -48,8 +48,9 @@ public class AdminPageController {
                         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
                     }
                     else {
-                        //I am clueless. Don't know how to continue
-                        //profileImageView.setImage(new Image(getClass().getResource("C:\\Users\\user\\Desktop\\Tarn\\Java_final_project\\cs211-661-project-the-rookies-team\\data\\profile_picture" + newValue.getPic()).toExternalForm()));
+                        File file = new File("data/profile_picture/" + newValue.getPic());
+                        Image profileImage = new Image(file.toURI().toString());
+                        profileImageView.setImage(profileImage);
                     }
                     usernameLabel.setText(newValue.getUsername());
                     nameLabel.setText(newValue.getName());
@@ -65,12 +66,16 @@ public class AdminPageController {
         TableColumn<LogUser, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        TableColumn<LogUser, String> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("logDate"));
+
         TableColumn<LogUser, String> timeColumn = new TableColumn<>("Time");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("logTime"));
 
         usersLogTableView.getColumns().clear();
         usersLogTableView.getColumns().add(usernameColumn);
         usersLogTableView.getColumns().add(nameColumn);
+        usersLogTableView.getColumns().add(dateColumn);
         usersLogTableView.getColumns().add(timeColumn);
 
         usersLogTableView.getItems().clear();

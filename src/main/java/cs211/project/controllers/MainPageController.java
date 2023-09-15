@@ -49,7 +49,7 @@ public class MainPageController {
         FXRouterPane.when("user-information", viewPath + "user-information.fxml");
         FXRouterPane.when("create-event", viewPath + "create-event.fxml");
         FXRouterPane.when("event-information", viewPath + "event-information.fxml");
-        FXRouterPane.when("your-created-events", viewPath + "your-created-events.fxml");
+        FXRouterPane.when("my-events", viewPath + "my-events.fxml");
         FXRouterPane.when("event-team-management", viewPath + "event-team-management.fxml");
         FXRouterPane.when("create-team", viewPath + "create-team.fxml");
         FXRouterPane.when("teamofevent-list", viewPath + "teamofevent-list.fxml");
