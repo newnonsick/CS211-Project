@@ -228,7 +228,7 @@ public class EventListController {
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
 
         timeline.getKeyFrames().add(keyFrame);
-        timeline.setAutoReverse(true);
+        categoryPane.setVisible(true);
         timeline.play();
 
     }

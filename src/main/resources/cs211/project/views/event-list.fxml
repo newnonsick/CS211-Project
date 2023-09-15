@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
@@ -32,7 +33,39 @@
             </Pane>
             <VBox layoutY="136.8000030517578">
                <children>
-                  <Pane fx:id="categoryPane" prefHeight="0.0" prefWidth="888.0" style="-fx-background-color: red;" />
+                  <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="888.0" />
+                  <Pane fx:id="categoryPane" prefHeight="0.0" prefWidth="888.0" visible="false">
+                     <children>
+                        <HBox prefHeight="26.0" prefWidth="875.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Button">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Button">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Button">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Button">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Button">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children></Pane>
                   <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">
                      <content>
                         <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="664.0" prefWidth="873.0">
