@@ -12,8 +12,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 public class MyEventsController {
     @FXML private TableView<Event> myEventsTableView;
@@ -34,18 +32,22 @@ public class MyEventsController {
         TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
         eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
 
+        TableColumn<Event, String> placeColumn = new TableColumn<>("Place");
+        placeColumn.setCellValueFactory(new PropertyValueFactory<>("placeEvent"));
+
         TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
         eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
         eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
 
-        TableColumn<Event, String> participantsColumn = new TableColumn<>("Participants");
+        TableColumn<Event, String> participantsColumn = new TableColumn<>("Max Participants");
         participantsColumn.setCellValueFactory(new PropertyValueFactory<>("maxParticipants"));
 
         myEventsTableView.getColumns().clear();
         myEventsTableView.getColumns().add(eventNameColumn);
         myEventsTableView.getColumns().add(eventCategoryColumn);
+        myEventsTableView.getColumns().add(placeColumn);
         myEventsTableView.getColumns().add(eventStartDateColumn);
         myEventsTableView.getColumns().add(eventEndDateColumn);
         myEventsTableView.getColumns().add(participantsColumn);
