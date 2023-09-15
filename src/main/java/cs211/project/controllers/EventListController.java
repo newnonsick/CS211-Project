@@ -5,6 +5,9 @@ import cs211.project.models.EventList;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouterPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -15,6 +18,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
 import java.io.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -28,7 +34,8 @@ public class EventListController {
     private EventList eventListData;
     private LocalDate currentDate;
     private boolean isSearch;
-
+    @FXML
+    Pane categoryPane;
     @FXML
     TextField searchTextField;
     @FXML
@@ -37,6 +44,8 @@ public class EventListController {
     GridPane eventGrid;
     @FXML
     ScrollPane eventScrollPane;
+    @FXML
+    Label logLabel;
 
     public void initialize() {
         isSearch = false;
@@ -208,6 +217,20 @@ public class EventListController {
 
             GridPane.setMargin(anchorPane, new Insets(10));
         }
+    }
+    @FXML
+    public void categoryPaneOpen() {
+        Timeline timeline = new Timeline();
+        double initHeight = categoryPane.getPrefHeight();
+        double targetHeight = 50;
+
+        KeyValue keyValue = new KeyValue(categoryPane.prefHeightProperty(), targetHeight);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.setAutoReverse(true);
+        timeline.play();
+
     }
 
 
