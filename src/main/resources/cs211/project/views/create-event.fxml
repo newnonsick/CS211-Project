@@ -56,17 +56,17 @@
       <TextField fx:id="placeTextField" layoutX="441.0" layoutY="573.0" prefHeight="25.0" prefWidth="176.0" />
       <DatePicker fx:id="startDatePicker" layoutX="441.0" layoutY="622.0" prefHeight="27.0" prefWidth="176.0" />
       <DatePicker fx:id="endDatePicker" layoutX="441.0" layoutY="672.0" prefHeight="27.0" prefWidth="176.0" />
-      <Button layoutX="948.0" layoutY="707.0" mnemonicParsing="false" onAction="#createEventButton" text="Create Event">
+      <Button layoutX="948.0" layoutY="707.0" mnemonicParsing="false" onAction="#createEvent" text="Create Event">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" layoutX="987.0" layoutY="675.0" text="errorLabel" textAlignment="RIGHT" textFill="RED">
+      <Label fx:id="errorLabel" layoutX="987.0" layoutY="673.0" text="errorLabel" textFill="RED">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Button fx:id="uploadImageButton" layoutX="363.0" layoutY="288.0" mnemonicParsing="false" text="Upload">
+      <Button fx:id="uploadImageButton" layoutX="363.0" layoutY="288.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload">
          <font>
             <Font size="16.0" />
          </font>

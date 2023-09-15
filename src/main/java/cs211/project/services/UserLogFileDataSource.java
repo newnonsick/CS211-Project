@@ -2,10 +2,13 @@ package cs211.project.services;
 
 import cs211.project.models.EventList;
 import cs211.project.models.LogUser;
+import cs211.project.models.User;
 import cs211.project.models.UserList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -46,14 +49,23 @@ public class UserLogFileDataSource implements Datasource<UserList> {
                 if (line.equals("")) continue;
                 String[] data = line.split(",");
                 String username = data[0];
-                String time = data[1];
-                users.addUser(new LogUser(username, time));
+                String date = data[1];
+                String time = data[2];
+                users.addUser(new LogUser(username, date,time));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Collections.reverse(users.getUsers());
-        return users;
+        UserList finalUsers = new UserList();
+        ArrayList<String> pastUsers = new ArrayList<String>();
+        for(User user : users.getUsers()) {
+            if(!pastUsers.contains(user.getUsername())) {
+                finalUsers.addUser(user);
+                pastUsers.add(user.getUsername());
+            }
+        }
+        return finalUsers;
     }
 
     @Override

@@ -94,5 +94,11 @@
             <Font size="16.0" />
          </font>
       </Button>
+      <Label text="Label" />
+      <Label fx:id="categoryLabel" layoutX="499.0" layoutY="400.0" text="categoryLabel">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
