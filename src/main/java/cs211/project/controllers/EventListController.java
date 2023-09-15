@@ -253,43 +253,57 @@ public class EventListController {
 
     }
     @FXML
-    public void searchByCategoryOne() {
-        searchByCategory("คอนเสิร์ต / แฟนมีตติ้ง");
-    }
+    public void searchByCategoryOne() {searchByCategory("งานแสดงสินค้า");}
     @FXML
     public void searchByCategoryTwo() {
-        searchByCategory("งานประชุม / งานสัมมนา");
+        searchByCategory("เทศกาล");
     }
     @FXML
     public void searchByCategoryThree() {
-        searchByCategory("งานเทศกาล");
+        searchByCategory("อบรมสัมนา");
     }
     @FXML
     public void searchByCategoryFour() {
-        searchByCategory("หนังสือ");
+        searchByCategory("บ้านและของแต่งบ้าน");
     }
     @FXML
     public void searchByCategoryFive() {
-        searchByCategory("ศิลปะ");
+        searchByCategory("อาหารและเครื่องดื่ม");
     }
     @FXML
     public void searchByCategorySix() {
-        searchByCategory("กีฬา");
+        searchByCategory("บันเทิง");
     }
     @FXML
     public void searchByCategorySeven() {
-        searchByCategory("อีสปอร์ต");
+        searchByCategory("คอนเสิร์ต/แฟนมีตติ้ง");
     }
     @FXML
     public void searchByCategoryEight() {
-        searchByCategory("งานแสดงสินค้า");
+        searchByCategory("ท่องเที่ยว");
     }
     @FXML
     public void searchByCategoryNine() {
-        searchByCategory("การกุศล");
+        searchByCategory("ศิลปะ/นิทรรศการ/ถ่ายภาพ");
     }
     @FXML
     public void searchByCategoryTen() {
+        searchByCategory("กีฬา");
+    }
+    @FXML
+    public void searchByCategoryEleven() {
+        searchByCategory("ศาสนา");
+    }
+    @FXML
+    public void searchByCategoryTwelve() {
+        searchByCategory("สัตว์เลี้ยง");
+    }
+    @FXML
+    public void searchByCategoryThirteen() {
+        searchByCategory("ธุรกิจ/อาชีพ/การศึกษา");
+    }
+    @FXML
+    public void searchByCategoryFourteen() {
         searchByCategory("อื่น ๆ");
     }
 

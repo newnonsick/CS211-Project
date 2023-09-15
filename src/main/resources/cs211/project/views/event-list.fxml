@@ -36,56 +36,84 @@
                   <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="888.0" />
                   <Pane fx:id="categoryPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" prefWidth="888.0" visible="false">
                      <children>
-                        <HBox prefHeight="26.0" prefWidth="875.0">
-                           <children>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryOne" text="คอนเสิร์ต / แฟนมีตติ้ง">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryTwo" text="งานประชุม / งานสัมมนา">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryThree" text="งานเทศกาล">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryFour" text="หนังสือ">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryFive" text="ศิลปะ">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategorySix" text="กีฬา">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategorySeven" text="อีสปอร์ต">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryEight" text="งานแสดงสินค้า">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryNine" text="การกุศล">
-                                 <HBox.margin>
-                                    <Insets right="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#searchByCategoryTen" text="อื่น ๆ" />
-                           </children>
-                        </HBox>
+                        <ScrollPane prefHeight="50.0" prefWidth="874.0" styleClass="transparent" vbarPolicy="NEVER">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1350.0">
+                                 <children>
+                                    <HBox prefHeight="26.0" prefWidth="1350.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryOne" text="งานแสดงสินค้า">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryTwo" text="เทศกาล">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryThree" text="อบรมสัมนา">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryFour" text="บ้านและของแต่งบ้าน">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryFive" text="อาหารและเครื่องดื่ม">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategorySix" text="บันเทิง">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategorySeven" text="คอนเสิร์ต/แฟนมีตติ้ง">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryEight" text="ท่องเที่ยว">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryNine" text="ศิลปะ/นิทรรศการ/ถ่ายภาพ">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryTen" text="กีฬา">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryEleven" text="ศาสนา">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryTwelve" text="สัตว์เลี้ยง">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryThirteen" text="ธุรกิจ/อาชีพ/การศึกษา">
+                                             <HBox.margin>
+                                                <Insets right="20.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#searchByCategoryFourteen" text="อื่น ๆ" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
                      </children></Pane>
                   <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">
                      <content>
