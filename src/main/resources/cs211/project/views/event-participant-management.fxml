@@ -44,10 +44,10 @@
       <Line endX="-100.0" endY="800.0" layoutX="700.0" layoutY="10.0" startX="-100.0" />
       <TableView fx:id="activityParticipantTableView" layoutX="635.0" layoutY="110.0" prefHeight="450.0" prefWidth="500.0">
          <columns>
-            <TableColumn prefWidth="76.79998779296875" text="เริ่ม" />
-            <TableColumn prefWidth="73.60003662109375" text="สิ้นสุด" />
-            <TableColumn prefWidth="120.0" text="ชื่อกิจกรรม" />
-            <TableColumn prefWidth="228.0" text="รายละเอียดกิจกรรม" />
+            <TableColumn fx:id="activityStartColumn" prefWidth="76.79998779296875" text="เริ่ม" />
+            <TableColumn fx:id="activityEndColumn" prefWidth="73.60003662109375" text="สิ้นสุด" />
+            <TableColumn fx:id="activityNameColumn" prefWidth="120.0" text="ชื่อกิจกรรม" />
+            <TableColumn fx:id="activityInfoColumn" prefWidth="228.0" text="รายละเอียดกิจกรรม" />
          </columns>
       </TableView>
       <Button layoutX="1027.0" layoutY="744.0" mnemonicParsing="false" onAction="#handleEndActivityPartiButton" text="สิ้นสุดกิจกรรม">
@@ -70,7 +70,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="avtivityNameTextField" layoutX="736.0" layoutY="572.0" prefHeight="35.0" prefWidth="399.0" />
+      <TextField fx:id="activityNameTextField" layoutX="736.0" layoutY="572.0" prefHeight="35.0" prefWidth="399.0" />
       <TextField fx:id="activityPartiDetailsTextField" layoutX="783.0" layoutY="632.0" prefHeight="91.0" prefWidth="352.0" />
       <Button layoutX="835.0" layoutY="742.0" mnemonicParsing="false" onAction="#handleRemoveActivityPartiButton" text="ลบกิจกรรม">
          <font>

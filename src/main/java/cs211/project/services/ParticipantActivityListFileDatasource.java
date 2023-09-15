@@ -99,7 +99,7 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
 
         try {
             for (Activity activity : activityList.getActivities()) {
-                String line = activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStartTime() + "," +activity.getActivityEndTime();
+                String line = activity.getActivityName() + "," + activity.getActivityInformation()  + "," + activity.getActivityStartTime() + "," +activity.getActivityEndTime();
                 buffer.append(line);
                 buffer.append("\n");
             }
