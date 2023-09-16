@@ -20,10 +20,8 @@ public class MyEventsController {
     @FXML
     public void initialize() {
         CurrentUser.ThisUser user = CurrentUser.getUser();
-        showTable(user.getCreatedEvents());
-        datasource = new EventListFileDatasource("data", "eventList.csv");
-        eventList = datasource.readData();
-        showTable(eventList);
+        EventList createdEvents = user.getCreatedEvents();
+        showTable(createdEvents);
 
         myEventsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
             @Override
@@ -69,8 +67,7 @@ public class MyEventsController {
         myEventsTableView.getItems().clear();
 
         for (Event event: eventList.getEvents()) {
-            if (event.getEventOwnerUsername().equals(CurrentUser.getUser().getUsername()))
-                myEventsTableView.getItems().add(event);
+            myEventsTableView.getItems().add(event);
         }
 
     }
