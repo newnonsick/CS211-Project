@@ -2,10 +2,9 @@ package cs211.project.controllers;
 
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
-import cs211.project.services.CurrentUser;
-import cs211.project.services.Datasource;
-import cs211.project.services.EventListFileDatasource;
-import cs211.project.services.FXRouterPane;
+import cs211.project.services.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,6 +21,22 @@ public class MyEventsController {
     public void initialize() {
         CurrentUser.ThisUser user = CurrentUser.getUser();
         showTable(user.getCreatedEvents());
+        datasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = datasource.readData();
+        showTable(eventList);
+
+        myEventsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
+            @Override
+            public void changed(ObservableValue observable, Event oldValue, Event newValue) {
+                if (newValue != null) {
+                    try {
+                        FXRouterPane.goTo("event-management", newValue.getEventName());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void showTable(EventList eventList) {
@@ -59,15 +74,4 @@ public class MyEventsController {
         }
 
     }
-
-    @FXML
-    public void goToEventManagement()  {
-        try {
-            FXRouterPane.goTo("event-management");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
 }
