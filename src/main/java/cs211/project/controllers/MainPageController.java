@@ -1,4 +1,5 @@
 package cs211.project.controllers;
+import cs211.project.models.User;
 import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
 import javafx.fxml.FXML;
@@ -26,15 +27,18 @@ public class MainPageController {
     @FXML
     Button userInfoButton;
 
+    private User currentUser;
+
 
 
     @FXML
     public void initialize() {
+        currentUser = (User) FXRouter.getData();
         changeStyleClassButton(eventButton);
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
         try {
-            FXRouterPane.goTo("event-list","First Run");
+            FXRouterPane.goTo("event-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,7 +66,7 @@ public class MainPageController {
     public void goToEventList()  {
         try {
             changeStyleClassButton(eventButton);
-            FXRouterPane.goTo("event-list");
+            FXRouterPane.goTo("event-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +76,7 @@ public class MainPageController {
     public void goToCreateEvent()  {
         try {
             changeStyleClassButton(createEventButton);
-            FXRouterPane.goTo("create-event");
+            FXRouterPane.goTo("create-event", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +86,7 @@ public class MainPageController {
     public void goToMyEvents()  {
         try {
             changeStyleClassButton(myEventButton);
-            FXRouterPane.goTo("my-events");
+            FXRouterPane.goTo("my-events", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +96,7 @@ public class MainPageController {
     public void goToUserInformation()  {
         try {
             changeStyleClassButton(userInfoButton);
-            FXRouterPane.goTo("user-information");
+            FXRouterPane.goTo("user-information", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -102,7 +106,7 @@ public class MainPageController {
     public void handleMyTeamButton(){
         try {
             changeStyleClassButton(myTeamButton);
-            FXRouterPane.goTo("myteam-list");
+            FXRouterPane.goTo("myteam-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

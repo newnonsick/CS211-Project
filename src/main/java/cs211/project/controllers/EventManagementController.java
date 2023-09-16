@@ -36,13 +36,14 @@ public class EventManagementController {
     private EventList eventList;
     private Event event;
     private Datasource<EventList> datasource;
+    private String eventName;
 
     @FXML
     public void initialize() {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
 
-        String eventName = (String) FXRouterPane.getData();
+        eventName = (String) FXRouterPane.getData();
         event = eventList.findEventByEventName(eventName);
         showEvent(event);
     }
@@ -87,7 +88,7 @@ public class EventManagementController {
     @FXML
     public void handleManageTeamButton(){
         try {
-            FXRouterPane.goTo("event-team-management");
+            FXRouterPane.goTo("event-team-management", eventName);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

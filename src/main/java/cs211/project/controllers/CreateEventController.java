@@ -2,6 +2,7 @@ package cs211.project.controllers;
 
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
+import cs211.project.models.User;
 import cs211.project.services.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 public class CreateEventController {
+    private User currentUser;
     @FXML private TextField eventNameTextField;
     @FXML private TextField eventInfoTextField;
     @FXML private TextField placeTextField;
@@ -43,6 +45,7 @@ public class CreateEventController {
 
     @FXML
     public void initialize() {
+        currentUser = (User) FXRouter.getData();
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
 
@@ -65,7 +68,7 @@ public class CreateEventController {
         String startDate = localStartDate.toString();
         String endDate = localEndDate.toString();
 
-        String eventOwner = CurrentUser.getUser().getUsername();
+        String eventOwner = currentUser.getUsername();
 
         String filePath = "data/eventList.csv";
         File file = new File(filePath);
@@ -163,8 +166,6 @@ public class CreateEventController {
                 throw new RuntimeException(e);
             }
         }
-        Event event = new Event(eventName, eventImage, eventInfo, eventCategory, place, LocalDate.parse(startDate), LocalDate.parse(endDate), eventOwner);
-        CurrentUser.getUser().addEvent(event);
         goToMyEvents();
     }
 

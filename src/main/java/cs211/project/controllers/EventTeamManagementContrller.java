@@ -15,6 +15,11 @@ public class EventTeamManagementContrller {
     private Team team;
     private String eventName;
 
+    @FXML
+    public void initialize(){
+        eventName = (String) FXRouterPane.getData();
+        eventNameLabel.setText(eventName);
+    }
 
     @FXML
     public void handleCreateTeamButton(){

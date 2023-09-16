@@ -2,6 +2,7 @@ package cs211.project.controllers;
 
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
+import cs211.project.models.User;
 import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,12 +17,14 @@ public class MyEventsController {
     @FXML private TableView<Event> myEventsTableView;
     private EventList eventList;
     private Datasource<EventList> datasource;
+    private User CurrentUser;
 
     @FXML
     public void initialize() {
-        CurrentUser.ThisUser user = CurrentUser.getUser();
-        EventList createdEvents = user.getCreatedEvents();
-        showTable(createdEvents);
+        CurrentUser = (User) FXRouter.getData();
+        datasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = datasource.readData();
+        showTable(eventList);
 
         myEventsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
             @Override
@@ -67,7 +70,8 @@ public class MyEventsController {
         myEventsTableView.getItems().clear();
 
         for (Event event: eventList.getEvents()) {
-            myEventsTableView.getItems().add(event);
+            if (event.getEventOwnerUsername().equals(CurrentUser.getUsername()))
+                myEventsTableView.getItems().add(event);
         }
 
     }

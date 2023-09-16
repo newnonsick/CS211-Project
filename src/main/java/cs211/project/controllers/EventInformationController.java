@@ -31,12 +31,16 @@ public class EventInformationController {
     private EventList eventList;
     private Event event;
     private String eventName;
+    private String [] componentData;
+    private String currentUserName;
 
     @FXML
     public void initialize() {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
-        eventName = (String) FXRouterPane.getData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventName = componentData[0];
+        currentUserName = componentData[1];
         event = eventList.findEventByEventName(eventName);
         eventNameLabel.setText(event.getEventName());
         eventInfoLabel.setText(event.getEventInformation());
@@ -68,7 +72,7 @@ public class EventInformationController {
 
     @FXML
     private void joinEventButton() {
-        if (CurrentUser.getUser().getUsername().equals(event.getEventOwnerUsername())){
+        if (currentUserName.equals(event.getEventOwnerUsername())){
             errorLabel.setText("You can not join your own event.");
         }
 
@@ -100,7 +104,7 @@ public class EventInformationController {
                 String eventName = data[1].trim();
 
                 if (event.getEventName().equals(eventName)) {
-                    if (CurrentUser.getUser().getUsername().equals(userName)) {
+                    if (currentUserName.equals(userName)) {
                         errorLabel.setText("You have already join this event.");
                         return;
                     }
@@ -124,7 +128,7 @@ public class EventInformationController {
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
 
-        String newJoinEvent = CurrentUser.getUser().getUsername() + "," + event.getEventName();
+        String newJoinEvent = currentUserName + "," + event.getEventName();
         try {
             for(String joinEventData : allJoinEventData) {
                 bufferWrite.append(joinEventData);
@@ -159,7 +163,7 @@ public class EventInformationController {
     @FXML
     public void handleVisitTeamButton(){
         try {
-            FXRouterPane.goTo("teamofevent-list", eventName);
+            FXRouterPane.goTo("teamofevent-list", new String[] { event.getEventName(), currentUserName });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
