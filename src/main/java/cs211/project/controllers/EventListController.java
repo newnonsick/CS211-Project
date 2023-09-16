@@ -315,6 +315,9 @@ public class EventListController {
             if (!event.getEventCategory().equals(category)) {
                 continue;
             }
+            if (event.getEventEndDate().isBefore(currentDate)) {
+                continue;
+            }
             if(column == 3) {
                 row++;
                 column = 0;
