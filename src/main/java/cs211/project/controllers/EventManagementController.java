@@ -1,7 +1,10 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Event;
+import cs211.project.models.EventList;
+import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
+import cs211.project.services.FXRouter;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -30,8 +33,22 @@ public class EventManagementController {
     @FXML
     private DatePicker closingJoinDatePicker;
 
+    private EventList eventList;
+    private Event event;
+    private Datasource<EventList> datasource;
+
     @FXML
     public void initialize() {
+        datasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = datasource.readData();
+
+        String eventName = (String) FXRouterPane.getData();
+        event = eventList.findEventByEventName(eventName);
+        showEvent(event);
+    }
+
+    private void showEvent(Event event) {
+        // show event information
     }
 
     public void setEditable(boolean editable) {
@@ -61,7 +78,7 @@ public class EventManagementController {
     @FXML
     public void backToYourCreatedEvents() {
         try {
-            FXRouterPane.goTo("your-created-events");
+            FXRouterPane.goTo("my-events");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
