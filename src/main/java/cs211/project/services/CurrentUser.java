@@ -13,8 +13,8 @@ public class CurrentUser {
     public static ThisUser getUser() {
         return user;
     }
-    public static void setUser(String username) {
-        user = new ThisUser(username);
+    public static void setUser(String username, String password,String name, String pic) {
+        user = new ThisUser(username, password, name, pic);
     }
 
     public static class ThisUser extends User {
@@ -22,8 +22,8 @@ public class CurrentUser {
         EventList passedEvents = new EventList();
         EventList createdEvents = new EventList();
 
-        public ThisUser(String username) {
-            super(username);
+        public ThisUser(String username, String password,String name, String pic) {
+            super(username, password, name, pic);
             getInfo();
         }
 

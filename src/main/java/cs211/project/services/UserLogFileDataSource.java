@@ -25,6 +25,8 @@ public class UserLogFileDataSource implements Datasource<UserList> {
     }
     @Override
     public UserList readData() {
+        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        UserList userList = userListDatasource.readData();
         UserList users = new UserList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
@@ -45,6 +47,7 @@ public class UserLogFileDataSource implements Datasource<UserList> {
         BufferedReader buffer = new BufferedReader(inputStreamReader);
 
         String line = "";
+        User temp = null;
         try {  //more information hasn't been added yet
             while ( (line = buffer.readLine()) != null ){
                 if (line.equals("")) continue;
@@ -52,7 +55,8 @@ public class UserLogFileDataSource implements Datasource<UserList> {
                 String username = data[0];
                 String date = data[1];
                 String time = data[2];
-                users.addUser(new LogUser(username, date,time));
+                temp = userList.getUser(username);
+                users.addUser(new LogUser(temp.getUsername(), temp.getPassword(), temp.getName(), temp.getProfilePicture(), date,time));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -13,19 +13,6 @@ public class User {
     private String profilePic;
     private String password;
 
-    public User(String username) {
-        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
-        UserList userList = userListDatasource.readData();
-        for(User user : userList.getUsers()) {
-            if(user.getUsername().equals(username)) {
-                this.username = user.getUsername();
-                this.password = user.getPassword();
-                this.name = user.getName();
-                this.profilePic = user.profilePic;
-                return;
-            }
-        }
-    }
     public User(String username, String password,String name, String pic) {
         this.username = username;
         this.password = password;
