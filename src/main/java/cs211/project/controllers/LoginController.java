@@ -52,8 +52,6 @@ public class LoginController {
                 if(result.verified) {
                     userLogList.addUser(user);
                     userListUserLogFileDataSource.writeData(userLogList);
-                    User userCurrent = userList.getUser(username);
-                    CurrentUser.setUser(userCurrent.getUsername(), userCurrent.getPassword(), userCurrent.getName(), userCurrent.getProfilePicture());
                     FXRouter.goTo(destination, user);
                 }
             }
