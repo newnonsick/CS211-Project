@@ -142,7 +142,18 @@ public class EventInformationController {
                 throw new RuntimeException(e);
             }
         }
+        goToUserInformation();
 
+    }
+
+    @FXML
+    private void goToUserInformation() {
+        try {
+            FXRouterPane.goTo("user-information");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
