@@ -10,7 +10,7 @@ import java.io.IOException;
 public class User {
     private String username;
     private String name;
-    private String pic;
+    private String profilePic;
     private String password;
 
     public User(String username) {
@@ -21,7 +21,7 @@ public class User {
                 this.username = user.getUsername();
                 this.password = user.getPassword();
                 this.name = user.getName();
-                this.pic = user.getPic();
+                this.profilePic = user.profilePic;
                 return;
             }
         }
@@ -30,7 +30,7 @@ public class User {
         this.username = username;
         this.password = password;
         this.name = name;
-        this.pic = pic;
+        this.profilePic = pic;
     }
 
     public String getUsername() {
@@ -42,6 +42,6 @@ public class User {
         return this.name;
     }
 
-    public String getPic() { return this.pic;}
+    public String getProfilePicture() { return this.profilePic;}
 
 }

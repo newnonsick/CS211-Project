@@ -68,7 +68,7 @@ public class LoginController {
         String username = usernameTextField.getText();
         String inputPassword = passwordTextField.getText();
         String destination = "mainPage";
-        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+
         Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
         UserList userList = userListDatasource.readData();
         Datasource<UserList> userListUserLogFileDataSource = new UserLogFileDataSource("data", "logInfo.csv");
@@ -82,8 +82,11 @@ public class LoginController {
                 if(result.verified) {
                     userLogList.addUser(user);
                     userListUserLogFileDataSource.writeData(userLogList);
-
-                    CurrentUser.setUser(username);
+                    for(User userCurrent : userList.getUsers()) {
+                        if(userCurrent.getUsername().equals(username)) {
+                            CurrentUser.setUser(username);
+                        }
+                    }
                     FXRouter.goTo(destination);
                 }
             }
