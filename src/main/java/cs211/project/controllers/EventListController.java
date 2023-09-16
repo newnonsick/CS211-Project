@@ -136,7 +136,7 @@ public class EventListController {
                 matchedSuggestion = suggestion;
                 break;
             }
-         }
+        }
 
         if (matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
             searchTextField.setText(matchedSuggestion);

@@ -19,6 +19,8 @@ public class MyEventsController {
 
     @FXML
     public void initialize() {
+        CurrentUser.ThisUser user = CurrentUser.getUser();
+        showTable(user.getCreatedEvents());
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
         showTable(eventList);

@@ -94,7 +94,7 @@ public class LoginController {
                 if (user.equals(username)) {
                     BCrypt.Result result = BCrypt.verifyer().verify(inputPassword.toCharArray(), password);
                     if (result.verified) {
-                        CurrentUser.setUser(new User(user));
+                        CurrentUser.setUser(user);
                         String date = LocalDate.now(thaiTimeZone).toString();
                         String time = LocalTime.now(thaiTimeZone).toString().substring(0,8);
                         String log = user + "," + date + "," + time;
