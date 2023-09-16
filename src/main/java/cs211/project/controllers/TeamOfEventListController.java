@@ -89,7 +89,7 @@ public class TeamOfEventListController {
                    teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventOfTeamName(), team.getTeamName());
                    datasourceParticipant.writeData(teamParticipantList);
                     try {
-                        FXRouterPane.goTo("team-communication", team);
+                        FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
