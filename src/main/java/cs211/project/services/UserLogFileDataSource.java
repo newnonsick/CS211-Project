@@ -1,15 +1,16 @@
 package cs211.project.services;
 
-import cs211.project.models.EventList;
 import cs211.project.models.LogUser;
 import cs211.project.models.User;
 import cs211.project.models.UserList;
+import javafx.scene.text.Text;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class UserLogFileDataSource implements Datasource<UserList> {
@@ -70,7 +71,28 @@ public class UserLogFileDataSource implements Datasource<UserList> {
 
     @Override
     public void writeData(UserList userList) {
-
+        String name = "";
+        String filePath = directoryName + File.separator + fileName;
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        String log = "";
+        for(User user : userList.getUsers()) {
+            name = user.getName();
+        }
+        log = name + "," + LocalDate.now(thaiTimeZone).toString() + "," +  LocalTime.now(thaiTimeZone).toString().substring(0,8);;
+        FileWriter fileWriter = null;
+        PrintWriter out = null;
+        try {
+            fileWriter = new FileWriter(filePath,true);
+            out = new PrintWriter(new BufferedWriter(fileWriter));
+            out.println(log);
+            out.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
     }
 
     private void checkFileIsExisted() {

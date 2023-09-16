@@ -1,5 +1,8 @@
 package cs211.project.models;
 
+import cs211.project.services.Datasource;
+import cs211.project.services.UserListFileDataSource;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,19 +11,32 @@ public class User {
     private String username;
     private String name;
     private String pic;
+    private String password;
 
     public User(String username) {
-        String info = checkUserExistence(username);
-        if(info != null) {
-            this.username = username;
-            this.name = info.split(":")[0];
-            this.pic = info.split(":")[1];
+        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        UserList userList = userListDatasource.readData();
+        for(User user : userList.getUsers()) {
+            if(user.getUsername().equals(username)) {
+                this.username = user.getUsername();
+                this.password = user.getPassword();
+                this.name = user.getName();
+                this.pic = user.getPic();
+                return;
+            }
         }
+    }
+    public User(String username, String password,String name, String pic) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.pic = pic;
     }
 
     public String getUsername() {
         return this.username;
     }
+    public String getPassword() {return this.password;}
 
     public String getName() {
         return this.name;
@@ -28,26 +44,4 @@ public class User {
 
     public String getPic() { return this.pic;}
 
-    public static String checkUserExistence(String username) {
-        try {
-            FileReader fileReader = new FileReader("data/userData.csv");
-            BufferedReader buffer = new BufferedReader(fileReader);
-            String line = "";
-            try {
-                while ((line = buffer.readLine()) != null) {
-                    if (line.isEmpty()) continue;
-                    String[] data = line.split(",");
-                    String usernameInData = data[0].trim();
-                    if (username.equals(usernameInData)) {
-                        return data[2].trim() + ":" + data[3].trim();
-                    }
-                }
-                return null;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

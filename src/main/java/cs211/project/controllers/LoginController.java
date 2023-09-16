@@ -2,9 +2,10 @@ package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
-import cs211.project.services.CurrentUser;
-import cs211.project.services.FXRouter;
+import cs211.project.models.UserList;
+import cs211.project.services.*;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -60,67 +61,32 @@ public class LoginController {
     }
 
     @FXML
-    public void login() {
+    public void login() throws IOException {
         File file = new File(filePath);
         File logInfoFile = new File(loginFilePath);
         FileInputStream fileInputStream = null;
-        String user = usernameTextField.getText();
+        String username = usernameTextField.getText();
         String inputPassword = passwordTextField.getText();
         String destination = "mainPage";
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
-        if (user.equals("admin211")) {
+        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        UserList userList = userListDatasource.readData();
+        Datasource<UserList> userListUserLogFileDataSource = new UserLogFileDataSource("data", "logInfo.csv");
+        UserList userLogList = new UserList();
+        if (username.equals("admin211")) {
             destination = "adminPage";
         }
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        for(User user : userList.getUsers()) {
+            if(user.getName().equals(username)) {
+                BCrypt.Result result = BCrypt.verifyer().verify(inputPassword.toCharArray(), user.getPassword());
+                if(result.verified) {
+                    userLogList.addUser(user);
+                    userListUserLogFileDataSource.writeData(userLogList);
 
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                fileInputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedReader buffer = new BufferedReader(inputStreamReader);
-
-        String line = "";
-        try {
-            while ((line = buffer.readLine()) != null) {
-                if (line.isEmpty()) continue;
-                String[] data = line.split(",");
-
-                String username = data[0].trim();
-                String password = data[1].trim();
-                if (user.equals(username)) {
-                    BCrypt.Result result = BCrypt.verifyer().verify(inputPassword.toCharArray(), password);
-                    if (result.verified) {
-                        CurrentUser.setUser(user);
-                        String date = LocalDate.now(thaiTimeZone).toString();
-                        String time = LocalTime.now(thaiTimeZone).toString().substring(0,8);
-                        String log = user + "," + date + "," + time;
-                        FileWriter fileWriter = null;
-                        PrintWriter out = null;
-                        try {
-                            fileWriter = new FileWriter(logInfoFile,true);
-                            out = new PrintWriter(new BufferedWriter(fileWriter));
-                            out.println(log);
-                            out.flush();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } finally {
-                            if (out != null) {
-                                out.close();
-                            }
-                        }
-                        FXRouter.goTo(destination);
-                    } else {
-                        break;
-                    }
+                    CurrentUser.setUser(username);
+                    FXRouter.goTo(destination);
                 }
-
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         errorLabel.setText("username or password is incorrect!");
         usernameTextField.setText("");
