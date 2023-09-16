@@ -107,7 +107,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 String line = event.getEventName() + "," + event.getEventPicture() + ","
                         + event.getEventInformation() + "," + event.getEventCategory()  + "," +
                         event.getPlaceEvent() + "," + event.getEventStartDate() + "," +
-                        event.getEventEndDate() + "," + CurrentUser.getUser();
+                        event.getEventEndDate() + "," + event.getEventOwnerUsername();
                 buffer.append(line);
                 buffer.append("\n");
             }

@@ -9,9 +9,10 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 import java.io.IOException;
 import cs211.project.models.User;
-import cs211.project.services.CurrentUser;
 
 public class UserInformationController {
+    private User currentUser;
+
     @FXML private Label usernameLabel;
     @FXML private Label nameLabel;
     @FXML private TableView activeEventTableView;
@@ -19,7 +20,7 @@ public class UserInformationController {
     @FXML private ImageView profileImageView;
 
     public void initialize() {
-
+        currentUser = (User) FXRouter.getData();
         checkFileIsExisted("userData.csv");
         showUser();
     }
@@ -41,9 +42,8 @@ public class UserInformationController {
     }
 
     private void showUser() {
-        CurrentUser.ThisUser user = CurrentUser.getUser();
-        nameLabel.setText(user.getName());
-        usernameLabel.setText(user.getUsername());
+        nameLabel.setText(currentUser.getName());
+        usernameLabel.setText(currentUser.getUsername());
         // profile picture
     }
 }
