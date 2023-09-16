@@ -41,7 +41,7 @@ public class UserInformationController {
     }
 
     private void showUser() {
-        User user = CurrentUser.getUser();
+        CurrentUser.ThisUser user = CurrentUser.getUser();
         nameLabel.setText(user.getName());
         usernameLabel.setText(user.getUsername());
         // profile picture

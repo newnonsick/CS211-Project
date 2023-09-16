@@ -163,7 +163,8 @@ public class CreateEventController {
                 throw new RuntimeException(e);
             }
         }
-
+        Event event = new Event(eventName, eventImage, eventInfo, eventCategory, place, LocalDate.parse(startDate), LocalDate.parse(endDate), eventOwner);
+        CurrentUser.getUser().addEvent(event);
         goToMyEvents();
     }
 

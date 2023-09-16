@@ -14,10 +14,14 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TableView fx:id="eventsYouCreatedTableView" layoutX="99.0" layoutY="104.0" prefHeight="539.0" prefWidth="980.0">
+      <TableView fx:id="myEventsTableView" layoutX="99.0" layoutY="104.0" prefHeight="539.0" prefWidth="980.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn minWidth="250.0" prefWidth="250.0" text="Name" />
+          <TableColumn minWidth="150.0" prefWidth="150.0" text="Category" />
+            <TableColumn minWidth="150.0" prefWidth="150.0" text="Place" />
+            <TableColumn minWidth="100.0" prefWidth="100.0" text="Start Date" />
+            <TableColumn minWidth="100.0" prefWidth="100.0" text="End Date" />
+            <TableColumn minWidth="100.0" prefWidth="100.0" text="Max Participants" />
         </columns>
       </TableView>
       <Button layoutX="913.0" layoutY="657.0" mnemonicParsing="false" onAction="#goToEventManagement" prefHeight="35.0" prefWidth="166.0" text="Edit Your Event" />
