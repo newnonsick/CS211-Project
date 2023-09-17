@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -18,10 +19,13 @@
                   <Pane prefHeight="121.0" prefWidth="150.0" />
                   <Button fx:id="eventButton" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="150.0" styleClass="navigation-button" text="Event">
                      <graphic>
-                        <ImageView fx:id="eventNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                        <ImageView fx:id="eventNavBarImage" fitHeight="50.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@../images/eventListIcon.png" />
+                           </image>
                         </ImageView>
                      </graphic></Button>
                   <Button fx:id="createEventButton" mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="Create Event">
