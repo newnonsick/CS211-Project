@@ -42,9 +42,17 @@ public class TeamCommunicationController {
     private String eventOfTeamName;
     private String teamName;
     private String currentUserName;
+    private Datasource<UserList> userListDatasource;
+    private UserList userList;
+    private Datasource<EventList> eventListDatasource;
+    private EventList eventList;
 
     @FXML
     public void initialize(){
+        eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListDatasource.readData();
+        userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        userList = userListDatasource.readData();
         teamListDatasource = new TeamListFileDatasource("data", "team_list.csv");
         teamList = teamListDatasource.readData();
         teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
@@ -57,7 +65,7 @@ public class TeamCommunicationController {
         currentUserName = componentData[2];
         team = teamList.findTeamByNameAndEvent(eventOfTeamName, teamName);
         manageTeamButton.setVisible(false);
-        if (team.getHeadOfTeamUsername().equals(currentUserName)){
+        if (team.getHeadOfTeamUsername().equals(currentUserName) || eventList.findEventByEventName(team.getEventOfTeamName()).getEventOwnerUsername().equals(currentUserName)){
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
@@ -108,7 +116,7 @@ public class TeamCommunicationController {
     @FXML
     public void handleManageTeamButton(){
         try {
-            FXRouterPane.goTo("team-management", team);
+            FXRouterPane.goTo("team-management", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,6 +141,10 @@ public class TeamCommunicationController {
         });
     }
     public void update(String username,String message){
+        User user = userList.findUserByUsername(username);
+        if (user == null){
+            return;
+        }
         chatBoxVBox.setSpacing(-5);
         Text text = new Text(message);
         text.getStyleClass().add("message");
@@ -152,7 +164,7 @@ public class TeamCommunicationController {
             usernameText.getStyleClass().add("usernameText");
             messageVBox.getChildren().add(usernameText);
 
-            String path = new File("data/profile_picture/default.png").toURI().toString();
+            String path = new File("data/profile_picture/" + user.getProfilePicture()).toURI().toString();
             img.setFill(new ImagePattern(new Image(path)));
 
         }
