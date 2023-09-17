@@ -20,7 +20,7 @@ public class Event implements Comparable {
 
 
     public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
-                 LocalDate eventStartDate, LocalDate eventEndDate, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
+                 LocalDate eventStartDate, LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
         this.eventName = eventName;
         this.eventPicture = eventPicture;
         this.eventInformation = eventInformation;
@@ -28,6 +28,7 @@ public class Event implements Comparable {
         this.placeEvent = placeEvent;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
+        this.eventOwnerUsername = eventOwnerUsername;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
@@ -88,6 +89,42 @@ public class Event implements Comparable {
     }
 
     public String getEventOwnerUsername() { return eventOwnerUsername; }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    public void setEventPicture(String eventPicture) {
+        this.eventPicture = eventPicture;
+    }
+
+    public void setEventInformation(String eventInformation) {
+        this.eventInformation = eventInformation;
+    }
+
+    public void setEventCategory(String eventCategory) {
+        this.eventCategory = eventCategory;
+    }
+
+    public void setPlaceEvent(String placeEvent) {
+        this.placeEvent = placeEvent;
+    }
+
+    public void setEventStartDate(LocalDate eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    public void setEventEndDate(LocalDate eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
+    public void setMaxParticipants(int maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
+
+
+    public void setEventOwnerUsername(String eventOwner) {
+    }
 
     @Override
     public int compareTo(Object o) {

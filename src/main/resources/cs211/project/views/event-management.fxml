@@ -5,6 +5,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -72,38 +73,39 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="437.0" layoutY="646.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="จัดการทีม">
+      <Button layoutX="866.0" layoutY="652.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="จัดการทีม">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="264.0" layoutY="646.0" mnemonicParsing="false" onAction="#EventPartiManagementButton" text="จัดการผู้เข้าร่วม">
+      <Button layoutX="699.0" layoutY="652.0" mnemonicParsing="false" onAction="#EventPartiManagementButton" text="จัดการผู้เข้าร่วม">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TextField fx:id="numberOfParticipantTextField" layoutX="579.0" layoutY="498.0" />
-      <DatePicker fx:id="editStartDatePicker" layoutX="354.0" layoutY="357.0" />
-      <DatePicker fx:id="editEndDatePicker" layoutX="354.0" layoutY="394.0" />
+      <TextField fx:id="maxParticipantTextField" layoutX="579.0" layoutY="498.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="354.0" layoutY="357.0" />
+      <DatePicker fx:id="endDatePicker" layoutX="354.0" layoutY="394.0" />
       <DatePicker fx:id="startJoinDatePicker" layoutX="578.0" layoutY="531.0" prefHeight="26.0" prefWidth="150.0" />
       <DatePicker fx:id="closingJoinDatePicker" layoutX="578.0" layoutY="566.0" prefHeight="20.0" prefWidth="150.0" />
       <Button layoutX="33.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToYourCreatedEvents" text="Back">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TextField fx:id="eventNameTextField" editable="false" layoutX="354.0" layoutY="182.0" prefHeight="26.0" prefWidth="199.0" />
-      <TextField fx:id="placeEventTextField" editable="false" layoutX="354.0" layoutY="318.0" prefHeight="26.0" prefWidth="199.0" />
-      <TextField fx:id="eventInformationTextField" editable="false" layoutX="354.0" layoutY="217.0" prefHeight="26.0" prefWidth="199.0" />
+      <TextField fx:id="eventNameTextField" editable="true" layoutX="354.0" layoutY="182.0" prefHeight="26.0" prefWidth="199.0" />
+      <TextField fx:id="placeTextField" editable="true" layoutX="354.0" layoutY="318.0" prefHeight="26.0" prefWidth="199.0" />
+      <TextField fx:id="eventInfoTextField" editable="true" layoutX="354.0" layoutY="217.0" prefHeight="26.0" prefWidth="199.0" />
       <Label layoutX="133.0" layoutY="456.0" text="เพิ่มข้อมูลอีเวนต์ของคุณ">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="eventCategoryChoiceBox" layoutX="354.0" layoutY="251.0" prefHeight="26.0" prefWidth="199.0" />
-      <Button layoutX="553.0" layoutY="183.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
-      <Button layoutX="553.0" layoutY="251.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
-      <Button layoutX="552.0" layoutY="217.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
-      <Button layoutX="553.0" layoutY="318.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
-      <Button layoutX="528.0" layoutY="357.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
-      <Button layoutX="528.0" layoutY="394.0" mnemonicParsing="false" onAction="#onEditButtonClick" text="Edit" />
+      <ChoiceBox fx:id="eventChoiceBox" layoutX="354.0" layoutY="251.0" prefHeight="26.0" prefWidth="199.0" />
+      <Button fx:id="editImageButton" layoutX="354.0" layoutY="284.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload" />
+      <Button fx:id="saveEventEditButton" layoutX="388.0" layoutY="656.0" mnemonicParsing="false" onAction="#saveEventEditButton" text="Save">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="eventImageView" fitHeight="150.0" fitWidth="200.0" layoutX="654.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
