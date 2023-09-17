@@ -1,12 +1,19 @@
 package cs211.project.controllers;
+import cs211.project.models.User;
 import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -25,19 +32,74 @@ public class MainPageController {
     Button myTeamButton;
     @FXML
     Button userInfoButton;
+    @FXML
+    ImageView eventNavBarImage;
+    @FXML
+    ImageView createEventNavBarImage;
+    @FXML
+    ImageView myEventsNavBarImage;
+    @FXML
+    ImageView myTeamsNavBarImage;
+    @FXML
+    ImageView userInfoNavBarImage;
+
+    private User currentUser;
+
 
 
 
     @FXML
     public void initialize() {
+        currentUser = (User) FXRouter.getData();
         changeStyleClassButton(eventButton);
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
         try {
-            FXRouterPane.goTo("event-list","First Run");
+            FXRouterPane.goTo("event-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //Mouse In (Can't do with SceneBuilder. Somehow it does not work. I've tried.
+        eventButton.setOnMouseEntered(event -> {
+            mouseIn(eventNavBarImage);
+        });
+
+        createEventButton.setOnMouseEntered(event -> {
+            mouseIn(createEventNavBarImage);
+        });
+
+        myEventButton.setOnMouseEntered(event -> {
+            mouseIn(myEventsNavBarImage);
+        });
+
+        myTeamButton.setOnMouseEntered(event -> {
+            mouseIn(myTeamsNavBarImage);
+        });
+
+        userInfoButton.setOnMouseEntered(event -> {
+            mouseIn(userInfoNavBarImage);
+        });
+
+        //Mouse Out
+        eventButton.setOnMouseExited(event -> {
+            mouseOut(eventNavBarImage);
+        });
+
+        createEventButton.setOnMouseExited(event -> {
+            mouseOut(createEventNavBarImage);
+        });
+
+        myEventButton.setOnMouseExited(event -> {
+            mouseOut(myEventsNavBarImage);
+        });
+
+        myTeamButton.setOnMouseExited(event -> {
+            mouseOut(myTeamsNavBarImage);
+        });
+
+        userInfoButton.setOnMouseExited(event -> {
+            mouseOut(userInfoNavBarImage);
+        });
     }
     public static void configRoute()
     {
@@ -62,7 +124,7 @@ public class MainPageController {
     public void goToEventList()  {
         try {
             changeStyleClassButton(eventButton);
-            FXRouterPane.goTo("event-list");
+            FXRouterPane.goTo("event-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -72,7 +134,7 @@ public class MainPageController {
     public void goToCreateEvent()  {
         try {
             changeStyleClassButton(createEventButton);
-            FXRouterPane.goTo("create-event");
+            FXRouterPane.goTo("create-event", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,7 +144,7 @@ public class MainPageController {
     public void goToMyEvents()  {
         try {
             changeStyleClassButton(myEventButton);
-            FXRouterPane.goTo("my-events");
+            FXRouterPane.goTo("my-events", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +154,7 @@ public class MainPageController {
     public void goToUserInformation()  {
         try {
             changeStyleClassButton(userInfoButton);
-            FXRouterPane.goTo("user-information");
+            FXRouterPane.goTo("user-information", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -102,7 +164,7 @@ public class MainPageController {
     public void handleMyTeamButton(){
         try {
             changeStyleClassButton(myTeamButton);
-            FXRouterPane.goTo("myteam-list");
+            FXRouterPane.goTo("myteam-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -116,4 +178,29 @@ public class MainPageController {
         userInfoButton.getStyleClass().remove("selected_navigation-button");
         button.getStyleClass().add("selected_navigation-button");
     }
+
+    public void mouseIn(ImageView imageView) {
+        Timeline timeline = new Timeline();
+        imageView.setVisible(true);
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 50);
+
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
+
+    public void mouseOut(ImageView imageView) {
+        Timeline timeline = new Timeline();
+
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 1);
+        KeyValue keyValue2 = new KeyValue(imageView.visibleProperty(), false);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
+        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.15), keyValue2);
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.getKeyFrames().add(keyFrame2);
+        timeline.play();
+    }
+
 }

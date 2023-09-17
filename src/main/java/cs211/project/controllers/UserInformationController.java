@@ -20,9 +20,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 import cs211.project.models.User;
-import cs211.project.services.CurrentUser;
 
 public class UserInformationController {
+    private User currentUser;
+
     @FXML private Label usernameLabel;
     @FXML private Label nameLabel;
     @FXML private TableView<Event> activeEventTableView;
@@ -32,10 +33,14 @@ public class UserInformationController {
     private Datasource<EventList> datasource;
 
     public void initialize() {
+<<<<<<< HEAD
         CurrentUser.ThisUser user = CurrentUser.getUser();
         datasource = new EventListFileDatasource("data", "joinEventData.csv");
         eventList = datasource.readData();
 
+=======
+        currentUser = (User) FXRouter.getData();
+>>>>>>> 44ef9ef0aae387eff9926735794ac67dba029ef7
         checkFileIsExisted("userData.csv");
         showUser();
         showTable(eventList);
@@ -58,6 +63,7 @@ public class UserInformationController {
     }
 
     private void showUser() {
+<<<<<<< HEAD
         CurrentUser.ThisUser user = CurrentUser.getUser();
         nameLabel.setText(user.getName());
         usernameLabel.setText(user.getUsername());
@@ -96,5 +102,10 @@ public class UserInformationController {
         activeEventTableView.getItems().clear();
         eventHistoryTableview.getItems().clear();
 
+=======
+        nameLabel.setText(currentUser.getName());
+        usernameLabel.setText(currentUser.getUsername());
+        // profile picture
+>>>>>>> 44ef9ef0aae387eff9926735794ac67dba029ef7
     }
 }

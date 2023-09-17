@@ -2,96 +2,141 @@ package cs211.project.controllers;
 
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
-import cs211.project.services.Datasource;
-import cs211.project.services.EventListFileDatasource;
-import cs211.project.services.FXRouter;
+import cs211.project.services.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import cs211.project.services.FXRouterPane;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class EventManagementController {
     @FXML
     private TextField eventNameTextField;
     @FXML
-    private TextField eventInformationTextField;
+    private TextField eventInfoTextField;
     @FXML
-    private ChoiceBox<String> eventCategoryChoiceBox;  //havn't do it
+    private ChoiceBox<String> eventChoiceBox;
     @FXML
-    private TextField placeEventTextField;
-    @ FXML
-    private DatePicker editStartDatePicker;
+    private TextField placeTextField;
     @FXML
-    private DatePicker editEndDatePicker;
+    private DatePicker startDatePicker;
     @FXML
-    private TextField numberOfParticipantTextField;
+    private DatePicker endDatePicker;
+    @FXML
+    private TextField maxParticipantTextField;
     @FXML
     private DatePicker startJoinDatePicker;
     @FXML
     private DatePicker closingJoinDatePicker;
+    @FXML
+    private ImageView eventImageView;
+    @FXML
+    private Label dateErrorLabel;
 
-    private EventList eventList;
-    private Event event;
     private Datasource<EventList> datasource;
+
+    private Event event;
+    private EventList eventList;
+    private String[] eventCategories = {"งานแสดงสินค้า", "เทศกาล", "อบรมสัมนา", "บ้านและของแต่งบ้าน"
+            , "อาหารและเครื่องดื่ม", "บันเทิง", "คอนเสิร์ต/แฟนมีตติ้ง", "ท่องเที่ยว", "ศิลปะ/นิทรรศการ/ถ่ายภาพ", "กีฬา"
+            , "ศาสนา", "สัตว์เลี้ยง", "ธุรกิจ/อาชีพ/การศึกษา", "อื่น ๆ"};
+
+    private String eventName;
+    private String[] componentData;
+    private String currentUsername;
 
     @FXML
     public void initialize() {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventName = componentData[0];
+        currentUsername = componentData[1];
 
-        String eventName = (String) FXRouterPane.getData();
-        event = eventList.findEventByEventName(eventName);
-        showEvent(event);
+        eventNameTextField.setText(event.getEventName());
+        eventInfoTextField.setText(event.getEventInformation());
+        placeTextField.setText(event.getPlaceEvent());
+        startDatePicker.setValue(event.getEventStartDate());
+        endDatePicker.setValue(event.getEventEndDate());
+        eventChoiceBox.setValue(event.getEventCategory());
+        maxParticipantTextField.setText(String.valueOf(event.getMaxParticipants()));
+        startJoinDatePicker.setValue(event.getStartJoinDate());
+        closingJoinDatePicker.setValue(event.getClosingJoinDate());
+
+        Image image = new Image("file:data/eventPicture/" + event.getEventPicture());
+        eventImageView.setImage(image);
     }
 
-    private void showEvent(Event event) {
-        // show event information
-    }
 
-    public void setEditable(boolean editable) {
-        eventNameTextField.setEditable(editable);
-        eventInformationTextField.setEditable(editable);
-        placeEventTextField.setEditable(editable);
-        editStartDatePicker.setEditable(editable);
-        editEndDatePicker.setEditable(editable);
-        numberOfParticipantTextField.setEditable(editable);
-        startJoinDatePicker.setEditable(editable);
-        closingJoinDatePicker.setEditable(editable);
-    }
+
 
     @FXML
-    private void onEditButtonClick() {
-        setEditable(true); //เปลี่ยนเป็นค่า true เพื่อใหแก้ไขข้อมูลได้
-    }
-    @FXML
-    public void EventPartiManagementButton() {
-        try {
-            FXRouterPane.goTo("event-participant-management");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void uploadImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose an Image");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+        );
+        File selectedImage = fileChooser.showOpenDialog(null);
+        if (selectedImage != null) {
+            Image image = new Image(selectedImage.toURI().toString());
+            eventImageView.setImage(image);
+            event.setEventPicture(selectedImage.getPath());
+
+            eventList.updateEvent(event);
+            datasource.writeData(eventList);
         }
     }
 
     @FXML
-    public void backToYourCreatedEvents() {
-        try {
-            FXRouterPane.goTo("my-events");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public void saveEventEditButton() {
+        event.setEventName(eventNameTextField.getText());
+        event.setEventInformation(eventInfoTextField.getText());
+        event.setEventCategory(eventChoiceBox.getValue());
+        event.setPlaceEvent(placeTextField.getText());
+        event.setEventStartDate(startDatePicker.getValue());
+        event.setEventEndDate(endDatePicker.getValue());
 
-    @FXML
-    public void handleManageTeamButton(){
-        try {
-            FXRouterPane.goTo("event-team-management");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//        currentEvent.setMaxParticipant(Integer.parseInt(maxParticipantTextField.getText()));
+//        currentEvent.setStartJoinDate(startJoinDatePicker.getValue());
+//        currentEvent.setClosingJoinDate(closingJoinDatePicker.getValue());
 
+
+        eventList.updateEvent(event);
+        datasource.writeData(eventList);
+        backToYourCreatedEvents();
 }
+
+        @FXML
+        public void EventPartiManagementButton() {
+            try {
+                FXRouterPane.goTo("event-participant-management");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @FXML
+        public void backToYourCreatedEvents () {
+            try {
+                FXRouterPane.goTo("my-events");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @FXML
+        public void handleManageTeamButton () {
+            try {
+                FXRouterPane.goTo("event-team-management", new String[] {event.getEventName(), currentUsername});
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 

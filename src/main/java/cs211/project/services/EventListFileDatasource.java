@@ -72,10 +72,12 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 LocalDate eventStartDate = LocalDate.parse(data[5].trim());
                 LocalDate eventEndDate = LocalDate.parse(data[6].trim());
                 String eventOwnerUsername = data[7].trim();
+//                Integer maxParticipants = Integer.parseInt(data[8].trim());
+//                LocalDate startJoinDate = LocalDate.parse(data[9].trim());
+//                LocalDate closingJoinDate = LocalDate.parse(data[10].trim());
 
                 // add data to the list
-                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername);
-            }
+                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername);}
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +109,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 String line = event.getEventName() + "," + event.getEventPicture() + ","
                         + event.getEventInformation() + "," + event.getEventCategory()  + "," +
                         event.getPlaceEvent() + "," + event.getEventStartDate() + "," +
-                        event.getEventEndDate() + "," + CurrentUser.getUser();
+                        event.getEventEndDate() + "," + event.getEventOwnerUsername();;
                 buffer.append(line);
                 buffer.append("\n");
             }

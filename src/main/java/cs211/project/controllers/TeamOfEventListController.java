@@ -30,11 +30,15 @@ public class TeamOfEventListController {
     private TeamList teamList;
     private TeamParticipantList teamParticipantList;
     private String eventName;
+    private String [] componentData;
+    private String currentUserName;
     private LocalDate currentDate;
 
     @FXML
     public void initialize(){
-        eventName = (String) FXRouterPane.getData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventName = componentData[0];
+        currentUserName = componentData[1];
         eventNameLabel.setText(eventName);
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
@@ -82,10 +86,10 @@ public class TeamOfEventListController {
                if(result.get() == ButtonType.OK) {
                    Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
                    TeamParticipantList teamParticipantList = datasourceParticipant.readData();
-                   teamParticipantList.addNewTeamParticipant(CurrentUser.getUser().getUsername(), team.getEventOfTeamName(), team.getTeamName());
+                   teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventOfTeamName(), team.getTeamName());
                    datasourceParticipant.writeData(teamParticipantList);
                     try {
-                        FXRouterPane.goTo("team-communication", team);
+                        FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
