@@ -18,9 +18,7 @@ public class Team implements Comparable {
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
-        if (headOfTeamUsername != "null") {
-            this.headOfTeamUsername = headOfTeamUsername;
-        }
+        this.headOfTeamUsername = headOfTeamUsername;
     }
 
     public String getEventOfTeamName() {
@@ -45,6 +43,7 @@ public class Team implements Comparable {
     public String getHeadOfTeamUsername() {
         return headOfTeamUsername;
     }
+
 
 
     public void setHeadOfTeamUsername(String headOfTeamUsername) {

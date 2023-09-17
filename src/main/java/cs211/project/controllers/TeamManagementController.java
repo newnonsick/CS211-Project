@@ -1,9 +1,8 @@
 package cs211.project.controllers;
 
-import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
-import cs211.project.models.Team;
+import cs211.project.models.*;
 import cs211.project.services.Datasource;
+import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouterPane;
 import cs211.project.services.TeamActivityListFileDatasource;
 import javafx.beans.value.ChangeListener;
@@ -22,15 +21,27 @@ public class TeamManagementController {
     @FXML Button deleteActivityButton;
     @FXML Button endActivityButton;
 
-    private Team team;
     private ActivityList activityList;
     private Datasource<ActivityList> activityListDatasource;
+    private EventList eventList;
+    private Event event;
+    private Datasource<EventList> eventListDatasource;
     private Activity selectedActivity;
+    private String[] componentData;
+    private String currentUsername;
+    private String eventOfTeamName;
+    private String teamName;
     @FXML
     public void initialize(){
         deleteActivityButton.setDisable(true);
         endActivityButton.setDisable(true);
-        team = (Team) FXRouterPane.getData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventOfTeamName = componentData[0];
+        teamName = componentData[1];
+        currentUsername = componentData[2];
+        eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListDatasource.readData();
+        event = eventList.findEventByEventName(eventOfTeamName);
         activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
         activityList = activityListDatasource.readData();
         showActivity(activityList);
@@ -40,7 +51,9 @@ public class TeamManagementController {
             public void changed(ObservableValue observable, Activity oldValue, Activity newValue) {
                 if (newValue != null) {
                     deleteActivityButton.setDisable(false);
-                    endActivityButton.setDisable(false);
+                    if (currentUsername.equals(event.getEventOwnerUsername())){
+                        endActivityButton.setDisable(false);
+                    }
                     selectedActivity = newValue;
                 }
                 else{
@@ -71,7 +84,7 @@ public class TeamManagementController {
         String activityName = avtivityNameTextField.getText();
         String activityDescription = activityDescriptionTextArea.getText();
         if (!activityName.isEmpty() && !activityDescription.isEmpty()){
-            activityList.addNewActivityTeam(team.getEventOfTeamName(), team.getTeamName(), activityName, activityDescription, "In Progress");
+            activityList.addNewActivityTeam(eventOfTeamName, teamName, activityName, activityDescription, "In Progress");
             activityListDatasource.writeData(activityList);
             showActivity(activityList);
             avtivityNameTextField.clear();
@@ -112,7 +125,7 @@ public class TeamManagementController {
 
 
         for (Activity activity : activityList.getActivities()) {
-            if (activity.getTeamOfActivityName().equals(team.getTeamName()) && activity.getEventOfActivityName().equals(team.getEventOfTeamName())) {
+            if (activity.getTeamOfActivityName().equals(teamName) && activity.getEventOfActivityName().equals(eventOfTeamName)) {
                 activityTableView.getItems().add(activity);
             }
         }

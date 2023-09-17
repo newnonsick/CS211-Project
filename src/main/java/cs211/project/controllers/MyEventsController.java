@@ -17,11 +17,11 @@ public class MyEventsController {
     @FXML private TableView<Event> myEventsTableView;
     private EventList eventList;
     private Datasource<EventList> datasource;
-    private User CurrentUser;
+    private User currentUser;
 
     @FXML
     public void initialize() {
-        CurrentUser = (User) FXRouter.getData();
+        currentUser = (User) FXRouter.getData();
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
         showTable(eventList);
@@ -31,7 +31,7 @@ public class MyEventsController {
             public void changed(ObservableValue observable, Event oldValue, Event newValue) {
                 if (newValue != null) {
                     try {
-                        FXRouterPane.goTo("event-management", newValue.getEventName());
+                        FXRouterPane.goTo("event-management", new String[] {newValue.getEventName(), currentUser.getUsername()});
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -70,7 +70,7 @@ public class MyEventsController {
         myEventsTableView.getItems().clear();
 
         for (Event event: eventList.getEvents()) {
-            if (event.getEventOwnerUsername().equals(CurrentUser.getUsername()))
+            if (event.getEventOwnerUsername().equals(currentUser.getUsername()))
                 myEventsTableView.getItems().add(event);
         }
 
