@@ -34,8 +34,6 @@ public class MainPageController {
     Button userInfoButton;
     @FXML
     ImageView eventNavBarImage;
-    @FXML
-    Label errorLabel;
 
     private User currentUser;
 
@@ -55,6 +53,22 @@ public class MainPageController {
         }
         //Mouse In (Can't do with SceneBuilder. Somehow it does not work. I've tried.
         eventButton.setOnMouseEntered(event -> {
+            mouseIn(eventNavBarImage);
+        });
+
+        createEventButton.setOnMouseEntered(event -> {
+            mouseIn(eventNavBarImage);
+        });
+
+        myEventButton.setOnMouseEntered(event -> {
+            mouseIn(eventNavBarImage);
+        });
+
+        myTeamButton.setOnMouseEntered(event -> {
+            mouseIn(eventNavBarImage);
+        });
+
+        userInfoButton.setOnMouseEntered(event -> {
             mouseIn(eventNavBarImage);
         });
 
