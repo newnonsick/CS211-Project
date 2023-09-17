@@ -38,50 +38,41 @@ public class EventManagementController {
     private Label dateErrorLabel;
 
     private Datasource<EventList> datasource;
-<<<<<<< HEAD
-    private Event currentEvent;
+
+    private Event event;
     private EventList eventList;
     private String[] eventCategories = {"งานแสดงสินค้า", "เทศกาล", "อบรมสัมนา", "บ้านและของแต่งบ้าน"
             , "อาหารและเครื่องดื่ม", "บันเทิง", "คอนเสิร์ต/แฟนมีตติ้ง", "ท่องเที่ยว", "ศิลปะ/นิทรรศการ/ถ่ายภาพ", "กีฬา"
             , "ศาสนา", "สัตว์เลี้ยง", "ธุรกิจ/อาชีพ/การศึกษา", "อื่น ๆ"};
 
-=======
     private String eventName;
     private String[] componentData;
     private String currentUsername;
->>>>>>> 027a2b4880e0a0c8606b7e8e70a45d58d240de01
 
     @FXML
     public void initialize() {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
-<<<<<<< HEAD
-        String eventName = (String) FXRouterPane.getData();
-        currentEvent = eventList.findEventByEventName(eventName);
-        eventChoiceBox.getItems().addAll(eventCategories);
-=======
-
         componentData = (String[]) FXRouterPane.getData();
         eventName = componentData[0];
         currentUsername = componentData[1];
-        event = eventList.findEventByEventName(eventName);
-        showEvent(event);
-    }
->>>>>>> 027a2b4880e0a0c8606b7e8e70a45d58d240de01
 
-        eventNameTextField.setText(currentEvent.getEventName());
-        eventInfoTextField.setText(currentEvent.getEventInformation());
-        placeTextField.setText(currentEvent.getPlaceEvent());
-        startDatePicker.setValue(currentEvent.getEventStartDate());
-        endDatePicker.setValue(currentEvent.getEventEndDate());
-        eventChoiceBox.setValue(currentEvent.getEventCategory());
-        maxParticipantTextField.setText(String.valueOf(currentEvent.getMaxParticipants()));
-        startJoinDatePicker.setValue(currentEvent.getStartJoinDate());
-        closingJoinDatePicker.setValue(currentEvent.getClosingJoinDate());
+        eventNameTextField.setText(event.getEventName());
+        eventInfoTextField.setText(event.getEventInformation());
+        placeTextField.setText(event.getPlaceEvent());
+        startDatePicker.setValue(event.getEventStartDate());
+        endDatePicker.setValue(event.getEventEndDate());
+        eventChoiceBox.setValue(event.getEventCategory());
+        maxParticipantTextField.setText(String.valueOf(event.getMaxParticipants()));
+        startJoinDatePicker.setValue(event.getStartJoinDate());
+        closingJoinDatePicker.setValue(event.getClosingJoinDate());
 
-        Image image = new Image("file:data/eventPicture/" + currentEvent.getEventPicture());
+        Image image = new Image("file:data/eventPicture/" + event.getEventPicture());
         eventImageView.setImage(image);
     }
+
+
+
 
     @FXML
     public void uploadImage() {
@@ -94,40 +85,30 @@ public class EventManagementController {
         if (selectedImage != null) {
             Image image = new Image(selectedImage.toURI().toString());
             eventImageView.setImage(image);
-            currentEvent.setEventPicture(selectedImage.getPath());
+            event.setEventPicture(selectedImage.getPath());
 
-            eventList.updateEvent(currentEvent);
+            eventList.updateEvent(event);
             datasource.writeData(eventList);
         }
     }
 
     @FXML
     public void saveEventEditButton() {
-        currentEvent.setEventName(eventNameTextField.getText());
-        currentEvent.setEventInformation(eventInfoTextField.getText());
-        currentEvent.setEventCategory(eventChoiceBox.getValue());
-        currentEvent.setPlaceEvent(placeTextField.getText());
-        currentEvent.setEventStartDate(startDatePicker.getValue());
-        currentEvent.setEventEndDate(endDatePicker.getValue());
+        event.setEventName(eventNameTextField.getText());
+        event.setEventInformation(eventInfoTextField.getText());
+        event.setEventCategory(eventChoiceBox.getValue());
+        event.setPlaceEvent(placeTextField.getText());
+        event.setEventStartDate(startDatePicker.getValue());
+        event.setEventEndDate(endDatePicker.getValue());
 
-<<<<<<< HEAD
 //        currentEvent.setMaxParticipant(Integer.parseInt(maxParticipantTextField.getText()));
 //        currentEvent.setStartJoinDate(startJoinDatePicker.getValue());
 //        currentEvent.setClosingJoinDate(closingJoinDatePicker.getValue());
-=======
-    @FXML
-    public void handleManageTeamButton(){
-        try {
-            FXRouterPane.goTo("event-team-management", new String[] {event.getEventName(), currentUsername});
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
->>>>>>> 027a2b4880e0a0c8606b7e8e70a45d58d240de01
 
-        eventList.updateEvent(currentEvent);
+
+        eventList.updateEvent(event);
         datasource.writeData(eventList);
-        backToYourCreatedEvents ();
+        backToYourCreatedEvents();
 }
 
         @FXML
@@ -151,7 +132,7 @@ public class EventManagementController {
         @FXML
         public void handleManageTeamButton () {
             try {
-                FXRouterPane.goTo("event-team-management");
+                FXRouterPane.goTo("event-team-management", new String[] {event.getEventName(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
