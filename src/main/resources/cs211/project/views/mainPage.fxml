@@ -16,7 +16,7 @@
             <VBox prefHeight="200.0" prefWidth="150.0" styleClass="navigation-list" BorderPane.alignment="CENTER">
                <children>
                   <Pane prefHeight="121.0" prefWidth="150.0" />
-                  <Button fx:id="eventButton" mnemonicParsing="false" onAction="#goToEventList" onMouseDragEntered="#mouseInEventNavBar" onMouseDragExited="#mouseOutEventNavBar" prefHeight="100.0" prefWidth="150.0" styleClass="navigation-button" text="Event">
+                  <Button fx:id="eventButton" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="150.0" styleClass="navigation-button" text="Event">
                      <graphic>
                         <ImageView fx:id="eventNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
@@ -24,10 +24,38 @@
                            </viewport>
                         </ImageView>
                      </graphic></Button>
-                  <Button fx:id="createEventButton" mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="Create Event" />
-                  <Button fx:id="myEventButton" mnemonicParsing="false" onAction="#goToMyEvents" prefHeight="100.0" prefWidth="205.0" styleClass="navigation-button" text="My Events" />
-                  <Button fx:id="myTeamButton" mnemonicParsing="false" onAction="#handleMyTeamButton" prefHeight="100.0" prefWidth="203.0" styleClass="navigation-button" text="My Teams" />
-                  <Button fx:id="userInfoButton" mnemonicParsing="false" onAction="#goToUserInformation" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="User Info" />
+                  <Button fx:id="createEventButton" mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="Create Event">
+                     <graphic>
+                        <ImageView fx:id="createEventNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="myEventButton" mnemonicParsing="false" onAction="#goToMyEvents" prefHeight="100.0" prefWidth="205.0" styleClass="navigation-button" text="My Events">
+                     <graphic>
+                        <ImageView fx:id="myEventsNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="myTeamButton" mnemonicParsing="false" onAction="#handleMyTeamButton" prefHeight="100.0" prefWidth="203.0" styleClass="navigation-button" text="My Teams">
+                     <graphic>
+                        <ImageView fx:id="myTeamsNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button fx:id="userInfoButton" mnemonicParsing="false" onAction="#goToUserInformation" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="User Info">
+                     <graphic>
+                        <ImageView fx:id="userInfoNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                           <viewport>
+                              <Rectangle2D />
+                           </viewport>
+                        </ImageView>
+                     </graphic></Button>
                </children>
             </VBox>
          </left>

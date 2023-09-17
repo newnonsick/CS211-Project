@@ -34,6 +34,14 @@ public class MainPageController {
     Button userInfoButton;
     @FXML
     ImageView eventNavBarImage;
+    @FXML
+    ImageView createEventNavBarImage;
+    @FXML
+    ImageView myEventsNavBarImage;
+    @FXML
+    ImageView myTeamsNavBarImage;
+    @FXML
+    ImageView userInfoNavBarImage;
 
     private User currentUser;
 
@@ -57,24 +65,40 @@ public class MainPageController {
         });
 
         createEventButton.setOnMouseEntered(event -> {
-            mouseIn(eventNavBarImage);
+            mouseIn(createEventNavBarImage);
         });
 
         myEventButton.setOnMouseEntered(event -> {
-            mouseIn(eventNavBarImage);
+            mouseIn(myEventsNavBarImage);
         });
 
         myTeamButton.setOnMouseEntered(event -> {
-            mouseIn(eventNavBarImage);
+            mouseIn(myTeamsNavBarImage);
         });
 
         userInfoButton.setOnMouseEntered(event -> {
-            mouseIn(eventNavBarImage);
+            mouseIn(userInfoNavBarImage);
         });
 
         //Mouse Out
         eventButton.setOnMouseExited(event -> {
             mouseOut(eventNavBarImage);
+        });
+
+        createEventButton.setOnMouseExited(event -> {
+            mouseOut(createEventNavBarImage);
+        });
+
+        myEventButton.setOnMouseExited(event -> {
+            mouseOut(myEventsNavBarImage);
+        });
+
+        myTeamButton.setOnMouseExited(event -> {
+            mouseOut(myTeamsNavBarImage);
+        });
+
+        userInfoButton.setOnMouseExited(event -> {
+            mouseOut(userInfoNavBarImage);
         });
     }
     public static void configRoute()
@@ -146,16 +170,6 @@ public class MainPageController {
         }
     }
 
-    @FXML
-    public void mouseInEventNavBar() {
-        mouseIn(eventNavBarImage);
-    }
-
-    @FXML
-    public void mouseOutEventNavBar() {
-
-    }
-
     public void changeStyleClassButton(Button button){
         eventButton.getStyleClass().remove("selected_navigation-button");
         createEventButton.getStyleClass().remove("selected_navigation-button");
@@ -168,7 +182,7 @@ public class MainPageController {
     public void mouseIn(ImageView imageView) {
         Timeline timeline = new Timeline();
         imageView.setVisible(true);
-        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 72);
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 50);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
 
