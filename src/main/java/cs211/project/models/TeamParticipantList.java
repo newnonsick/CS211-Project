@@ -38,7 +38,7 @@ public class TeamParticipantList{
                 count++;
             }
         }
-        return count;
+        return count - 1;
     }
 
     public ArrayList<TeamParticipant> getTeamParticipants() {
