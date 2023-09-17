@@ -62,7 +62,6 @@ public class EventInformationController {
 
     @FXML
     public void handleBackToEventPage() {
-        // ไปหน้ารวมอีเวนต์
         try {
             FXRouterPane.goTo("event-list");
         } catch (IOException e) {

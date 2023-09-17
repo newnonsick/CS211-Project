@@ -33,17 +33,10 @@ public class UserInformationController {
     private Datasource<EventList> datasource;
 
     public void initialize() {
-<<<<<<< HEAD
-        CurrentUser.ThisUser user = CurrentUser.getUser();
-        datasource = new EventListFileDatasource("data", "joinEventData.csv");
-        eventList = datasource.readData();
-
-=======
         currentUser = (User) FXRouter.getData();
->>>>>>> 44ef9ef0aae387eff9926735794ac67dba029ef7
+
         checkFileIsExisted("userData.csv");
         showUser();
-        showTable(eventList);
     }
 
     private void checkFileIsExisted(String fileName) {
@@ -63,49 +56,12 @@ public class UserInformationController {
     }
 
     private void showUser() {
-<<<<<<< HEAD
-        CurrentUser.ThisUser user = CurrentUser.getUser();
-        nameLabel.setText(user.getName());
-        usernameLabel.setText(user.getUsername());
+        nameLabel.setText(currentUser.getName());
+        usernameLabel.setText(currentUser.getUsername());
 
-        String filePath = "data/profile_picture/" + user.getPic();
+        String filePath = "data/profile_picture/" + currentUser.getProfilePicture();
         File file = new File(filePath);
         profileImageView.setImage(new Image(file.toURI().toString()));
     }
 
-    private void showTable(EventList eventList) {
-        TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
-        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
-
-        TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
-        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
-
-        TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
-        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
-
-        TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
-        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
-
-        activeEventTableView.getColumns().clear();
-        eventHistoryTableview.getColumns().clear();
-
-        activeEventTableView.getColumns().add(eventNameColumn);
-        activeEventTableView.getColumns().add(eventCategoryColumn);
-        activeEventTableView.getColumns().add(eventStartDateColumn);
-        activeEventTableView.getColumns().add(eventEndDateColumn);
-
-        eventHistoryTableview.getColumns().add(eventNameColumn);
-        eventHistoryTableview.getColumns().add(eventCategoryColumn);
-        eventHistoryTableview.getColumns().add(eventStartDateColumn);
-        eventHistoryTableview.getColumns().add(eventEndDateColumn);
-
-        activeEventTableView.getItems().clear();
-        eventHistoryTableview.getItems().clear();
-
-=======
-        nameLabel.setText(currentUser.getName());
-        usernameLabel.setText(currentUser.getUsername());
-        // profile picture
->>>>>>> 44ef9ef0aae387eff9926735794ac67dba029ef7
-    }
 }
