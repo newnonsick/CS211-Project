@@ -10,6 +10,6 @@ public class ParticipantActivityController {
     @FXML TableView activityParticipantTableView;
 
     //back to event participant user choosing event page
-    public void backToPage(ActionEvent actionEvent) {
+    public void backToPage() {
     }
 }

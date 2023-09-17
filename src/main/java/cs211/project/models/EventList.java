@@ -12,7 +12,7 @@ public class EventList {
     public void addEvent(Event event) {
         events.add(event);
     }
-    public void addEvent(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
+    public void addEvent(String eventName, String eventPicture, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
                          LocalDate eventEndDate, String eventOwnerUsername) {
         eventName = eventName.trim();
         eventInformation = eventInformation.trim();
@@ -56,6 +56,13 @@ public class EventList {
     public ArrayList<Event> getEvents(){
         return events;
     }
-
+    public void updateEvent(Event updatedEvent) {
+        for (int i = 0; i < events.size(); i++) {
+            if (events.get(i).getEventName().equals(updatedEvent.getEventName())) {
+                events.set(i, updatedEvent);
+                break;
+            }
+        }
+    }
 }
 
