@@ -1,10 +1,7 @@
 package cs211.project.controllers;
 
 import cs211.project.Main;
-import cs211.project.models.Team;
-import cs211.project.models.TeamList;
-import cs211.project.models.TeamParticipant;
-import cs211.project.models.TeamParticipantList;
+import cs211.project.models.*;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +22,7 @@ public class MyTeamListController {
     ScrollPane teamListScrollPane;
     @FXML
     GridPane teamListGridPane;
-
+    private User currentUser;
     private Datasource<TeamList> datasourceTeam;
     private Datasource<TeamParticipantList> datasourceParticipant;
     private LocalDate currentDate;
@@ -33,6 +30,7 @@ public class MyTeamListController {
     private TeamParticipantList teamParticipantList;
 
     public void initialize(){
+        currentUser = (User) FXRouter.getData();
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         datasourceTeam = new TeamListFileDatasource("data", "team_list.csv");
@@ -47,7 +45,7 @@ public class MyTeamListController {
         int column = 0;
         for (TeamParticipant teamParticipant : teamParticipantList.getTeamParticipants()) {
             Team team = teamList.findTeamByNameAndEvent(teamParticipant.getEventName(), teamParticipant.getTeamName());
-            if (!teamParticipant.getUsername().equals(CurrentUser.getUser().getUsername())) {
+            if (!teamParticipant.getUsername().equals(currentUser.getUsername())) {
                 continue;
             }
             if (team.getClosingJoinDate().isBefore(currentDate)) {
@@ -70,7 +68,7 @@ public class MyTeamListController {
             team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("team-communication", team);
+                    FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUser.getUsername()});
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

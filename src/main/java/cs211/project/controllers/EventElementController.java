@@ -26,13 +26,4 @@ public class EventElementController {
         eventImageView.setImage(eventImage);
         categoryLabel.setText("หมวดหมู่ : " + category);
     }
-    @FXML
-    public void mouseEnter() {
-        eventNameLabel.setStyle("-fx-background-color: blue;");
-    }
-
-    @FXML
-    public void mouseExit() {
-        eventNameLabel.setStyle("-fx-background-color: transparent;");
-    }
 }

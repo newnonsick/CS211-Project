@@ -38,20 +38,36 @@ public class EventManagementController {
     private Label dateErrorLabel;
 
     private Datasource<EventList> datasource;
+<<<<<<< HEAD
     private Event currentEvent;
     private EventList eventList;
     private String[] eventCategories = {"งานแสดงสินค้า", "เทศกาล", "อบรมสัมนา", "บ้านและของแต่งบ้าน"
             , "อาหารและเครื่องดื่ม", "บันเทิง", "คอนเสิร์ต/แฟนมีตติ้ง", "ท่องเที่ยว", "ศิลปะ/นิทรรศการ/ถ่ายภาพ", "กีฬา"
             , "ศาสนา", "สัตว์เลี้ยง", "ธุรกิจ/อาชีพ/การศึกษา", "อื่น ๆ"};
 
+=======
+    private String eventName;
+    private String[] componentData;
+    private String currentUsername;
+>>>>>>> 027a2b4880e0a0c8606b7e8e70a45d58d240de01
 
     @FXML
     public void initialize() {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
+<<<<<<< HEAD
         String eventName = (String) FXRouterPane.getData();
         currentEvent = eventList.findEventByEventName(eventName);
         eventChoiceBox.getItems().addAll(eventCategories);
+=======
+
+        componentData = (String[]) FXRouterPane.getData();
+        eventName = componentData[0];
+        currentUsername = componentData[1];
+        event = eventList.findEventByEventName(eventName);
+        showEvent(event);
+    }
+>>>>>>> 027a2b4880e0a0c8606b7e8e70a45d58d240de01
 
         eventNameTextField.setText(currentEvent.getEventName());
         eventInfoTextField.setText(currentEvent.getEventInformation());
@@ -94,9 +110,20 @@ public class EventManagementController {
         currentEvent.setEventStartDate(startDatePicker.getValue());
         currentEvent.setEventEndDate(endDatePicker.getValue());
 
+<<<<<<< HEAD
 //        currentEvent.setMaxParticipant(Integer.parseInt(maxParticipantTextField.getText()));
 //        currentEvent.setStartJoinDate(startJoinDatePicker.getValue());
 //        currentEvent.setClosingJoinDate(closingJoinDatePicker.getValue());
+=======
+    @FXML
+    public void handleManageTeamButton(){
+        try {
+            FXRouterPane.goTo("event-team-management", new String[] {event.getEventName(), currentUsername});
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+>>>>>>> 027a2b4880e0a0c8606b7e8e70a45d58d240de01
 
         eventList.updateEvent(currentEvent);
         datasource.writeData(eventList);

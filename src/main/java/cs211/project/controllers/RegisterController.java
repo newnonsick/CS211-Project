@@ -1,8 +1,13 @@
 package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import cs211.project.models.User;
+import cs211.project.models.UserList;
+import cs211.project.services.Datasource;
 import cs211.project.services.FXRouter;
+import cs211.project.services.UserListFileDataSource;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -48,16 +53,12 @@ public class RegisterController {
 
     @FXML
     private void signUp() throws IOException {
-        //Possible future bug fix : making it impossible to create an account id "Default"
         //checking and register
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
         String fullName = nameTextField.getText();
-        String filePath = "data/userData.csv";
         String profilePic = "";
-        File file = new File(filePath);
-        FileInputStream fileInputStream = null;
         if(username.isEmpty() || password.isEmpty() || password2.isEmpty() || fullName.isEmpty()) {
             errorLabel.setText("Please fill in the information.");
             return;
@@ -80,72 +81,28 @@ public class RegisterController {
             confirmPasswordTextField.setText("");
             return;
         }
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                fileInputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedReader bufferRead = new BufferedReader(inputStreamReader);
-        ArrayList<String> userPass = new ArrayList<String>();
-        String line = "";
-        String encryptPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 
-        try {
-            while ((line = bufferRead.readLine()) != null) {
-                if (line.equals("")) continue;
+        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        UserList userList = userListDatasource.readData();
 
-                String[] data = line.split(",");
-
-                String id = data[0].trim();
-                if (id.equals(username)) {
-                    errorLabel.setText("Username already exist!");
-                    usernameTextField.setText("");
-                    return;
-                }
-                userPass.add(line);
+        for(User user : userList.getUsers()) {
+            if(user.getUsername().equals(username)) {
+                errorLabel.setText("Username already exist!!");
+                passwordTextField.setText("");
+                confirmPasswordTextField.setText("");
+                return;
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-                fileOutputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
+
+        String encryptPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
         if(!upFile) {
             profilePic = "default.png";
         }
         else {
             profilePic = username + "." + (Files.probeContentType(Paths.get(selectedImage.getAbsolutePath())).substring(6));
         }
-        String newAcc = username + "," + encryptPassword + "," + fullName + "," + profilePic;
-        try {
-            for(String acc : userPass) {
-                bufferWrite.append(acc);
-                bufferWrite.append('\n');
-            }
-            bufferWrite.append(newAcc);
-            bufferWrite.append('\n');
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                bufferWrite.flush();
-                bufferWrite.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        userList.addUser(new User(username, encryptPassword, fullName, profilePic));
+        userListDatasource.writeData(userList);
         if(selectedImage != null) {
             //upload the profile picture
             String selectedImagePath = selectedImage.getAbsolutePath();
@@ -160,7 +117,6 @@ public class RegisterController {
                 throw new RuntimeException(e);
             }
         }
-
         goToLogin();
     }
     @FXML

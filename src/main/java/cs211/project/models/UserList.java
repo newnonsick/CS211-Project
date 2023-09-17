@@ -13,10 +13,6 @@ public class UserList {
         users.add(user);
     }
 
-    public void addUser(String username) {
-        User user = new User(username);
-        users.add(user);
-    }
 
     public boolean findUser(User user) {
         for (User aUser : this.users) {

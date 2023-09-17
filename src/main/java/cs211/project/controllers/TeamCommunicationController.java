@@ -32,25 +32,37 @@ public class TeamCommunicationController {
 
     private TeamChatList teamChatList;
     private Team team;
+    private Datasource<TeamList> teamListDatasource;
+    private TeamList teamList;
     private Datasource<TeamChatList> teamChatListDatasource;
     private Datasource<ActivityList> activityListDatasource;
     private ActivityList activityList;
     private String beforeSend = "";
+    private String [] componentData;
+    private String eventOfTeamName;
+    private String teamName;
+    private String currentUserName;
 
     @FXML
     public void initialize(){
-        team = (Team) FXRouterPane.getData();
+        teamListDatasource = new TeamListFileDatasource("data", "team_list.csv");
+        teamList = teamListDatasource.readData();
+        teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
+        teamChatList = teamChatListDatasource.readData();
+        activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
+        activityList = activityListDatasource.readData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventOfTeamName = componentData[0];
+        teamName = componentData[1];
+        currentUserName = componentData[2];
+        team = teamList.findTeamByNameAndEvent(eventOfTeamName, teamName);
         manageTeamButton.setVisible(false);
-        if (team.getHeadOfTeamUsername().equals(CurrentUser.getUser().getUsername())){
+        if (team.getHeadOfTeamUsername().equals(currentUserName)){
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
         avtivityNameLabel.setText("");
         activityDescriptionLabel.setText("");
-        teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
-        teamChatList = teamChatListDatasource.readData();
-        activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
-        activityList = activityListDatasource.readData();
         showActivity(activityList);
         newShowChat();
 
@@ -79,9 +91,9 @@ public class TeamCommunicationController {
         String text = sendMessageTextField.getText();
         if (!text.isEmpty()){
             sendMessageTextField.clear();
-            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), CurrentUser.getUser().getUsername(), text.replace(",", "//comma//"));
+            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), currentUserName, text.replace(",", "//comma//"));
             teamChatListDatasource.writeData(teamChatList);
-            update(CurrentUser.getUser().getUsername(),text);
+            update(currentUserName,text);
         }
         try {
             TimeUnit.MILLISECONDS.sleep(500);
@@ -130,7 +142,7 @@ public class TeamCommunicationController {
         VBox messageVBox = new VBox(-5);
         messageVBox.setAlignment(Pos.TOP_LEFT);
         Text usernameText = new Text();
-        if (!CurrentUser.getUser().getUsername().equals(username)){
+        if (!currentUserName.equals(username)){
             if (team.getHeadOfTeamUsername().equals(username)){
                 usernameText = new Text(username + " (Leader)" + "\n");
             }
@@ -152,7 +164,7 @@ public class TeamCommunicationController {
         HBox hBoxMessage = new HBox(10);
 
         Pane pane = new Pane();
-        if(!CurrentUser.getUser().getUsername().equals(username)){
+        if(!currentUserName.equals(username)){
             if (beforeSend.equals(username)){
                 messageVBox.getChildren().remove(0);
                 flow.getStyleClass().add("textFlowFlipped");

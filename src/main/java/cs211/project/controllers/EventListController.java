@@ -2,6 +2,7 @@ package cs211.project.controllers;
 
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
+import cs211.project.models.User;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouterPane;
@@ -37,6 +38,7 @@ public class EventListController {
     private LocalDate currentDate;
     private boolean isSearch;
     private String selectedCategory;
+    private User currentUser;
     @FXML
     Pane categoryPane;
     @FXML
@@ -66,6 +68,7 @@ public class EventListController {
     boolean categoryOn = false;
 
     public void initialize() {
+        currentUser = (User) FXRouterPane.getData();
         allCategoryButton.getStyleClass().add("category-button-selected");
         isSearch = false;
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
@@ -194,7 +197,7 @@ public class EventListController {
             event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("event-information", event.getEventName());
+                    FXRouterPane.goTo("event-information", new String[] { event.getEventName(), currentUser.getUsername() });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -238,7 +241,8 @@ public class EventListController {
             event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("event-information", event.getEventName());
+//                    FXRouterPane.goTo("event-information", event.getEventName());
+                    FXRouterPane.goTo("event-information", new String[] { event.getEventName(), currentUser.getUsername() });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
