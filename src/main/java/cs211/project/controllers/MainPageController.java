@@ -2,12 +2,18 @@ package cs211.project.controllers;
 import cs211.project.models.User;
 import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -26,8 +32,13 @@ public class MainPageController {
     Button myTeamButton;
     @FXML
     Button userInfoButton;
+    @FXML
+    ImageView eventNavBarImage;
+    @FXML
+    Label errorLabel;
 
     private User currentUser;
+
 
 
 
@@ -42,6 +53,15 @@ public class MainPageController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //Mouse In (Can't do with SceneBuilder. Somehow it does not work. I've tried.
+        eventButton.setOnMouseEntered(event -> {
+            mouseIn(eventNavBarImage);
+        });
+
+        //Mouse Out
+        eventButton.setOnMouseExited(event -> {
+            mouseOut(eventNavBarImage);
+        });
     }
     public static void configRoute()
     {
@@ -112,6 +132,16 @@ public class MainPageController {
         }
     }
 
+    @FXML
+    public void mouseInEventNavBar() {
+        mouseIn(eventNavBarImage);
+    }
+
+    @FXML
+    public void mouseOutEventNavBar() {
+
+    }
+
     public void changeStyleClassButton(Button button){
         eventButton.getStyleClass().remove("selected_navigation-button");
         createEventButton.getStyleClass().remove("selected_navigation-button");
@@ -120,4 +150,29 @@ public class MainPageController {
         userInfoButton.getStyleClass().remove("selected_navigation-button");
         button.getStyleClass().add("selected_navigation-button");
     }
+
+    public void mouseIn(ImageView imageView) {
+        Timeline timeline = new Timeline();
+        imageView.setVisible(true);
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 72);
+
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
+
+    public void mouseOut(ImageView imageView) {
+        Timeline timeline = new Timeline();
+
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 1);
+        KeyValue keyValue2 = new KeyValue(imageView.visibleProperty(), false);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
+        KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.15), keyValue2);
+
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.getKeyFrames().add(keyFrame2);
+        timeline.play();
+    }
+
 }
