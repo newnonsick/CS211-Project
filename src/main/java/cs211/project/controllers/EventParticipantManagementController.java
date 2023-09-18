@@ -53,8 +53,6 @@ public class EventParticipantManagementController {
         }
     }
 
-    public void handleEndActivityPartiButton() {
-    }
 
     public void handleAddActivityPartiButton() {
     }

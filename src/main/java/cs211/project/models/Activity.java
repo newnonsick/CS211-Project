@@ -1,6 +1,5 @@
 package cs211.project.models;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Activity {

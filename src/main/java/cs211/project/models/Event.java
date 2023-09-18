@@ -118,13 +118,6 @@ public class Event implements Comparable {
         this.eventEndDate = eventEndDate;
     }
 
-    public void setMaxParticipants(int maxParticipants) {
-        this.maxParticipants = maxParticipants;
-    }
-
-
-    public void setEventOwnerUsername(String eventOwner) {
-    }
 
     @Override
     public int compareTo(Object o) {

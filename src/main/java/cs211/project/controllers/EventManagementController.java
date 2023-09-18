@@ -35,7 +35,7 @@ public class EventManagementController {
     @FXML
     private ImageView eventImageView;
     @FXML
-    private Label dateErrorLabel;
+    private Label errorLabel;
 
     private Datasource<EventList> datasource;
 
@@ -56,15 +56,23 @@ public class EventManagementController {
         componentData = (String[]) FXRouterPane.getData();
         eventName = componentData[0];
         currentUsername = componentData[1];
-
+        event = eventList.findEventByEventName(eventName);
+        eventChoiceBox.getItems().addAll(eventCategories);
+        errorLabel.setVisible(false);
+        showInformation();
+    }
+    public void showInformation(){
         eventNameTextField.setText(event.getEventName());
         eventInfoTextField.setText(event.getEventInformation());
         placeTextField.setText(event.getPlaceEvent());
         startDatePicker.setValue(event.getEventStartDate());
         endDatePicker.setValue(event.getEventEndDate());
         eventChoiceBox.setValue(event.getEventCategory());
-        maxParticipantTextField.setText(String.valueOf(event.getMaxParticipants()));
-        startJoinDatePicker.setValue(event.getStartJoinDate());
+        if (event.getMaxParticipants() != -1) {
+            maxParticipantTextField.setText(String.valueOf(event.getMaxParticipants()));
+        } else {
+            maxParticipantTextField.setText("");
+        }startJoinDatePicker.setValue(event.getStartJoinDate());
         closingJoinDatePicker.setValue(event.getClosingJoinDate());
 
         Image image = new Image("file:data/eventPicture/" + event.getEventPicture());
@@ -94,17 +102,30 @@ public class EventManagementController {
 
     @FXML
     public void saveEventEditButton() {
+        LocalDate startJoin = startJoinDatePicker.getValue();
+        LocalDate closingJoin = closingJoinDatePicker.getValue();
+
+
+        if (closingJoin != null && startJoin != null && closingJoin.isBefore(startJoin)) {
+            errorLabel.setText("Start date must be before closing date.");
+            errorLabel.setVisible(true);
+            return;
+        } else {
+            errorLabel.setVisible(false);
+        }
+
         event.setEventName(eventNameTextField.getText());
         event.setEventInformation(eventInfoTextField.getText());
         event.setEventCategory(eventChoiceBox.getValue());
         event.setPlaceEvent(placeTextField.getText());
         event.setEventStartDate(startDatePicker.getValue());
         event.setEventEndDate(endDatePicker.getValue());
+        event.setMaxParticipant(Integer.parseInt(maxParticipantTextField.getText()));
+        event.setStartJoinDate(startJoinDatePicker.getValue());
+        event.setClosingJoinDate(closingJoinDatePicker.getValue());
 
-//        currentEvent.setMaxParticipant(Integer.parseInt(maxParticipantTextField.getText()));
-//        currentEvent.setStartJoinDate(startJoinDatePicker.getValue());
-//        currentEvent.setClosingJoinDate(closingJoinDatePicker.getValue());
-
+        event.setStartJoinDate(startJoin);
+        event.setClosingJoinDate(closingJoin);
 
         eventList.updateEvent(event);
         datasource.writeData(eventList);

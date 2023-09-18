@@ -82,11 +82,11 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TextField fx:id="maxParticipantTextField" layoutX="579.0" layoutY="498.0" />
+      <TextField fx:id="maxParticipantTextField" layoutX="579.0" layoutY="498.0" promptText="จำนวนผู้เข้าร่วมสูงสุด" />
       <DatePicker fx:id="startDatePicker" layoutX="354.0" layoutY="357.0" />
       <DatePicker fx:id="endDatePicker" layoutX="354.0" layoutY="394.0" />
-      <DatePicker fx:id="startJoinDatePicker" layoutX="578.0" layoutY="531.0" prefHeight="26.0" prefWidth="150.0" />
-      <DatePicker fx:id="closingJoinDatePicker" layoutX="578.0" layoutY="566.0" prefHeight="20.0" prefWidth="150.0" />
+      <DatePicker fx:id="startJoinDatePicker" layoutX="578.0" layoutY="531.0" prefHeight="26.0" prefWidth="150.0" promptText="วันที่เปิดรับสมัคร" />
+      <DatePicker fx:id="closingJoinDatePicker" layoutX="578.0" layoutY="566.0" prefHeight="20.0" prefWidth="150.0" promptText="วันที่ปิดรับสมัคร" />
       <Button layoutX="33.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToYourCreatedEvents" text="Back">
          <font>
             <Font size="18.0" />
@@ -107,5 +107,6 @@
          </font>
       </Button>
       <ImageView fx:id="eventImageView" fitHeight="150.0" fitWidth="200.0" layoutX="654.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="errorLabel" layoutX="469.0" layoutY="663.0" text="errorLabel" />
    </children>
 </AnchorPane>

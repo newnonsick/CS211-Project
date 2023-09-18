@@ -23,6 +23,7 @@ public class EventInformationController {
     @FXML private Label startDateLabel;
     @FXML private Label endDateLabel;
     @FXML private Label maxParticipantsLabel;
+    @FXML private Label startJoinDateLabel;
     @FXML private Label closingJoinDateLabel;
     @FXML private Label categoryLabel;
     @FXML private Label errorLabel;
@@ -50,8 +51,22 @@ public class EventInformationController {
         startDateLabel.setText("" + event.getEventStartDate().format(DateTimeFormatter.ofPattern(pattern)));
         endDateLabel.setText("" + event.getEventEndDate().format(DateTimeFormatter.ofPattern(pattern)));
 
-        maxParticipantsLabel.setText("" + event.getMaxParticipants());
-        closingJoinDateLabel.setText("" + event.getClosingJoinDate());
+        if (event.getMaxParticipants() == -1) {
+            maxParticipantsLabel.setText("ไม่จำกัดจำนวนผู้เข้าร่วม");
+        } else {
+            maxParticipantsLabel.setText("" + event.getMaxParticipants());
+        }
+
+        if (event.getStartJoinDate() == null) {
+            startJoinDateLabel.setText("N/A");
+        } else {
+            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+        }
+        if (event.getClosingJoinDate() == null) {
+            closingJoinDateLabel.setText("N/A");
+        } else {
+            closingJoinDateLabel.setText("" + event.getClosingJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+        }
         categoryLabel.setText(event.getEventCategory());
         String filePath = "data/eventPicture/" + event.getEventPicture();
         File file = new File(filePath);
