@@ -56,7 +56,7 @@ public class EventManagementController {
         componentData = (String[]) FXRouterPane.getData();
         eventName = componentData[0];
         currentUsername = componentData[1];
-
+        event = eventList.findEventByEventName(eventName);
         eventNameTextField.setText(event.getEventName());
         eventInfoTextField.setText(event.getEventInformation());
         placeTextField.setText(event.getPlaceEvent());
