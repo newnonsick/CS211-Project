@@ -171,12 +171,12 @@ public class MainPageController {
     }
 
     public void changeStyleClassButton(Button button){
-        eventButton.getStyleClass().remove("selected_navigation-button");
-        createEventButton.getStyleClass().remove("selected_navigation-button");
-        myEventButton.getStyleClass().remove("selected_navigation-button");
-        myTeamButton.getStyleClass().remove("selected_navigation-button");
-        userInfoButton.getStyleClass().remove("selected_navigation-button");
-        button.getStyleClass().add("selected_navigation-button");
+        eventButton.getStyleClass().remove("navigation-button-selected");
+        createEventButton.getStyleClass().remove("navigation-button-selected");
+        myEventButton.getStyleClass().remove("navigation-button-selected");
+        myTeamButton.getStyleClass().remove("navigation-button-selected");
+        userInfoButton.getStyleClass().remove("navigation-button-selected");
+        button.getStyleClass().add("navigation-button-selected");
     }
 
     public void mouseIn(ImageView imageView) {

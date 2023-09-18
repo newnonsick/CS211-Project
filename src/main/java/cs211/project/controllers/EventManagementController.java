@@ -57,11 +57,14 @@ public class EventManagementController {
         eventName = componentData[0];
         currentUsername = componentData[1];
         event = eventList.findEventByEventName(eventName);
+<<<<<<< HEAD
         eventChoiceBox.getItems().addAll(eventCategories);
         errorLabel.setVisible(false);
         showInformation();
     }
     public void showInformation(){
+=======
+>>>>>>> f972a287dcdaafb5ff0e7fc08027ca032d3cd847
         eventNameTextField.setText(event.getEventName());
         eventInfoTextField.setText(event.getEventInformation());
         placeTextField.setText(event.getPlaceEvent());
