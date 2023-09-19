@@ -1,5 +1,6 @@
 package cs211.project.models;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Activity {
@@ -10,6 +11,7 @@ public class Activity {
     private String activityStatus;
     private LocalTime activityStartTime;
     private LocalTime activityEndTime;
+    private LocalDate activityDate;
 
     public Activity(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
         this.eventOfActivityName = eventOfActivityName;
@@ -19,11 +21,13 @@ public class Activity {
         this.activityStatus = activityStatus;
     }
 
-    public Activity(String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime) {
+    public Activity(String eventOfActivityName, String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime, LocalDate activityDate) {
+        this.eventOfActivityName = eventOfActivityName;
         this.activityName = activityName;
         this.activityInformation = activityInformation;
         this.activityStartTime = activityStartTime;
         this.activityEndTime = activityEndTime;
+        this.activityDate = activityDate;
     }
 
     public String getActivityName() {
@@ -59,11 +63,9 @@ public class Activity {
         return activityStartTime;
     }
 
-
-    public LocalTime activityEndTime(){
-        return activityEndTime;
+    public LocalDate getActivityDate() {
+        return activityDate;
     }
-
     public boolean isActivity(Activity activity) {
         if (activity.getActivityName().equals(this.getActivityName()) && activity.getEventOfActivityName().equals(this.getEventOfActivityName()) && activity.getTeamOfActivityName().equals(this.getTeamOfActivityName())) {
             return true;

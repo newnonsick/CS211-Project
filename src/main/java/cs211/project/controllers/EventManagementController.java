@@ -11,6 +11,9 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 
 public class EventManagementController {
@@ -87,18 +90,30 @@ public class EventManagementController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose an Image");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
+                new FileChooser.ExtensionFilter("Image Files", "*.jpg","*.png", "*.jpeg", "*.webp",  "*.jfif" , "*.pjpeg" , "*.pjp")
         );
         File selectedImage = fileChooser.showOpenDialog(null);
         if (selectedImage != null) {
             Image image = new Image(selectedImage.toURI().toString());
             eventImageView.setImage(image);
-            event.setEventPicture(selectedImage.getPath());
+
+            String targetDirectoryPath = "data/eventPicture";
+            Path targetDirectory = Path.of(targetDirectoryPath);
+            String fileType = selectedImage.getName().substring(selectedImage.getName().lastIndexOf(".") + 1);
+            Path targetFilePath = targetDirectory.resolve(event.getEventName() + "." + fileType);
+            try {
+                Files.copy(selectedImage.toPath(), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            event.setEventPicture(event.getEventName() + "." + fileType);
 
             eventList.updateEvent(event);
             datasource.writeData(eventList);
         }
     }
+
 
     @FXML
     public void saveEventEditButton() {
@@ -112,6 +127,17 @@ public class EventManagementController {
             return;
         } else {
             errorLabel.setVisible(false);
+        }
+        String newEventName = eventNameTextField.getText();
+
+        if (!event.getEventName().equals(newEventName)) {
+            String oldImageFileName = event.getEventPicture();
+            String fileType = oldImageFileName.substring(oldImageFileName.lastIndexOf(".") + 1);
+            File oldImageFile = new File("data/eventPicture/" + oldImageFileName);
+            File newImageFile = new File("data/eventPicture/" + newEventName + "." + fileType);
+            if (oldImageFile.renameTo(newImageFile)) {
+                event.setEventPicture(newEventName + "." + fileType);
+            }
         }
 
         event.setEventName(eventNameTextField.getText());
@@ -135,7 +161,7 @@ public class EventManagementController {
         @FXML
         public void EventPartiManagementButton() {
             try {
-                FXRouterPane.goTo("event-participant-management");
+                FXRouterPane.goTo("event-participant-management", new String[] {event.getEventName(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
