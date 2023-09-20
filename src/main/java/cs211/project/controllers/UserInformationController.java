@@ -29,7 +29,7 @@ public class UserInformationController {
     private User currentUser;
     private Datasource<EventList> eventListDatasource;
     private EventList eventList;
-    private Datasource<List<String[]>> joinEventDataSource; // Changed variable name
+    private Datasource<List<String[]>> joinEventDataSource;
     private List<String[]> joinEventData;
 
     public void initialize() {
@@ -43,7 +43,8 @@ public class UserInformationController {
 
         checkFileIsExisted("userData.csv");
         showUser();
-        showTable(eventList);
+        showActiveTable(eventList);
+        showHistoryTable(eventList);
     }
 
     private void checkFileIsExisted(String fileName) {
@@ -71,7 +72,8 @@ public class UserInformationController {
         profileImageView.setImage(new Image(file.toURI().toString()));
     }
 
-    private void showTable(EventList eventList) {
+
+    private void showActiveTable(EventList eventList) {
         TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
         eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
 
@@ -84,10 +86,51 @@ public class UserInformationController {
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
         eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
 
+        eventNameColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.36));
+        eventCategoryColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.30));
+        eventStartDateColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.17));
+        eventEndDateColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.17));
+
         activeEventTableView.getColumns().clear();
         activeEventTableView.getColumns().addAll(eventNameColumn, eventCategoryColumn, eventStartDateColumn, eventEndDateColumn);
         activeEventTableView.getItems().clear();
 
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        LocalDate currentDate = LocalDate.now(thaiTimeZone);
+
+        for (Event event : eventList.getEvents()) {
+            for (String[] data : joinEventData) {
+                String username = data[0];
+                String eventName = data[1];
+
+                if (username.equals(currentUser.getUsername()) && eventName.equals(event.getEventName())) {
+                    if (event.getEventEndDate().isAfter(currentDate)) {
+                        activeEventTableView.getItems().add(event);
+                    } else {
+                        activeEventTableView.getItems();
+                    }
+                }
+            }
+        }
+    }
+
+    private void showHistoryTable(EventList eventList) {
+        TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+
+        TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
+        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
+
+        TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
+        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+
+        TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
+        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+
+        eventNameColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.36));
+        eventCategoryColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.30));
+        eventStartDateColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.17));
+        eventEndDateColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.17));
 
         eventHistoryTableView.getColumns().clear();
         eventHistoryTableView.getColumns().addAll(eventNameColumn, eventCategoryColumn, eventStartDateColumn, eventEndDateColumn);
@@ -105,7 +148,7 @@ public class UserInformationController {
                     if (event.getEventEndDate().isBefore(currentDate)) {
                         eventHistoryTableView.getItems().add(event);
                     } else {
-                        activeEventTableView.getItems().add(event);
+                        eventHistoryTableView.getItems();
                     }
                 }
             }
