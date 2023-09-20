@@ -29,6 +29,7 @@ public class UserInformationController {
     private User currentUser;
     private Datasource<EventList> eventListDatasource;
     private EventList eventList;
+    private Event event;
     private Datasource<List<String[]>> joinEventDataSource;
     private List<String[]> joinEventData;
 
@@ -98,17 +99,15 @@ public class UserInformationController {
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         LocalDate currentDate = LocalDate.now(thaiTimeZone);
 
-        for (Event event : eventList.getEvents()) {
-            for (String[] data : joinEventData) {
-                String username = data[0];
-                String eventName = data[1];
-
-                if (username.equals(currentUser.getUsername()) && eventName.equals(event.getEventName())) {
-                    if (event.getEventEndDate().isAfter(currentDate)) {
-                        activeEventTableView.getItems().add(event);
-                    } else {
-                        activeEventTableView.getItems();
-                    }
+        for (String[] data : joinEventData) {
+            String username = data[0];
+            String eventName = data[1];
+            if (username.equals(currentUser.getUsername())) {
+                event = eventList.findEventByEventName(eventName);
+                if (event.getEventEndDate().isAfter(currentDate)) {
+                    activeEventTableView.getItems().add(event);
+                } else {
+                    activeEventTableView.getItems();
                 }
             }
         }
@@ -139,17 +138,15 @@ public class UserInformationController {
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         LocalDate currentDate = LocalDate.now(thaiTimeZone);
 
-        for (Event event : eventList.getEvents()) {
-            for (String[] data : joinEventData) {
-                String username = data[0];
-                String eventName = data[1];
-
-                if (username.equals(currentUser.getUsername()) && eventName.equals(event.getEventName())) {
-                    if (event.getEventEndDate().isBefore(currentDate)) {
-                        eventHistoryTableView.getItems().add(event);
-                    } else {
-                        eventHistoryTableView.getItems();
-                    }
+        for (String[] data : joinEventData) {
+            String username = data[0];
+            String eventName = data[1];
+            if (username.equals(currentUser.getUsername())) {
+                event = eventList.findEventByEventName(eventName);
+                if (event.getEventEndDate().isBefore(currentDate)) {
+                    eventHistoryTableView.getItems().add(event);
+                } else {
+                    eventHistoryTableView.getItems();
                 }
             }
         }
