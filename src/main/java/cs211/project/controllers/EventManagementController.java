@@ -3,6 +3,7 @@ package cs211.project.controllers;
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.services.*;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -90,7 +91,7 @@ public class EventManagementController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose an Image");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.jpg","*.png", "*.jpeg", "*.webp",  "*.jfif" , "*.pjpeg" , "*.pjp")
+                new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg")
         );
         File selectedImage = fileChooser.showOpenDialog(null);
         if (selectedImage != null) {
@@ -99,7 +100,13 @@ public class EventManagementController {
 
             String targetDirectoryPath = "data/eventPicture";
             Path targetDirectory = Path.of(targetDirectoryPath);
-            String fileType = selectedImage.getName().substring(selectedImage.getName().lastIndexOf(".") + 1);
+            String fileType = selectedImage.getName().substring(selectedImage.getName().lastIndexOf(".") + 1).toLowerCase();
+
+
+            if (!fileType.equals("jpeg") && !fileType.equals("jpg") && !fileType.equals("png")) {
+                fileType = "jpeg";
+            }
+
             Path targetFilePath = targetDirectory.resolve(event.getEventName() + "." + fileType);
             try {
                 Files.copy(selectedImage.toPath(), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
@@ -119,7 +126,6 @@ public class EventManagementController {
     public void saveEventEditButton() {
         LocalDate startJoin = startJoinDatePicker.getValue();
         LocalDate closingJoin = closingJoinDatePicker.getValue();
-
 
         if (closingJoin != null && startJoin != null && closingJoin.isBefore(startJoin)) {
             errorLabel.setText("Start date must be before closing date.");
@@ -146,20 +152,44 @@ public class EventManagementController {
         event.setPlaceEvent(placeTextField.getText());
         event.setEventStartDate(startDatePicker.getValue());
         event.setEventEndDate(endDatePicker.getValue());
-        event.setMaxParticipant(Integer.parseInt(maxParticipantTextField.getText()));
-        event.setStartJoinDate(startJoinDatePicker.getValue());
-        event.setClosingJoinDate(closingJoinDatePicker.getValue());
 
-        event.setStartJoinDate(startJoin);
-        event.setClosingJoinDate(closingJoin);
+        if (eventNameTextField.getText().isEmpty() ||
+                eventInfoTextField.getText().isEmpty() ||
+                placeTextField.getText().isEmpty() ||
+                eventChoiceBox.getValue() == null ||
+                startDatePicker.getValue() == null ||
+                endDatePicker.getValue() == null ||
+                eventImageView.getImage() == null) {
+
+            errorLabel.setText("Please fill in all required fields.");
+            errorLabel.setVisible(true);
+            return;
+        }
+
+        try {
+            int maxParticipant = Integer.parseInt(maxParticipantTextField.getText());
+            event.setMaxParticipant(maxParticipant);
+        } catch (NumberFormatException e) {
+            event.setMaxParticipant(-1);
+        }
+
+        if (startJoin != null) {
+            event.setStartJoinDate(startJoin);
+        }
+        if (closingJoin != null) {
+            event.setClosingJoinDate(closingJoin);
+        }
+
+
 
         eventList.updateEvent(event);
         datasource.writeData(eventList);
         backToYourCreatedEvents();
-}
+    }
 
-        @FXML
-        public void EventPartiManagementButton() {
+
+    @FXML
+        public void eventPartiManagementButton() {
             try {
                 FXRouterPane.goTo("event-participant-management", new String[] {event.getEventName(), currentUsername});
             } catch (IOException e) {

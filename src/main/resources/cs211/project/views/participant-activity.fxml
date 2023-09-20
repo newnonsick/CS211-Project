@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.ParticipantActivityController">
+<AnchorPane fx:id="eventNAmeLabel" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.ParticipantActivityController">
    <children>
       <Label layoutX="122.0" layoutY="51.0" text="ตารางกิจกรรมสำหรับผู้เข้าร่วม">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventName" layoutX="122.0" layoutY="95.0" text="eventName">
+      <Label fx:id="eventNameLabel" layoutX="122.0" layoutY="95.0" text="eventNameLabel">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -24,12 +24,13 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="activityParticipantTableView" layoutX="122.0" layoutY="143.0" prefHeight="525.0" prefWidth="741.0">
+      <TableView fx:id="activityParticipantTableView" layoutX="134.0" layoutY="153.0" prefHeight="493.0" prefWidth="734.0">
          <columns>
-            <TableColumn fx:id="activityNameColumn" prefWidth="180.800048828125" text="ชื่อกิจกรรม" />
-            <TableColumn fx:id="activityInfoColumn" prefWidth="299.199951171875" text="รายละเอียดกิจกรรม" />
-            <TableColumn fx:id="activityStartColumn" prefWidth="124.0" text="เริ่ม" />
-            <TableColumn fx:id="activityEndColumn" prefWidth="136.800048828125" text="สิ้นสุด" />
+            <TableColumn fx:id="activityDateColumn" prefWidth="96.79998779296875" text="วันที่" />
+            <TableColumn fx:id="activityStartColumn" prefWidth="70.0" text="เวลาเริ่ม" />
+            <TableColumn fx:id="activityEndColumn" prefWidth="70.0" text="เวลาสิ้นสุด" />
+            <TableColumn fx:id="activityNameColumn" prefWidth="146.39996337890625" text="ชื่อกิจกรรม" />
+            <TableColumn fx:id="activityInfoColumn" prefWidth="349.60003662109375" text="รายละเอียดกิจกรรม" />
          </columns>
       </TableView>
    </children>

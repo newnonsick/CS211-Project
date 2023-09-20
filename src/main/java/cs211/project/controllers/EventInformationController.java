@@ -160,19 +160,19 @@ public class EventInformationController {
                 throw new RuntimeException(e);
             }
         }
-        goToUserInformation();
+        goToParticipantActivity();
 
     }
 
     @FXML
-    private void goToUserInformation() {
+    private void goToParticipantActivity() {
         try {
-            FXRouterPane.goTo("user-information");
+            FXRouterPane.goTo("participant-activity", new String[] { event.getEventName(), currentUserName});
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+        }
 
     @FXML
     public void handleVisitTeamButton(){
@@ -183,3 +183,4 @@ public class EventInformationController {
         }
     }
 }
+
