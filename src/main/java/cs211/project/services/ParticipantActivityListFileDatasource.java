@@ -6,10 +6,12 @@ import cs211.project.models.Event;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 
-public class ParticipantActivityListFileDatasource implements Datasource<ActivityList>{
+public class ParticipantActivityListFileDatasource implements Datasource<ActivityList> {
     private String directoryName;
     private String fileName;
 
@@ -61,16 +63,21 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
 
         String line = "";
         try {
-            while ( (line = buffer.readLine()) != null ){
+            while ((line = buffer.readLine()) != null) {
                 if (line.equals("")) continue;
                 String[] data = line.split(",");
-                String activityName = data[0].trim();
-                String activityInformation = data[1].trim();
-                LocalTime activityStartTime = LocalTime.parse(data[2].trim());
-                LocalTime activityEndTime = LocalTime.parse(data[3].trim());
+                String eventOfActivityName = data[0].trim();
+                String activityName = data[1].trim();
+                String activityInformation = data[2].trim();
+                try {
+                    LocalTime activityStartTime = LocalTime.parse(data[3].trim());
+                    LocalTime activityEndTime = LocalTime.parse(data[4].trim());
+                    LocalDate activityDate = LocalDate.parse(data[5].trim());
 
-                // add data to the list
-                activities.addNewActivityParticipant(activityName, activityInformation, activityStartTime, activityEndTime);
+                    activities.addNewActivityParticipant(eventOfActivityName, activityName, activityInformation, activityStartTime, activityEndTime, activityDate);
+                } catch (DateTimeParseException e) {
+                    System.err.println("Error parsing date or time on line: " + line);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -99,7 +106,7 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
 
         try {
             for (Activity activity : activityList.getActivities()) {
-                String line = activity.getActivityName() + "," + activity.getActivityInformation()  + "," + activity.getActivityStartTime() + "," +activity.getActivityEndTime();
+                String line = activity.getEventOfActivityName() + "," + activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStartTime() + "," + activity.getActivityEndTime() + "," + activity.getActivityDate();
                 buffer.append(line);
                 buffer.append("\n");
             }
@@ -109,12 +116,11 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
             try {
                 buffer.flush();
                 buffer.close();
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
-
 }
+
 

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;
@@ -72,10 +73,18 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 LocalDate eventStartDate = LocalDate.parse(data[5].trim());
                 LocalDate eventEndDate = LocalDate.parse(data[6].trim());
                 String eventOwnerUsername = data[7].trim();
+                int maxParticipants = data.length > 8 && !data[8].trim().equals("-1") ? Integer.parseInt(data[8].trim()) : -1;
+                LocalDate startJoinDate = null;
+                if (data.length > 9 && !data[9].trim().isEmpty() && !data[9].trim().equalsIgnoreCase("null")) {
+                    startJoinDate = LocalDate.parse(data[9].trim());
+                }
 
-                // add data to the list
-                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername);
-            }
+                LocalDate closingJoinDate = null;
+                if (data.length > 10 && !data[10].trim().isEmpty() && !data[10].trim().equalsIgnoreCase("null")) {
+                    closingJoinDate = LocalDate.parse(data[10].trim());
+                }
+
+                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDate, closingJoinDate);}
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +116,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 String line = event.getEventName() + "," + event.getEventPicture() + ","
                         + event.getEventInformation() + "," + event.getEventCategory()  + "," +
                         event.getPlaceEvent() + "," + event.getEventStartDate() + "," +
-                        event.getEventEndDate() + "," + event.getEventOwnerUsername();
+                        event.getEventEndDate() + "," + event.getEventOwnerUsername() + "," + event.getMaxParticipants() + "," + event.getStartJoinDate() + "," + event.getClosingJoinDate();
                 buffer.append(line);
                 buffer.append("\n");
             }

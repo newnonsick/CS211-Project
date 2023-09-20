@@ -1,9 +1,11 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Activity;
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.models.User;
 import cs211.project.services.*;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.*;
+import java.time.LocalDate;
 
 public class MyEventsController {
     @FXML private TableView<Event> myEventsTableView;
@@ -57,7 +60,14 @@ public class MyEventsController {
         eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
 
         TableColumn<Event, String> participantsColumn = new TableColumn<>("Max Participants");
-        participantsColumn.setCellValueFactory(new PropertyValueFactory<>("maxParticipants"));
+        participantsColumn.setCellValueFactory(cellData -> {
+            int maxParticipants = cellData.getValue().getMaxParticipants();
+            if (maxParticipants == -1) {
+                return new SimpleStringProperty("ไม่จำกัดจำนวนผู้เข้าร่วม");
+            } else {
+                return new SimpleStringProperty(String.valueOf(maxParticipants));
+            }
+        });
 
         myEventsTableView.getColumns().clear();
         myEventsTableView.getColumns().add(eventNameColumn);

@@ -13,6 +13,15 @@ public class UserList {
         users.add(user);
     }
 
+    public User findUserByUsername(String username) {
+        for (User user : this.users) {
+            if (username.equals(user.getUsername())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 
     public boolean findUser(User user) {
         for (User aUser : this.users) {
