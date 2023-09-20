@@ -55,6 +55,7 @@ public class TeamParticipantElementController {
         teamParticipant = teamParticipantList.findTeamParticipantByUsernameAndEventAndTeam(username, eventOfTeamName, teamName);
         user = userList.findUserByUsername(username);
         team = teamList.findTeamByNameAndEvent(eventOfTeamName, teamName);
+        this.currentUsername = currentUsername;
         //profile size 40 x 40
         Circle img = new Circle(20, 20, 20);
         profileImageView.setClip(img);
@@ -78,9 +79,16 @@ public class TeamParticipantElementController {
         alert.setContentText("This action cannot be undone.");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
+            if (currentUsername.equals(teamParticipant.getUsername())){
+                Alert alert2 = new Alert(Alert.AlertType.ERROR);
+                alert2.setTitle("Error");
+                alert2.setHeaderText("You cannot remove yourself from the team.");
+                alert2.showAndWait();
+                return;
+            }
             teamParticipantList.getTeamParticipants().remove(teamParticipant);
             teamParticipantListDatasource.writeData(teamParticipantList);
-            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(teamParticipant.getEventName(), teamParticipant.getTeamName()) == 0){
+            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(teamParticipant.getEventName(), teamParticipant.getTeamName()) == 0 || teamParticipant.getUsername().equals(team.getHeadOfTeamUsername())){
                 team.setHeadOfTeamUsername(currentUsername);
                 teamListDatasource.writeData(teamList);
             }
