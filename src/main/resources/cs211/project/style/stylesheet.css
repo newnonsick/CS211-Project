@@ -105,3 +105,8 @@
 .category-button-selected {
     -fx-background-color: #DCDCDC;
 }
+
+.team-full{
+    -fx-background-color: grey;
+    -fx-background-radius: 30;
+}

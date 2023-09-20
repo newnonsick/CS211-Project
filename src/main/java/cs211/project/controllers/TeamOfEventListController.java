@@ -60,9 +60,6 @@ public class TeamOfEventListController {
             if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
-            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(team.getEventOfTeamName(), team.getTeamName()) >= team.getMaxParticipants()){
-                continue;
-            }
             if (column == 2) {
                 row++;
                 column = 0;
@@ -77,24 +74,42 @@ public class TeamOfEventListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate());
-            anchorPane.setOnMouseClicked(event1 -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText("Do you want to join this team?");
-                Optional<ButtonType> result = alert.showAndWait();
+            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUserName));
+            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(team.getEventOfTeamName(), team.getTeamName()) >= team.getMaxParticipants()) {
+                anchorPane.getStyleClass().remove("element");
+                anchorPane.getStyleClass().add("team-full");
+            }
+            else{
+                anchorPane.setOnMouseClicked(event1 -> {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setHeaderText("Do you want to join this team?");
+                    Optional<ButtonType> result = alert.showAndWait();
 
-               if(result.get() == ButtonType.OK) {
-                   Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
-                   TeamParticipantList teamParticipantList = datasourceParticipant.readData();
-                   teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventOfTeamName(), team.getTeamName());
-                   datasourceParticipant.writeData(teamParticipantList);
-                    try {
-                        FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    if(result.get() == ButtonType.OK) {
+                        if (currentUserName.equals(team.getTeamOwnerUsername())){
+                            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                            alert1.setHeaderText("You are the owner of this team.");
+                            alert1.showAndWait();
+                            return;
+                        }
+                        Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
+                        TeamParticipantList teamParticipantList = datasourceParticipant.readData();
+                        if (!teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventOfTeamName(), team.getTeamName())){
+                            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                            alert1.setHeaderText("You have already joined this team.");
+                            alert1.showAndWait();
+                            return;
+                        }
+                        datasourceParticipant.writeData(teamParticipantList);
+                        try {
+                            FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
-               }
-            });
+                });
+            }
+
             teamGridPane.add(anchorPane, column, row);
             column++;
 

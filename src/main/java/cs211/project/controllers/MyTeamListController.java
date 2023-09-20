@@ -23,6 +23,10 @@ public class MyTeamListController {
     ScrollPane teamListScrollPane;
     @FXML
     GridPane teamListGridPane;
+    @FXML
+    ScrollPane yourCreateTeamListScrollPane;
+    @FXML
+    GridPane yourCreateTeamListGridPane;
     private User currentUser;
     private Datasource<TeamList> datasourceTeam;
     private Datasource<TeamParticipantList> datasourceParticipant;
@@ -49,6 +53,9 @@ public class MyTeamListController {
             if (!teamParticipant.getUsername().equals(currentUser.getUsername())) {
                 continue;
             }
+            if (team.getTeamOwnerUsername().equals(currentUser.getUsername())) {
+                continue;
+            }
             if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
@@ -66,7 +73,7 @@ public class MyTeamListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate());
+            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), teamParticipant.getUsername().equals(team.getTeamOwnerUsername()));
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUser.getUsername()});
@@ -75,6 +82,43 @@ public class MyTeamListController {
                 }
             });
             teamListGridPane.add(anchorPane, column, row);
+            column++;
+
+            GridPane.setMargin(anchorPane, new Insets(10));
+        }
+
+        row = 0;
+        column = 0;
+        for (Team team : teamList.getTeams()) {
+            if (!team.getTeamOwnerUsername().equals(currentUser.getUsername())) {
+                continue;
+            }
+            if (team.getClosingJoinDate().isBefore(currentDate)) {
+                continue;
+            }
+            if(column == 2) {
+                row++;
+                column = 0;
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/team-element.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            TeamElementController team_ = fxmlLoader.getController();
+            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), true);
+            anchorPane.setOnMouseClicked(event1 -> {
+                try {
+                    FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUser.getUsername()});
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            yourCreateTeamListGridPane.add(anchorPane, column, row);
             column++;
 
             GridPane.setMargin(anchorPane, new Insets(10));

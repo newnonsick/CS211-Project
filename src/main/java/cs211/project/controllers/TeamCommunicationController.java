@@ -65,7 +65,7 @@ public class TeamCommunicationController {
         currentUserName = componentData[2];
         team = teamList.findTeamByNameAndEvent(eventOfTeamName, teamName);
         manageTeamButton.setVisible(false);
-        if (team.getHeadOfTeamUsername().equals(currentUserName) || eventList.findEventByEventName(team.getEventOfTeamName()).getEventOwnerUsername().equals(currentUserName)){
+        if (team.getHeadOfTeamUsername().equals(currentUserName) || team.getTeamOwnerUsername().equals(currentUserName)){
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
@@ -165,7 +165,7 @@ public class TeamCommunicationController {
             messageVBox.getChildren().add(usernameText);
 
             String path = new File("data/profile_picture/" + user.getProfilePicture()).toURI().toString();
-            img.setFill(new ImagePattern(new Image(path)));
+            img.setFill(new ImagePattern(new Image(path, 32, 32, false, false)));
 
         }
 

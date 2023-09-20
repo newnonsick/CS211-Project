@@ -42,7 +42,7 @@ public class CreateTeamController {
             return;
         }
         try {
-            boolean canAddNewTeam = teamList.addNewTeam(eventName, teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue(), currentUsername);
+            boolean canAddNewTeam = teamList.addNewTeam(eventName, teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue(), currentUsername, currentUsername);
             if (!canAddNewTeam) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");

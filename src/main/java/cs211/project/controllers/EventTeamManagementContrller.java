@@ -93,7 +93,7 @@ public class EventTeamManagementContrller {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate());
+            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUsername));
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("team-management", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUsername});
