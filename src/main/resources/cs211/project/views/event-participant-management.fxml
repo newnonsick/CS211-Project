@@ -17,9 +17,9 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <TableView fx:id="eventParticipantTableView" layoutX="61.0" layoutY="169.0" prefHeight="502.0" prefWidth="384.0">
+      <TableView fx:id="eventParticipantTableView" layoutX="61.0" layoutY="169.0" prefHeight="502.0" prefWidth="412.0">
         <columns>
-            <TableColumn fx:id="partiUsernameColumn" minWidth="0.0" prefWidth="248.80002975463867" text="Username" />
+            <TableColumn fx:id="partiUsernameColumn" minWidth="0.0" prefWidth="248.80002975463867" text="รายชื่อผู้เข้าร่วม" />
             <TableColumn fx:id="approvedColumn" minWidth="2.4000244140625" prefWidth="155.199951171875" text=" Approved Status" />
         </columns>
       </TableView>
@@ -32,7 +32,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventName2" layoutX="75.0" layoutY="98.0" text="eventName">
+      <Label fx:id="eventName2Label" layoutX="75.0" layoutY="98.0" text="eventName">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -78,7 +78,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventName" layoutX="566.0" layoutY="67.0" text="eventName">
+      <Label fx:id="eventNameLabel" layoutX="566.0" layoutY="67.0" text="eventName">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

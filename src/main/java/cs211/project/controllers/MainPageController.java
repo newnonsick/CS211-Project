@@ -119,6 +119,7 @@ public class MainPageController {
         FXRouterPane.when("team-communication", viewPath + "team-communication.fxml");
         FXRouterPane.when("team-management", viewPath + "team-management.fxml");
         FXRouterPane.when("edit-participant", viewPath + "edit-participant.fxml");
+        FXRouterPane.when("participant-activity",viewPath + "participant-activity.fxml");
     }
     @FXML
     public void goToEventList()  {

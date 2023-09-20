@@ -4,9 +4,7 @@ import cs211.project.models.Activity;
 import cs211.project.models.ActivityList;
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
-import cs211.project.services.Datasource;
-import cs211.project.services.EventListFileDatasource;
-import cs211.project.services.ParticipantActivityListFileDatasource;
+import cs211.project.services.*;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,7 +13,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import cs211.project.services.FXRouterPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
@@ -23,18 +20,19 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 public class EventParticipantManagementController {
 
     @FXML private TableView eventParticipantTableView;
+    @FXML private TableView activityParticipantTableView;
     @FXML private Button goToEditParticipant;
     @FXML private Button removeActivityButton;
     @FXML private Button startTimePicker;
     @FXML private Button endTimePicker;
-    @FXML private Label eventName;
-    @FXML private Label eventName2;
-    @FXML private TableView activityParticipantTableView;
+    @FXML private Label eventNameLabel;
+    @FXML private Label eventName2Label;
     @FXML private TextField activityNameTextField;
     @FXML private TextField activityInfoTextField;
     @FXML private DatePicker activityDatePicker;
@@ -49,6 +47,9 @@ public class EventParticipantManagementController {
     private String[] componentData;
     private String currentUsername;
     private String eventOfParticipantName;
+    private Datasource<List<String[]>> participantDataSource;
+    private List<String[]> participantList;
+
 
     public void initialize(){
         removeActivityButton.setDisable(true);
@@ -58,10 +59,13 @@ public class EventParticipantManagementController {
         eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         event = eventList.findEventByEventName(eventOfParticipantName);
-        eventName.setText(event.getEventName());
-        eventName2.setText(event.getEventName());
+        eventNameLabel.setText(event.getEventName());
+        eventName2Label.setText(event.getEventName());
         activityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         activityList = activityListDatasource.readData();
+        participantDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
+        participantList = participantDataSource.readData();
+        showParticipants(participantList);
         showActivity(activityList);
         activityParticipantTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
             @Override
@@ -88,11 +92,6 @@ public class EventParticipantManagementController {
     }
     @FXML
     public void goToEditParticipant() {
-        try {
-            FXRouterPane.goTo("edit-participant");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @FXML
@@ -122,7 +121,7 @@ public class EventParticipantManagementController {
         for (int i = 0; i < 24; i++) {
             hoursBox.getItems().add(i);
         }
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 60; i+=5) {
             minutesBox.getItems().add(i);
         }
 
@@ -179,7 +178,25 @@ public class EventParticipantManagementController {
         selectedActivity = null;
         removeActivityButton.setDisable(true);
     }
+    public void showParticipants(List<String[]> participantList){
+        TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("รายชื่อผู้เข้าร่วม");
+        partiUsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
+        ObservableList<String[]> filteredParticipants = FXCollections.observableArrayList();
+        for (String[] participantData : participantList) {
+            if (participantData[1].equals(eventOfParticipantName)) {
+                filteredParticipants.add(participantData);
+            }
+        }
 
+
+        eventParticipantTableView.setItems(filteredParticipants);
+        eventParticipantTableView.getColumns().clear();
+        eventParticipantTableView.getColumns().add(partiUsernameColumn);
+
+
+        partiUsernameColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(1.0));
+
+           }
     public void showActivity(ActivityList activityList){
 
         TableColumn<Activity, String> activityNameColumn = new TableColumn<>("ชื่อกิจกรรม");
@@ -203,12 +220,19 @@ public class EventParticipantManagementController {
         activityParticipantTableView.setItems(observableList);
 
         activityParticipantTableView.getColumns().clear();
-        activityParticipantTableView.getColumns().add(activityNameColumn);
-        activityParticipantTableView.getColumns().add(activityInfoColumn);
+
+        activityParticipantTableView.getColumns().add(activityDateColumn);
         activityParticipantTableView.getColumns().add(activityStartColumn);
         activityParticipantTableView.getColumns().add(activityEndColumn);
-        activityParticipantTableView.getColumns().add(activityDateColumn);
+        activityParticipantTableView.getColumns().add(activityNameColumn);
+        activityParticipantTableView.getColumns().add(activityInfoColumn);
         activityParticipantTableView.getItems().clear();
+
+        activityDateColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.17));
+        activityStartColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.1));
+        activityEndColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.1));
+        activityNameColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.23));
+        activityInfoColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.40));
 
         for (Activity activity : activityList.getActivities()) {
             if (activity.getEventOfActivityName().equals(eventOfParticipantName)) {
