@@ -80,14 +80,7 @@ public class UserInformationController {
     private void showUser() {
         nameLabel.setText(currentUser.getName());
         usernameLabel.setText(currentUser.getUsername());
-
-        if (currentUser.getProfilePicture().equals("default.png")) {
-            profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
-        } else {
-            String filePath = "data/profile_picture/" + currentUser.getProfilePicture();
-            File file = new File(filePath);
-            profileImageView.setImage(new Image(file.toURI().toString()));
-        }
+        profileImageView.setImage(currentUser.getProfilePicture());
     }
 
     private void showActiveTable(EventList eventList) {
@@ -181,7 +174,7 @@ public class UserInformationController {
             Path targetDirectory = Path.of(targetDirectoryPath);
 
             String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-            String currentProfilePicName = currentUser.getProfilePicture();
+            String currentProfilePicName = currentUser.getProfilePictureName();
             Path existingProfilePicPath = targetDirectory.resolve(currentProfilePicName);
 
             if (Files.exists(existingProfilePicPath)) {
@@ -229,7 +222,7 @@ public class UserInformationController {
 
         String targetDirectoryPath = "data/profile_picture";
         Path targetDirectory = Path.of(targetDirectoryPath);
-        String currentProfilePicName = currentUser.getProfilePicture();
+        String currentProfilePicName = currentUser.getProfilePictureName();
         Path existingProfilePicPath = targetDirectory.resolve(currentProfilePicName);
 
         if (Files.exists(existingProfilePicPath)) {

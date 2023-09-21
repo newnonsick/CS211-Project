@@ -59,6 +59,10 @@ public class Activity {
         this.activityStatus = activityStatus;
     }
 
+    public void setEventOfActivityName(String eventOfActivityName) {
+        this.eventOfActivityName = eventOfActivityName;
+    }
+
     public LocalTime getActivityStartTime() {
         return activityStartTime;
     }

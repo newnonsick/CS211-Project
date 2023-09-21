@@ -2,8 +2,10 @@ package cs211.project.models;
 
 import cs211.project.services.Datasource;
 import cs211.project.services.UserListFileDataSource;
+import javafx.scene.image.Image;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -29,7 +31,21 @@ public class User {
         return this.name;
     }
 
-    public String getProfilePicture() { return this.profilePic;}
+    public Image getProfilePicture() {
+        if(this.profilePic.equals("default.png")) {
+            return new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm());
+        }
+
+        else {
+            String filePath = "data/profile_picture/" + this.profilePic;
+            File file = new File(filePath);
+            return (new Image(file.toURI().toString()));
+        }
+    }
+
+    public String getProfilePictureName() {
+        return this.profilePic;
+    }
 
     public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 }

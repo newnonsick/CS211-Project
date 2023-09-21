@@ -88,6 +88,7 @@ public class EventInformationController {
     private void joinEventButton() {
         if (currentUserName.equals(event.getEventOwnerUsername())){
             errorLabel.setText("You can not join your own event.");
+            return;
         }
 
         String filePath = "data/joinEventData.csv";
