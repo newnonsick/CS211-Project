@@ -1,5 +1,7 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Activity;
+import cs211.project.models.ActivityList;
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.services.*;
@@ -41,7 +43,11 @@ public class EventManagementController {
     @FXML
     private Label errorLabel;
 
-    private Datasource<EventList> datasource;
+    private Datasource<EventList> eventListDatasource;
+    private JoinEventFileDataSource joinEventDatasource;
+    private ParticipantActivityListFileDatasource participantActivityListDatasource;
+
+
 
     private Event event;
     private EventList eventList;
@@ -52,17 +58,24 @@ public class EventManagementController {
     private String eventUUID;
     private String[] componentData;
     private String currentUsername;
+    private String oldEventName;
+
+    private ActivityList activityList;
 
     @FXML
     public void initialize() {
-        datasource = new EventListFileDatasource("data", "eventList.csv");
-        eventList = datasource.readData();
+        eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListDatasource.readData();
         componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
         currentUsername = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
         eventChoiceBox.getItems().addAll(eventCategories);
         errorLabel.setVisible(false);
+        joinEventDatasource = new JoinEventFileDataSource("data", "joinEventData.csv");
+        participantActivityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
+        activityList = participantActivityListDatasource.readData();
+
         showInformation();
     }
     public void showInformation(){
@@ -78,7 +91,7 @@ public class EventManagementController {
             maxParticipantTextField.setText("");
         }startJoinDatePicker.setValue(event.getStartJoinDate());
         closingJoinDatePicker.setValue(event.getClosingJoinDate());
-
+        oldEventName = event.getEventName();
         Image image = new Image("file:data/eventPicture/" + event.getEventPicture());
         eventImageView.setImage(image);
     }
@@ -115,9 +128,7 @@ public class EventManagementController {
             }
 
             event.setEventPicture(event.getEventName() + "." + fileType);
-
-            eventList.updateEvent(event);
-            datasource.writeData(eventList);
+            eventListDatasource.writeData(eventList);
         }
     }
 
@@ -135,8 +146,14 @@ public class EventManagementController {
             errorLabel.setVisible(false);
         }
         String newEventName = eventNameTextField.getText();
+        event.setEventName(newEventName);
+        event.setEventInformation(eventInfoTextField.getText());
+        event.setEventCategory(eventChoiceBox.getValue());
+        event.setPlaceEvent(placeTextField.getText());
+        event.setEventStartDate(startDatePicker.getValue());
+        event.setEventEndDate(endDatePicker.getValue());
 
-        if (!event.getEventName().equals(newEventName)) {
+        if (!oldEventName.equals(newEventName)) {
             String oldImageFileName = event.getEventPicture();
             String fileType = oldImageFileName.substring(oldImageFileName.lastIndexOf(".") + 1);
             File oldImageFile = new File("data/eventPicture/" + oldImageFileName);
@@ -145,13 +162,6 @@ public class EventManagementController {
                 event.setEventPicture(newEventName + "." + fileType);
             }
         }
-
-        event.setEventName(eventNameTextField.getText());
-        event.setEventInformation(eventInfoTextField.getText());
-        event.setEventCategory(eventChoiceBox.getValue());
-        event.setPlaceEvent(placeTextField.getText());
-        event.setEventStartDate(startDatePicker.getValue());
-        event.setEventEndDate(endDatePicker.getValue());
 
         if (eventNameTextField.getText().isEmpty() ||
                 eventInfoTextField.getText().isEmpty() ||
@@ -166,12 +176,17 @@ public class EventManagementController {
             return;
         }
 
-        try {
-            int maxParticipant = Integer.parseInt(maxParticipantTextField.getText());
-            event.setMaxParticipant(maxParticipant);
-        } catch (NumberFormatException e) {
+        String maxParticipantsText = maxParticipantTextField.getText();
+        if (maxParticipantsText.isEmpty()) {
             event.setMaxParticipant(-1);
+        } else if (!maxParticipantsText.matches("\\d+") || Integer.parseInt(maxParticipantsText) < 0) {
+            errorLabel.setText("Max participants must be a non-negative integer.");
+            errorLabel.setVisible(true);
+            return;
+        } else {
+            event.setMaxParticipant(Integer.parseInt(maxParticipantsText));
         }
+
 
         if (startJoin != null) {
             event.setStartJoinDate(startJoin);
@@ -179,11 +194,8 @@ public class EventManagementController {
         if (closingJoin != null) {
             event.setClosingJoinDate(closingJoin);
         }
+        eventListDatasource.writeData(eventList);
 
-
-
-        eventList.updateEvent(event);
-        datasource.writeData(eventList);
         backToYourCreatedEvents();
     }
 

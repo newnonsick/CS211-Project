@@ -56,7 +56,7 @@ public class UserLogFileDataSource implements Datasource<UserList> {
                 String date = data[1];
                 String time = data[2];
                 temp = userList.getUser(username);
-                users.addUser(new LogUser(temp.getUsername(), temp.getPassword(), temp.getName(), temp.getProfilePicture(), date,time));
+                users.addUser(new LogUser(temp.getUsername(), temp.getPassword(), temp.getName(), temp.getProfilePictureName(), date,time));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -88,6 +88,7 @@ public class EventInformationController {
     private void joinEventButton() {
         if (currentUserName.equals(event.getEventOwnerUsername())){
             errorLabel.setText("You can not join your own event.");
+            return;
         }
 
         String filePath = "data/joinEventData.csv";
@@ -115,9 +116,9 @@ public class EventInformationController {
 
                 String[] data = line.split(",");
                 String userName = data[0].trim();
-                String eventName = data[1].trim();
+                String eventUUID = data[1].trim();
 
-                if (event.getEventName().equals(eventName)) {
+                if (event.getEventUUID().equals(eventUUID)) {
                     if (currentUserName.equals(userName)) {
                         errorLabel.setText("You have already join this event.");
                         return;
@@ -142,7 +143,7 @@ public class EventInformationController {
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
 
-        String newJoinEvent = currentUserName + "," + event.getEventName();
+        String newJoinEvent = currentUserName + "," + event.getEventUUID();
         try {
             for(String joinEventData : allJoinEventData) {
                 bufferWrite.append(joinEventData);

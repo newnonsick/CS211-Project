@@ -44,7 +44,19 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
             }
         }
     }
+    public void updateEventName(String oldEventName, String newEventName) {
+        List<String[]> data = readData();
+        List<String[]> updatedData = new ArrayList<>();
 
+        for (String[] entry : data) {
+            if (entry[1].equals(oldEventName)) {
+                entry[1] = newEventName;
+            }
+            updatedData.add(entry);
+        }
+
+        writeData(updatedData);
+    }
     @Override
     public List<String[]> readData() {
         List<String[]> data = new ArrayList<>();
@@ -96,12 +108,10 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
 
         try {
-            for (User user : userList.getUsers()) {
-                for (Event event : eventList.getEvents()) {
-                    String line = user.getUsername() + "," + event.getEventUUID();
-                    buffer.append(line);
-                    buffer.append("\n");
-                }
+            for (String[] entry : data) {
+                String line = String.join(",", entry);
+                buffer.append(line);
+                buffer.append("\n");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,4 +125,5 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
             }
         }
     }
+
 }

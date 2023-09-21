@@ -68,9 +68,7 @@ public class UserInformationController {
         nameLabel.setText(currentUser.getName());
         usernameLabel.setText(currentUser.getUsername());
 
-        String filePath = "data/profile_picture/" + currentUser.getProfilePicture();
-        File file = new File(filePath);
-        profileImageView.setImage(new Image(file.toURI().toString()));
+        profileImageView.setImage(currentUser.getProfilePicture());
     }
 
 
@@ -101,9 +99,9 @@ public class UserInformationController {
 
         for (String[] data : joinEventData) {
             String username = data[0];
-            String eventName = data[1];
+            String eventUUID = data[1];
             if (username.equals(currentUser.getUsername())) {
-                event = eventList.findEventByEventName(eventName);
+                event = eventList.findEventByUUID(eventUUID);
                 if (event.getEventEndDate().isAfter(currentDate)) {
                     activeEventTableView.getItems().add(event);
                 } else {

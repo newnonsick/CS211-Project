@@ -22,6 +22,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class EventParticipantManagementController {
 
@@ -162,8 +163,8 @@ public class EventParticipantManagementController {
             selectedStartTime = null;
             selectedEndTime = null;
             activityDatePicker.setValue(null);
-            startTimePicker.setText("Select Start Time");
-            endTimePicker.setText("Select End Time");
+            startTimePicker.setText("Start Time");
+            endTimePicker.setText("End Time");
             showActivity(activityList);
         }
     }
@@ -178,6 +179,17 @@ public class EventParticipantManagementController {
         selectedActivity = null;
         removeActivityButton.setDisable(true);
     }
+    private void removeParticipant(String[] participantData) {
+        // Remove from the TableView
+        eventParticipantTableView.getItems().remove(participantData);
+
+        // Remove from the participantList
+        participantList.remove(participantData);
+
+        // Update the CSV file
+        participantDataSource.writeData(participantList);
+    }
+
     public void showParticipants(List<String[]> participantList){
         TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("รายชื่อผู้เข้าร่วม");
         partiUsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
@@ -187,16 +199,34 @@ public class EventParticipantManagementController {
                 filteredParticipants.add(participantData);
             }
         }
+        TableColumn<String[], String> removeButtonColumn = new TableColumn<>("Remove");
+        removeButtonColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button removeButton = new Button("Remove");
 
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    removeButton.setOnAction(event -> {
+                        String[] participantData = getTableView().getItems().get(getIndex());
+                        removeParticipant(participantData);
+                    });
+                    setGraphic(removeButton);
+                }
+            }
+        });
 
         eventParticipantTableView.setItems(filteredParticipants);
         eventParticipantTableView.getColumns().clear();
         eventParticipantTableView.getColumns().add(partiUsernameColumn);
+        eventParticipantTableView.getColumns().add(removeButtonColumn);
 
 
-        partiUsernameColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(1.0));
+        partiUsernameColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(0.8));
 
-           }
+    }
     public void showActivity(ActivityList activityList){
 
         TableColumn<Activity, String> activityNameColumn = new TableColumn<>("ชื่อกิจกรรม");

@@ -9,9 +9,7 @@ public class EventList {
         events = new ArrayList<>();
     }
 
-    public void addEvent(Event event) {
-        events.add(event);
-    }
+
     public void addEvent(String eventName, String eventPicture, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
                          LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDAte, LocalDate closingJoinDate, String eventUUID) {
         eventName = eventName.trim();
@@ -35,13 +33,7 @@ public class EventList {
         } return false;
     }
 
-    public boolean findEvent(Event event) {
-        for (Event anEvent : this.events) {
-            if (event.getEventName().equals(anEvent.getEventName())) {
-                return true;
-            }
-        } return false;
-    }
+
 
     public Event findEventByEventName(String eventName){
         for (Event anEvent : this.events) {  //for-each loop
@@ -65,13 +57,6 @@ public class EventList {
     public ArrayList<Event> getEvents(){
         return events;
     }
-    public void updateEvent(Event updatedEvent) {
-        for (int i = 0; i < events.size(); i++) {
-            if (events.get(i).getEventName().equals(updatedEvent.getEventName())) {
-                events.set(i, updatedEvent);
-                break;
-            }
-        }
-    }
+
 }
 

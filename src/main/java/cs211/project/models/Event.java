@@ -36,23 +36,7 @@ public class Event implements Comparable {
         this.eventUUID = eventUUID;
     }
 
-    public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
-                 LocalDate eventStartDate, LocalDate eventEndDate, String eventOwnerUsername, String eventUUID) {
-        this.eventName = eventName;
-        this.eventPicture = eventPicture;
-        this.eventInformation = eventInformation;
-        this.eventCategory = eventCategory;
-        this.placeEvent = placeEvent;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
-        this.eventActivity = new ArrayList<>();
-        this.eventOwnerUsername = eventOwnerUsername;
-        this.eventUUID = eventUUID;
-    }
 
-    public boolean isEvent(String eventName) {
-        return this.eventName.equals(eventName);
-    }
 
     public String getEventName() { return eventName; }
     public String getEventInformation() { return eventInformation; }
