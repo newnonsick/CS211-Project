@@ -49,7 +49,7 @@ public class MyTeamListController {
         int row = 0;
         int column = 0;
         for (TeamParticipant teamParticipant : teamParticipantList.getTeamParticipants()) {
-            Team team = teamList.findTeamByNameAndEvent(teamParticipant.getEventName(), teamParticipant.getTeamName());
+            Team team = teamList.findEventByEventUUIDAndTeamName(teamParticipant.getEventUUID(), teamParticipant.getTeamName());
             if (!teamParticipant.getUsername().equals(currentUser.getUsername())) {
                 continue;
             }
@@ -73,10 +73,10 @@ public class MyTeamListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), teamParticipant.getUsername().equals(team.getTeamOwnerUsername()));
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), teamParticipant.getUsername().equals(team.getTeamOwnerUsername()));
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUser.getUsername()});
+                    FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUser.getUsername()});
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -110,10 +110,10 @@ public class MyTeamListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), true);
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), true);
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUser.getUsername()});
+                    FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUser.getUsername()});
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

@@ -10,42 +10,42 @@ public class TeamParticipantList{
     }
 
 
-    public boolean addNewTeamParticipant(String username, String eventName, String teamName) {
+    public boolean addNewTeamParticipant(String username, String eventUUID, String teamName) {
         username = username.trim();
-        eventName = eventName.trim();
+        eventUUID = eventUUID.trim();
         teamName = teamName.trim();
-        if (!username.equals("") && !eventName.equals("") && !teamName.equals("")) {
-            TeamParticipant exist = findTeamParticipantByUsernameAndEventAndTeam(username, eventName, teamName);
+        if (!username.equals("") && !eventUUID.equals("") && !teamName.equals("")) {
+            TeamParticipant exist = findTeamParticipantByUsernameAndEventUUIDAndTeam(username, eventUUID, teamName);
             if (exist == null) {
-                teamParticipants.add(new TeamParticipant(username, eventName, teamName));
+                teamParticipants.add(new TeamParticipant(username, eventUUID, teamName));
                 return true;
             }
         }
         return false;
     }
 
-    public TeamParticipant findTeamParticipantByUsernameAndEventAndTeam(String username, String eventName, String teamName) {
+    public TeamParticipant findTeamParticipantByUsernameAndEventUUIDAndTeam(String username, String eventUUID, String teamName) {
         for (TeamParticipant teamParticipant : teamParticipants) {
-            if (teamParticipant.getUsername().equals(username) && teamParticipant.getTeamName().equals(teamName) && teamParticipant.getEventName().equals(eventName)) {
+            if (teamParticipant.getUsername().equals(username) && teamParticipant.getTeamName().equals(teamName) && teamParticipant.getEventUUID().equals(eventUUID)) {
                 return teamParticipant;
             }
         }
         return null;
     }
 
-    public int getTeamParticipantCountByEventAndTeamName(String eventName, String teamName) {
+    public int getTeamParticipantCountByEventUUIDAndTeamName(String eventUUID, String teamName) {
         int count = 0;
         for (TeamParticipant teamParticipant : teamParticipants) {
-            if (teamParticipant.getEventName().equals(eventName) && teamParticipant.getTeamName().equals(teamName)) {
+            if (teamParticipant.getEventUUID().equals(eventUUID) && teamParticipant.getTeamName().equals(teamName)) {
                 count++;
             }
         }
         return count - 1;
     }
 
-    public boolean checkUserInTeam(String username, String eventName, String teamName) {
+    public boolean checkUserInTeam(String username, String eventUUID, String teamName) {
         for (TeamParticipant teamParticipant : teamParticipants) {
-            if (teamParticipant.getUsername().equals(username) && teamParticipant.getEventName().equals(eventName) && teamParticipant.getTeamName().equals(teamName)) {
+            if (teamParticipant.getUsername().equals(username) && teamParticipant.getEventUUID().equals(eventUUID) && teamParticipant.getTeamName().equals(teamName)) {
                 return true;
             }
         }

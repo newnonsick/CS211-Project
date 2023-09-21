@@ -66,7 +66,7 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
             while ((line = buffer.readLine()) != null) {
                 if (line.equals("")) continue;
                 String[] data = line.split(",");
-                String eventOfActivityName = data[0].trim();
+                String eventOfActivityUUID = data[0].trim();
                 String activityName = data[1].trim();
                 String activityInformation = data[2].trim();
                 try {
@@ -74,7 +74,7 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
                     LocalTime activityEndTime = LocalTime.parse(data[4].trim());
                     LocalDate activityDate = LocalDate.parse(data[5].trim());
 
-                    activities.addNewActivityParticipant(eventOfActivityName, activityName, activityInformation, activityStartTime, activityEndTime, activityDate);
+                    activities.addNewActivityParticipant(eventOfActivityUUID, activityName, activityInformation, activityStartTime, activityEndTime, activityDate);
                 } catch (DateTimeParseException e) {
                     System.err.println("Error parsing date or time on line: " + line);
                 }
@@ -106,7 +106,7 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
 
         try {
             for (Activity activity : activityList.getActivities()) {
-                String line = activity.getEventOfActivityName() + "," + activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStartTime() + "," + activity.getActivityEndTime() + "," + activity.getActivityDate();
+                String line = activity.getEventOfActivityUUID() + "," + activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStartTime() + "," + activity.getActivityEndTime() + "," + activity.getActivityDate();
                 buffer.append(line);
                 buffer.append("\n");
             }

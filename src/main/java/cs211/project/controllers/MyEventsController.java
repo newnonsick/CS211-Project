@@ -34,7 +34,7 @@ public class MyEventsController {
             public void changed(ObservableValue observable, Event oldValue, Event newValue) {
                 if (newValue != null) {
                     try {
-                        FXRouterPane.goTo("event-management", new String[] {newValue.getEventName(), currentUser.getUsername()});
+                        FXRouterPane.goTo("event-management", new String[] {newValue.getEventUUID(), currentUser.getUsername()});
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

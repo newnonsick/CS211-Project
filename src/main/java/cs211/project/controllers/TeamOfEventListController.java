@@ -1,8 +1,6 @@
 package cs211.project.controllers;
 
-import cs211.project.models.Team;
-import cs211.project.models.TeamList;
-import cs211.project.models.TeamParticipantList;
+import cs211.project.models.*;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,23 +27,29 @@ public class TeamOfEventListController {
     private Datasource<TeamParticipantList> teamParticipantListDatasource;
     private TeamList teamList;
     private TeamParticipantList teamParticipantList;
-    private String eventName;
+    private String eventUUID;
     private String [] componentData;
     private String currentUserName;
     private LocalDate currentDate;
+    private Event event;
+    private Datasource<EventList> eventListDatasource;
+    private EventList eventList;
 
     @FXML
     public void initialize(){
-        componentData = (String[]) FXRouterPane.getData();
-        eventName = componentData[0];
-        currentUserName = componentData[1];
-        eventNameLabel.setText(eventName);
-        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
-        currentDate = LocalDate.now(thaiTimeZone);
         teamListDatasource = new TeamListFileDatasource("data", "team_list.csv");
         teamList = teamListDatasource.readData();
         teamParticipantListDatasource = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
         teamParticipantList = teamParticipantListDatasource.readData();
+        eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListDatasource.readData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventUUID = componentData[0];
+        currentUserName = componentData[1];
+        event = eventList.findEventByUUID(eventUUID);
+        eventNameLabel.setText(event.getEventName());
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        currentDate = LocalDate.now(thaiTimeZone);
         showTeam();
     }
 
@@ -54,7 +58,7 @@ public class TeamOfEventListController {
         int row = 0;
         int column = 0;
         for (Team team : teamList.getTeams()) {
-            if (!team.getEventOfTeamName().equals(eventName)) {
+            if (!team.getEventUUID().equals(eventUUID)) {
                 continue;
             }
             if (team.getClosingJoinDate().isBefore(currentDate)) {
@@ -74,8 +78,8 @@ public class TeamOfEventListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUserName));
-            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(team.getEventOfTeamName(), team.getTeamName()) >= team.getMaxParticipants()) {
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUserName));
+            if (teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(team.getEventUUID(), team.getTeamName()) >= team.getMaxParticipants()) {
                 anchorPane.getStyleClass().remove("element");
                 anchorPane.getStyleClass().add("team-full");
             }
@@ -94,7 +98,7 @@ public class TeamOfEventListController {
                         }
                         Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
                         TeamParticipantList teamParticipantList = datasourceParticipant.readData();
-                        if (!teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventOfTeamName(), team.getTeamName())){
+                        if (!teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventUUID(), team.getTeamName())){
                             Alert alert1 = new Alert(Alert.AlertType.ERROR);
                             alert1.setHeaderText("You have already joined this team.");
                             alert1.showAndWait();
@@ -102,7 +106,7 @@ public class TeamOfEventListController {
                         }
                         datasourceParticipant.writeData(teamParticipantList);
                         try {
-                            FXRouterPane.goTo("team-communication", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
+                            FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUserName});
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

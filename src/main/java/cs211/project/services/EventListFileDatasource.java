@@ -83,8 +83,10 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 if (data.length > 10 && !data[10].trim().isEmpty() && !data[10].trim().equalsIgnoreCase("null")) {
                     closingJoinDate = LocalDate.parse(data[10].trim());
                 }
+                String eventUUID = data.length > 11 ? data[11].trim() : null;
 
-                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDate, closingJoinDate);}
+                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDate, closingJoinDate, eventUUID);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -116,7 +118,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 String line = event.getEventName() + "," + event.getEventPicture() + ","
                         + event.getEventInformation() + "," + event.getEventCategory()  + "," +
                         event.getPlaceEvent() + "," + event.getEventStartDate() + "," +
-                        event.getEventEndDate() + "," + event.getEventOwnerUsername() + "," + event.getMaxParticipants() + "," + event.getStartJoinDate() + "," + event.getClosingJoinDate();
+                        event.getEventEndDate() + "," + event.getEventOwnerUsername() + "," + event.getMaxParticipants() + "," + event.getStartJoinDate() + "," + event.getClosingJoinDate() + "," + event.getEventUUID();
                 buffer.append(line);
                 buffer.append("\n");
             }

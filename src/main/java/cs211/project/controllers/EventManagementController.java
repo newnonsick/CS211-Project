@@ -55,7 +55,7 @@ public class EventManagementController {
             , "อาหารและเครื่องดื่ม", "บันเทิง", "คอนเสิร์ต/แฟนมีตติ้ง", "ท่องเที่ยว", "ศิลปะ/นิทรรศการ/ถ่ายภาพ", "กีฬา"
             , "ศาสนา", "สัตว์เลี้ยง", "ธุรกิจ/อาชีพ/การศึกษา", "อื่น ๆ"};
 
-    private String eventName;
+    private String eventUUID;
     private String[] componentData;
     private String currentUsername;
     private String oldEventName;
@@ -67,9 +67,9 @@ public class EventManagementController {
         eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         componentData = (String[]) FXRouterPane.getData();
-        eventName = componentData[0];
+        eventUUID = componentData[0];
         currentUsername = componentData[1];
-        event = eventList.findEventByEventName(eventName);
+        event = eventList.findEventByUUID(eventUUID);
         eventChoiceBox.getItems().addAll(eventCategories);
         errorLabel.setVisible(false);
         joinEventDatasource = new JoinEventFileDataSource("data", "joinEventData.csv");
@@ -196,15 +196,6 @@ public class EventManagementController {
         }
         eventListDatasource.writeData(eventList);
 
-        if (!oldEventName.equals(newEventName)) {
-            for (Activity activity : activityList.getActivities()) {
-                if (activity.getEventOfActivityName().equals(oldEventName)) {
-                    activity.setEventOfActivityName(newEventName);
-                }
-            }
-            participantActivityListDatasource.writeData(activityList);
-            joinEventDatasource.updateEventName(oldEventName, newEventName);
-        }
         backToYourCreatedEvents();
     }
 
@@ -212,7 +203,7 @@ public class EventManagementController {
     @FXML
         public void eventPartiManagementButton() {
             try {
-                FXRouterPane.goTo("event-participant-management", new String[] {event.getEventName(), currentUsername});
+                FXRouterPane.goTo("event-participant-management", new String[] {event.getEventUUID(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -230,7 +221,7 @@ public class EventManagementController {
         @FXML
         public void handleManageTeamButton () {
             try {
-                FXRouterPane.goTo("event-team-management", new String[] {event.getEventName(), currentUsername});
+                FXRouterPane.goTo("event-team-management", new String[] {event.getEventUUID(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

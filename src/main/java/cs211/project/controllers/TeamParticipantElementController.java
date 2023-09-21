@@ -3,7 +3,6 @@ package cs211.project.controllers;
 import cs211.project.models.*;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -51,10 +50,10 @@ public class TeamParticipantElementController {
         leaderImageView.setVisible(false);
     }
 
-    public void setTeamParticipant(String username, String eventOfTeamName, String teamName, String currentUsername){
-        teamParticipant = teamParticipantList.findTeamParticipantByUsernameAndEventAndTeam(username, eventOfTeamName, teamName);
+    public void setTeamParticipant(String username, String eventOfTeamUUID, String teamName, String currentUsername){
+        teamParticipant = teamParticipantList.findTeamParticipantByUsernameAndEventUUIDAndTeam(username, eventOfTeamUUID, teamName);
         user = userList.findUserByUsername(username);
-        team = teamList.findTeamByNameAndEvent(eventOfTeamName, teamName);
+        team = teamList.findEventByEventUUIDAndTeamName(eventOfTeamUUID, teamName);
         this.currentUsername = currentUsername;
         //profile size 40 x 40
         Circle img = new Circle(20, 20, 20);
@@ -88,12 +87,12 @@ public class TeamParticipantElementController {
             }
             teamParticipantList.getTeamParticipants().remove(teamParticipant);
             teamParticipantListDatasource.writeData(teamParticipantList);
-            if (teamParticipantList.getTeamParticipantCountByEventAndTeamName(teamParticipant.getEventName(), teamParticipant.getTeamName()) == 0 || teamParticipant.getUsername().equals(team.getHeadOfTeamUsername())){
+            if (teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(teamParticipant.getEventUUID(), teamParticipant.getTeamName()) == 0 || teamParticipant.getUsername().equals(team.getHeadOfTeamUsername())){
                 team.setHeadOfTeamUsername(currentUsername);
                 teamListDatasource.writeData(teamList);
             }
             try {
-                FXRouterPane.goTo("team-management", new String[]{teamParticipant.getEventName(), teamParticipant.getTeamName(), currentUsername});
+                FXRouterPane.goTo("team-management", new String[]{teamParticipant.getEventUUID(), teamParticipant.getTeamName(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -112,7 +111,7 @@ public class TeamParticipantElementController {
             team.setHeadOfTeamUsername(teamParticipant.getUsername());
             teamListDatasource.writeData(teamList);
             try {
-                FXRouterPane.goTo("team-management", new String[]{teamParticipant.getEventName(), teamParticipant.getTeamName(), currentUsername});
+                FXRouterPane.goTo("team-management", new String[]{teamParticipant.getEventUUID(), teamParticipant.getTeamName(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

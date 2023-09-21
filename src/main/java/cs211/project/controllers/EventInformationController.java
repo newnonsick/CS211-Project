@@ -31,7 +31,7 @@ public class EventInformationController {
     private Datasource<EventList> datasource;
     private EventList eventList;
     private Event event;
-    private String eventName;
+    private String eventUUID;
     private String [] componentData;
     private String currentUserName;
 
@@ -40,9 +40,9 @@ public class EventInformationController {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
         componentData = (String[]) FXRouterPane.getData();
-        eventName = componentData[0];
+        eventUUID = componentData[0];
         currentUserName = componentData[1];
-        event = eventList.findEventByEventName(eventName);
+        event = eventList.findEventByUUID(eventUUID);
         eventNameLabel.setText(event.getEventName());
         eventInfoLabel.setText(event.getEventInformation());
         placeLabel.setText(event.getPlaceEvent());
@@ -116,9 +116,9 @@ public class EventInformationController {
 
                 String[] data = line.split(",");
                 String userName = data[0].trim();
-                String eventName = data[1].trim();
+                String eventUUID = data[1].trim();
 
-                if (event.getEventName().equals(eventName)) {
+                if (event.getEventUUID().equals(eventUUID)) {
                     if (currentUserName.equals(userName)) {
                         goToParticipantActivity();
                         return;
@@ -143,7 +143,7 @@ public class EventInformationController {
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
 
-        String newJoinEvent = currentUserName + "," + event.getEventName();
+        String newJoinEvent = currentUserName + "," + event.getEventUUID();
         try {
             for(String joinEventData : allJoinEventData) {
                 bufferWrite.append(joinEventData);
@@ -166,7 +166,7 @@ public class EventInformationController {
     @FXML
     private void goToParticipantActivity() {
         try {
-            FXRouterPane.goTo("participant-activity", new String[] { event.getEventName(), currentUserName});
+            FXRouterPane.goTo("participant-activity", new String[] { event.getEventUUID(), currentUserName});
         }
         catch (IOException e) {
             throw new RuntimeException(e);
@@ -176,7 +176,7 @@ public class EventInformationController {
     @FXML
     public void handleVisitTeamButton(){
         try {
-            FXRouterPane.goTo("teamofevent-list", new String[] { event.getEventName(), currentUserName });
+            FXRouterPane.goTo("teamofevent-list", new String[] { event.getEventUUID(), currentUserName });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
