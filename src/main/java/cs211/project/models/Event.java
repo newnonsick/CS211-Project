@@ -16,11 +16,12 @@ public class Event implements Comparable {
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
     private ArrayList<Activity> eventActivity;
+    private String eventUUID;
 
 
 
     public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
-                 LocalDate eventStartDate, LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate) {
+                 LocalDate eventStartDate, LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String eventUUID) {
         this.eventName = eventName;
         this.eventPicture = eventPicture;
         this.eventInformation = eventInformation;
@@ -32,8 +33,8 @@ public class Event implements Comparable {
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
+        this.eventUUID = eventUUID;
     }
-
 
 
 
@@ -53,6 +54,7 @@ public class Event implements Comparable {
     public String getEventPicture() {
         return eventPicture;
     }
+    public String getEventUUID() { return eventUUID; }
 
     public void setMaxParticipant(int maxParticipants) {
         this.maxParticipants = maxParticipants;

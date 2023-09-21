@@ -1,5 +1,9 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Event;
+import cs211.project.models.EventList;
+import cs211.project.services.Datasource;
+import cs211.project.services.EventListFileDatasource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -18,9 +22,18 @@ public class TeamElementController {
     @FXML
     AnchorPane selectTeamAnchorPane;
     private boolean isOwner;
+    private Datasource<EventList> eventListDatasource;
+    private EventList eventList;
+    private Event event;
 
-    public void setPage(String eventName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, boolean isOwner) {
-        eventNameLabel.setText(eventName);
+    public void initialize() {
+        eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListDatasource.readData();
+    }
+
+    public void setPage(String eventUUID, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, boolean isOwner) {
+        event = eventList.findEventByUUID(eventUUID);
+        eventNameLabel.setText(event.getEventName());
         teamNameLabel.setText(teamName);
         maxParticipantsLabel.setText(String.valueOf(maxParticipants));
         remaindaysLabel.setText(startJoinDate.toString() + " - " + closingJoinDate.toString());

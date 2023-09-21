@@ -64,10 +64,10 @@ public class TeamParticipantListFileDataSource implements Datasource<TeamPartici
                 String[] data = line.split(",");
 
                 String username = data[0].trim();
-                String eventOfTeamName = data[1].trim();
+                String eventUUID = data[1].trim();
                 String teamName = data[2].trim();
 
-                teamParticipantList.addNewTeamParticipant(username, eventOfTeamName, teamName);
+                teamParticipantList.addNewTeamParticipant(username, eventUUID, teamName);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -97,7 +97,7 @@ public class TeamParticipantListFileDataSource implements Datasource<TeamPartici
 
         try {
             for (TeamParticipant teamParticipant : teamParticipantList.getTeamParticipants()) {
-                String line = teamParticipant.getUsername() + "," + teamParticipant.getEventName() + "," + teamParticipant.getTeamName();
+                String line = teamParticipant.getUsername() + "," + teamParticipant.getEventUUID() + "," + teamParticipant.getTeamName();
                 buffer.append(line);
                 buffer.append("\n");
             }

@@ -1,13 +1,13 @@
 package cs211.project.models;
 
 public class TeamParticipant {
-    private String eventName;
+    private String eventUUID;
     private String teamName;
     private String username;
 
-    public TeamParticipant(String username, String eventName, String teamName) {
+    public TeamParticipant(String username, String eventUUID, String teamName) {
         this.username = username;
-        this.eventName = eventName;
+        this.eventUUID = eventUUID;
         this.teamName = teamName;
     }
 
@@ -19,8 +19,8 @@ public class TeamParticipant {
         return this.username;
     }
 
-    public String getEventName() {
-        return this.eventName;
+    public String getEventUUID() {
+        return this.eventUUID;
     }
 
 }

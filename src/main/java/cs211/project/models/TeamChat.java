@@ -2,13 +2,13 @@ package cs211.project.models;
 
 public class TeamChat {
     private String teamName;
-    private String eventName;
+    private String eventUUID;
     private String username;
     private String message;
 
-    public TeamChat(String eventName, String teamName, String username, String message) {
+    public TeamChat(String eventUUID, String teamName, String username, String message) {
         this.teamName = teamName;
-        this.eventName = eventName;
+        this.eventUUID = eventUUID;
         this.username = username;
         this.message = message;
     }
@@ -17,8 +17,8 @@ public class TeamChat {
         return teamName;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getEventUUID() {
+        return eventUUID;
     }
 
     public String getUsername() {

@@ -31,7 +31,7 @@ public class ParticipantActivityController {
 
     private Event event;
     EventList eventList;
-    private String eventName;
+    private String eventUUID;
     private String currentUserName;
     private ParticipantActivityListFileDatasource datasource;
 
@@ -39,14 +39,14 @@ public class ParticipantActivityController {
     @FXML
     public void initialize() {
         String[] componentData = (String[]) FXRouterPane.getData();
-        eventName = componentData[0];
+        eventUUID = componentData[0];
         currentUserName = componentData[1];
         Datasource<EventList> eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         datasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         ActivityList activityList = datasource.readData();
-        event = eventList.findEventByEventName(eventName);
-        eventNameLabel.setText(eventName);
+        event = eventList.findEventByUUID(eventUUID);
+        eventNameLabel.setText(event.getEventName());
         showActivities(activityList);
     }
 
@@ -98,7 +98,7 @@ public class ParticipantActivityController {
         activityNameColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.23));
         activityInfoColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.40));
         for (Activity activity : activityList.getActivities()) {
-            if (activity.getEventOfActivityName().equals(eventName)) {
+            if (activity.getEventOfActivityUUID().equals(eventUUID)) {
                 activityParticipantTableView.getItems().add(activity);
             }
         }

@@ -60,7 +60,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
 
                 String[] data = line.split(",");
 
-                String eventOfTeamName = data[0].trim();
+                String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 int maxParticipants = Integer.parseInt(data[2].trim());
                 LocalDate startJoinDate = LocalDate.parse(data[3].trim());
@@ -68,7 +68,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 String teamOwnerUsername = data[5].trim();
                 String headOfTeamUsername = data[6].trim();
 
-                teams.addNewTeam(eventOfTeamName, teamName, maxParticipants,startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername);
+                teams.addNewTeam(eventUUID, teamName, maxParticipants,startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -98,7 +98,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
         Collections.sort(teamList.getTeams());
         try {
             for (Team team : teamList.getTeams()) {
-                String line = team.getEventOfTeamName() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getTeamOwnerUsername() + "," + team.getHeadOfTeamUsername();
+                String line = team.getEventUUID() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getTeamOwnerUsername() + "," + team.getHeadOfTeamUsername();
                 buffer.append(line);
                 buffer.append("\n");
             }
