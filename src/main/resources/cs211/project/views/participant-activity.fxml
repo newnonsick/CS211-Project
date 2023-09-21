@@ -19,7 +19,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="33.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToPage" text="Back">
+      <Button layoutX="33.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToEventInformation" text="Back">
          <font>
             <Font size="14.0" />
          </font>

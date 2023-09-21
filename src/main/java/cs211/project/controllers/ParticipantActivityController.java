@@ -70,6 +70,14 @@ public class ParticipantActivityController {
         TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("รายละเอียดกิจกรรม");
         activityInfoColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
+        //Sort Date and Time
+        activityList.getActivities().sort((a1, a2) -> {
+            int dateComparison = a1.getActivityDate().compareTo(a2.getActivityDate());
+            if (dateComparison != 0) {
+                return dateComparison;
+            }
+            return a1.getActivityStartTime().compareTo(a2.getActivityStartTime());
+        });
 
         ObservableList<Activity> observableList = FXCollections.observableArrayList(activityList.getActivities());
         activityParticipantTableView.setItems(observableList);
@@ -96,9 +104,9 @@ public class ParticipantActivityController {
         }
     }
 
-    public void backToPage() {
+    public void backToEventInformation() {
         try {
-            FXRouterPane.goTo("user-information");
+            FXRouterPane.goTo("event-information");
         }
         catch (IOException e) {
             throw new RuntimeException(e);
