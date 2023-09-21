@@ -21,6 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class CreateEventController {
     private User currentUser;
@@ -131,10 +132,13 @@ public class CreateEventController {
                 StandardCharsets.UTF_8
         );
         BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
-
+        UUID eventUUID = UUID.randomUUID();
+        while (eventList.findEventByUUID(eventUUID.toString()) != null) {
+            eventUUID = UUID.randomUUID();
+        }
         eventImage = eventName + "." + (Files.probeContentType(Paths.get(selectedImage.getAbsolutePath())).substring(6));
         String newEvent = eventName + "," + eventImage + "," + eventInfo + "," + eventCategory + "," + place
-                + "," + startDate + "," + endDate + "," + eventOwner+ ",-1,,";
+                + "," + startDate + "," + endDate + "," + eventOwner+ ",-1,," + "," + eventUUID.toString();
 
         try {
             for(String thisEvent : allEvent) {

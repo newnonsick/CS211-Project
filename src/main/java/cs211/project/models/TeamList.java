@@ -14,13 +14,13 @@ public class TeamList {
     public ArrayList<Team> getTeams() {
         return teams;
     }
-    public boolean addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String teamOwnerUsername,String headOfTeamUsername) {
-        eventOfTeamName = eventOfTeamName.trim();
+    public boolean addNewTeam(String eventUUID, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String teamOwnerUsername,String headOfTeamUsername) {
+        eventUUID = eventUUID.trim();
         teamName = teamName.trim();
-        if (!eventOfTeamName.equals("") && !teamName.equals("") && maxParticipants > 0 && startJoinDate != null && closingJoinDate != null && !headOfTeamUsername.equals("")) {
-            Team exist = findTeamByNameAndEvent(eventOfTeamName, teamName);
+        if (!eventUUID.equals("") && !teamName.equals("") && maxParticipants > 0 && startJoinDate != null && closingJoinDate != null && !headOfTeamUsername.equals("")) {
+            Team exist = findEventByEventUUIDAndTeamName(eventUUID, teamName);
             if (exist == null) {
-                teams.add(new Team(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername));
+                teams.add(new Team(eventUUID, teamName, maxParticipants, startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername));
                 return true;
             }
             return false;
@@ -28,9 +28,18 @@ public class TeamList {
         return false;
     }
 
-    public Team findTeamByNameAndEvent(String eventOfTeamName, String teamName) {
-        for (Team team : teams) {
-            if (team.getTeamName().equals(teamName) && team.getEventOfTeamName().equals(eventOfTeamName)) {
+//    public Team findTeamByNameAndEvent(String eventOfTeamName, String teamName) {
+//        for (Team team : teams) {
+//            if (team.getTeamName().equals(teamName) && team.getEventOfTeamName().equals(eventOfTeamName)) {
+//                return team;
+//            }
+//        }
+//        return null;
+//    }
+
+    public Team findEventByEventUUIDAndTeamName(String eventUUID, String teamName){
+        for (Team team : this.teams) {
+            if (eventUUID.equals(team.getEventUUID()) && teamName.equals(team.getTeamName())) {
                 return team;
             }
         }

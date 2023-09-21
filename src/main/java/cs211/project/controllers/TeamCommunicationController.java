@@ -39,7 +39,7 @@ public class TeamCommunicationController {
     private ActivityList activityList;
     private String beforeSend = "";
     private String [] componentData;
-    private String eventOfTeamName;
+    private String eventUUID;
     private String teamName;
     private String currentUserName;
     private Datasource<UserList> userListDatasource;
@@ -60,10 +60,10 @@ public class TeamCommunicationController {
         activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
         activityList = activityListDatasource.readData();
         componentData = (String[]) FXRouterPane.getData();
-        eventOfTeamName = componentData[0];
+        eventUUID = componentData[0];
         teamName = componentData[1];
         currentUserName = componentData[2];
-        team = teamList.findTeamByNameAndEvent(eventOfTeamName, teamName);
+        team = teamList.findEventByEventUUIDAndTeamName(eventUUID, teamName);
         manageTeamButton.setVisible(false);
         if (team.getHeadOfTeamUsername().equals(currentUserName) || team.getTeamOwnerUsername().equals(currentUserName)){
             manageTeamButton.setVisible(true);
@@ -96,10 +96,10 @@ public class TeamCommunicationController {
 
     @FXML
     public void handleSendMessageButton() {
-        String text = sendMessageTextField.getText();
+        String text = sendMessageTextField.getText().trim();
+        sendMessageTextField.clear();
         if (!text.isEmpty()){
-            sendMessageTextField.clear();
-            teamChatList.addNewChat(team.getEventOfTeamName(), team.getTeamName(), currentUserName, text.replace(",", "//comma//"));
+            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUserName, text.replace(",", "//comma//"));
             teamChatListDatasource.writeData(teamChatList);
             update(currentUserName,text);
         }
@@ -116,7 +116,7 @@ public class TeamCommunicationController {
     @FXML
     public void handleManageTeamButton(){
         try {
-            FXRouterPane.goTo("team-management", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUserName});
+            FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUserName});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -126,7 +126,7 @@ public class TeamCommunicationController {
     public void newShowChat(){
         chatBoxVBox.getChildren().clear();
         for (TeamChat teamChat : teamChatList.getTeamChats()) {
-            if (!teamChat.getEventName().equals(team.getEventOfTeamName()) || !teamChat.getTeamName().equals(team.getTeamName())) {
+            if (!teamChat.getEventUUID().equals(team.getEventUUID()) || !teamChat.getTeamName().equals(team.getTeamName())) {
                 continue;
             }
             update(teamChat.getUsername(),teamChat.getMessage().replace("//comma//", ","));
@@ -157,6 +157,9 @@ public class TeamCommunicationController {
         if (!currentUserName.equals(username)){
             if (team.getHeadOfTeamUsername().equals(username)){
                 usernameText = new Text(username + " (Leader)" + "\n");
+            }
+            else if (team.getTeamOwnerUsername().equals(username)){
+                usernameText = new Text(username + " (Owner)" + "\n");
             }
             else{
                 usernameText = new Text(username + "\n");
@@ -245,7 +248,7 @@ public class TeamCommunicationController {
 
 
         for (Activity activity : activityList.getActivities()) {
-            if (activity.getTeamOfActivityName().equals(team.getTeamName()) && activity.getEventOfActivityName().equals(team.getEventOfTeamName())) {
+            if (activity.getTeamOfActivityName().equals(team.getTeamName()) && activity.getEventOfActivityUUID().equals(team.getEventUUID())) {
                 activityTableView.getItems().add(activity);
             }
         }

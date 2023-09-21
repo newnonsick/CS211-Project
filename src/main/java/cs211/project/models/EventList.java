@@ -13,7 +13,7 @@ public class EventList {
         events.add(event);
     }
     public void addEvent(String eventName, String eventPicture, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
-                         LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDAte, LocalDate closingJoinDate) {
+                         LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDAte, LocalDate closingJoinDate, String eventUUID) {
         eventName = eventName.trim();
         eventInformation = eventInformation.trim();
         eventCategory = eventCategory.trim();
@@ -21,7 +21,7 @@ public class EventList {
 
         if (!eventName.equals("") && !eventInformation.equals("") && !eventCategory.equals("") && !placeEvent.equals("")) {
             if (!findEvent(eventName)) {
-                Event newEvent = new Event(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDAte, closingJoinDate);
+                Event newEvent = new Event(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDAte, closingJoinDate, eventUUID);
                 events.add(newEvent);
             }
         }
@@ -47,6 +47,15 @@ public class EventList {
         for (Event anEvent : this.events) {  //for-each loop
             if (eventName.equals(anEvent.getEventName())) {
                 return anEvent;
+            }
+        }
+        return null;
+    }
+
+    public Event findEventByUUID(String eventUUID){
+        for (Event event : this.events) {
+            if (eventUUID.equals(event.getEventUUID())) {
+                return event;
             }
         }
         return null;

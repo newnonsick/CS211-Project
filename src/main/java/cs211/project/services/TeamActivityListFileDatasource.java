@@ -62,13 +62,13 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
 
                 String[] data = line.split(",");
 
-                String eventName = data[0].trim();
+                String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 String activityName = data[2].trim();
                 String activityInfo = data[3].trim();
                 String activityStatus = data[4].trim();
 
-                activities.addNewActivityTeam(eventName, teamName, activityName, activityInfo, activityStatus);
+                activities.addNewActivityTeam(eventUUID, teamName, activityName, activityInfo, activityStatus);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -128,7 +128,7 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
 
         try {
             for (Activity activity : activityList.getActivities()) {
-                String line = activity.getEventOfActivityName() + "," + activity.getTeamOfActivityName() + "," + activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStatus();
+                String line = activity.getEventOfActivityUUID() + "," + activity.getTeamOfActivityName() + "," + activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStatus();
                 buffer.append(line);
                 buffer.append("\n");
             }

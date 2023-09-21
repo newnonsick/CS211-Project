@@ -46,7 +46,7 @@ public class EventParticipantManagementController {
     private Datasource<EventList> eventListDatasource;
     private String[] componentData;
     private String currentUsername;
-    private String eventOfParticipantName;
+    private String eventOfParticipantUUID;
     private Datasource<List<String[]>> participantDataSource;
     private List<String[]> participantList;
 
@@ -54,11 +54,11 @@ public class EventParticipantManagementController {
     public void initialize(){
         removeActivityButton.setDisable(true);
         componentData = (String[]) FXRouterPane.getData();
-        eventOfParticipantName = componentData[0];
+        eventOfParticipantUUID = componentData[0];
         currentUsername = componentData[1];
         eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
-        event = eventList.findEventByEventName(eventOfParticipantName);
+        event = eventList.findEventByUUID(eventOfParticipantUUID);
         eventNameLabel.setText(event.getEventName());
         eventName2Label.setText(event.getEventName());
         activityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
@@ -155,7 +155,7 @@ public class EventParticipantManagementController {
         LocalDate activityDate = activityDatePicker.getValue();
 
         if (!activityName.isEmpty() || !activityInfo.isEmpty() || !(startTime == null) || !(endTime == null) || !(activityDate == null)) {
-            activityList.addNewActivityParticipant(eventOfParticipantName, activityName, activityInfo, startTime, endTime, activityDate);
+            activityList.addNewActivityParticipant(eventOfParticipantUUID, activityName, activityInfo, startTime, endTime, activityDate);
             activityListDatasource.writeData(activityList);
             activityNameTextField.clear();
             activityInfoTextField.clear();
@@ -183,7 +183,7 @@ public class EventParticipantManagementController {
         partiUsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
         ObservableList<String[]> filteredParticipants = FXCollections.observableArrayList();
         for (String[] participantData : participantList) {
-            if (participantData[1].equals(eventOfParticipantName)) {
+            if (participantData[1].equals(eventOfParticipantUUID)) {
                 filteredParticipants.add(participantData);
             }
         }
@@ -235,7 +235,7 @@ public class EventParticipantManagementController {
         activityInfoColumn.prefWidthProperty().bind(activityParticipantTableView.widthProperty().multiply(0.40));
 
         for (Activity activity : activityList.getActivities()) {
-            if (activity.getEventOfActivityName().equals(eventOfParticipantName)) {
+            if (activity.getEventOfActivityUUID().equals(event.getEventUUID())) {
                 activityParticipantTableView.getItems().add(activity);
             }
         }

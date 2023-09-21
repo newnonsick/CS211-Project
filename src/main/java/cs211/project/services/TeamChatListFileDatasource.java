@@ -62,12 +62,12 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
 
                 String[] data = line.split(",");
 
-                String eventName = data[0].trim();
+                String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 String username = data[2].trim();
                 String message = data[3].trim();
 
-                teamChats.addNewChat(eventName, teamName, username, message);
+                teamChats.addNewChat(eventUUID, teamName, username, message);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -97,7 +97,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
 
         try {
             for (TeamChat teamChat : teamChatList.getTeamChats()) {
-                String line = teamChat.getEventName() + "," + teamChat.getTeamName() + "," + teamChat.getUsername() + "," + teamChat.getMessage();
+                String line = teamChat.getEventUUID() + "," + teamChat.getTeamName() + "," + teamChat.getUsername() + "," + teamChat.getMessage();
                 buffer.append(line);
                 buffer.append("\n");
             }

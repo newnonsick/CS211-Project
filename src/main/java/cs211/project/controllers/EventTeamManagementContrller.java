@@ -1,15 +1,13 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
-import cs211.project.services.Datasource;
-import cs211.project.services.FXRouterPane;
-import cs211.project.services.TeamListFileDatasource;
-import cs211.project.services.TeamParticipantListFileDataSource;
+import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableView;
@@ -27,7 +25,7 @@ public class EventTeamManagementContrller {
     @FXML ScrollPane teamListScrollPane;
     @FXML Label eventNameLabel;
 
-    private String eventName;
+    private String eventUUID;
     private Datasource<TeamList> datasourceTeam;
     private LocalDate currentDate;
     private TeamList teamList;
@@ -35,17 +33,23 @@ public class EventTeamManagementContrller {
     private String currentUsername;
     private Stage createTeamStage;
     private CreateTeamController createTeamController;
+    private Datasource<EventList> datasourceEvent;
+    private EventList eventList;
+    private Event event;
 
     @FXML
     public void initialize(){
-        componentData = (String[]) FXRouterPane.getData();
-        eventName = componentData[0];
-        currentUsername = componentData[1];
-        eventNameLabel.setText(eventName);
-        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
-        currentDate = LocalDate.now(thaiTimeZone);
         datasourceTeam = new TeamListFileDatasource("data", "team_list.csv");
         teamList = datasourceTeam.readData();
+        datasourceEvent = new EventListFileDatasource("data", "eventlist.csv");
+        eventList = datasourceEvent.readData();
+        componentData = (String[]) FXRouterPane.getData();
+        eventUUID = componentData[0];
+        currentUsername = componentData[1];
+        event = eventList.findEventByUUID(eventUUID);
+        eventNameLabel.setText(event.getEventName());
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        currentDate = LocalDate.now(thaiTimeZone);
         showTeamList();
     }
 
@@ -58,7 +62,7 @@ public class EventTeamManagementContrller {
             createTeamStage.initStyle(StageStyle.UTILITY);
             createTeamStage.setTitle("Create Team");
             createTeamController = loader.getController();
-            createTeamController.setEventName(eventName);
+            createTeamController.setEventUUID(eventUUID);
             createTeamController.setCreateTeamStage(createTeamStage);
             createTeamController.setCurrentUsername(currentUsername);
             Scene scene = new Scene(root);
@@ -73,7 +77,7 @@ public class EventTeamManagementContrller {
         int row = 0;
         int column = 0;
         for (Team team : teamList.getTeams()) {
-            if (!team.getEventOfTeamName().equals(eventName)) {
+            if (!team.getEventUUID().equals(eventUUID)) {
                 continue;
             }
             if (team.getClosingJoinDate().isBefore(currentDate)) {
@@ -93,10 +97,10 @@ public class EventTeamManagementContrller {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventOfTeamName(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUsername));
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUsername));
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("team-management", new String[] {team.getEventOfTeamName(), team.getTeamName(), currentUsername});
+                    FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUsername});
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

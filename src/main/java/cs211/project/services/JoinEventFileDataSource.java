@@ -98,7 +98,7 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
         try {
             for (User user : userList.getUsers()) {
                 for (Event event : eventList.getEvents()) {
-                    String line = user.getUsername() + "," + event.getEventName();
+                    String line = user.getUsername() + "," + event.getEventUUID();
                     buffer.append(line);
                     buffer.append("\n");
                 }

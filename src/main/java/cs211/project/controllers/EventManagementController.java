@@ -49,7 +49,7 @@ public class EventManagementController {
             , "อาหารและเครื่องดื่ม", "บันเทิง", "คอนเสิร์ต/แฟนมีตติ้ง", "ท่องเที่ยว", "ศิลปะ/นิทรรศการ/ถ่ายภาพ", "กีฬา"
             , "ศาสนา", "สัตว์เลี้ยง", "ธุรกิจ/อาชีพ/การศึกษา", "อื่น ๆ"};
 
-    private String eventName;
+    private String eventUUID;
     private String[] componentData;
     private String currentUsername;
 
@@ -58,9 +58,9 @@ public class EventManagementController {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
         componentData = (String[]) FXRouterPane.getData();
-        eventName = componentData[0];
+        eventUUID = componentData[0];
         currentUsername = componentData[1];
-        event = eventList.findEventByEventName(eventName);
+        event = eventList.findEventByUUID(eventUUID);
         eventChoiceBox.getItems().addAll(eventCategories);
         errorLabel.setVisible(false);
         showInformation();
@@ -191,7 +191,7 @@ public class EventManagementController {
     @FXML
         public void eventPartiManagementButton() {
             try {
-                FXRouterPane.goTo("event-participant-management", new String[] {event.getEventName(), currentUsername});
+                FXRouterPane.goTo("event-participant-management", new String[] {event.getEventUUID(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -209,7 +209,7 @@ public class EventManagementController {
         @FXML
         public void handleManageTeamButton () {
             try {
-                FXRouterPane.goTo("event-team-management", new String[] {event.getEventName(), currentUsername});
+                FXRouterPane.goTo("event-team-management", new String[] {event.getEventUUID(), currentUsername});
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

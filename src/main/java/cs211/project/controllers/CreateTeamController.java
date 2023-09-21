@@ -23,7 +23,7 @@ public class CreateTeamController {
     private Stage createTeamStage;
     private TeamList teamList;
     private Datasource<TeamList> datasource;
-    private String eventName;
+    private String eventUUID;
     private String currentUsername;
 
     @FXML
@@ -42,7 +42,7 @@ public class CreateTeamController {
             return;
         }
         try {
-            boolean canAddNewTeam = teamList.addNewTeam(eventName, teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue(), currentUsername, currentUsername);
+            boolean canAddNewTeam = teamList.addNewTeam(eventUUID, teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), endDateDatePicker.getValue(), currentUsername, currentUsername);
             if (!canAddNewTeam) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -53,7 +53,7 @@ public class CreateTeamController {
             datasource.writeData(teamList);
             Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
             TeamParticipantList teamParticipantList = datasourceParticipant.readData();
-            teamParticipantList.addNewTeamParticipant(currentUsername, eventName, teamNameTextField.getText());
+            teamParticipantList.addNewTeamParticipant(currentUsername, eventUUID, teamNameTextField.getText());
             datasourceParticipant.writeData(teamParticipantList);
             if (createTeamStage != null) {
                 createTeamStage.close();
@@ -67,8 +67,8 @@ public class CreateTeamController {
 
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setEventUUID(String eventUUID) {
+        this.eventUUID = eventUUID;
     }
 
     public void setCreateTeamStage(Stage createTeamStage) {

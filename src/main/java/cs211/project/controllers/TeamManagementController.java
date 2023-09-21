@@ -33,19 +33,19 @@ public class TeamManagementController {
     private TeamParticipantList teamParticipantList;
     private String[] componentData;
     private String currentUsername;
-    private String eventOfTeamName;
+    private String eventUUID;
     private String teamName;
     @FXML
     public void initialize(){
         deleteActivityButton.setDisable(true);
         endActivityButton.setDisable(true);
         componentData = (String[]) FXRouterPane.getData();
-        eventOfTeamName = componentData[0];
+        eventUUID = componentData[0];
         teamName = componentData[1];
         currentUsername = componentData[2];
         teamListDatasource = new TeamListFileDatasource("data", "team_list.csv");
         teamList = teamListDatasource.readData();
-        team = teamList.findTeamByObject(teamList.findTeamByNameAndEvent(eventOfTeamName, teamName));
+        team = teamList.findTeamByObject(teamList.findEventByEventUUIDAndTeamName(eventUUID, teamName));
         activityListDatasource = new TeamActivityListFileDatasource("data", "team_activity_list.csv");
         activityList = activityListDatasource.readData();
         teamParticipantListDatasource = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
@@ -86,7 +86,7 @@ public class TeamManagementController {
         String activityName = avtivityNameTextField.getText();
         String activityDescription = activityDescriptionTextArea.getText();
         if (!activityName.isEmpty() && !activityDescription.isEmpty()){
-            activityList.addNewActivityTeam(eventOfTeamName, teamName, activityName, activityDescription, "In Progress");
+            activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress");
             activityListDatasource.writeData(activityList);
             showActivity(activityList);
             avtivityNameTextField.clear();
@@ -127,7 +127,7 @@ public class TeamManagementController {
 
 
         for (Activity activity : activityList.getActivities()) {
-            if (activity.getTeamOfActivityName().equals(teamName) && activity.getEventOfActivityName().equals(eventOfTeamName)) {
+            if (activity.getTeamOfActivityName().equals(teamName) && activity.getEventOfActivityUUID().equals(eventUUID)) {
                 activityTableView.getItems().add(activity);
             }
         }
@@ -136,7 +136,7 @@ public class TeamManagementController {
     public void showParticipant(){
         int row = 0;
         for (TeamParticipant teamParticipant: teamParticipantList.getTeamParticipants()) {
-            if (!teamParticipant.getEventName().equals(eventOfTeamName) && teamParticipant.getTeamName().equals(teamName)) {
+            if (!teamParticipant.getEventUUID().equals(eventUUID) && teamParticipant.getTeamName().equals(teamName)) {
                 continue;
             }
             if (teamParticipant.getUsername().equals(team.getTeamOwnerUsername())){
@@ -152,7 +152,7 @@ public class TeamManagementController {
             }
 
             TeamParticipantElementController team_ = fxmlLoader.getController();
-            team_.setTeamParticipant(teamParticipant.getUsername(), teamParticipant.getEventName(), teamParticipant.getTeamName(), currentUsername);
+            team_.setTeamParticipant(teamParticipant.getUsername(), teamParticipant.getEventUUID(), teamParticipant.getTeamName(), currentUsername);
             participantListGridPane.add(anchorPane, 0, row);
             row++;
 

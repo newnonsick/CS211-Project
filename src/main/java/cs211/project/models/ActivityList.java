@@ -15,29 +15,29 @@ public class ActivityList {
         return activities;
     }
 
-    public void addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
-        eventOfActivityName = eventOfActivityName.trim();
+    public void addNewActivityTeam(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
+        eventOfActivityUUID = eventOfActivityUUID.trim();
         teamOfActivityName = teamOfActivityName.trim();
         activityName = activityName.trim();
         activityInformation = activityInformation.trim();
-        if (!eventOfActivityName.equals("") && !teamOfActivityName.equals("") && !activityName.equals("") && !activityInformation.equals("")) {
-            Activity exist = findActivityByObject(new Activity(eventOfActivityName, teamOfActivityName, activityName, activityInformation, activityStatus));
+        if (!eventOfActivityUUID.equals("") && !teamOfActivityName.equals("") && !activityName.equals("") && !activityInformation.equals("")) {
+            Activity exist = findActivityByObject(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus));
             if (exist == null) {
-                activities.add(new Activity(eventOfActivityName, teamOfActivityName, activityName, activityInformation, activityStatus));
+                activities.add(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus));
             }
         }
     }
 
-    public void addNewActivityParticipant(String eventOfActivityName, String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime, LocalDate activityDate)
+    public void addNewActivityParticipant(String eventOfActivityUUID, String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime, LocalDate activityDate)
 
     {
-        eventOfActivityName = eventOfActivityName.trim();
+        eventOfActivityUUID = eventOfActivityUUID.trim();
         activityName = activityName.trim();
         activityInformation = activityInformation.trim();
         if (!activityName.equals("") && !activityInformation.equals("")) {
-            Activity newActivity = findActivityByObject(new Activity(eventOfActivityName, activityName, activityInformation, activityStartTime, activityEndTime, activityDate));
+            Activity newActivity = findActivityByObject(new Activity(eventOfActivityUUID, activityName, activityInformation, activityStartTime, activityEndTime, activityDate));
             if (newActivity == null) {
-                activities.add(new Activity(eventOfActivityName, activityName, activityInformation, activityStartTime, activityEndTime, activityDate));
+                activities.add(new Activity(eventOfActivityUUID, activityName, activityInformation, activityStartTime, activityEndTime, activityDate));
 
             }
         }

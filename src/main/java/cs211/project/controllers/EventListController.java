@@ -197,7 +197,7 @@ public class EventListController {
             event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-                    FXRouterPane.goTo("event-information", new String[] { event.getEventName(), currentUser.getUsername() });
+                    FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -242,7 +242,7 @@ public class EventListController {
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
 //                    FXRouterPane.goTo("event-information", event.getEventName());
-                    FXRouterPane.goTo("event-information", new String[] { event.getEventName(), currentUser.getUsername() });
+                    FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
