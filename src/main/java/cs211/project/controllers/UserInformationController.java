@@ -68,9 +68,7 @@ public class UserInformationController {
         nameLabel.setText(currentUser.getName());
         usernameLabel.setText(currentUser.getUsername());
 
-        String filePath = "data/profile_picture/" + currentUser.getProfilePicture();
-        File file = new File(filePath);
-        profileImageView.setImage(new Image(file.toURI().toString()));
+        profileImageView.setImage(currentUser.getProfilePicture());
     }
 
 

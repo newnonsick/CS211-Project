@@ -45,9 +45,6 @@ public class MainPageController {
 
     private User currentUser;
 
-
-
-
     @FXML
     public void initialize() {
         currentUser = (User) FXRouter.getData();
@@ -202,6 +199,12 @@ public class MainPageController {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
+    }
+
+    @FXML
+    public void logOut() throws IOException {
+        FXRouter.goTo("login");
+        currentUser = null;
     }
 
 }

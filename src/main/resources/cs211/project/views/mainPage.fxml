@@ -60,6 +60,8 @@
                            </viewport>
                         </ImageView>
                      </graphic></Button>
+                  <Pane prefHeight="126.0" prefWidth="150.0" />
+                  <Button mnemonicParsing="false" onAction="#logOut" prefHeight="52.0" prefWidth="150.0" text="Logout" />
                </children>
             </VBox>
          </left>

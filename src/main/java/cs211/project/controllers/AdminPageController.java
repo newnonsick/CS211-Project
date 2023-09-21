@@ -42,16 +42,8 @@ public class AdminPageController {
         usersLogTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<LogUser>() {
             @Override
             public void changed(ObservableValue observable, LogUser oldValue, LogUser newValue) {
-                errorLabel.setText(newValue.getProfilePicture());
                 if (newValue != null) {
-                    if(newValue.getProfilePicture().equals("default.png")) {
-                        profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
-                    }
-                    else {
-                        File file = new File("data/profile_picture/" + newValue.getProfilePicture());
-                        Image profileImage = new Image(file.toURI().toString());
-                        profileImageView.setImage(profileImage);
-                    }
+                    profileImageView.setImage(newValue.getProfilePicture());
                     usernameLabel.setText(newValue.getUsername());
                     nameLabel.setText(newValue.getName());
                 }
