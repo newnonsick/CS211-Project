@@ -64,7 +64,7 @@ public class UserListFileDataSource implements Datasource<UserList> {
 
         try {
             for (User user : userList.getUsers()) {
-                String line = user.getUsername() + "," + user.getPassword() + "," + user.getName() + "," + user.getProfilePicture();
+                String line = user.getUsername() + "," + user.getPassword() + "," + user.getName() + "," + user.getProfilePictureName();
                 buffer.append(line);
                 buffer.append("\n");
             }
