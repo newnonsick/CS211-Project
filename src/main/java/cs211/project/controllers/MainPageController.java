@@ -200,11 +200,6 @@ public class MainPageController {
         timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
     }
-
-    @FXML
-    public void logOut() throws IOException {
-        FXRouter.goTo("login");
-        currentUser = null;
-    }
+    
 
 }
