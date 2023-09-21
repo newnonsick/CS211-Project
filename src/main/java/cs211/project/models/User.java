@@ -31,4 +31,5 @@ public class User {
 
     public String getProfilePicture() { return this.profilePic;}
 
+    public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 }

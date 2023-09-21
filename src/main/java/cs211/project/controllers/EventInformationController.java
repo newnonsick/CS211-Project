@@ -119,7 +119,7 @@ public class EventInformationController {
 
                 if (event.getEventName().equals(eventName)) {
                     if (currentUserName.equals(userName)) {
-                        errorLabel.setText("You have already join this event.");
+                        goToParticipantActivity();
                         return;
                     }
                 }
@@ -160,8 +160,6 @@ public class EventInformationController {
                 throw new RuntimeException(e);
             }
         }
-        goToParticipantActivity();
-
     }
 
     @FXML
@@ -172,7 +170,7 @@ public class EventInformationController {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-        }
+    }
 
     @FXML
     public void handleVisitTeamButton(){
