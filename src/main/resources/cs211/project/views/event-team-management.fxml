@@ -2,15 +2,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventTeamManagementContrller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventTeamManagementContrller">
    <children>
-      <VBox layoutX="49.0" layoutY="31.0" prefHeight="135.0" prefWidth="672.0">
+      <VBox layoutX="72.0" layoutY="14.0" prefHeight="135.0" prefWidth="672.0">
          <children>
             <Label text="Event Team Management">
                <font>
@@ -24,21 +25,20 @@
             </Label>
          </children>
       </VBox>
-      <TableView fx:id="teamListTableView" layoutX="49.0" layoutY="172.0" prefHeight="581.0" prefWidth="895.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
-      <Button layoutX="974.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleCreateTeamButton" text="Create team">
+      <Button layoutX="1059.0" layoutY="70.0" mnemonicParsing="false" onAction="#handleCreateTeamButton" styleClass="radius" text="+">
          <font>
-            <Font size="18.0" />
+            <Font size="28.0" />
          </font>
       </Button>
-      <Button layoutX="974.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="Manage team">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
+      <ScrollPane fx:id="teamListScrollPane" layoutX="72.0" layoutY="134.0" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
+         <content>
+            <GridPane fx:id="teamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+            </GridPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

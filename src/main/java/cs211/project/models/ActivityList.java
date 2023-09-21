@@ -1,5 +1,7 @@
 package cs211.project.models;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class ActivityList {
@@ -13,21 +15,40 @@ public class ActivityList {
         return activities;
     }
 
-    public void addNewActivity(String activityName, String activityInformation) {
+    public void addNewActivityTeam(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
+        eventOfActivityUUID = eventOfActivityUUID.trim();
+        teamOfActivityName = teamOfActivityName.trim();
         activityName = activityName.trim();
         activityInformation = activityInformation.trim();
-        if (!activityName.equals("") && !activityInformation.equals("")) {
-            Activity exist = findActivityByName(activityName);
+        if (!eventOfActivityUUID.equals("") && !teamOfActivityName.equals("") && !activityName.equals("") && !activityInformation.equals("")) {
+            Activity exist = findActivityByObject(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus));
             if (exist == null) {
-                activities.add(new Activity(activityName, activityInformation));
+                activities.add(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus));
             }
         }
     }
 
-    public Activity findActivityByName(String activityName) {
-        for (Activity activity : activities) {
-            if (activity.getActivityName().equals(activityName)) {
-                return activity;
+    public void addNewActivityParticipant(String eventOfActivityUUID, String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime, LocalDate activityDate)
+
+    {
+        eventOfActivityUUID = eventOfActivityUUID.trim();
+        activityName = activityName.trim();
+        activityInformation = activityInformation.trim();
+        if (!activityName.equals("") && !activityInformation.equals("")) {
+            Activity newActivity = findActivityByObject(new Activity(eventOfActivityUUID, activityName, activityInformation, activityStartTime, activityEndTime, activityDate));
+            if (newActivity == null) {
+                activities.add(new Activity(eventOfActivityUUID, activityName, activityInformation, activityStartTime, activityEndTime, activityDate));
+
+            }
+        }
+    }
+
+
+
+    public Activity findActivityByObject(Activity activity) {
+        for (Activity activity1 : activities) {
+            if (activity1.isActivity(activity)) {
+                return activity1;
             }
         }
         return null;

@@ -8,30 +8,82 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
+<AnchorPane prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
    <children>
-      <Label layoutX="494.0" layoutY="33.0" text="Event List">
-         <font>
-            <Font name="System Bold" size="43.0" />
-         </font>
-      </Label>
-      <TextField fx:id="searchTextField" layoutX="119.0" layoutY="121.0" prefHeight="26.0" prefWidth="888.0" promptText="For a Sample of Autocomplete Try to Type New or Tarn or Ice or Nutt" />
-      <Button fx:id="searchButton" layoutX="1007.0" layoutY="121.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Search" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="122.0" layoutY="147.0" prefHeight="606.0" prefWidth="888.0">
-         <content>
-            <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="606.0" prefWidth="875.0">
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </GridPane>
-         </content>
-      </ScrollPane>
+      <Pane layoutX="146.0">
+         <children>
+            <Pane prefHeight="37.0" prefWidth="888.0" />
+            <Label layoutX="347.20001220703125" layoutY="36.0" text="Event List">
+               <font>
+                  <Font name="System Bold" size="43.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" layoutY="100.0" prefHeight="38.0" prefWidth="890.0" spacing="10.0" styleClass="search-box">
+               <children>
+                  <TextField fx:id="searchTextField" prefHeight="36.0" prefWidth="719.0" promptText="Search" styleClass="transparent" />
+                  <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="26.0" prefWidth="55.0" styleClass="search-button" text="Search" />
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#categoryPaneOpen" prefWidth="64.0" styleClass="search-button" text="Category" />
+               </children>
+            </HBox>
+            <VBox layoutY="136.8000030517578">
+               <children>
+                  <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="888.0" />
+                  <Pane fx:id="categoryPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" prefWidth="888.0" visible="false">
+                     <children>
+                        <ScrollPane prefHeight="50.0" prefWidth="874.0" styleClass="transparent" vbarPolicy="NEVER">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="1200.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="1200.0" spacing="5.0">
+                                       <children>
+                                          <Button fx:id="allCategoryButton" mnemonicParsing="false" onAction="#handleAllCategoryButton" text="ทั้งหมด" />
+                                          <Button fx:id="categoryExpoButton" mnemonicParsing="false" onAction="#handleCategoryExpoButton" text="งานแสดงสินค้า" />
+                                          <Button fx:id="categoryFestivalButton" mnemonicParsing="false" onAction="#handleCategoryFestivalButton" text="เทศกาล" />
+                                          <Button fx:id="categorySeminarButton" mnemonicParsing="false" onAction="#handleCategorySeminarButton" text="อบรมสัมมนา" />
+                                          <Button fx:id="categoryHouseButton" mnemonicParsing="false" onAction="#handleCategoryHouseButton" text="บ้านและของแต่งบ้าน" />
+                                          <Button fx:id="categoryFoodButton" mnemonicParsing="false" onAction="#handleCategoryFoodButton" text="อาหารและเครื่องดื่ม" />
+                                          <Button fx:id="categoryEntertainmentButton" mnemonicParsing="false" onAction="#handleCategoryEntertainmentButton" text="บันเทิง" />
+                                          <Button fx:id="categoryConcertButton" mnemonicParsing="false" onAction="#handleCategoryConcertButton" text="คอนเสิร์ต/แฟนมีตติ้ง" />
+                                          <Button fx:id="categoryTravelButton" mnemonicParsing="false" onAction="#handleCategoryTravelButton" text="ท่องเที่ยว" />
+                                          <Button fx:id="categoryArtButton" mnemonicParsing="false" onAction="#handleCategoryArtButton" text="ศิลปะ/นิทรรศการ/ถ่ายภาพ" />
+                                          <Button fx:id="categorySportButton" mnemonicParsing="false" onAction="#handleCategorySportButton" text="กีฬา" />
+                                          <Button fx:id="categoryReligionButton" mnemonicParsing="false" onAction="#handleCategoryReligionButton" text="ศาสนา" />
+                                          <Button fx:id="categoryPetButton" mnemonicParsing="false" onAction="#handleCategoryPetButton" text="สัตว์เลี้ยง" />
+                                          <Button fx:id="categoryEducationButton" mnemonicParsing="false" onAction="#handleCategoryEducationButton" text="ธุรกิจ/อาชีพ/การศึกษา" />
+                                          <Button fx:id="categoryOtherButton" mnemonicParsing="false" onAction="#handleCategoryOtherButton" text="อื่น ๆ" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                     </children></Pane>
+                  <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">
+                     <content>
+                        <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="664.0" prefWidth="873.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <rowConstraints>
+                              <RowConstraints />
+                           </rowConstraints>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

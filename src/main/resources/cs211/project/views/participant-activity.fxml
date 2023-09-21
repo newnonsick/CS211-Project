@@ -7,30 +7,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.ParticipantActivityController">
+<AnchorPane fx:id="eventNAmeLabel" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.ParticipantActivityController">
    <children>
-      <TableView fx:id="activityParticipantTableView" layoutX="122.0" layoutY="149.0" prefHeight="493.0" prefWidth="712.0">
-         <columns>
-            <TableColumn prefWidth="127.20004272460938" text="วันที่" />
-            <TableColumn prefWidth="138.3999786376953" text="เวลา" />
-            <TableColumn prefWidth="235.2000732421875" text="รายละเอียด" />
-         </columns>
-      </TableView>
       <Label layoutX="122.0" layoutY="51.0" text="ตารางกิจกรรมสำหรับผู้เข้าร่วม">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventName" layoutX="122.0" layoutY="95.0" text="eventName">
+      <Label fx:id="eventNameLabel" layoutX="122.0" layoutY="95.0" text="eventNameLabel">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="33.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToPage" text="Back">
+      <Button layoutX="33.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToEventInformation" text="Back">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+      <TableView fx:id="activityParticipantTableView" layoutX="134.0" layoutY="153.0" prefHeight="493.0" prefWidth="734.0">
+         <columns>
+            <TableColumn fx:id="activityDateColumn" prefWidth="96.79998779296875" text="วันที่" />
+            <TableColumn fx:id="activityStartColumn" prefWidth="70.0" text="เวลาเริ่ม" />
+            <TableColumn fx:id="activityEndColumn" prefWidth="70.0" text="เวลาสิ้นสุด" />
+            <TableColumn fx:id="activityNameColumn" prefWidth="146.39996337890625" text="ชื่อกิจกรรม" />
+            <TableColumn fx:id="activityInfoColumn" prefWidth="349.60003662109375" text="รายละเอียดกิจกรรม" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

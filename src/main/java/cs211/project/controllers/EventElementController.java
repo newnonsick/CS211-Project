@@ -15,11 +15,15 @@ public class EventElementController {
     @FXML
     ImageView eventImageView;
 
-    public void setPage(String name, String imgName) {
+    @FXML
+    Label categoryLabel;
+
+    public void setPage(String name, String imgName, String category) {
         String filePath = "data/eventPicture/" + imgName;
         File file = new File(filePath);
-        Image eventImage = new Image(file.toURI().toString(),149,129,false,false);
+        Image eventImage = new Image(file.toURI().toString(),176,129,false,false);
         eventNameLabel.setText(name);
         eventImageView.setImage(eventImage);
+        categoryLabel.setText("หมวดหมู่ : " + category);
     }
 }

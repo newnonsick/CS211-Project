@@ -1,58 +1,130 @@
 package cs211.project.controllers;
 
-import cs211.project.services.FXRouter;
+import cs211.project.models.Event;
+import cs211.project.models.EventList;
+import cs211.project.models.User;
+import cs211.project.services.Datasource;
+import cs211.project.services.EventListFileDatasource;
+import cs211.project.services.FXRouterPane;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import cs211.project.controllers.EventElementController;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
+import javafx.util.Duration;
+
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.security.Key;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class EventListController {
-    private static String[] SUGGESTIONS_ARRAY = {
-            "New", "Tarn", "Ice", "Nutt"
-    };
+    private String[] eventList;
+    private int maxRow = 4;
+    private Datasource<EventList> datasource;
+    private EventList eventListData;
+    private LocalDate currentDate;
+    private boolean isSearch;
+    private String selectedCategory;
+    private User currentUser;
     @FXML
-    TableView eventListTableView;
+    Pane categoryPane;
     @FXML
     TextField searchTextField;
     @FXML
     Button searchButton;
     @FXML
     GridPane eventGrid;
+    @FXML
+    ScrollPane eventScrollPane;
+    @FXML Button allCategoryButton;
+    @FXML Button categoryExpoButton;
+    @FXML Button categoryFestivalButton;
+    @FXML Button categorySeminarButton;
+    @FXML Button categoryHouseButton;
+    @FXML Button categoryFoodButton;
+    @FXML Button categoryEntertainmentButton;
+    @FXML Button categoryConcertButton;
+    @FXML Button categoryTravelButton;
+    @FXML Button categoryArtButton;
+    @FXML Button categorySportButton;
+    @FXML Button categoryReligionButton;
+    @FXML Button categoryPetButton;
+    @FXML Button categoryEducationButton;
+    @FXML Button categoryOtherButton;
+
+    boolean categoryOn = false;
 
     public void initialize() {
-        checkFileIsExisted("eventList.csv");
-        showList();
+        currentUser = (User) FXRouterPane.getData();
+        allCategoryButton.getStyleClass().add("category-button-selected");
+        isSearch = false;
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        currentDate = LocalDate.now(thaiTimeZone);
+        datasource = new EventListFileDatasource("data", "eventList.csv");
+        eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
-        Arrays.sort(SUGGESTIONS_ARRAY); //Array must be sorted
-    }
-    private void checkFileIsExisted(String fileName) {
-        File file = new File("data");
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        String filePath = "data" + File.separator + fileName;
-        file = new File(filePath);
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        eventList = eventListData.getEvents().stream()
+                .map(Event::getEventName)
+                .toArray(String[]::new);
+        Arrays.sort(eventList);
+        showList();
+        eventScrollPane.vvalueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                // Calculate the maximum Vvalue (maximum scroll position)
+                double maxVvalue = eventScrollPane.getVmax();
+
+                // Calculate the current Vvalue (current scroll position)
+                double currentVvalue = newValue.doubleValue();
+
+                if (selectedCategory == null && currentVvalue >= maxVvalue * 0.95 && !isSearch) {
+                    if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
+                        maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
+                    }
+                    else if (maxRow < (int) Math.round(eventListData.getEvents().size() / 3.0 )){
+                        maxRow += 4;
+                        showList();
+                    }
+                }
             }
-        }
+        });
     }
+
+    @FXML
+    public void handleSearchButton(){
+        eventScrollPane.setVvalue(0);
+        if (!searchTextField.getText().isEmpty()) {
+            eventGrid.getChildren().clear();
+            showList(searchTextField.getText());
+            isSearch = true;
+        } else if (isSearch){
+            maxRow = 4;
+            eventScrollPane.setVvalue(0);
+            eventGrid.getChildren().clear();
+            if (selectedCategory != null) {
+                showList("");
+            }
+            else {
+                showList();
+            }
+            isSearch = false;
+        }
+        searchTextField.clear();
+    }
+
     //Auto completion
     private void handleAutoComplete(KeyEvent event) {
         String enteredText = searchTextField.getText();
@@ -62,12 +134,12 @@ public class EventListController {
 
         String matchedSuggestion = null;
         int totalMatched = 0;
-        for (String suggestion : SUGGESTIONS_ARRAY) {
+        for (String suggestion : eventList) {
             if (suggestion.toLowerCase().startsWith(enteredText.toLowerCase())) {
                 matchedSuggestion = suggestion;
                 break;
             }
-         }
+        }
 
         if (matchedSuggestion != null && !matchedSuggestion.equals(enteredText)) {
             searchTextField.setText(matchedSuggestion);
@@ -75,7 +147,7 @@ public class EventListController {
         }
 
 
-        for (String suggestion : SUGGESTIONS_ARRAY) {
+        for (String suggestion : eventList) {
             if (suggestion.toLowerCase().contains(enteredText.toLowerCase())) {
                 if (totalMatched > 1){
                     break;
@@ -94,43 +166,236 @@ public class EventListController {
     }
 
     public void showList() {
-        File file = new File("data/eventList.csv");
-        FileInputStream fileInputStream = null;
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        int row = maxRow - 4;
+        int column = 0;
+        int i = 0;
+        for (Event event : eventListData.getEvents()) {
+            if (i < (maxRow - 4) * 3) {
+                i++;
+                continue;
+            }
+            if (event.getEventEndDate().isBefore(currentDate)) {
+                continue;
+            }
+            if(column == 3) {
+                row++;
+                column = 0;
+            }
+            if (row == maxRow) {
+                break;
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            EventElementController event_ = fxmlLoader.getController();
+            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            anchorPane.setOnMouseClicked(event1 -> {
+                try {
+                    FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            eventGrid.add(anchorPane, column, row);
+            column++;
+
+            GridPane.setMargin(anchorPane, new Insets(10));
         }
 
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                fileInputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedReader buffer = new BufferedReader(inputStreamReader);
+    }
+
+    public void showList(String eventName) {
+        eventGrid.getChildren().clear();
         int row = 0;
         int column = 0;
-        String line = "";
-        try {
-            while ( (line = buffer.readLine()) != null ){
-                if (line.isEmpty()) continue;
-                String[] data = line.split(",");
-                if(column == 3) {
-                    row++;
-                    column = 0;
-                }
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                EventElementController event = fxmlLoader.getController();
-                event.setPage(data[0], data[1].trim());
-                eventGrid.add(anchorPane, column, row);
-                column++;
-
-                GridPane.setMargin(anchorPane, new Insets(10));
+        for (Event event : eventListData.getEvents()) {
+            if (eventName != "" && !event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
+                continue;
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            if (event.getEventEndDate().isBefore(currentDate)) {
+                continue;
+            }
+            if (selectedCategory != null && !event.getEventCategory().equals(selectedCategory)) {
+                continue;
+            }
+            if(column == 3) {
+                row++;
+                column = 0;
+            }
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/cs211/project/views/eventElement.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            EventElementController event_ = fxmlLoader.getController();
+            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            anchorPane.setOnMouseClicked(event1 -> {
+                try {
+//                    FXRouterPane.goTo("event-information", event.getEventName());
+                    FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            eventGrid.add(anchorPane, column, row);
+            column++;
+
+            GridPane.setMargin(anchorPane, new Insets(10));
         }
     }
+    @FXML
+    public void categoryPaneOpen() {
+        Timeline timeline = new Timeline();
+        if(!categoryOn) {
+            double targetHeight = 50;
+
+            KeyValue keyValue = new KeyValue(categoryPane.prefHeightProperty(), targetHeight);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+
+            timeline.getKeyFrames().add(keyFrame);
+            categoryPane.setVisible(true);
+            timeline.play();
+            categoryOn = true;
+        }
+        else {
+            double targetHeight = 0;
+
+            KeyValue keyValue = new KeyValue(categoryPane.prefHeightProperty(), targetHeight);
+            KeyValue keyValue2 = new KeyValue(categoryPane.visibleProperty(), false);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.3), keyValue);
+            KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.3), keyValue2);
+
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.getKeyFrames().add(keyFrame2);
+            timeline.play();
+
+            categoryPane.setVisible(false);
+            categoryOn = false;
+        }
+
+    }
+    @FXML
+    public void handleAllCategoryButton() {
+        maxRow = 4;
+        selectedCategory = null;
+        eventGrid.getChildren().clear();
+        showList();
+        changeStyleClassCategoryButton(allCategoryButton);
+    }
+    @FXML
+    public void handleCategoryExpoButton() {
+        selectedCategory = "งานแสดงสินค้า";
+        changeStyleClassCategoryButton(categoryExpoButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryFestivalButton() {
+        selectedCategory = "เทศกาล";
+        changeStyleClassCategoryButton(categoryFestivalButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategorySeminarButton() {
+        selectedCategory = "อบรมสัมนา";
+        changeStyleClassCategoryButton(categorySeminarButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryHouseButton() {
+        selectedCategory = "บ้านและของแต่งบ้าน";
+        changeStyleClassCategoryButton(categoryHouseButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryFoodButton() {
+        selectedCategory = "อาหารและเครื่องดื่ม";
+        changeStyleClassCategoryButton(categoryFoodButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryEntertainmentButton() {
+        selectedCategory = "บันเทิง";
+        changeStyleClassCategoryButton(categoryEntertainmentButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryConcertButton() {
+        selectedCategory = "คอนเสิร์ต/แฟนมีตติ้ง";
+        changeStyleClassCategoryButton(categoryConcertButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryTravelButton() {
+        selectedCategory = "ท่องเที่ยว";
+        changeStyleClassCategoryButton(categoryTravelButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryArtButton() {
+        selectedCategory = "ศิลปะ/นิทรรศการ/ถ่ายภาพ";
+        changeStyleClassCategoryButton(categoryArtButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategorySportButton() {
+        selectedCategory = "กีฬา";
+        changeStyleClassCategoryButton(categorySportButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryReligionButton() {
+        selectedCategory = "ศาสนา";
+        changeStyleClassCategoryButton(categoryReligionButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryPetButton() {
+        selectedCategory = "สัตว์เลี้ยง";
+        changeStyleClassCategoryButton(categoryPetButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryEducationButton() {
+        selectedCategory = "ธุรกิจ/อาชีพ/การศึกษา";
+        changeStyleClassCategoryButton(categoryEducationButton);
+        showList("");
+    }
+    @FXML
+    public void handleCategoryOtherButton() {
+        selectedCategory = "อื่น ๆ";
+        changeStyleClassCategoryButton(categoryOtherButton);
+        showList("");
+    }
+
+    public void changeStyleClassCategoryButton(Button button){
+        allCategoryButton.getStyleClass().remove("category-button-selected");
+        categoryExpoButton.getStyleClass().remove("category-button-selected");
+        categoryFestivalButton.getStyleClass().remove("category-button-selected");
+        categorySeminarButton.getStyleClass().remove("category-button-selected");
+        categoryHouseButton.getStyleClass().remove("category-button-selected");
+        categoryFoodButton.getStyleClass().remove("category-button-selected");
+        categoryEntertainmentButton.getStyleClass().remove("category-button-selected");
+        categoryConcertButton.getStyleClass().remove("category-button-selected");
+        categoryTravelButton.getStyleClass().remove("category-button-selected");
+        categoryArtButton.getStyleClass().remove("category-button-selected");
+        categorySportButton.getStyleClass().remove("category-button-selected");
+        categoryReligionButton.getStyleClass().remove("category-button-selected");
+        categoryPetButton.getStyleClass().remove("category-button-selected");
+        categoryEducationButton.getStyleClass().remove("category-button-selected");
+        categoryOtherButton.getStyleClass().remove("category-button-selected");
+        button.getStyleClass().add("category-button-selected");
+    }
+
+
+
 }

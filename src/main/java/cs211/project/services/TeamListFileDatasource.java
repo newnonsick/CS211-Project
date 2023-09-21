@@ -1,10 +1,12 @@
 package cs211.project.services;
 
+import cs211.project.models.Team;
 import cs211.project.models.TeamList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class TeamListFileDatasource implements Datasource<TeamList>{
     private String directoryName;
@@ -58,25 +60,58 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
 
                 String[] data = line.split(",");
 
-                String eventOfTeamName = data[0].trim();
+                String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 int maxParticipants = Integer.parseInt(data[2].trim());
                 LocalDate startJoinDate = LocalDate.parse(data[3].trim());
                 LocalDate closingJoinDate = LocalDate.parse(data[4].trim());
+                String teamOwnerUsername = data[5].trim();
+                String headOfTeamUsername = data[6].trim();
 
-                //เหลือ teamActivities, teamMembers, teamChat ที่ยังไม่แน่ใตว่าเก็บไฟล์เป็นยังไง
-
-                //teams.addNewTeam(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, teamActivities, teamMembers, teamChat);
+                teams.addNewTeam(eventUUID, teamName, maxParticipants,startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        Collections.sort(teams.getTeams());
         return teams;
     }
 
     @Override
     public void writeData(TeamList teamList) {
-        ;
+        String filePath = directoryName + File.separator + fileName;
+        File file = new File(filePath);
+
+        FileOutputStream fileOutputStream = null;
+
+        try {
+            fileOutputStream = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
+                fileOutputStream,
+                StandardCharsets.UTF_8
+        );
+        BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
+        Collections.sort(teamList.getTeams());
+        try {
+            for (Team team : teamList.getTeams()) {
+                String line = team.getEventUUID() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getTeamOwnerUsername() + "," + team.getHeadOfTeamUsername();
+                buffer.append(line);
+                buffer.append("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                buffer.flush();
+                buffer.close();
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
