@@ -14,13 +14,13 @@ public class TeamList {
     public ArrayList<Team> getTeams() {
         return teams;
     }
-    public boolean addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String headOfTeamUsername) {
+    public boolean addNewTeam(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String teamOwnerUsername,String headOfTeamUsername) {
         eventOfTeamName = eventOfTeamName.trim();
         teamName = teamName.trim();
         if (!eventOfTeamName.equals("") && !teamName.equals("") && maxParticipants > 0 && startJoinDate != null && closingJoinDate != null && !headOfTeamUsername.equals("")) {
             Team exist = findTeamByNameAndEvent(eventOfTeamName, teamName);
             if (exist == null) {
-                teams.add(new Team(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, headOfTeamUsername));
+                teams.add(new Team(eventOfTeamName, teamName, maxParticipants, startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername));
                 return true;
             }
             return false;

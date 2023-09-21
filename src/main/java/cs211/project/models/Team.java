@@ -11,13 +11,15 @@ public class Team implements Comparable {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closingJoinDate;
+    private String teamOwnerUsername;
 
-    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String headOfTeamUsername) {
+    public Team(String eventOfTeamName, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String teamOwnerUsername,String headOfTeamUsername) {
         this.eventOfTeamName = eventOfTeamName;
         this.teamName = teamName;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closingJoinDate = closingJoinDate;
+        this.teamOwnerUsername = teamOwnerUsername;
         this.headOfTeamUsername = headOfTeamUsername;
     }
 
@@ -43,6 +45,8 @@ public class Team implements Comparable {
     public String getHeadOfTeamUsername() {
         return headOfTeamUsername;
     }
+
+    public String getTeamOwnerUsername() {return teamOwnerUsername;}
 
 
 

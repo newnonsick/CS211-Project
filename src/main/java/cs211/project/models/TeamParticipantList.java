@@ -10,7 +10,7 @@ public class TeamParticipantList{
     }
 
 
-    public void addNewTeamParticipant(String username, String eventName, String teamName) {
+    public boolean addNewTeamParticipant(String username, String eventName, String teamName) {
         username = username.trim();
         eventName = eventName.trim();
         teamName = teamName.trim();
@@ -18,8 +18,10 @@ public class TeamParticipantList{
             TeamParticipant exist = findTeamParticipantByUsernameAndEventAndTeam(username, eventName, teamName);
             if (exist == null) {
                 teamParticipants.add(new TeamParticipant(username, eventName, teamName));
+                return true;
             }
         }
+        return false;
     }
 
     public TeamParticipant findTeamParticipantByUsernameAndEventAndTeam(String username, String eventName, String teamName) {
@@ -39,6 +41,15 @@ public class TeamParticipantList{
             }
         }
         return count - 1;
+    }
+
+    public boolean checkUserInTeam(String username, String eventName, String teamName) {
+        for (TeamParticipant teamParticipant : teamParticipants) {
+            if (teamParticipant.getUsername().equals(username) && teamParticipant.getEventName().equals(eventName) && teamParticipant.getTeamName().equals(teamName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<TeamParticipant> getTeamParticipants() {

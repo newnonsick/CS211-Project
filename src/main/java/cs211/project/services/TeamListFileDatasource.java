@@ -65,9 +65,10 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 int maxParticipants = Integer.parseInt(data[2].trim());
                 LocalDate startJoinDate = LocalDate.parse(data[3].trim());
                 LocalDate closingJoinDate = LocalDate.parse(data[4].trim());
-                String headOfTeamUsername = data[5].trim();
+                String teamOwnerUsername = data[5].trim();
+                String headOfTeamUsername = data[6].trim();
 
-                teams.addNewTeam(eventOfTeamName, teamName, maxParticipants,startJoinDate, closingJoinDate, headOfTeamUsername);
+                teams.addNewTeam(eventOfTeamName, teamName, maxParticipants,startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -97,7 +98,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
         Collections.sort(teamList.getTeams());
         try {
             for (Team team : teamList.getTeams()) {
-                String line = team.getEventOfTeamName() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getHeadOfTeamUsername();
+                String line = team.getEventOfTeamName() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getTeamOwnerUsername() + "," + team.getHeadOfTeamUsername();
                 buffer.append(line);
                 buffer.append("\n");
             }

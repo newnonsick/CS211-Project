@@ -30,9 +30,9 @@
             <Font size="28.0" />
          </font>
       </Button>
-      <ScrollPane fx:id="teamListScrollPane" layoutX="72.0" layoutY="134.0" prefHeight="666.0" prefWidth="1045.0">
+      <ScrollPane fx:id="teamListScrollPane" layoutX="72.0" layoutY="134.0" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
          <content>
-            <GridPane fx:id="teamListGridPane" prefHeight="666.0" prefWidth="1030.0">
+            <GridPane fx:id="teamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
