@@ -32,6 +32,10 @@ public class AdminPageController {
     private ImageView profileImageView;
     @FXML
     Label errorLabel;
+    @FXML
+    Label usernameTagLabel;
+    @FXML
+    Label nameTagLabel;
 
     @FXML
     public void initialize() {
@@ -46,6 +50,15 @@ public class AdminPageController {
                     profileImageView.setImage(newValue.getProfilePicture());
                     usernameLabel.setText(newValue.getUsername());
                     nameLabel.setText(newValue.getName());
+                    usernameTagLabel.setVisible(true);
+                    nameTagLabel.setVisible(true);
+                }
+                else {
+                    profileImageView.setImage(null);
+                    usernameLabel.setText("");
+                    nameLabel.setText("");
+                    usernameTagLabel.setVisible(false);
+                    nameTagLabel.setVisible(false);
                 }
             }
         });

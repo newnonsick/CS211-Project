@@ -26,8 +26,8 @@
       <Pane layoutX="804.0" layoutY="96.0" prefHeight="587.0" prefWidth="438.0">
          <children>
             <ImageView fx:id="profileImageView" fitHeight="240.0" fitWidth="287.0" layoutX="76.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="76.0" layoutY="285.0" text="Username" />
-            <Label layoutX="76.0" layoutY="337.0" text="Name" />
+            <Label fx:id="usernameTagLabel" layoutX="76.0" layoutY="285.0" text="Username" visible="false" />
+            <Label fx:id="nameTagLabel" layoutX="76.0" layoutY="337.0" text="Name" visible="false" />
             <Label fx:id="usernameLabel" layoutX="220.0" layoutY="285.0" />
             <Label fx:id="nameLabel" layoutX="220.0" layoutY="337.0" />
             <Label fx:id="errorLabel" layoutX="115.0" layoutY="448.0" />
