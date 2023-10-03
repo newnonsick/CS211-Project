@@ -49,6 +49,7 @@ public class MainPageController {
     public void initialize() {
         currentUser = (User) FXRouter.getData();
         changeStyleClassButton(eventButton);
+        FXRouterPane.clearContent();
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
         try {
@@ -199,6 +200,15 @@ public class MainPageController {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
+    }
+
+    @FXML
+    public void logout() {
+        try {
+            FXRouter.goTo("login");
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     
 
