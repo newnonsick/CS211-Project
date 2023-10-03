@@ -18,10 +18,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 
 public class LoginController {
-    private String directoryName = "data";
-    private String fileName = "userData.csv";
-    private String filePath = directoryName + File.separator + fileName;
-    private String loginFilePath = directoryName + File.separator + "logInfo.csv";
+
     @FXML
     TextField usernameTextField;
     @FXML
