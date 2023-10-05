@@ -33,7 +33,7 @@ public class TeamElementController {
 
     public void setPage(String eventUUID, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, boolean isOwner) {
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
         teamNameLabel.setText(teamName);
         maxParticipantsLabel.setText(String.valueOf(maxParticipants));
         remaindaysLabel.setText(startJoinDate.toString() + " - " + closingJoinDate.toString());

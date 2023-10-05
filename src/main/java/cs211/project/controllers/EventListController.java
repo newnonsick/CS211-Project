@@ -23,12 +23,9 @@ import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.io.*;
-import java.security.Key;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class EventListController {
     private String[] eventList;
@@ -77,7 +74,7 @@ public class EventListController {
         eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
         eventList = eventListData.getEvents().stream()
-                .map(Event::getEventName)
+                .map(Event::getName)
                 .toArray(String[]::new);
         Arrays.sort(eventList);
         showList();
@@ -174,7 +171,7 @@ public class EventListController {
                 i++;
                 continue;
             }
-            if (event.getEventEndDate().isBefore(currentDate)) {
+            if (event.getEndDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 3) {
@@ -194,7 +191,7 @@ public class EventListController {
             }
 
             EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            event_.setPage(event.getName(), event.getPicture(), event.getCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
@@ -215,13 +212,13 @@ public class EventListController {
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
-            if (eventName != "" && !event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
+            if (eventName != "" && !event.getName().toLowerCase().contains(eventName.toLowerCase())) {
                 continue;
             }
-            if (event.getEventEndDate().isBefore(currentDate)) {
+            if (event.getEndDate().isBefore(currentDate)) {
                 continue;
             }
-            if (selectedCategory != null && !event.getEventCategory().equals(selectedCategory)) {
+            if (selectedCategory != null && !event.getCategory().equals(selectedCategory)) {
                 continue;
             }
             if(column == 3) {
@@ -238,7 +235,7 @@ public class EventListController {
             }
 
             EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            event_.setPage(event.getName(), event.getPicture(), event.getCategory());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
 //                    FXRouterPane.goTo("event-information", event.getEventName());

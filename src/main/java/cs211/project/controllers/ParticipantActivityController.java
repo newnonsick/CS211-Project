@@ -11,7 +11,6 @@ import cs211.project.services.ParticipantActivityListFileDatasource;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -46,7 +45,7 @@ public class ParticipantActivityController {
         datasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         ActivityList activityList = datasource.readData();
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
         showActivities(activityList);
     }
 

@@ -10,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,7 +21,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class EventParticipantManagementController {
 
@@ -60,8 +58,8 @@ public class EventParticipantManagementController {
         eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         event = eventList.findEventByUUID(eventOfParticipantUUID);
-        eventNameLabel.setText(event.getEventName());
-        eventName2Label.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
+        eventName2Label.setText(event.getName());
         activityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         activityList = activityListDatasource.readData();
         participantDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");

@@ -27,7 +27,7 @@ public class EventList {
 
     public boolean findEvent(String eventName) {
         for (Event anEvent : this.events) {
-            if (eventName.equals(anEvent.getEventName())) {
+            if (eventName.equals(anEvent.getName())) {
                 return true;
             }
         } return false;
@@ -37,7 +37,7 @@ public class EventList {
 
     public Event findEventByEventName(String eventName){
         for (Event anEvent : this.events) {  //for-each loop
-            if (eventName.equals(anEvent.getEventName())) {
+            if (eventName.equals(anEvent.getName())) {
                 return anEvent;
             }
         }

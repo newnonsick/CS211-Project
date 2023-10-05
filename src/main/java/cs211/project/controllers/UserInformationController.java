@@ -113,7 +113,7 @@ public class UserInformationController {
             String eventUUID = data[1];
             if (username.equals(currentUser.getUsername())) {
                 event = eventList.findEventByUUID(eventUUID);
-                if (event.getEventEndDate().isAfter(currentDate)) {
+                if (event.getEndDate().isAfter(currentDate)) {
                     activeEventTableView.getItems().add(event);
                 } else {
                     activeEventTableView.getItems();
@@ -152,7 +152,7 @@ public class UserInformationController {
             String eventUUID = data[1];
             if (username.equals(currentUser.getUsername())) {
                 event = eventList.findEventByUUID(eventUUID);
-                if (event.getEventEndDate().isBefore(currentDate)) {
+                if (event.getEndDate().isBefore(currentDate)) {
                     eventHistoryTableView.getItems().add(event);
                 } else {
                     eventHistoryTableView.getItems();

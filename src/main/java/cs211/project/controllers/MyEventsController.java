@@ -1,6 +1,5 @@
 package cs211.project.controllers;
 
-import cs211.project.models.Activity;
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.models.User;
@@ -14,7 +13,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.*;
-import java.time.LocalDate;
 
 public class MyEventsController {
     @FXML private TableView<Event> myEventsTableView;
@@ -80,7 +78,7 @@ public class MyEventsController {
         myEventsTableView.getItems().clear();
 
         for (Event event: eventList.getEvents()) {
-            if (event.getEventOwnerUsername().equals(currentUser.getUsername()))
+            if (event.getOwnerUsername().equals(currentUser.getUsername()))
                 myEventsTableView.getItems().add(event);
         }
 

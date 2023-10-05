@@ -2,57 +2,55 @@ package cs211.project.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Map;
+
 public class Event implements Comparable {
-    private String eventOwnerUsername;
-    private String eventName;
-    private String eventPicture;
-    private String eventInformation;
-    private String eventCategory;
-    private String placeEvent;
-    private LocalDate eventStartDate;
-    private LocalDate eventEndDate;
+    private String ownerUsername;
+    private String name;
+    private String picture;
+    private String info;
+    private String category;
+    private String place;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private int maxParticipants;
     private LocalDate startJoinDate;
-    private LocalDate closingJoinDate;
+    private LocalDate closeJoinDate;
     private ArrayList<Activity> eventActivity;
     private String eventUUID;
 
-
-
-    public Event(String eventName,String eventPicture, String eventInformation, String eventCategory, String placeEvent,
-                 LocalDate eventStartDate, LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String eventUUID) {
-        this.eventName = eventName;
-        this.eventPicture = eventPicture;
-        this.eventInformation = eventInformation;
-        this.eventCategory = eventCategory;
-        this.placeEvent = placeEvent;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
-        this.eventOwnerUsername = eventOwnerUsername;
+    public Event(String name, String picture, String info, String category, String place,
+                 LocalDate startDate, LocalDate endDate, String ownerUsername, int maxParticipants, LocalDate startJoinDate, LocalDate closeJoinDate, String eventUUID) {
+        this.name = name;
+        this.picture = picture;
+        this.info = info;
+        this.category = category;
+        this.place = place;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.ownerUsername = ownerUsername;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
-        this.closingJoinDate = closingJoinDate;
+        this.closeJoinDate = closeJoinDate;
         this.eventUUID = eventUUID;
     }
 
 
 
-    public String getEventName() { return eventName; }
-    public String getEventInformation() { return eventInformation; }
+    public String getName() { return name; }
+    public String getInfo() { return info; }
 
-    public String getEventCategory() { return eventCategory; }
+    public String getCategory() { return category; }
 
-    public String getPlaceEvent() { return placeEvent; }
+    public String getPlace() { return place; }
 
-    public LocalDate getEventStartDate() { return eventStartDate; }
+    public LocalDate getStartDate() { return startDate; }
 
-    public LocalDate getEventEndDate() { return eventEndDate; }
+    public LocalDate getEndDate() { return endDate; }
 
     public int getMaxParticipants() { return maxParticipants; }
 
-    public String getEventPicture() {
-        return eventPicture;
+    public String getPicture() {
+        return picture;
     }
     public String getEventUUID() { return eventUUID; }
 
@@ -68,42 +66,42 @@ public class Event implements Comparable {
         this.startJoinDate = startJoinDate;
     }
 
-    public LocalDate getClosingJoinDate() {
-        return closingJoinDate;
+    public LocalDate getCloseJoinDate() {
+        return closeJoinDate;
     }
 
-    public void setClosingJoinDate(LocalDate closingJoinDate) {
-        this.closingJoinDate = closingJoinDate;
+    public void setCloseJoinDate(LocalDate closeJoinDate) {
+        this.closeJoinDate = closeJoinDate;
     }
 
-    public String getEventOwnerUsername() { return eventOwnerUsername; }
+    public String getOwnerUsername() { return ownerUsername; }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setEventPicture(String eventPicture) {
-        this.eventPicture = eventPicture;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
-    public void setEventInformation(String eventInformation) {
-        this.eventInformation = eventInformation;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
-    public void setEventCategory(String eventCategory) {
-        this.eventCategory = eventCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setPlaceEvent(String placeEvent) {
-        this.placeEvent = placeEvent;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
-    public void setEventStartDate(LocalDate eventStartDate) {
-        this.eventStartDate = eventStartDate;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public void setEventEndDate(LocalDate eventEndDate) {
-        this.eventEndDate = eventEndDate;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
 
@@ -111,15 +109,15 @@ public class Event implements Comparable {
     public int compareTo(Object o) {
         Event event = (Event) o;
         try{
-            return Integer.parseInt(this.eventName) - Integer.parseInt(event.eventName);
+            return Integer.parseInt(this.name) - Integer.parseInt(event.name);
         }
         catch (NumberFormatException e){
-            if (this.eventName.compareTo(event.eventName) < 0){
-                if (this.eventName.length() > event.eventName.length()){
+            if (this.name.compareTo(event.name) < 0){
+                if (this.name.length() > event.name.length()){
                     return 1;
                 }
             }
-            return this.eventName.compareTo(event.eventName);
+            return this.name.compareTo(event.name);
         }
     }
 }

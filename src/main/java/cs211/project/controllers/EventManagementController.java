@@ -1,11 +1,9 @@
 package cs211.project.controllers;
 
-import cs211.project.models.Activity;
 import cs211.project.models.ActivityList;
 import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.services.*;
-import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -79,20 +77,20 @@ public class EventManagementController {
         showInformation();
     }
     public void showInformation(){
-        eventNameTextField.setText(event.getEventName());
-        eventInfoTextField.setText(event.getEventInformation());
-        placeTextField.setText(event.getPlaceEvent());
-        startDatePicker.setValue(event.getEventStartDate());
-        endDatePicker.setValue(event.getEventEndDate());
-        eventChoiceBox.setValue(event.getEventCategory());
+        eventNameTextField.setText(event.getName());
+        eventInfoTextField.setText(event.getInfo());
+        placeTextField.setText(event.getPlace());
+        startDatePicker.setValue(event.getStartDate());
+        endDatePicker.setValue(event.getEndDate());
+        eventChoiceBox.setValue(event.getCategory());
         if (event.getMaxParticipants() != -1) {
             maxParticipantTextField.setText(String.valueOf(event.getMaxParticipants()));
         } else {
             maxParticipantTextField.setText("");
         }startJoinDatePicker.setValue(event.getStartJoinDate());
-        closingJoinDatePicker.setValue(event.getClosingJoinDate());
-        oldEventName = event.getEventName();
-        Image image = new Image("file:data/eventPicture/" + event.getEventPicture());
+        closingJoinDatePicker.setValue(event.getCloseJoinDate());
+        oldEventName = event.getName();
+        Image image = new Image("file:data/eventPicture/" + event.getPicture());
         eventImageView.setImage(image);
     }
 
@@ -120,14 +118,14 @@ public class EventManagementController {
                 fileType = "jpeg";
             }
 
-            Path targetFilePath = targetDirectory.resolve(event.getEventName() + "." + fileType);
+            Path targetFilePath = targetDirectory.resolve(event.getName() + "." + fileType);
             try {
                 Files.copy(selectedImage.toPath(), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
-            event.setEventPicture(event.getEventName() + "." + fileType);
+            event.setPicture(event.getName() + "." + fileType);
             eventListDatasource.writeData(eventList);
         }
     }
@@ -146,20 +144,20 @@ public class EventManagementController {
             errorLabel.setVisible(false);
         }
         String newEventName = eventNameTextField.getText();
-        event.setEventName(newEventName);
-        event.setEventInformation(eventInfoTextField.getText());
-        event.setEventCategory(eventChoiceBox.getValue());
-        event.setPlaceEvent(placeTextField.getText());
-        event.setEventStartDate(startDatePicker.getValue());
-        event.setEventEndDate(endDatePicker.getValue());
+        event.setName(newEventName);
+        event.setInfo(eventInfoTextField.getText());
+        event.setCategory(eventChoiceBox.getValue());
+        event.setPlace(placeTextField.getText());
+        event.setStartDate(startDatePicker.getValue());
+        event.setEndDate(endDatePicker.getValue());
 
         if (!oldEventName.equals(newEventName)) {
-            String oldImageFileName = event.getEventPicture();
+            String oldImageFileName = event.getPicture();
             String fileType = oldImageFileName.substring(oldImageFileName.lastIndexOf(".") + 1);
             File oldImageFile = new File("data/eventPicture/" + oldImageFileName);
             File newImageFile = new File("data/eventPicture/" + newEventName + "." + fileType);
             if (oldImageFile.renameTo(newImageFile)) {
-                event.setEventPicture(newEventName + "." + fileType);
+                event.setPicture(newEventName + "." + fileType);
             }
         }
 
@@ -192,7 +190,7 @@ public class EventManagementController {
             event.setStartJoinDate(startJoin);
         }
         if (closingJoin != null) {
-            event.setClosingJoinDate(closingJoin);
+            event.setCloseJoinDate(closingJoin);
         }
         eventListDatasource.writeData(eventList);
 

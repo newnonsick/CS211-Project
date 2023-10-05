@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 public class TeamOfEventListController {
@@ -47,7 +46,7 @@ public class TeamOfEventListController {
         eventUUID = componentData[0];
         currentUserName = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         showTeam();

@@ -10,8 +10,6 @@ import javafx.scene.image.ImageView;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -43,13 +41,13 @@ public class EventInformationController {
         eventUUID = componentData[0];
         currentUserName = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
-        eventInfoLabel.setText(event.getEventInformation());
-        placeLabel.setText(event.getPlaceEvent());
+        eventNameLabel.setText(event.getName());
+        eventInfoLabel.setText(event.getInfo());
+        placeLabel.setText(event.getPlace());
 
         String pattern = "MMMM dd, yyyy";
-        startDateLabel.setText("" + event.getEventStartDate().format(DateTimeFormatter.ofPattern(pattern)));
-        endDateLabel.setText("" + event.getEventEndDate().format(DateTimeFormatter.ofPattern(pattern)));
+        startDateLabel.setText("" + event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)));
+        endDateLabel.setText("" + event.getEndDate().format(DateTimeFormatter.ofPattern(pattern)));
 
         if (event.getMaxParticipants() == -1) {
             maxParticipantsLabel.setText("ไม่จำกัดจำนวนผู้เข้าร่วม");
@@ -62,13 +60,13 @@ public class EventInformationController {
         } else {
             startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
         }
-        if (event.getClosingJoinDate() == null) {
+        if (event.getCloseJoinDate() == null) {
             closingJoinDateLabel.setText("N/A");
         } else {
-            closingJoinDateLabel.setText("" + event.getClosingJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+            closingJoinDateLabel.setText("" + event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
         }
-        categoryLabel.setText(event.getEventCategory());
-        String filePath = "data/eventPicture/" + event.getEventPicture();
+        categoryLabel.setText(event.getCategory());
+        String filePath = "data/eventPicture/" + event.getPicture();
         File file = new File(filePath);
         eventImageView.setImage(new Image(file.toURI().toString()));
 
@@ -86,7 +84,7 @@ public class EventInformationController {
 
     @FXML
     private void joinEventButton() {
-        if (currentUserName.equals(event.getEventOwnerUsername())){
+        if (currentUserName.equals(event.getOwnerUsername())){
             errorLabel.setText("You can not join your own event.");
             return;
         }
