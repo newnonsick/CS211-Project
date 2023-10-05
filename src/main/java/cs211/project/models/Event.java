@@ -1,6 +1,7 @@
 package cs211.project.models;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Event implements Comparable {
@@ -12,6 +13,8 @@ public class Event implements Comparable {
     private String place;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closeJoinDate;
@@ -19,7 +22,9 @@ public class Event implements Comparable {
     private String eventUUID;
 
     public Event(String name, String picture, String info, String category, String place,
-                 LocalDate startDate, LocalDate endDate, String ownerUsername, int maxParticipants, LocalDate startJoinDate, LocalDate closeJoinDate, String eventUUID) {
+                 LocalDate startDate, LocalDate endDate, LocalTime startTime,
+                 LocalTime endTime, String ownerUsername, int maxParticipants,
+                 LocalDate startJoinDate, LocalDate closeJoinDate, String eventUUID) {
         this.name = name;
         this.picture = picture;
         this.info = info;
@@ -27,6 +32,8 @@ public class Event implements Comparable {
         this.place = place;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.ownerUsername = ownerUsername;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
@@ -34,9 +41,8 @@ public class Event implements Comparable {
         this.eventUUID = eventUUID;
     }
 
-
-
     public String getName() { return name; }
+
     public String getInfo() { return info; }
 
     public String getCategory() { return category; }
@@ -47,11 +53,16 @@ public class Event implements Comparable {
 
     public LocalDate getEndDate() { return endDate; }
 
+    public LocalTime getStartTime() { return startTime; }
+
+    public LocalTime getEndTime() { return endTime; }
+
     public int getMaxParticipants() { return maxParticipants; }
 
     public String getPicture() {
         return picture;
     }
+
     public String getEventUUID() { return eventUUID; }
 
     public void setMaxParticipant(int maxParticipants) {
@@ -103,7 +114,6 @@ public class Event implements Comparable {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-
 
     @Override
     public int compareTo(Object o) {

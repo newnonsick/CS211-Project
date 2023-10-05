@@ -45,9 +45,9 @@ public class EventInformationController {
         eventInfoLabel.setText(event.getInfo());
         placeLabel.setText(event.getPlace());
 
-        String pattern = "MMMM dd, yyyy";
-        startDateLabel.setText("" + event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)));
-        endDateLabel.setText("" + event.getEndDate().format(DateTimeFormatter.ofPattern(pattern)));
+        String pattern = "dd MMMM yyy";
+        startDateLabel.setText(event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getStartTime());
+        endDateLabel.setText(event.getEndDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getEndTime());
 
         if (event.getMaxParticipants() == -1) {
             maxParticipantsLabel.setText("ไม่จำกัดจำนวนผู้เข้าร่วม");

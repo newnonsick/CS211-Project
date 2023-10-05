@@ -43,19 +43,19 @@ public class MyEventsController {
 
     private void showTable(EventList eventList) {
         TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
-        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
-        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
+        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         TableColumn<Event, String> placeColumn = new TableColumn<>("Place");
-        placeColumn.setCellValueFactory(new PropertyValueFactory<>("placeEvent"));
+        placeColumn.setCellValueFactory(new PropertyValueFactory<>("place"));
 
         TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
-        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
-        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         TableColumn<Event, String> participantsColumn = new TableColumn<>("Max Participants");
         participantsColumn.setCellValueFactory(cellData -> {

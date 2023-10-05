@@ -1,5 +1,6 @@
 package cs211.project.models;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class EventList {
@@ -10,16 +11,19 @@ public class EventList {
     }
 
 
-    public void addEvent(String eventName, String eventPicture, String eventInformation, String eventCategory, String placeEvent, LocalDate eventStartDate,
-                         LocalDate eventEndDate, String eventOwnerUsername, int maxParticipants, LocalDate startJoinDAte, LocalDate closingJoinDate, String eventUUID) {
-        eventName = eventName.trim();
-        eventInformation = eventInformation.trim();
-        eventCategory = eventCategory.trim();
-        placeEvent = placeEvent.trim();
+    public void addEvent(String name, String picture, String info, String category,
+                         String place, LocalDate startDate, LocalDate endDate,
+                         LocalTime startTime, LocalTime endTime, String ownerUsername, int maxParticipants,
+                         LocalDate startJoinDAte, LocalDate closeJoinDate, String eventUUID) {
+        name = name.trim();
+        info = info.trim();
+        category = category.trim();
+        place = place.trim();
 
-        if (!eventName.equals("") && !eventInformation.equals("") && !eventCategory.equals("") && !placeEvent.equals("")) {
-            if (!findEvent(eventName)) {
-                Event newEvent = new Event(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDAte, closingJoinDate, eventUUID);
+        if (!name.equals("") && !info.equals("") && !category.equals("") && !place.equals("")) {
+            if (!findEvent(name)) {
+                Event newEvent = new Event(name, picture, info, category, place, startDate, endDate,
+                        startTime, endTime, ownerUsername, maxParticipants, startJoinDAte, closeJoinDate, eventUUID);
                 events.add(newEvent);
             }
         }
@@ -52,7 +56,6 @@ public class EventList {
         }
         return null;
     }
-
 
     public ArrayList<Event> getEvents(){
         return events;
