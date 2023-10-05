@@ -181,7 +181,7 @@ public class MainPageController {
     public void mouseIn(ImageView imageView) {
         Timeline timeline = new Timeline();
         imageView.setVisible(true);
-        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 50);
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 25);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
 

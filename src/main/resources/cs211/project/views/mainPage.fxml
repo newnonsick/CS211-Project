@@ -19,7 +19,7 @@
                   <Pane prefHeight="121.0" prefWidth="150.0" />
                   <Button fx:id="eventButton" mnemonicParsing="false" onAction="#goToEventList" prefHeight="100.0" prefWidth="150.0" styleClass="navigation-button" text="Event">
                      <graphic>
-                        <ImageView fx:id="eventNavBarImage" fitHeight="50.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                        <ImageView fx:id="eventNavBarImage" fitHeight="30.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
@@ -30,34 +30,46 @@
                      </graphic></Button>
                   <Button fx:id="createEventButton" mnemonicParsing="false" onAction="#goToCreateEvent" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="Create Event">
                      <graphic>
-                        <ImageView fx:id="createEventNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                        <ImageView fx:id="createEventNavBarImage" fitHeight="25.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@../images/createEventIcon.png" />
+                           </image>
                         </ImageView>
                      </graphic></Button>
                   <Button fx:id="myEventButton" mnemonicParsing="false" onAction="#goToMyEvents" prefHeight="100.0" prefWidth="205.0" styleClass="navigation-button" text="My Events">
                      <graphic>
-                        <ImageView fx:id="myEventsNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                        <ImageView fx:id="myEventsNavBarImage" fitHeight="25.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@../images/myEventsIcon.png" />
+                           </image>
                         </ImageView>
                      </graphic></Button>
                   <Button fx:id="myTeamButton" mnemonicParsing="false" onAction="#handleMyTeamButton" prefHeight="100.0" prefWidth="203.0" styleClass="navigation-button" text="My Teams">
                      <graphic>
-                        <ImageView fx:id="myTeamsNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                        <ImageView fx:id="myTeamsNavBarImage" fitHeight="25.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@../images/myTeamIcon.png" />
+                           </image>
                         </ImageView>
                      </graphic></Button>
                   <Button fx:id="userInfoButton" mnemonicParsing="false" onAction="#goToUserInformation" prefHeight="100.0" prefWidth="212.0" styleClass="navigation-button" text="User Info">
                      <graphic>
-                        <ImageView fx:id="userInfoNavBarImage" fitHeight="72.0" fitWidth="1.0" pickOnBounds="true" visible="false">
+                        <ImageView fx:id="userInfoNavBarImage" fitHeight="25.0" fitWidth="1.0" pickOnBounds="true" visible="false">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@../images/userIcon.png" />
+                           </image>
                         </ImageView>
                      </graphic></Button>
                   <Pane prefHeight="126.0" prefWidth="150.0" />
