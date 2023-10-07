@@ -6,6 +6,7 @@ import cs211.project.models.User;
 import cs211.project.services.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,7 +32,7 @@ import java.util.UUID;
 public class CreateEventController {
     private User currentUser;
     @FXML private TextField eventNameTextField;
-    @FXML private TextField eventInfoTextField;
+    @FXML private TextArea eventInfoTextArea;
     @FXML private TextField placeTextField;
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
@@ -60,6 +61,7 @@ public class CreateEventController {
         eventList = datasource.readData();
 
         eventChoiceBox.getItems().addAll(eventCategories);
+        eventInfoTextArea.setWrapText(true);
 
         eventImageErrorLabel.setText("");
         errorLabel.setText("");
@@ -69,7 +71,7 @@ public class CreateEventController {
     private void createEvent() throws IOException {
         String name = eventNameTextField.getText().trim();
         String image = "";
-        String info = eventInfoTextField.getText().trim();
+        String info = eventInfoTextArea.getText().trim();
         String category = eventChoiceBox.getSelectionModel().getSelectedItem();;
         String place = placeTextField.getText().trim();
 
@@ -93,6 +95,7 @@ public class CreateEventController {
                 errorLabel.setText("End time should be greater than start time.");
             else
                 errorLabel.setText("Please fill in the required information.");
+            errorLabel.setAlignment(Pos.CENTER_RIGHT);
 
             if (selectedImage==null)
                 eventImageErrorLabel.setText("*Please upload the event image.");

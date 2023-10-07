@@ -93,8 +93,10 @@ public class UserInformationController {
 
     private void showUser() {
         nameLabel.setText(currentUser.getName());
-        usernameLabel.setText(currentUser.getUsername());
+        usernameLabel.setText("@" + currentUser.getUsername());
         profileImageView.setImage(currentUser.getProfilePicture());
+        profileImageView.setFitHeight(140);
+        profileImageView.setFitWidth(140);
     }
 
     private void showActiveTable(EventList eventList) {

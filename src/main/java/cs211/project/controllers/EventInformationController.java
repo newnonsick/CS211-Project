@@ -44,15 +44,19 @@ public class EventInformationController {
         currentUserName = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
         eventNameLabel.setText(event.getName());
+
+        eventInfoLabel.setWrapText(true);
         eventInfoLabel.setText(event.getInfo());
+        eventInfoLabel.setPrefWidth(950);
+
         placeLabel.setText(event.getPlace());
 
-        String pattern = "dd MMMM yyy";
-        startDateLabel.setText(event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getStartTime());
-        endDateLabel.setText(event.getEndDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getEndTime());
+        String pattern = "dd MMMM yyyy";
+        startDateLabel.setText(event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getStartTime() + " to");
+        endDateLabel.setText(event.getEndDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getEndTime());
 
         if (event.getMaxParticipants() == -1) {
-            maxParticipantsLabel.setText("ไม่จำกัดจำนวนผู้เข้าร่วม");
+            maxParticipantsLabel.setText("No Maximum Participants");
         } else {
             maxParticipantsLabel.setText("" + event.getMaxParticipants());
         }
@@ -60,7 +64,7 @@ public class EventInformationController {
         if (event.getStartJoinDate() == null) {
             startJoinDateLabel.setText("N/A");
         } else {
-            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " to");
         }
         if (event.getCloseJoinDate() == null) {
             closingJoinDateLabel.setText("N/A");
@@ -68,9 +72,12 @@ public class EventInformationController {
             closingJoinDateLabel.setText("" + event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
         }
         categoryLabel.setText(event.getCategory());
+
         String filePath = "data/eventPicture/" + event.getPicture();
         File file = new File(filePath);
         eventImageView.setImage(new Image(file.toURI().toString()));
+        eventImageView.setFitWidth(398);
+        eventImageView.setFitHeight(230);
 
         errorLabel.setText("");
     }
