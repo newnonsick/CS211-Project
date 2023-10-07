@@ -88,16 +88,12 @@ public class EventParticipantManagementController {
             throw new RuntimeException(e);
         }
     }
-    @FXML
-    public void goToEditParticipant() {
-    }
 
     @FXML
     public void handleStartTimePickerButton() {
         selectedStartTime = showCustomTimePickerDialog();
         if (selectedStartTime != null) {
-            System.out.println("Select Start Time: " + selectedStartTime);
-            startTimePicker.setText(selectedStartTime.toString());
+           startTimePicker.setText(selectedStartTime.toString());
         }
     }
 
@@ -105,7 +101,6 @@ public class EventParticipantManagementController {
     public void handleEndTimePickerButton() {
         selectedEndTime = showCustomTimePickerDialog();
         if (selectedEndTime != null) {
-            System.out.println("Select End Time: " + selectedEndTime);
             endTimePicker.setText(selectedEndTime.toString());
         }
     }
@@ -183,7 +178,7 @@ public class EventParticipantManagementController {
     }
 
     public void showParticipants(List<String[]> participantList){
-        TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("รายชื่อผู้เข้าร่วม");
+        TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("Participant List");
         partiUsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
         ObservableList<String[]> filteredParticipants = FXCollections.observableArrayList();
         for (String[] participantData : participantList) {
@@ -230,20 +225,20 @@ public class EventParticipantManagementController {
     }
     public void showActivity(ActivityList activityList){
 
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("ชื่อกิจกรรม");
+        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Activity");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("รายละเอียดกิจกรรม");
+        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("Details");
         activityInfoColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
-        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("เวลาเริ่ม");
+        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("Start Time");
         activityStartColumn.setCellValueFactory(new PropertyValueFactory<>("activityStartTime"));
 
-        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("เวลาสิ้นสุด");
+        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("End Time");
         activityEndColumn.setCellValueFactory(new PropertyValueFactory<>("activityEndTime"));
 
-        TableColumn<Activity, String> activityDateColumn =  new TableColumn<>("วันที่");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy"); // Replace 'your-pattern-here' with the desired pattern
+        TableColumn<Activity, String> activityDateColumn =  new TableColumn<>("Date");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM  yyyy");
         activityDateColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getActivityDate().format(formatter))
         );
