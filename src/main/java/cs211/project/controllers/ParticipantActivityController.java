@@ -32,6 +32,7 @@ public class ParticipantActivityController {
     EventList eventList;
     private String eventUUID;
     private String currentUserName;
+    private String sourcePage;
     private ParticipantActivityListFileDatasource datasource;
 
 
@@ -40,6 +41,7 @@ public class ParticipantActivityController {
         String[] componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
         currentUserName = componentData[1];
+        sourcePage = componentData[2];
         Datasource<EventList> eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         datasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
@@ -105,7 +107,11 @@ public class ParticipantActivityController {
 
     public void backToEventInformation() {
         try {
-            FXRouterPane.goTo("event-information");
+            if ("userInformation".equals(sourcePage)) {
+                FXRouterPane.goTo("user-information");
+            } else if ("eventInformation".equals(sourcePage)) {
+                FXRouterPane.goTo("event-information");
+            }
         }
         catch (IOException e) {
             throw new RuntimeException(e);

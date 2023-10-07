@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
-    @FXML Label avtivityNameLabel;
+    @FXML Label activityNameLabel;
     @FXML Label activityDescriptionLabel;
     @FXML Label teamNameLabel;
     @FXML TableView activityTableView;
@@ -69,7 +69,7 @@ public class TeamCommunicationController {
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
-        avtivityNameLabel.setText("");
+        activityNameLabel.setText("");
         activityDescriptionLabel.setText("");
         showActivity(activityList);
         newShowChat();
@@ -79,15 +79,15 @@ public class TeamCommunicationController {
             public void changed(ObservableValue observable, Activity oldValue, Activity newValue) {
                 if (newValue != null) {
                     if (newValue.getActivityStatus().equals("Ended")){
-                        avtivityNameLabel.setText("");
+                        activityNameLabel.setText("");
                         activityDescriptionLabel.setText("");
                         return;
                     }
-                    avtivityNameLabel.setText(newValue.getActivityName());
+                    activityNameLabel.setText(newValue.getActivityName());
                     activityDescriptionLabel.setText(newValue.getActivityInformation());
                 }
                 else{
-                    avtivityNameLabel.setText("");
+                    activityNameLabel.setText("");
                     activityDescriptionLabel.setText("");
                 }
             }

@@ -37,7 +37,6 @@
          </font>
       </Label>
       <TextField fx:id="eventNameTextField" layoutX="350.0" layoutY="103.0" prefHeight="25.0" prefWidth="384.0" />
-      <TextField fx:id="eventInfoTextField" layoutX="350.0" layoutY="143.0" prefHeight="75.0" prefWidth="384.0" />
       <Label layoutX="237.0" layoutY="570.0" text="สถานที่จัดอีเวนต์">
          <font>
             <Font size="20.0" />
@@ -80,5 +79,6 @@
       <ChoiceBox fx:id="eventChoiceBox" layoutX="350.0" layoutY="238.0" prefWidth="150.0" />
       <Button fx:id="startTimePicker" layoutX="636.0" layoutY="622.0" mnemonicParsing="false" onAction="#handleStartTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
       <Button fx:id="endTimePicker" layoutX="636.0" layoutY="673.0" mnemonicParsing="false" onAction="#handleEndTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
+      <TextField fx:id="eventInfoTextField" layoutX="350.0" layoutY="143.0" prefHeight="78.0" prefWidth="384.0" />
    </children>
 </AnchorPane>
