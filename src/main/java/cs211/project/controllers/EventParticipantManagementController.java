@@ -177,13 +177,8 @@ public class EventParticipantManagementController {
         removeActivityButton.setDisable(true);
     }
     private void removeParticipant(String[] participantData) {
-        // Remove from the TableView
         eventParticipantTableView.getItems().remove(participantData);
-
-        // Remove from the participantList
         participantList.remove(participantData);
-
-        // Update the CSV file
         participantDataSource.writeData(participantList);
     }
 
@@ -196,7 +191,6 @@ public class EventParticipantManagementController {
                 filteredParticipants.add(participantData);
             }
         }
-// ... (other parts of your code)
 
         TableColumn<String[], String> removeButtonColumn = new TableColumn<>("Remove");
         removeButtonColumn.setCellFactory(param -> new TableCell<>() {

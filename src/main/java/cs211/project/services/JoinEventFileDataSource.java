@@ -126,4 +126,16 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
         }
     }
 
+    public int countParticipantsForEvent(String eventUUID) {
+        List<String[]> data = readData();
+        int count = 0;
+        for (String[] entry : data) {
+            if (entry[1].equals(eventUUID)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 }

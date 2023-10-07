@@ -103,6 +103,13 @@ public class EventInformationController {
             return;
         }
 
+        JoinEventFileDataSource joinDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
+        int currentParticipants = joinDataSource.countParticipantsForEvent(event.getEventUUID());
+        if (event.getMaxParticipants() != -1 && currentParticipants >= event.getMaxParticipants()) {
+            errorLabel.setText("The event has reached its maximum\nnumber of participants. You can not join.");
+            return;
+        }
+
         String filePath = "data/joinEventData.csv";
         File file = new File(filePath);
         FileInputStream fileInputStream = null;
@@ -173,6 +180,7 @@ public class EventInformationController {
                 throw new RuntimeException(e);
             }
         }
+        goToParticipantActivity();
     }
 
     @FXML
