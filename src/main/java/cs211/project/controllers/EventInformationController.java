@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -88,6 +90,18 @@ public class EventInformationController {
             errorLabel.setText("You can not join your own event.");
             return;
         }
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        LocalDate currentDate = LocalDate.now(thaiTimeZone);
+        if (event.getEndDate().isBefore(currentDate)) {
+            errorLabel.setText("The event has ended.\nYou can not join.");
+            return;
+        }
+
+        if ((event.getStartJoinDate() != null && currentDate.isBefore(event.getStartJoinDate())) ||
+                (event.getCloseJoinDate() != null && currentDate.isAfter(event.getCloseJoinDate()))) {
+            errorLabel.setText("You can not join this event\noutside the specified joining period.");
+            return;
+        }
 
         String filePath = "data/joinEventData.csv";
         File file = new File(filePath);
@@ -164,7 +178,7 @@ public class EventInformationController {
     @FXML
     private void goToParticipantActivity() {
         try {
-            FXRouterPane.goTo("participant-activity", new String[] { event.getEventUUID(), currentUserName});
+            FXRouterPane.goTo("participant-activity", new String[] { event.getEventUUID(), currentUserName, "eventInformation"});
         }
         catch (IOException e) {
             throw new RuntimeException(e);

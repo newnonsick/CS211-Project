@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -16,6 +17,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Optional;
 
 public class EventManagementController {
     @FXML
@@ -40,6 +43,12 @@ public class EventManagementController {
     private ImageView eventImageView;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Button startTimeEditButton;
+    @FXML
+    private Button endTimeEditButton;
+    private LocalTime editedStartTime;
+    private LocalTime editedEndTime;
 
     private Datasource<EventList> eventListDatasource;
     private JoinEventFileDataSource joinEventDatasource;
@@ -57,7 +66,8 @@ public class EventManagementController {
     private String[] componentData;
     private String currentUsername;
     private String oldEventName;
-
+    private LocalTime oldStartTime;
+    private LocalTime oldEndTime;
     private ActivityList activityList;
 
     @FXML
@@ -87,8 +97,19 @@ public class EventManagementController {
             maxParticipantTextField.setText(String.valueOf(event.getMaxParticipants()));
         } else {
             maxParticipantTextField.setText("");
-        }startJoinDatePicker.setValue(event.getStartJoinDate());
+        }
+        startJoinDatePicker.setValue(event.getStartJoinDate());
         closingJoinDatePicker.setValue(event.getCloseJoinDate());
+        editedStartTime = event.getStartTime();
+        editedEndTime = event.getEndTime();
+        oldStartTime = event.getStartTime();
+        oldEndTime = event.getEndTime();
+        if (oldStartTime != null) {
+            startTimeEditButton.setText(oldStartTime.toString());
+        }
+        if (oldEndTime != null) {
+            endTimeEditButton.setText(oldEndTime.toString());
+        }
         oldEventName = event.getName();
         Image image = new Image("file:data/eventPicture/" + event.getPicture());
         eventImageView.setImage(image);
@@ -129,7 +150,23 @@ public class EventManagementController {
             eventListDatasource.writeData(eventList);
         }
     }
+    @FXML
+    public void handleStartTimeEditButton() {
+        editedStartTime = showCustomTimePickerDialog();
+        if (editedStartTime != null) {
+            System.out.println("Edited Start Time: " + editedStartTime);
+            startTimeEditButton.setText(editedStartTime.toString());
+        }
+    }
 
+    @FXML
+    public void handleEndTimeEditButton() {
+        editedEndTime = showCustomTimePickerDialog();
+        if (editedEndTime != null) {
+            System.out.println("Edited End Time: " + editedEndTime);
+            endTimeEditButton.setText(editedEndTime.toString());
+        }
+    }
 
     @FXML
     public void saveEventEditButton() {
@@ -150,6 +187,12 @@ public class EventManagementController {
         event.setPlace(placeTextField.getText());
         event.setStartDate(startDatePicker.getValue());
         event.setEndDate(endDatePicker.getValue());
+        if (editedStartTime != null) {
+            event.setStartTime(editedStartTime);
+        }
+        if (editedEndTime != null) {
+            event.setEndTime(editedEndTime);
+        }
 
         if (!oldEventName.equals(newEventName)) {
             String oldImageFileName = event.getPicture();
@@ -167,12 +210,14 @@ public class EventManagementController {
                 eventChoiceBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
                 endDatePicker.getValue() == null ||
-                eventImageView.getImage() == null) {
-
+                editedStartTime == null ||
+                editedEndTime == null
+        ) {
             errorLabel.setText("Please fill in all required fields.");
             errorLabel.setVisible(true);
             return;
         }
+
 
         String maxParticipantsText = maxParticipantTextField.getText();
         if (maxParticipantsText.isEmpty()) {
@@ -185,7 +230,6 @@ public class EventManagementController {
             event.setMaxParticipant(Integer.parseInt(maxParticipantsText));
         }
 
-
         if (startJoin != null) {
             event.setStartJoinDate(startJoin);
         }
@@ -196,8 +240,57 @@ public class EventManagementController {
 
         backToYourCreatedEvents();
     }
+    @FXML
+    public void handleStartTimeButton() {
+        LocalTime newStartTime = showCustomTimePickerDialog();
+        if (newStartTime != null) {
+            editedStartTime = newStartTime;
+            startTimeEditButton.setText(editedStartTime.toString());
+        }
+    }
 
+    @FXML
+    public void handleEndTimeButton() {
+        LocalTime newEndTime = showCustomTimePickerDialog();
+        if (newEndTime != null) {
+            editedEndTime = newEndTime;
+            endTimeEditButton.setText(editedEndTime.toString());
+        }
+    }
 
+    private LocalTime showCustomTimePickerDialog() {
+        Dialog<LocalTime> dialog = new Dialog<>();
+        dialog.setTitle("Select Time");
+
+        ComboBox<Integer> hoursBox = new ComboBox<>();
+        ComboBox<Integer> minutesBox = new ComboBox<>();
+        for (int i = 0; i < 24; i++) {
+            hoursBox.getItems().add(i);
+        }
+        for (int i = 0; i < 60; i+=5) {
+            minutesBox.getItems().add(i);
+        }
+
+        hoursBox.getSelectionModel().select(LocalTime.now().getHour());
+        minutesBox.getSelectionModel().select(LocalTime.now().getMinute());
+
+        HBox timePickerLayout = new HBox(5);
+        timePickerLayout.getChildren().addAll(hoursBox, new Label(":"), minutesBox);
+        dialog.getDialogPane().setContent(timePickerLayout);
+
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButton, ButtonType.CANCEL);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == okButton) {
+                return LocalTime.of(hoursBox.getValue(), minutesBox.getValue());
+            }
+            return null;
+        });
+
+        Optional<LocalTime> result = dialog.showAndWait();
+        return result.orElse(null);
+    }
     @FXML
         public void eventPartiManagementButton() {
             try {

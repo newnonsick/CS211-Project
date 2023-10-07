@@ -5,6 +5,8 @@ import cs211.project.models.Event;
 import cs211.project.models.EventList;
 import cs211.project.models.UserList;
 import cs211.project.services.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -59,6 +61,18 @@ public class UserInformationController {
         showUser();
         showActiveTable(eventList);
         showHistoryTable(eventList);
+        activeEventTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
+            @Override
+            public void changed(ObservableValue observable, Event oldValue, Event newValue) {
+                if (newValue != null) {
+                    try {
+                        FXRouterPane.goTo("participant-activity", new String[] {newValue.getEventUUID(), currentUser.getUsername(), "userInformation"});
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void checkFileIsExisted(String fileName) {
@@ -85,16 +99,16 @@ public class UserInformationController {
 
     private void showActiveTable(EventList eventList) {
         TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
-        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
-        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
+        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
-        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
-        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         eventNameColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.36));
         eventCategoryColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.30));
@@ -124,16 +138,16 @@ public class UserInformationController {
 
     private void showHistoryTable(EventList eventList) {
         TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
-        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
-        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
+        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
-        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
-        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         eventNameColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.36));
         eventCategoryColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.30));

@@ -78,7 +78,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="avtivityNameLabel" layoutX="152.0" layoutY="560.0" text="activityNameLabel">
+      <Label fx:id="activityNameLabel" layoutX="152.0" layoutY="560.0" text="activityNameLabel">
          <font>
             <Font size="18.0" />
          </font>

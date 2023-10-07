@@ -26,7 +26,6 @@ public class EventParticipantManagementController {
 
     @FXML private TableView eventParticipantTableView;
     @FXML private TableView activityParticipantTableView;
-    @FXML private Button goToEditParticipant;
     @FXML private Button removeActivityButton;
     @FXML private Button startTimePicker;
     @FXML private Button endTimePicker;
@@ -197,6 +196,8 @@ public class EventParticipantManagementController {
                 filteredParticipants.add(participantData);
             }
         }
+// ... (other parts of your code)
+
         TableColumn<String[], String> removeButtonColumn = new TableColumn<>("Remove");
         removeButtonColumn.setCellFactory(param -> new TableCell<>() {
             private final Button removeButton = new Button("Remove");
@@ -209,7 +210,15 @@ public class EventParticipantManagementController {
                 } else {
                     removeButton.setOnAction(event -> {
                         String[] participantData = getTableView().getItems().get(getIndex());
-                        removeParticipant(participantData);
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Remove Participant");
+                        alert.setHeaderText("Are you sure you want to remove this participant?");
+                        alert.setContentText("You won't be able to go back and change it.");
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            removeParticipant(participantData);
+                        }
                     });
                     setGraphic(removeButton);
                 }

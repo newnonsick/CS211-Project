@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 
 public class TeamManagementController {
-    @FXML TextField avtivityNameTextField;
+    @FXML TextField activityNameTextField;
     @FXML TextArea activityDescriptionTextArea;
     @FXML ScrollPane participantListScrollPane;
     @FXML GridPane participantListGridPane;
@@ -83,13 +83,13 @@ public class TeamManagementController {
 
     @FXML
     public void handleAddActivityButton(){
-        String activityName = avtivityNameTextField.getText();
+        String activityName = activityNameTextField.getText();
         String activityDescription = activityDescriptionTextArea.getText();
         if (!activityName.isEmpty() && !activityDescription.isEmpty()){
             activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress");
             activityListDatasource.writeData(activityList);
             showActivity(activityList);
-            avtivityNameTextField.clear();
+            activityNameTextField.clear();
             activityDescriptionTextArea.clear();
         }
     }

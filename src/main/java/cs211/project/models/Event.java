@@ -115,6 +115,14 @@ public class Event implements Comparable {
         this.endDate = endDate;
     }
 
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
     @Override
     public int compareTo(Object o) {
         Event event = (Event) o;
