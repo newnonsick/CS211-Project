@@ -19,6 +19,8 @@ public class MyEventsController {
     private EventList eventList;
     private Datasource<EventList> datasource;
     private User currentUser;
+    private JoinEventFileDataSource joinEventDataSource;
+
 
     @FXML
     public void initialize() {
@@ -26,6 +28,8 @@ public class MyEventsController {
         datasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = datasource.readData();
         showTable(eventList);
+        joinEventDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
+
 
         myEventsTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
             @Override
@@ -56,6 +60,11 @@ public class MyEventsController {
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
         eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        TableColumn<Event, String> eventStartTimeColumn = new TableColumn<>("Start Time");
+        eventStartTimeColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+
+        TableColumn<Event, String> eventEndTimeColumn = new TableColumn<>("End Time");
+        eventEndTimeColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
 
         TableColumn<Event, String> participantsColumn = new TableColumn<>("Max Participants");
         participantsColumn.setCellValueFactory(cellData -> {
@@ -67,13 +76,24 @@ public class MyEventsController {
             }
         });
 
+        TableColumn<Event, String> numberOfParticipantsColumn = new TableColumn<>("Participants");
+        numberOfParticipantsColumn.setCellValueFactory(cellData -> {
+            int currentParticipants = joinEventDataSource.countParticipantsForEvent(cellData.getValue().getEventUUID());
+            return new SimpleStringProperty(String.valueOf(currentParticipants));
+        });
+
+
+
         myEventsTableView.getColumns().clear();
         myEventsTableView.getColumns().add(eventNameColumn);
         myEventsTableView.getColumns().add(eventCategoryColumn);
         myEventsTableView.getColumns().add(placeColumn);
         myEventsTableView.getColumns().add(eventStartDateColumn);
         myEventsTableView.getColumns().add(eventEndDateColumn);
+        myEventsTableView.getColumns().add(eventStartTimeColumn);
+        myEventsTableView.getColumns().add(eventEndTimeColumn);
         myEventsTableView.getColumns().add(participantsColumn);
+        myEventsTableView.getColumns().add(numberOfParticipantsColumn);
 
         myEventsTableView.getItems().clear();
 

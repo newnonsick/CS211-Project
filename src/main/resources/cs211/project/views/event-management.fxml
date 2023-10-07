@@ -16,72 +16,72 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="126.0" layoutY="184.0" text="ชื่อ">
+      <Label layoutX="126.0" layoutY="184.0" text="Event name">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="125.0" layoutY="216.0" text="รายละเอียด">
+      <Label layoutX="125.0" layoutY="216.0" text="Details">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="125.0" layoutY="311.0" text="หมวดหมู่">
+      <Label layoutX="125.0" layoutY="311.0" text="Category">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="125.0" layoutY="344.0" text="อัปโหลดรูป">
+      <Label layoutX="123.0" layoutY="344.0" text="Upload photo">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="123.0" layoutY="379.0" text="สถานที่จัดอีเวนต์">
+      <Label layoutX="123.0" layoutY="379.0" text="Event location">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="123.0" layoutY="421.0" text="กำหนดการเริ่มอีเวนต์">
+      <Label layoutX="123.0" layoutY="421.0" text="Event start date">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="122.0" layoutY="470.0" text="กำหนดการสิ้นสุดอีเวนต์">
+      <Label layoutX="122.0" layoutY="470.0" text="Event end date">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="120.0" layoutY="513.0" text="การเปิดรับผู้เข้าร่วมอีเวนต์">
+      <Label layoutX="120.0" layoutY="513.0" text="Opening of Participants">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="363.0" layoutY="514.0" text="จำนวนผู้เข้าร่วม">
+      <Label layoutX="363.0" layoutY="514.0" text="Max participants">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label layoutX="363.0" layoutY="547.0" text="ช่วงเวลาเปิดรับสมัคร">
+      <Label layoutX="363.0" layoutY="547.0" text="Application opening day">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label layoutX="363.0" layoutY="581.0" text="ช่วงเวลาปิดรับสมัคร">
+      <Label layoutX="363.0" layoutY="581.0" text="Application closing day">
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button layoutX="866.0" layoutY="652.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="จัดการทีม">
+      <Button layoutX="868.0" layoutY="656.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="Team Management">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="699.0" layoutY="652.0" mnemonicParsing="false" onAction="#eventPartiManagementButton" text="จัดการผู้เข้าร่วม">
+      <Button layoutX="617.0" layoutY="656.0" mnemonicParsing="false" onAction="#eventPartiManagementButton" text="Participants Management">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <TextField fx:id="maxParticipantTextField" layoutX="567.0" layoutY="514.0" promptText="จำนวนผู้เข้าร่วมสูงสุด" />
+      <TextField fx:id="maxParticipantTextField" layoutX="567.0" layoutY="514.0" promptText="Max participants" />
       <DatePicker fx:id="startDatePicker" layoutX="344.0" layoutY="424.0" />
       <DatePicker fx:id="endDatePicker" layoutX="344.0" layoutY="471.0" />
-      <DatePicker fx:id="startJoinDatePicker" layoutX="566.0" layoutY="547.0" prefHeight="26.0" prefWidth="150.0" promptText="วันที่เปิดรับสมัคร" />
-      <DatePicker fx:id="closingJoinDatePicker" layoutX="566.0" layoutY="582.0" prefHeight="20.0" prefWidth="150.0" promptText="วันที่ปิดรับสมัคร" />
+      <DatePicker fx:id="startJoinDatePicker" layoutX="566.0" layoutY="547.0" prefHeight="26.0" prefWidth="150.0" promptText="Application opening day" />
+      <DatePicker fx:id="closingJoinDatePicker" layoutX="566.0" layoutY="582.0" prefHeight="20.0" prefWidth="150.0" promptText="Application closing day" />
       <Button layoutX="33.0" layoutY="30.0" mnemonicParsing="false" onAction="#backToYourCreatedEvents" text="Back">
          <font>
             <Font size="18.0" />

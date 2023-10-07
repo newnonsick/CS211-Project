@@ -150,23 +150,6 @@ public class EventManagementController {
             eventListDatasource.writeData(eventList);
         }
     }
-    @FXML
-    public void handleStartTimeEditButton() {
-        editedStartTime = showCustomTimePickerDialog();
-        if (editedStartTime != null) {
-            System.out.println("Edited Start Time: " + editedStartTime);
-            startTimeEditButton.setText(editedStartTime.toString());
-        }
-    }
-
-    @FXML
-    public void handleEndTimeEditButton() {
-        editedEndTime = showCustomTimePickerDialog();
-        if (editedEndTime != null) {
-            System.out.println("Edited End Time: " + editedEndTime);
-            endTimeEditButton.setText(editedEndTime.toString());
-        }
-    }
 
     @FXML
     public void saveEventEditButton() {
