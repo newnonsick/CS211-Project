@@ -14,7 +14,8 @@ public class EventList {
     public void addEvent(String name, String picture, String info, String category,
                          String place, LocalDate startDate, LocalDate endDate,
                          LocalTime startTime, LocalTime endTime, String ownerUsername, int maxParticipants,
-                         LocalDate startJoinDAte, LocalDate closeJoinDate, String eventUUID) {
+                         LocalDate startJoinDate, LocalDate closeJoinDate,
+                         LocalTime startJoinTime, LocalTime closeJoinTime, String eventUUID) {
         name = name.trim();
         info = info.trim();
         category = category.trim();
@@ -23,7 +24,8 @@ public class EventList {
         if (!name.equals("") && !info.equals("") && !category.equals("") && !place.equals("")) {
             if (!findEvent(name)) {
                 Event newEvent = new Event(name, picture, info, category, place, startDate, endDate,
-                        startTime, endTime, ownerUsername, maxParticipants, startJoinDAte, closeJoinDate, eventUUID);
+                        startTime, endTime, ownerUsername, maxParticipants, startJoinDate,
+                        closeJoinDate, startJoinTime, closeJoinTime, eventUUID);
                 events.add(newEvent);
             }
         }

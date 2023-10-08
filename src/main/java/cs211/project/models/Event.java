@@ -18,13 +18,16 @@ public class Event implements Comparable {
     private int maxParticipants;
     private LocalDate startJoinDate;
     private LocalDate closeJoinDate;
+    private LocalTime startJoinTime;
+    private LocalTime closeJoinTime;
     private ArrayList<Activity> eventActivity;
     private String eventUUID;
 
     public Event(String name, String picture, String info, String category, String place,
                  LocalDate startDate, LocalDate endDate, LocalTime startTime,
                  LocalTime endTime, String ownerUsername, int maxParticipants,
-                 LocalDate startJoinDate, LocalDate closeJoinDate, String eventUUID) {
+                 LocalDate startJoinDate, LocalDate closeJoinDate,
+                 LocalTime startJoinTime, LocalTime closeJoinTime, String eventUUID) {
         this.name = name;
         this.picture = picture;
         this.info = info;
@@ -38,6 +41,8 @@ public class Event implements Comparable {
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
         this.closeJoinDate = closeJoinDate;
+        this.startJoinTime = startJoinTime;
+        this.closeJoinTime = closeJoinTime;
         this.eventUUID = eventUUID;
     }
 
@@ -121,6 +126,22 @@ public class Event implements Comparable {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public LocalTime getStartJoinTime() {
+        return startJoinTime;
+    }
+
+    public void setStartJoinTime(LocalTime startJoinTime) {
+        this.startJoinTime = startJoinTime;
+    }
+
+    public LocalTime getCloseJoinTime() {
+        return closeJoinTime;
+    }
+
+    public void setCloseJoinTime(LocalTime closeJoinTime) {
+        this.closeJoinTime = closeJoinTime;
     }
 
     @Override

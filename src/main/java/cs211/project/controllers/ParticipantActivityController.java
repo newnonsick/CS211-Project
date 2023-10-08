@@ -59,8 +59,9 @@ public class ParticipantActivityController {
         String strEndDate = event.getEndDate().format(formatter);
         eventDateLabel.setText(strStartDate + " - " + strEndDate);
         eventTimeLabel.setText(event.getStartTime() + " - " + event.getEndTime());
+        placeLabel.setWrapText(true);
         placeLabel.setText(event.getPlace());
-
+        placeLabel.setPrefWidth(400);
         eventInfoLabel.setWrapText(true);
         eventInfoLabel.setText(event.getInfo());
         eventInfoLabel.setPrefWidth(400);

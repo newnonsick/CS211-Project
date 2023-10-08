@@ -47,8 +47,15 @@ public class EventManagementController {
     private Button startTimeEditButton;
     @FXML
     private Button endTimeEditButton;
+    @FXML private Button startJoinTimeButton;
+    @FXML private Button closeJoinTimeButton;
     private LocalTime editedStartTime;
     private LocalTime editedEndTime;
+    private LocalTime editedStartJoinTime;
+    private LocalTime editedCloseJoinTime;
+    private LocalTime oldStartJoinTime;
+    private LocalTime oldCloseJoinTime;
+
 
     private Datasource<EventList> eventListDatasource;
     private JoinEventFileDataSource joinEventDatasource;
@@ -110,6 +117,16 @@ public class EventManagementController {
         if (oldEndTime != null) {
             endTimeEditButton.setText(oldEndTime.toString());
         }
+        editedStartJoinTime = event.getStartJoinTime();
+        editedCloseJoinTime = event.getCloseJoinTime();
+        oldStartJoinTime = event.getStartJoinTime();
+        oldCloseJoinTime = event.getCloseJoinTime();
+        if (oldStartJoinTime != null) {
+            startJoinTimeButton.setText(oldStartJoinTime.toString());
+        }
+        if (oldCloseJoinTime != null) {
+            closeJoinTimeButton.setText(oldCloseJoinTime.toString());
+        }
         oldEventName = event.getName();
         Image image = new Image("file:data/eventPicture/" + event.getPicture());
         eventImageView.setImage(image);
@@ -163,6 +180,17 @@ public class EventManagementController {
         } else {
             errorLabel.setVisible(false);
         }
+        if ((startJoin == null && closingJoin != null) || (startJoin != null && closingJoin == null)) {
+            errorLabel.setText("You must fill in both application\nopening day and application closing day.");
+            errorLabel.setVisible(true);
+            return;
+        }
+        if ((editedStartJoinTime != null && startJoin == null) || (editedCloseJoinTime != null && closingJoin == null)) {
+            errorLabel.setText("application opening day and application closing day\nmust be provided to set times.");
+            errorLabel.setVisible(true);
+            return;
+        }
+
         String newEventName = eventNameTextField.getText();
         event.setName(newEventName);
         event.setInfo(eventInfoTextField.getText());
@@ -203,14 +231,22 @@ public class EventManagementController {
 
 
         String maxParticipantsText = maxParticipantTextField.getText();
+        int currentParticipants = joinEventDatasource.countParticipantsForEvent(event.getEventUUID());
+
         if (maxParticipantsText.isEmpty()) {
             event.setMaxParticipant(-1);
-        } else if (!maxParticipantsText.matches("\\d+") || Integer.parseInt(maxParticipantsText) < 0) {
+        } else if (!maxParticipantsText.matches("\\d+")) {
             errorLabel.setText("Max participants must be a non-negative integer.");
             errorLabel.setVisible(true);
             return;
         } else {
-            event.setMaxParticipant(Integer.parseInt(maxParticipantsText));
+            int newMaxParticipants = Integer.parseInt(maxParticipantsText);
+            if (newMaxParticipants < currentParticipants) {
+                errorLabel.setText("You cannot set max participants less than\nthe number of participants that have already joined the event.");
+                errorLabel.setVisible(true);
+                return;
+            }
+            event.setMaxParticipant(newMaxParticipants);
         }
 
         if (startJoin != null) {
@@ -218,6 +254,12 @@ public class EventManagementController {
         }
         if (closingJoin != null) {
             event.setCloseJoinDate(closingJoin);
+        }
+        if (editedStartJoinTime != null) {
+            event.setStartJoinTime(editedStartJoinTime);
+        }
+        if (editedCloseJoinTime != null) {
+            event.setCloseJoinTime(editedCloseJoinTime);
         }
         eventListDatasource.writeData(eventList);
 
@@ -240,6 +282,24 @@ public class EventManagementController {
             endTimeEditButton.setText(editedEndTime.toString());
         }
     }
+    @FXML
+    public void handleStartJoinTimeButton() {
+        LocalTime newStartJoinTime = showCustomTimePickerDialog();
+        if (newStartJoinTime != null) {
+            editedStartJoinTime = newStartJoinTime;
+            startJoinTimeButton.setText(editedStartJoinTime.toString());
+        }
+    }
+
+    @FXML
+    public void handleCloseJoinTimeButton() {
+        LocalTime newCloseJoinTime = showCustomTimePickerDialog();
+        if (newCloseJoinTime != null) {
+            editedCloseJoinTime = newCloseJoinTime;
+            closeJoinTimeButton.setText(editedCloseJoinTime.toString());
+        }
+    }
+
 
     private LocalTime showCustomTimePickerDialog() {
         Dialog<LocalTime> dialog = new Dialog<>();

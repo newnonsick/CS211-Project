@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -60,12 +61,12 @@ public class EventInformationController {
         if (event.getStartJoinDate() == null) {
             startJoinDateLabel.setText("N/A");
         } else {
-            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getStartJoinTime());
         }
         if (event.getCloseJoinDate() == null) {
             closingJoinDateLabel.setText("N/A");
         } else {
-            closingJoinDateLabel.setText("" + event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+            closingJoinDateLabel.setText("" + event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getCloseJoinTime());
         }
         categoryLabel.setText(event.getCategory());
         String filePath = "data/eventPicture/" + event.getPicture();
@@ -92,13 +93,20 @@ public class EventInformationController {
         }
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         LocalDate currentDate = LocalDate.now(thaiTimeZone);
-        if (event.getEndDate().isBefore(currentDate)) {
+         if (event.getEndDate().isBefore(currentDate)) {
             errorLabel.setText("The event has ended.\nYou can not join.");
             return;
         }
 
-        if ((event.getStartJoinDate() != null && currentDate.isBefore(event.getStartJoinDate())) ||
-                (event.getCloseJoinDate() != null && currentDate.isAfter(event.getCloseJoinDate()))) {
+        LocalDateTime currentDateTime = LocalDateTime.now(thaiTimeZone);
+        LocalDateTime startJoinDateTime = (event.getStartJoinDate() != null && event.getStartJoinTime() != null)
+                ? LocalDateTime.of(event.getStartJoinDate(), event.getStartJoinTime())
+                : LocalDateTime.MIN;
+        LocalDateTime closeJoinDateTime = (event.getCloseJoinDate() != null && event.getCloseJoinTime() != null)
+                ? LocalDateTime.of(event.getCloseJoinDate(), event.getCloseJoinTime())
+                : LocalDateTime.MAX;
+
+        if (currentDateTime.isBefore(startJoinDateTime) || currentDateTime.isAfter(closeJoinDateTime)) {
             errorLabel.setText("You can not join this event\noutside the specified joining period.");
             return;
         }
