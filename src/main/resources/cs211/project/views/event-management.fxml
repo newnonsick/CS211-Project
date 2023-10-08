@@ -68,12 +68,12 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Button layoutX="868.0" layoutY="656.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="Team Management">
+      <Button layoutX="867.0" layoutY="692.0" mnemonicParsing="false" onAction="#handleManageTeamButton" text="Team Management">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="617.0" layoutY="656.0" mnemonicParsing="false" onAction="#eventPartiManagementButton" text="Participants Management">
+      <Button layoutX="616.0" layoutY="692.0" mnemonicParsing="false" onAction="#eventPartiManagementButton" text="Participants Management">
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -90,15 +90,20 @@
       <TextField fx:id="placeTextField" editable="true" layoutX="344.0" layoutY="379.0" prefHeight="26.0" prefWidth="199.0" />
       <ChoiceBox fx:id="eventChoiceBox" layoutX="344.0" layoutY="312.0" prefHeight="26.0" prefWidth="199.0" />
       <Button fx:id="editImageButton" layoutX="344.0" layoutY="345.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload" />
-      <Button fx:id="saveEventEditButton" layoutX="388.0" layoutY="656.0" mnemonicParsing="false" onAction="#saveEventEditButton" text="Save">
+      <Button fx:id="saveEventEditButton" layoutX="387.0" layoutY="692.0" mnemonicParsing="false" onAction="#saveEventEditButton" text="Save">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <ImageView fx:id="eventImageView" fitHeight="150.0" fitWidth="200.0" layoutX="794.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="errorLabel" layoutX="390.0" layoutY="634.0" text="errorLabel" />
+      <Label fx:id="errorLabel" layoutX="385.0" layoutY="636.0" text="errorLabel" textFill="RED">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
       <Button fx:id="startTimeEditButton" layoutX="543.0" layoutY="423.0" mnemonicParsing="false" onAction="#handleStartTimeButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
       <Button fx:id="endTimeEditButton" layoutX="543.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleEndTimeButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
       <TextField fx:id="eventInfoTextField" layoutX="342.0" layoutY="230.0" prefHeight="66.0" prefWidth="336.0" />
+      <Button fx:id="startJoinTimeButton" layoutX="731.0" layoutY="548.0" mnemonicParsing="false" onAction="#handleStartJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="opening time" />
+      <Button fx:id="closeJoinTimeButton" layoutX="731.0" layoutY="583.0" mnemonicParsing="false" onAction="#handleCloseJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="closing time" />
    </children>
 </AnchorPane>

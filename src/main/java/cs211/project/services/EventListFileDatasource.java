@@ -80,10 +80,20 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 if (data.length > 12 && !data[12].trim().isEmpty() && !data[12].trim().equalsIgnoreCase("null")) {
                     closeJoinDate = LocalDate.parse(data[12].trim());
                 }
-                String eventUUID = data.length > 13 ? data[13].trim() : null;
+                LocalTime startJoinTime = null;
+                if (data.length > 13 && !data[13].trim().isEmpty() && !data[13].trim().equalsIgnoreCase("null")) {
+                    startJoinTime = LocalTime.parse(data[13].trim());
+                }
+
+                LocalTime closeJoinTime = null;
+                if (data.length > 14 && !data[14].trim().isEmpty() && !data[14].trim().equalsIgnoreCase("null")) {
+                    closeJoinTime = LocalTime.parse(data[14].trim());
+                }
+                String eventUUID = data.length > 15 ? data[15].trim() : null;
 
                 events.addEvent(name, picture, info, category, place, startDate, endDate, startTime, endTime,
-                        ownerUsername, maxParticipants, startJoinDate, closeJoinDate, eventUUID);
+                        ownerUsername, maxParticipants, startJoinDate, closeJoinDate,
+                        startJoinTime, closeJoinTime, eventUUID);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -117,7 +127,9 @@ public class EventListFileDatasource implements Datasource<EventList> {
                         + event.getCategory()  + "," + event.getPlace() + "," + event.getStartDate() + ","
                         + event.getEndDate() + "," + event.getStartTime() + "," + event.getEndTime() + ","
                         + event.getOwnerUsername() + "," + event.getMaxParticipants() + ","
-                        + event.getStartJoinDate() + "," + event.getCloseJoinDate() + "," + event.getEventUUID();
+                        + event.getStartJoinDate() + "," + event.getCloseJoinDate() + ","
+                        + event.getStartJoinTime() + "," + event.getCloseJoinTime() + ","
+                        + event.getEventUUID();
                 buffer.append(line);
                 buffer.append("\n");
             }

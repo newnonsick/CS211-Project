@@ -154,7 +154,7 @@ public class CreateEventController {
         image = name + "." + (Files.probeContentType(Paths.get(selectedImage.getAbsolutePath())).substring(6));
         String newEvent = name + "," + image + "," + info + "," + category + "," + place
                 + "," + startDate + "," + endDate + "," + selectedStartTime + "," + selectedEndTime + "," +
-                eventOwner+ ",-1,," + "," + eventUUID.toString();
+                eventOwner+ ",-1,,,," + "," + eventUUID.toString();
 
         try {
             for(String thisEvent : allEvent) {
