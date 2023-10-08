@@ -11,9 +11,9 @@
 <AnchorPane prefHeight="202.0" prefWidth="256.0" style="-fx-background-radius: 30;" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
    <VBox alignment="CENTER" layoutY="-1.0" prefHeight="218.0" prefWidth="256.0">
       <children>
-            <Label fx:id="eventNameLabel" text="Event name">
+            <Label fx:id="eventNameLabel" text="Event name" textAlignment="CENTER">
             <font>
-               <Font name="System Bold" size="20.0" />
+               <Font name="System Bold" size="18.0" />
             </font>
          </Label>
             <ImageView fx:id="eventImageView" fitHeight="129.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white;">

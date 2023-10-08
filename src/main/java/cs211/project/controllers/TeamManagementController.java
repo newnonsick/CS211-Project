@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class TeamManagementController {
     @FXML TextField avtivityNameTextField;
@@ -22,6 +23,9 @@ public class TeamManagementController {
     @FXML TableView activityTableView;
     @FXML Button deleteActivityButton;
     @FXML Button endActivityButton;
+    @FXML TableColumn activityNameColumn;
+    @FXML TableColumn activityDescriptionColumn;
+    @FXML TableColumn activityStatusColumn;
 
     private ActivityList activityList;
     private Datasource<ActivityList> activityListDatasource;
@@ -85,8 +89,14 @@ public class TeamManagementController {
     public void handleAddActivityButton(){
         String activityName = avtivityNameTextField.getText();
         String activityDescription = activityDescriptionTextArea.getText();
+        UUID uuid = UUID.randomUUID();
+        String activityUUID = uuid.toString();
+        while (activityList.findActivityByUUID(activityUUID) != null){
+            uuid = UUID.randomUUID();
+            activityUUID = uuid.toString();
+        }
         if (!activityName.isEmpty() && !activityDescription.isEmpty()){
-            activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress");
+            activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress", activityUUID);
             activityListDatasource.writeData(activityList);
             showActivity(activityList);
             avtivityNameTextField.clear();
@@ -99,31 +109,32 @@ public class TeamManagementController {
         activityList.getActivities().remove(selectedActivity);
         activityListDatasource.writeData(activityList);
         showActivity(activityList);
+        Datasource<TeamChatList> teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
+        TeamChatList teamChatList = teamChatListDatasource.readData();
+        for (TeamChat teamChat: teamChatList.getTeamChats()) {
+            if (teamChat.getActivityUUID().equals(selectedActivity.getActivityUUID())){
+                teamChatList.getTeamChats().remove(teamChat);
+                break;
+            }
+        }
+        teamChatListDatasource.writeData(teamChatList);
         selectedActivity = null;
         deleteActivityButton.setDisable(true);
         endActivityButton.setDisable(true);
     }
 
     public void showActivity(ActivityList activityList){
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInformationColumn = new TableColumn<>("Description");
-        activityInformationColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
+        activityDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
-        TableColumn<Activity, String> activityStatusColumn = new TableColumn<>("Status");
         activityStatusColumn.setCellValueFactory(new PropertyValueFactory<>("activityStatus"));
 
         activityTableView.getColumns().clear();
         activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getColumns().add(activityNameColumn);
-        activityTableView.getColumns().add(activityInformationColumn);
+        activityTableView.getColumns().add(activityDescriptionColumn);
         activityTableView.getItems().clear();
-
-        if (activityList.getActivities().size() == 0){
-            activityInformationColumn.setPrefWidth(activityTableView.getPrefWidth() - activityNameColumn.getPrefWidth() - activityStatusColumn.getPrefWidth());
-            return;
-        }
 
 
         for (Activity activity : activityList.getActivities()) {
@@ -136,7 +147,7 @@ public class TeamManagementController {
     public void showParticipant(){
         int row = 0;
         for (TeamParticipant teamParticipant: teamParticipantList.getTeamParticipants()) {
-            if (!teamParticipant.getEventUUID().equals(eventUUID) && teamParticipant.getTeamName().equals(teamName)) {
+            if (!teamParticipant.getEventUUID().equals(eventUUID) && !teamParticipant.getTeamName().equals(teamName)) {
                 continue;
             }
             if (teamParticipant.getUsername().equals(team.getTeamOwnerUsername())){

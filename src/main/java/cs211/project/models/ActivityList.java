@@ -15,15 +15,15 @@ public class ActivityList {
         return activities;
     }
 
-    public void addNewActivityTeam(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
+    public void addNewActivityTeam(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus, String activityUUID) {
         eventOfActivityUUID = eventOfActivityUUID.trim();
         teamOfActivityName = teamOfActivityName.trim();
         activityName = activityName.trim();
         activityInformation = activityInformation.trim();
         if (!eventOfActivityUUID.equals("") && !teamOfActivityName.equals("") && !activityName.equals("") && !activityInformation.equals("")) {
-            Activity exist = findActivityByObject(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus));
+            Activity exist = findActivityByObject(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus, activityUUID));
             if (exist == null) {
-                activities.add(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus));
+                activities.add(new Activity(eventOfActivityUUID, teamOfActivityName, activityName, activityInformation, activityStatus, activityUUID));
             }
         }
     }
@@ -47,8 +47,17 @@ public class ActivityList {
 
     public Activity findActivityByObject(Activity activity) {
         for (Activity activity1 : activities) {
-            if (activity1.isActivity(activity)) {
+            if (activity1.equals(activity)) {
                 return activity1;
+            }
+        }
+        return null;
+    }
+
+    public Activity findActivityByUUID(String activityUUID) {
+        for (Activity activity : activities) {
+            if (activityUUID.equals(activity.getActivityUUID())) {
+                return activity;
             }
         }
         return null;

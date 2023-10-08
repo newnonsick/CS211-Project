@@ -68,6 +68,7 @@ public class EventListController {
     boolean categoryOn = false;
 
     public void initialize() {
+//        searchButton.setImage(new javafx.scene.image.Image("/cs211/project/images/search.png"));
         currentUser = (User) FXRouterPane.getData();
         allCategoryButton.getStyleClass().add("category-button-selected");
         isSearch = false;

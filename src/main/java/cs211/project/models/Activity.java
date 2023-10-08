@@ -12,13 +12,15 @@ public class Activity {
     private LocalTime activityStartTime;
     private LocalTime activityEndTime;
     private LocalDate activityDate;
+    private String activityUUID;
 
-    public Activity(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
+    public Activity(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus, String activityUUID) {
         this.eventOfActivityUUID = eventOfActivityUUID;
         this.teamOfActivityName = teamOfActivityName;
         this.activityName = activityName;
         this.activityInformation = activityInformation;
         this.activityStatus = activityStatus;
+        this.activityUUID = activityUUID;
     }
 
     public Activity(String eventOfActivityUUID, String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime, LocalDate activityDate) {
@@ -67,6 +69,22 @@ public class Activity {
         return activityDate;
     }
     public boolean isActivity(Activity activity) {
+        if (activity.getActivityName().equals(this.getActivityName()) && activity.getEventOfActivityUUID().equals(this.getEventOfActivityUUID()) && activity.getTeamOfActivityName().equals(this.getTeamOfActivityName())) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getActivityUUID() {
+        return activityUUID;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Activity)) {
+            return false;
+        }
+        Activity activity = (Activity) obj;
         if (activity.getActivityName().equals(this.getActivityName()) && activity.getEventOfActivityUUID().equals(this.getEventOfActivityUUID()) && activity.getTeamOfActivityName().equals(this.getTeamOfActivityName())) {
             return true;
         }

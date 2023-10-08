@@ -6,6 +6,7 @@ import cs211.project.models.UserList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -18,18 +19,32 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 
 public class LoginController {
-    private String directoryName = "data";
-    private String fileName = "userData.csv";
-    private String filePath = directoryName + File.separator + fileName;
-    private String loginFilePath = directoryName + File.separator + "logInfo.csv";
+
     @FXML
     TextField usernameTextField;
     @FXML
     PasswordField passwordTextField;
     @FXML
     Label errorLabel;
+    @FXML
+    Button loginButton;
 
     public void initialize() {
+        loginButton.setDisable(true);
+        usernameTextField.setOnKeyReleased(event -> {
+            if (!usernameTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty()) {
+                loginButton.setDisable(false);
+            } else {
+                loginButton.setDisable(true);
+            }
+        });
+        passwordTextField.setOnKeyReleased(event -> {
+            if (!usernameTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty()) {
+                loginButton.setDisable(false);
+            } else {
+                loginButton.setDisable(true);
+            }
+        });
     }
 
 
@@ -69,5 +84,4 @@ public class LoginController {
             throw new RuntimeException(e);
         }
     }
-
 }

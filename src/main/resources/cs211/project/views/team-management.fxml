@@ -17,10 +17,11 @@
    <children>
       <Line endX="-100.0" endY="800.0" layoutX="690.0" startX="-100.0" />
       <TableView fx:id="activityTableView" layoutX="625.0" layoutY="100.0" prefHeight="450.0" prefWidth="500.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="424.0" text="C2" />
-        </columns>
+         <columns>
+            <TableColumn fx:id="activityStatusColumn" prefWidth="75.0" text="Status" />
+            <TableColumn fx:id="activityNameColumn" prefWidth="147.0" text="Name" />
+            <TableColumn fx:id="activityDescriptionColumn" prefWidth="276.0" text="Description" />
+         </columns>
       </TableView>
       <Label layoutX="50.0" layoutY="55.0" text="รายชื่อผู้ร่วมทีม">
          <font>

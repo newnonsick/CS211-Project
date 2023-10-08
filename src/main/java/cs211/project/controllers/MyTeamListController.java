@@ -56,7 +56,20 @@ public class MyTeamListController {
             if (team.getTeamOwnerUsername().equals(currentUser.getUsername())) {
                 continue;
             }
-            if (team.getClosingJoinDate().isBefore(currentDate)) {
+            if (team.getStartJoinDate().isEqual(currentDate)) {
+                if (team.getStartTime().isAfter(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getStartJoinDate().isAfter(currentDate)) {
+                continue;
+            }
+            else if (team.getClosingJoinDate().isEqual(currentDate)) {
+                if (team.getEndTime().isBefore(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 2) {
@@ -73,7 +86,7 @@ public class MyTeamListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), teamParticipant.getUsername().equals(team.getTeamOwnerUsername()));
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getStartTime(), team.getClosingJoinDate(), team.getEndTime());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUser.getUsername()});
@@ -93,7 +106,12 @@ public class MyTeamListController {
             if (!team.getTeamOwnerUsername().equals(currentUser.getUsername())) {
                 continue;
             }
-            if (team.getClosingJoinDate().isBefore(currentDate)) {
+            if (team.getClosingJoinDate().isEqual(currentDate)) {
+                if (team.getEndTime().isBefore(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 2) {
@@ -110,7 +128,7 @@ public class MyTeamListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), true);
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getStartTime(), team.getClosingJoinDate(), team.getEndTime());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUser.getUsername()});

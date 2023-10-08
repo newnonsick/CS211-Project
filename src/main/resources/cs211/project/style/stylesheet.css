@@ -47,12 +47,12 @@
 
 .navigation-button:hover{
     -fx-background-color: #F5F5F5;
-    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,0.0);
 }
 
 .navigation-button-selected{
     -fx-background-color: #F5F5F5;
-    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,10.0);
+    -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,0.0);
 }
 
 .radius{
@@ -109,4 +109,13 @@
 .team-full{
     -fx-background-color: grey;
     -fx-background-radius: 30;
+}
+
+.button-with-icon{
+    -fx-background-color: transparent;
+    -fx-background-radius: 30;
+}
+
+.button-with-icon:hover{
+    -fx-background-color: lightgrey;
 }

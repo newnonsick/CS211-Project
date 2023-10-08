@@ -58,8 +58,13 @@ public class TeamParticipantElementController {
         //profile size 40 x 40
         Circle img = new Circle(20, 20, 20);
         profileImageView.setClip(img);
-        File file = new File("data" + File.separator + "profile_picture" + File.separator + user.getProfilePicture());
-        profileImageView.setImage(new Image(file.toURI().toString(), 40, 40, false, false));
+        String profilePicturePath;
+        if (user.getProfilePictureName().equals("default.png")){
+            profilePicturePath = getClass().getResource("/cs211/project/images/default.png").toExternalForm();
+        }else{
+            profilePicturePath = new File("data" + File.separator + "profile_picture" + File.separator + user.getProfilePictureName()).toURI().toString();
+        }
+        profileImageView.setImage(new Image(profilePicturePath, 40, 40, false, false));
         nameLabel.setText(user.getName());
         if (team.getHeadOfTeamUsername().equals(teamParticipant.getUsername())){
             setLeaderButton.setDisable(true);

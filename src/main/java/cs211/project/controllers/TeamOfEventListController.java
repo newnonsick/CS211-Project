@@ -61,7 +61,20 @@ public class TeamOfEventListController {
             if (!team.getEventUUID().equals(eventUUID)) {
                 continue;
             }
-            if (team.getClosingJoinDate().isBefore(currentDate)) {
+            if (team.getStartJoinDate().isEqual(currentDate)) {
+                if (team.getStartTime().isAfter(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getStartJoinDate().isAfter(currentDate)) {
+                continue;
+            }
+            else if (team.getClosingJoinDate().isEqual(currentDate)) {
+                if (team.getEndTime().isBefore(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if (column == 2) {
@@ -78,7 +91,7 @@ public class TeamOfEventListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUserName));
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getStartTime(), team.getClosingJoinDate(), team.getEndTime());
             if (teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(team.getEventUUID(), team.getTeamName()) >= team.getMaxParticipants()) {
                 anchorPane.getStyleClass().remove("element");
                 anchorPane.getStyleClass().add("team-full");

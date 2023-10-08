@@ -18,7 +18,7 @@ public class EventList {
         placeEvent = placeEvent.trim();
 
         if (!eventName.equals("") && !eventInformation.equals("") && !eventCategory.equals("") && !placeEvent.equals("")) {
-            if (!findEvent(eventName)) {
+            if (findEventByUUID(eventUUID) == null) {
                 Event newEvent = new Event(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDAte, closingJoinDate, eventUUID);
                 events.add(newEvent);
             }
