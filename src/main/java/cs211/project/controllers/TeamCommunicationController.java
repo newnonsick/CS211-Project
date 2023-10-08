@@ -22,7 +22,7 @@ import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
-    @FXML Label avtivityNameLabel;
+    @FXML Label activityNameLabel;
     @FXML Label activityDescriptionLabel;
     @FXML Label teamNameLabel;
     @FXML TableView activityTableView;
@@ -75,7 +75,7 @@ public class TeamCommunicationController {
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
-        avtivityNameLabel.setText("");
+        activityNameLabel.setText("");
         activityDescriptionLabel.setText("");
         sendMessageButton.setDisable(true);
         sendMessageTextField.setDisable(true);
@@ -92,17 +92,17 @@ public class TeamCommunicationController {
                     sendMessageButton.setDisable(false);
                     sendMessageTextField.setDisable(false);
                     if (newValue.getActivityStatus().equals("Ended")){
-                        avtivityNameLabel.setText("");
+                        activityNameLabel.setText("");
                         activityDescriptionLabel.setText("");
                         return;
                     }
-                    avtivityNameLabel.setText(newValue.getActivityName());
+                    activityNameLabel.setText(newValue.getActivityName());
                     activityDescriptionLabel.setText(newValue.getActivityInformation());
                 }
                 else{
                     sendMessageButton.setDisable(true);
                     sendMessageTextField.setDisable(true);
-                    avtivityNameLabel.setText("");
+                    activityNameLabel.setText("");
                     activityDescriptionLabel.setText("");
                 }
             }

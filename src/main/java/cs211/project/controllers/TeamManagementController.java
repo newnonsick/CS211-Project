@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class TeamManagementController {
-    @FXML TextField avtivityNameTextField;
+    @FXML TextField activityNameTextField;
     @FXML TextArea activityDescriptionTextArea;
     @FXML ScrollPane participantListScrollPane;
     @FXML GridPane participantListGridPane;
@@ -87,7 +87,7 @@ public class TeamManagementController {
 
     @FXML
     public void handleAddActivityButton(){
-        String activityName = avtivityNameTextField.getText();
+        String activityName = activityNameTextField.getText();
         String activityDescription = activityDescriptionTextArea.getText();
         UUID uuid = UUID.randomUUID();
         String activityUUID = uuid.toString();
@@ -99,7 +99,7 @@ public class TeamManagementController {
             activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress", activityUUID);
             activityListDatasource.writeData(activityList);
             showActivity(activityList);
-            avtivityNameTextField.clear();
+            activityNameTextField.clear();
             activityDescriptionTextArea.clear();
         }
     }

@@ -15,31 +15,42 @@
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="usernameLabel" layoutX="88.0" layoutY="137.0" text="usernameLabel" textAlignment="CENTER">
+      <Label fx:id="usernameLabel" layoutX="90.0" layoutY="168.0" text="usernameLabel" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="nameLabel" layoutX="88.0" layoutY="96.0" text="nameLabel">
+      <Label fx:id="nameLabel" layoutX="88.0" layoutY="136.0" text="nameLabel">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="88.0" layoutY="220.0" text="อีเวนต์ที่กำลังเข้าร่วม">
+      <Label layoutX="88.0" layoutY="220.0" text="Your Upcoming Events">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="575.0" layoutY="220.0" text="อีเวนต์ที่เคยเข้าร่วม">
+      <Label layoutX="611.0" layoutY="220.0" text="Your Past Events">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Line endX="344.4518737792969" layoutX="433.0" layoutY="491.0" rotate="90.0" startX="-100.0" />
+      <Line endX="344.4518737792969" layoutX="452.0" layoutY="489.0" rotate="90.0" startX="-100.0" strokeWidth="2.0" />
       <TableView fx:id="activeEventTableView" layoutX="88.0" layoutY="267.0" prefHeight="445.0" prefWidth="450.0" />
-      <TableView fx:id="eventHistoryTableView" layoutX="575.0" layoutY="267.0" prefHeight="445.0" prefWidth="450.0" />
-      <ImageView fx:id="profileImageView" fitHeight="130.0" fitWidth="130.0" layoutX="960.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="changeProfileButton" layoutX="1011.0" layoutY="195.0" mnemonicParsing="false" onAction="#changeProfile" text="Change" />
-      <Button fx:id="cancelButton" layoutX="979.0" layoutY="195.0" mnemonicParsing="false" onAction="#cancelChangeProfilePic" text="X" />
+      <TableView fx:id="eventHistoryTableView" layoutX="611.0" layoutY="267.0" prefHeight="445.0" prefWidth="450.0" />
+      <ImageView fx:id="profileImageView" fitHeight="140.0" fitWidth="140.0" layoutX="952.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="changeProfileButton" layoutX="1011.0" layoutY="195.0" mnemonicParsing="false" onAction="#changeProfile" text="Change">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button fx:id="cancelButton" layoutX="979.0" layoutY="195.0" mnemonicParsing="false" onAction="#cancelChangeProfilePic" text="X">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Label layoutX="88.0" layoutY="96.0" text="Welcome !">
+         <font>
+            <Font name="System Italic" size="22.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

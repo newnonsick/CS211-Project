@@ -44,19 +44,7 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
             }
         }
     }
-    public void updateEventName(String oldEventName, String newEventName) {
-        List<String[]> data = readData();
-        List<String[]> updatedData = new ArrayList<>();
 
-        for (String[] entry : data) {
-            if (entry[1].equals(oldEventName)) {
-                entry[1] = newEventName;
-            }
-            updatedData.add(entry);
-        }
-
-        writeData(updatedData);
-    }
     @Override
     public List<String[]> readData() {
         List<String[]> data = new ArrayList<>();
@@ -125,5 +113,17 @@ public class JoinEventFileDataSource implements Datasource<List<String[]>> {
             }
         }
     }
+
+    public int countParticipantsForEvent(String eventUUID) {
+        List<String[]> data = readData();
+        int count = 0;
+        for (String[] entry : data) {
+            if (entry[1].equals(eventUUID)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 
 }

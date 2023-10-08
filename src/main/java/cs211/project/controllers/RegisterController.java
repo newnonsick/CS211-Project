@@ -106,7 +106,7 @@ public class RegisterController {
         if(selectedImage != null) {
             //upload the profile picture
             String selectedImagePath = selectedImage.getAbsolutePath();
-            String targetDirectoryPath = "data/profile_picture";
+            String targetDirectoryPath = "data" + File.separator + "profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
             String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
             //errorLabel.setText(fileType);

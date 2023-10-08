@@ -75,14 +75,14 @@ public class UserLogFileDataSource implements Datasource<UserList> {
 
     @Override
     public void writeData(UserList userList) {
-        String name = "";
+        String username = "";
         String filePath = directoryName + File.separator + fileName;
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         String log = "";
         for(User user : userList.getUsers()) {
-            name = user.getName();
+            username = user.getUsername();
         }
-        log = name + "," + LocalDate.now(thaiTimeZone).toString() + "," +  LocalTime.now(thaiTimeZone).toString().substring(0,8);;
+        log = username + "," + LocalDate.now(thaiTimeZone).toString() + "," +  LocalTime.now(thaiTimeZone).toString().substring(0,8);;
         FileWriter fileWriter = null;
         PrintWriter out = null;
         try {

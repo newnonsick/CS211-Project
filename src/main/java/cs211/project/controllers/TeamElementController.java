@@ -51,11 +51,11 @@ public class TeamElementController {
         String formattedClosingJoinDate = closingJoinDate.format(formatter);
 
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
         teamNameLabel.setText(teamName);
         maxParticipantsLabel.setText(String.valueOf(maxParticipants));
         remaindaysLabel.setText(formattedStartJoinDate + " " + startJoinTime + " - " + formattedClosingJoinDate + " " + endJoinTime);
-        eventImageView.setImage(new Image(new File("data" + File.separator + "eventPicture" + File.separator + event.getEventPicture()).toURI().toString(), 130, 130, false, false));
+        eventImageView.setImage(new Image(new File("data" + File.separator + "eventPicture" + File.separator + event.getPicture()).toURI().toString(), 130, 130, false, false));
         participantsLabel.setText(String.valueOf(teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(eventUUID, teamName)));
     }
 

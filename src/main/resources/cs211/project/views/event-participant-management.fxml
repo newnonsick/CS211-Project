@@ -18,16 +18,16 @@
          </font>
       </Label>
       <TableView fx:id="eventParticipantTableView" layoutX="61.0" layoutY="169.0" prefHeight="502.0" prefWidth="412.0">
-        <columns>
-            <TableColumn fx:id="partiUsernameColumn" minWidth="0.0" prefWidth="248.80002975463867" text="รายชื่อผู้เข้าร่วม" />
+         <columns>
+            <TableColumn fx:id="partiUsernameColumn" minWidth="0.0" prefWidth="248.80002975463867" text="List of participants" />
             <TableColumn fx:id="approvedColumn" minWidth="2.4000244140625" prefWidth="155.199951171875" text=" Approved Status" />
-        </columns>
+         </columns>
       </TableView>
       <Button layoutX="29.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleBackToEventManagementButton" text="Back">
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Label layoutX="75.0" layoutY="132.0" text="รายชื่อผู้เข้าร่วมอีเวนต์" textFill="BLUE">
+      <Label layoutX="75.0" layoutY="132.0" text="List of participants" textFill="BLUE">
          <font>
             <Font size="18.0" />
          </font>
@@ -37,43 +37,39 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="388.0" layoutY="712.0" mnemonicParsing="false" onAction="#goToEditParticipant" text="ระงับสิทธิ์">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
       <Line endX="-100.0" endY="800.0" layoutX="617.0" layoutY="13.0" startX="-100.0" />
       <TableView fx:id="activityParticipantTableView" layoutX="566.0" layoutY="104.0" prefHeight="303.0" prefWidth="576.0">
          <columns>
-            <TableColumn fx:id="activityDateColumn" prefWidth="96.79998779296875" text="วันที่" />
-            <TableColumn fx:id="activityStartColumn" prefWidth="70.0" text="เวลาเริ่ม" />
-            <TableColumn fx:id="activityEndColumn" prefWidth="70.0" text="เวลาสิ้นสุด" />
-            <TableColumn fx:id="activityNameColumn" prefWidth="96.79998779296875" text="ชื่อกิจกรรม" />
-            <TableColumn fx:id="activityInfoColumn" prefWidth="241.5999755859375" text="รายละเอียดกิจกรรม" />
+            <TableColumn fx:id="activityDateColumn" prefWidth="96.79998779296875" text="Date" />
+            <TableColumn fx:id="activityStartColumn" prefWidth="70.0" text="Start Time" />
+            <TableColumn fx:id="activityEndColumn" prefWidth="70.0" text="End Time" />
+            <TableColumn fx:id="activityNameColumn" prefWidth="96.79998779296875" text="Activity" />
+            <TableColumn fx:id="activityInfoColumn" prefWidth="241.5999755859375" text="Activity Datails" />
          </columns>
       </TableView>
-      <Button fx:id="addActivityButton" layoutX="640.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleAddActivityPartiButton" text="เพิ่มกิจกรรม">
+      <Button fx:id="addActivityButton" layoutX="640.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleAddActivityPartiButton" text="Add Activity">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="567.0" layoutY="444.0" text="ชื่อกิจกรรม">
+      <Label layoutX="567.0" layoutY="444.0" text="Activity name">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="564.0" layoutY="494.0" text="รายละเอียดกิจกรรม">
+      <Label layoutX="564.0" layoutY="494.0" text="Details">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="activityNameTextField" layoutX="668.0" layoutY="440.0" prefHeight="35.0" prefWidth="399.0" />
+      <TextField fx:id="activityNameTextField" layoutX="715.0" layoutY="440.0" prefHeight="35.0" prefWidth="399.0" />
       <TextField fx:id="activityInfoTextField" layoutX="715.0" layoutY="500.0" prefHeight="70.0" prefWidth="352.0" />
-      <Button fx:id="removeActivityButton" layoutX="884.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleRemoveActivityPartiButton" text="ลบกิจกรรม">
+      <Button fx:id="removeActivityButton" layoutX="884.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleRemoveActivityPartiButton" text="Remove Activity">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="566.0" layoutY="26.0" text="ตารางกิจกรรมสำหรับผู้เข้าร่วม">
+      <Label layoutX="566.0" layoutY="26.0" text="Activity schedule">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -83,19 +79,19 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="566.0" layoutY="633.0" text="เวลาเริ่มต้นกิจกรรม">
+      <Label layoutX="566.0" layoutY="633.0" text="Start Time">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="567.0" layoutY="684.0" text="เวลาสิ้นสุดกิจกรรม">
+      <Label layoutX="567.0" layoutY="684.0" text="End Time">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
       <Button fx:id="startTimePicker" layoutX="723.0" layoutY="634.0" mnemonicParsing="false" onAction="#handleStartTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
       <Button fx:id="endTimePicker" layoutX="723.0" layoutY="685.0" mnemonicParsing="false" onAction="#handleEndTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
-      <Label layoutX="564.0" layoutY="591.0" text="วันที่">
+      <Label layoutX="564.0" layoutY="591.0" text="Date">
          <font>
             <Font size="18.0" />
          </font>

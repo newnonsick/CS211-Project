@@ -21,7 +21,6 @@ public class ParticipantActivityListFileDatasource implements Datasource<Activit
         checkFileIsExisted();
     }
 
-    // check if file exists (if not, creat a new file)
     private void checkFileIsExisted() {
         File file = new File(directoryName);
         if (!file.exists()) {

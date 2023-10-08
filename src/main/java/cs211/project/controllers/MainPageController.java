@@ -49,6 +49,7 @@ public class MainPageController {
     public void initialize() {
         currentUser = (User) FXRouter.getData();
         changeStyleClassButton(eventButton);
+        FXRouterPane.clearContent();
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
         try {
@@ -180,7 +181,7 @@ public class MainPageController {
     public void mouseIn(ImageView imageView) {
         Timeline timeline = new Timeline();
         imageView.setVisible(true);
-        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 50);
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 25);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
 
@@ -199,6 +200,15 @@ public class MainPageController {
         timeline.getKeyFrames().add(keyFrame);
         timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
+    }
+
+    @FXML
+    public void logout() {
+        try {
+            FXRouter.goTo("login");
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     
 

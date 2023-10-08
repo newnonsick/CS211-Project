@@ -33,7 +33,7 @@
             </HBox>
             <HBox prefHeight="35.0" prefWidth="619.0" spacing="10.0">
                <children>
-                  <Label text="ชื่อทีม">
+                  <Label text="Name">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -46,7 +46,7 @@
             </HBox>
             <HBox prefHeight="35.0" prefWidth="619.0" spacing="10.0">
                <children>
-                  <Label text="จำนวนคนร่วมทีม">
+                  <Label text="Max Participants">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -59,7 +59,7 @@
             </HBox>
             <HBox prefHeight="35.0" prefWidth="619.0" spacing="10.0">
                <children>
-                  <Label text="กำหนดการเปิดรับสมัครทีม">
+                  <Label text="Opening schedule">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -79,7 +79,7 @@
             </HBox>
             <HBox prefHeight="35.0" prefWidth="619.0" spacing="10.0">
                <children>
-                  <Label text="กำหนดการปิดรับสมัครทีม ">
+                  <Label text="Closing schedule  ">
                      <font>
                         <Font size="24.0" />
                      </font>

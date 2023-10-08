@@ -23,38 +23,38 @@
             <TableColumn fx:id="activityDescriptionColumn" prefWidth="276.0" text="Description" />
          </columns>
       </TableView>
-      <Label layoutX="50.0" layoutY="55.0" text="รายชื่อผู้ร่วมทีม">
+      <Label layoutX="50.0" layoutY="55.0" text="List of participants">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="625.0" layoutY="55.0" text="กิจกรรม">
+      <Label layoutX="625.0" layoutY="55.0" text="Activities">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="endActivityButton" layoutX="1017.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleEndActivityButton" text="สิ้นสุดกิจกรรม">
+      <Button fx:id="endActivityButton" layoutX="1017.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleEndActivityButton" text="End Activity">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="625.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleAddActivityButton" text="เพิ่มกิจกรรม">
+      <Button layoutX="625.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleAddActivityButton" text="Add Activity">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label layoutX="625.0" layoutY="566.0" text="ชื่อกิจกรรม">
+      <Label layoutX="625.0" layoutY="566.0" text="Activity Name">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="623.0" layoutY="628.0" text="รายละเอียดกิจกรรม">
+      <Label alignment="TOP_LEFT" layoutX="625.0" layoutY="614.0" prefHeight="102.0" prefWidth="111.0" text="Activity Description" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="avtivityNameTextField" layoutX="726.0" layoutY="562.0" prefHeight="35.0" prefWidth="399.0" />
-      <Button fx:id="deleteActivityButton" layoutX="825.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleRemoveActivityButton" text="ลบกิจกรรม">
+      <TextField fx:id="activityNameTextField" layoutX="762.0" layoutY="562.0" prefHeight="35.0" prefWidth="363.0" />
+      <Button fx:id="deleteActivityButton" layoutX="815.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleRemoveActivityButton" text="Delete Activity">
          <font>
             <Font size="18.0" />
          </font>
