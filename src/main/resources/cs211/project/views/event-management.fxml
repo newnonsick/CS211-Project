@@ -105,5 +105,6 @@
       <TextField fx:id="eventInfoTextField" layoutX="342.0" layoutY="230.0" prefHeight="66.0" prefWidth="336.0" />
       <Button fx:id="startJoinTimeButton" layoutX="731.0" layoutY="548.0" mnemonicParsing="false" onAction="#handleStartJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="opening time" />
       <Button fx:id="closeJoinTimeButton" layoutX="731.0" layoutY="583.0" mnemonicParsing="false" onAction="#handleCloseJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="closing time" />
+      <Button fx:id="clearJoinTimesButton" layoutX="730.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleClearJoinTimesButton" text="clear selected time" />
    </children>
 </AnchorPane>

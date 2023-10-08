@@ -49,6 +49,9 @@ public class EventManagementController {
     private Button endTimeEditButton;
     @FXML private Button startJoinTimeButton;
     @FXML private Button closeJoinTimeButton;
+    @FXML
+    private Button clearJoinTimesButton;
+
     private LocalTime editedStartTime;
     private LocalTime editedEndTime;
     private LocalTime editedStartJoinTime;
@@ -90,6 +93,10 @@ public class EventManagementController {
         joinEventDatasource = new JoinEventFileDataSource("data", "joinEventData.csv");
         participantActivityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         activityList = participantActivityListDatasource.readData();
+        oldStartJoinTime = event.getStartJoinTime();
+        oldCloseJoinTime = event.getCloseJoinTime();
+        checkJoinTimesClearButton();
+
 
         showInformation();
     }
@@ -190,6 +197,11 @@ public class EventManagementController {
             errorLabel.setVisible(true);
             return;
         }
+        if (startJoin == null && closingJoin == null && (editedStartJoinTime != null || editedCloseJoinTime != null)) {
+            errorLabel.setText("You must provide both application opening and\nclosing dates if you set times.");
+            errorLabel.setVisible(true);
+            return;
+        }
 
         String newEventName = eventNameTextField.getText();
         event.setName(newEventName);
@@ -255,9 +267,17 @@ public class EventManagementController {
         if (closingJoin != null) {
             event.setCloseJoinDate(closingJoin);
         }
+        if(startJoin == null) {
+            event.setStartJoinDate(null);
+        }
+        if(closingJoin == null) {
+            event.setCloseJoinDate(null);
+        }
+
         if (editedStartJoinTime != null) {
             event.setStartJoinTime(editedStartJoinTime);
         }
+
         if (editedCloseJoinTime != null) {
             event.setCloseJoinTime(editedCloseJoinTime);
         }
@@ -289,6 +309,7 @@ public class EventManagementController {
             editedStartJoinTime = newStartJoinTime;
             startJoinTimeButton.setText(editedStartJoinTime.toString());
         }
+        checkJoinTimesClearButton();
     }
 
     @FXML
@@ -298,7 +319,33 @@ public class EventManagementController {
             editedCloseJoinTime = newCloseJoinTime;
             closeJoinTimeButton.setText(editedCloseJoinTime.toString());
         }
+        checkJoinTimesClearButton();
     }
+    @FXML
+    public void handleClearJoinTimesButton() {
+        editedStartJoinTime = null;
+        startJoinTimeButton.setText("opening time");
+
+        editedCloseJoinTime = null;
+        closeJoinTimeButton.setText("closing time");
+
+        oldStartJoinTime = null;
+        oldCloseJoinTime = null;
+
+        clearJoinTimesButton.setDisable(true);
+    }
+
+    private void checkJoinTimesClearButton() {
+        if (editedStartJoinTime != null || oldStartJoinTime != null ||
+                editedCloseJoinTime != null || oldCloseJoinTime != null) {
+            clearJoinTimesButton.setDisable(false);
+        } else {
+            clearJoinTimesButton.setDisable(true);
+        }
+    }
+
+
+
 
 
     private LocalTime showCustomTimePickerDialog() {

@@ -66,16 +66,20 @@ public class EventInformationController {
 
         if (event.getStartJoinDate() == null) {
             startJoinDateLabel.setText("N/A");
+        } else if (event.getStartJoinTime() == null) {
+            startJoinDateLabel.setText(event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " to");
         } else {
-            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " to");
-            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getStartJoinTime());
-
+            startJoinDateLabel.setText(event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getStartJoinTime() + " to");
         }
+
         if (event.getCloseJoinDate() == null) {
             closingJoinDateLabel.setText("N/A");
+        } else if (event.getCloseJoinTime() == null) {
+            closingJoinDateLabel.setText(event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
         } else {
-            closingJoinDateLabel.setText("" + event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + ", " + event.getCloseJoinTime());
+            closingJoinDateLabel.setText(event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getCloseJoinTime());
         }
+
         categoryLabel.setText(event.getCategory());
 
         String filePath = "data/eventPicture/" + event.getPicture();
