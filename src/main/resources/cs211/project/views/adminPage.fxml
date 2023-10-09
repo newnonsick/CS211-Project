@@ -41,7 +41,7 @@
          </children>
       </Pane>
       <Button layoutX="101.0" layoutY="574.0" mnemonicParsing="false" onAction="#changePasswordPaneToggle" text="Change Password" />
-      <Pane fx:id="changePasswordPane" layoutX="101.0" layoutY="610.0" prefHeight="0.0" prefWidth="203.0" style="-fx-background-color: #5fa4e4; -fx-border-color: black; -fx-border-width: 2px; -fx-background-radius: 5px; -fx-border-radius: 5px;">
+      <Pane fx:id="changePasswordPane" layoutX="101.0" layoutY="610.0" prefHeight="0.0" prefWidth="203.0" style="-fx-background-color: #5fa4e4; -fx-border-color: black; -fx-border-width: 2px; -fx-background-radius: 5px; -fx-border-radius: 5px;" visible="false">
          <children>
             <PasswordField fx:id="oldPasswordField" layoutX="14.0" layoutY="14.0" promptText="Your current password" />
             <PasswordField fx:id="newPasswordField" layoutX="14.0" layoutY="54.0" promptText="New password" />
