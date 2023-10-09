@@ -32,7 +32,7 @@ public class EventParticipantManagementController {
     @FXML private Label eventNameLabel;
     @FXML private Label eventName2Label;
     @FXML private TextField activityNameTextField;
-    @FXML private TextField activityInfoTextField;
+    @FXML private TextArea activityInfoTextArea;
     @FXML private DatePicker activityDatePicker;
     private LocalTime selectedStartTime;
     private LocalTime selectedEndTime;
@@ -57,12 +57,12 @@ public class EventParticipantManagementController {
         eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         event = eventList.findEventByUUID(eventOfParticipantUUID);
-        eventNameLabel.setText(event.getName());
-        eventName2Label.setText(event.getName());
         activityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         activityList = activityListDatasource.readData();
         participantDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
         participantList = participantDataSource.readData();
+        eventNameLabel.setText(event.getName());
+        eventName2Label.setText(event.getName());
         showParticipants(participantList);
         showActivity(activityList);
         activityParticipantTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
@@ -142,7 +142,7 @@ public class EventParticipantManagementController {
 
     public void handleAddActivityPartiButton() {
         String activityName = activityNameTextField.getText();
-        String activityInfo = activityInfoTextField.getText();
+        String activityInfo = activityInfoTextArea.getText();
         LocalTime startTime = selectedStartTime;
         LocalTime endTime = selectedEndTime;
         LocalDate activityDate = activityDatePicker.getValue();
@@ -151,7 +151,7 @@ public class EventParticipantManagementController {
             activityList.addNewActivityParticipant(eventOfParticipantUUID, activityName, activityInfo, startTime, endTime, activityDate);
             activityListDatasource.writeData(activityList);
             activityNameTextField.clear();
-            activityInfoTextField.clear();
+            activityInfoTextArea.clear();
             selectedStartTime = null;
             selectedEndTime = null;
             activityDatePicker.setValue(null);
@@ -161,16 +161,27 @@ public class EventParticipantManagementController {
         }
     }
 
+
     public void handleRemoveActivityPartiButton(){
         if (selectedActivity == null) {
             return;
         }
-        activityList.getActivities().remove(selectedActivity);
-        activityListDatasource.writeData(activityList);
-        showActivity(activityList);
-        selectedActivity = null;
-        removeActivityButton.setDisable(true);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remove Activity");
+        alert.setHeaderText("Are you sure you want to remove this activity?");
+        alert.setContentText("You won't be able to go back and change it.");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            activityList.removeActivity(selectedActivity);
+            activityListDatasource.writeData(activityList);
+            showActivity(activityList);
+            selectedActivity = null;
+            removeActivityButton.setDisable(true);
+        }
     }
+
     private void removeParticipant(String[] participantData) {
         eventParticipantTableView.getItems().remove(participantData);
         participantList.remove(participantData);

@@ -35,7 +35,7 @@ public class ParticipantActivityController {
     private Event event;
     EventList eventList;
     private String eventUUID;
-    private String currentUserName;
+    private String currentUsername;
     private String sourcePage;
     private ParticipantActivityListFileDatasource datasource;
     private EventListFileDatasource eventListFileDatasource;
@@ -45,7 +45,7 @@ public class ParticipantActivityController {
     public void initialize() {
         String[] componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
-        currentUserName = componentData[1];
+        currentUsername = componentData[1];
         sourcePage = componentData[2];
         eventListFileDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListFileDatasource.readData();
@@ -71,21 +71,21 @@ public class ParticipantActivityController {
 
     public void showActivities(ActivityList activityList) {
 
-        TableColumn<Activity, String> activityDateColumn = new TableColumn<>("วันที่");
+        TableColumn<Activity, String> activityDateColumn = new TableColumn<>("Date");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         activityDateColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getActivityDate().format(formatter))
         );
-        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("เวลาเริ่ม");
+        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("Start Time");
         activityStartColumn.setCellValueFactory(new PropertyValueFactory<>("activityStartTime"));
 
-        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("เวลาสิ้นสุด");
+        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("End Time");
         activityEndColumn.setCellValueFactory(new PropertyValueFactory<>("activityEndTime"));
 
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("ชื่อกิจกรรม");
+        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Activity");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("รายละเอียดกิจกรรม");
+        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("Details");
         activityInfoColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
         //Sort Date and Time

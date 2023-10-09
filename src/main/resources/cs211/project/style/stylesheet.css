@@ -1,6 +1,7 @@
+/*main color #FF8FAB*/
 
 .button {
-    -fx-background-color: #FF9900;
+    -fx-background-color: #FF8FAB;
 }
 
 .button:pressed {
@@ -14,7 +15,7 @@
     -fx-background-color: #FFFFFF;
 }
 .element:hover {
-    -fx-background-color: #FFA500;
+    -fx-background-color: #FFB3C6;
 }
 
 .shadow{
@@ -33,12 +34,12 @@
 }
 
 .search-button{
-    -fx-background-color: #FF9900;
+    -fx-background-color: #FF8FAB;
     -fx-background-radius: 30;
 }
 
 .navigation-list{
-    -fx-background-color: #DCDCDC;
+    -fx-background-color: #FFFFFF;
 }
 
 .navigation-button{
@@ -46,12 +47,12 @@
 }
 
 .navigation-button:hover{
-    -fx-background-color: #F5F5F5;
+    -fx-background-color: #FFB3C6;
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,0.0);
 }
 
 .navigation-button-selected{
-    -fx-background-color: #F5F5F5;
+    -fx-background-color: #FFB3C6;
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0 , 0.0 ,0.0);
 }
 
@@ -64,7 +65,7 @@
 .textFlow{
     /*-fx-background-color: linear-gradient(to left, #ff512f, #dd2476);*/
     /*บน ขวา ล่าง ซ้าย*/
-    -fx-background-color: #FF9900;
+    -fx-background-color: #FF8FAB;
     -fx-background-insets: -5 -10 -5 -10;
     /*-fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.08),2,1.0,0.5,0.5);*/
     -fx-background-radius: 15;
@@ -85,7 +86,7 @@
 
 
 .usernameText{
-    -fx-fill: #FF9900;
+    -fx-fill: #FF8FAB;
     -fx-font-size: 12px;
 }
 
@@ -118,4 +119,52 @@
 
 .button-with-icon:hover{
     -fx-background-color: lightgrey;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.column-header {
+    -fx-background-color: #FF8FAB;
+}
+
+.cell-selection {
+    -fx-background-color: #0078d4;
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab-header-area .tab-header-background{
+    -fx-background-color: transparent;
+}
+
+.tab{
+    -fx-background-color: #FFFFFF;
+    /*-fx-background-radius: 30;*/
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.tab:selected{
+    -fx-background-color: #FF8FAB;
+}
+
+.tab:hover{
+    -fx-background-color: #FF8FAB;
+}
+
+.tab:disabled{
+    -fx-opacity: 0.5;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+}
+
+.menu-button .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.menu-button .menu-item:hover {
+    -fx-background-color: #FF8FAB;
 }

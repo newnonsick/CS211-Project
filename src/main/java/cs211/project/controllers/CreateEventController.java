@@ -91,6 +91,8 @@ public class CreateEventController {
                 selectedStartTime==null || selectedEndTime==null) {
             if (localEndDate.isBefore(localStartDate))
                 errorLabel.setText("End date should be greater than start date.");
+            else if (selectedEndTime==null || selectedStartTime==null)
+                errorLabel.setText("You need to fill start time\nand end time");
             else if (selectedEndTime.isBefore(selectedStartTime))
                 errorLabel.setText("End time should be greater than start time.");
             else

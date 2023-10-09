@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 public class EventListController {
     private String[] eventList;
-    private int maxRow = 4;
+    private int maxRow = 3;
     private Datasource<EventList> datasource;
     private EventList eventListData;
     private LocalDate currentDate;
@@ -79,26 +79,29 @@ public class EventListController {
                 .toArray(String[]::new);
         Arrays.sort(eventList);
         showList();
-        eventScrollPane.vvalueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // Calculate the maximum Vvalue (maximum scroll position)
-                double maxVvalue = eventScrollPane.getVmax();
+        eventScrollPane.vvalueProperty().addListener((observable, oldValue, newValue) -> {
+            // Calculate the maximum Vvalue (maximum scroll position)
+            double maxVvalue = eventScrollPane.getVmax();
 
-                // Calculate the current Vvalue (current scroll position)
-                double currentVvalue = newValue.doubleValue();
+            // Calculate the current Vvalue (current scroll position)
+            double currentVvalue = newValue.doubleValue();
 
-                if (selectedCategory == null && currentVvalue >= maxVvalue * 0.95 && !isSearch) {
-                    if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
-                        maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
-                    }
-                    else if (maxRow < (int) Math.round(eventListData.getEvents().size() / 3.0 )){
-                        maxRow += 4;
-                        showList();
-                    }
+            if (selectedCategory == null && currentVvalue >= maxVvalue * 0.95 && !isSearch) {
+                int totalEvents = eventListData.getEvents().size();
+                int visibleRows = (int) Math.ceil((double) maxRow / 3);
+                int remainingEvents = totalEvents - visibleRows * 3;
+
+                if (remainingEvents > 0) {
+                    maxRow += 3;
+                    showList();
+                } else {
+                    maxRow = (int) Math.ceil((double) totalEvents / 3) * 3;
                 }
             }
         });
+
+
+
     }
 
     @FXML
@@ -164,11 +167,11 @@ public class EventListController {
     }
 
     public void showList() {
-        int row = maxRow - 4;
+        int row = maxRow - 3;
         int column = 0;
         int i = 0;
         for (Event event : eventListData.getEvents()) {
-            if (i < (maxRow - 4) * 3) {
+            if (i < (maxRow - 3) * 3) {
                 i++;
                 continue;
             }

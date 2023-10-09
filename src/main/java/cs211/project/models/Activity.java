@@ -85,9 +85,16 @@ public class Activity {
             return false;
         }
         Activity activity = (Activity) obj;
-        if (activity.getActivityName().equals(this.getActivityName()) && activity.getEventOfActivityUUID().equals(this.getEventOfActivityUUID()) && activity.getTeamOfActivityName().equals(this.getTeamOfActivityName())) {
-            return true;
+
+        String activityName = activity.getActivityName();
+        String eventOfActivityUUID = activity.getEventOfActivityUUID();
+        String teamOfActivityName = activity.getTeamOfActivityName();
+
+        if (this.teamOfActivityName != null){ //เป็น activity ของ team
+            return this.activityUUID.equals(activity.getActivityUUID());
+        } else { //เป็น activity ของ event
+            return this.activityName.equals(activityName) && this.eventOfActivityUUID.equals(eventOfActivityUUID);
         }
-        return false;
     }
+
 }

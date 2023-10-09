@@ -55,7 +55,8 @@ public class CreateTeamController {
             });
             endMinuteMenuButton.getItems().add(endMinuteMenuItem);
         }
-
+        startHourMenuButton.setText(LocalTime.now().getHour() < 10 ? "0" + LocalTime.now().getHour() : String.valueOf(LocalTime.now().getHour()));
+        startMinuteMenuButton.setText(LocalTime.now().getMinute() < 10 ? "0" + LocalTime.now().getMinute() : String.valueOf(LocalTime.now().getMinute()));
     }
 
     public void createTeam() {

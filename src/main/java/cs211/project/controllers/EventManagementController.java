@@ -24,7 +24,7 @@ public class EventManagementController {
     @FXML
     private TextField eventNameTextField;
     @FXML
-    private TextField eventInfoTextField;
+    private TextArea eventInfoTextArea;
     @FXML
     private ChoiceBox<String> eventChoiceBox;
     @FXML
@@ -102,7 +102,7 @@ public class EventManagementController {
     }
     public void showInformation(){
         eventNameTextField.setText(event.getName());
-        eventInfoTextField.setText(event.getInfo());
+        eventInfoTextArea.setText(event.getInfo());
         placeTextField.setText(event.getPlace());
         startDatePicker.setValue(event.getStartDate());
         endDatePicker.setValue(event.getEndDate());
@@ -179,6 +179,18 @@ public class EventManagementController {
     public void saveEventEditButton() {
         LocalDate startJoin = startJoinDatePicker.getValue();
         LocalDate closingJoin = closingJoinDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+
+        if (endDate != null && endDate.isBefore(LocalDate.now())) {
+            errorLabel.setText("End date of the event\ncan not be before the present day.");
+            errorLabel.setVisible(true);
+            return;
+        }
+        if (closingJoin != null && endDate != null && closingJoin.isAfter(endDate)) {
+            errorLabel.setText("Application closing day can not be\nafter the end date of the event.");
+            errorLabel.setVisible(true);
+            return;
+        }
 
         if (closingJoin != null && startJoin != null && closingJoin.isBefore(startJoin)) {
             errorLabel.setText("Start date must be before closing date.");
@@ -203,9 +215,10 @@ public class EventManagementController {
             return;
         }
 
+
         String newEventName = eventNameTextField.getText();
         event.setName(newEventName);
-        event.setInfo(eventInfoTextField.getText());
+        event.setInfo(eventInfoTextArea.getText());
         event.setCategory(eventChoiceBox.getValue());
         event.setPlace(placeTextField.getText());
         event.setStartDate(startDatePicker.getValue());
@@ -228,7 +241,7 @@ public class EventManagementController {
         }
 
         if (eventNameTextField.getText().isEmpty() ||
-                eventInfoTextField.getText().isEmpty() ||
+                eventInfoTextArea.getText().isEmpty() ||
                 placeTextField.getText().isEmpty() ||
                 eventChoiceBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
