@@ -1,3 +1,4 @@
+/*main color #FF9900*/
 
 .button {
     -fx-background-color: #FF9900;
@@ -118,4 +119,52 @@
 
 .button-with-icon:hover{
     -fx-background-color: lightgrey;
+}
+
+.table-view{
+    -fx-background-color: transparent;
+}
+
+.column-header {
+    -fx-background-color: #FF9900;
+}
+
+.cell-selection {
+    -fx-background-color: #0078d4;
+    -fx-text-fill: white;
+}
+
+.tab-pane .tab-header-area .tab-header-background{
+    -fx-background-color: transparent;
+}
+
+.tab{
+    -fx-background-color: #FFFFFF;
+    /*-fx-background-radius: 30;*/
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.tab:selected{
+    -fx-background-color: #FF9900;
+}
+
+.tab:hover{
+    -fx-background-color: #FF9900;
+}
+
+.tab:disabled{
+    -fx-opacity: 0.5;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+}
+
+.menu-button .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.menu-button .menu-item:hover {
+    -fx-background-color: #FF9900;
 }

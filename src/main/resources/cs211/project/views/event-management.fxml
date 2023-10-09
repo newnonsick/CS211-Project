@@ -106,6 +106,6 @@
       <Button fx:id="startJoinTimeButton" layoutX="731.0" layoutY="548.0" mnemonicParsing="false" onAction="#handleStartJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="opening time" />
       <Button fx:id="closeJoinTimeButton" layoutX="731.0" layoutY="583.0" mnemonicParsing="false" onAction="#handleCloseJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="closing time" />
       <Button fx:id="clearJoinTimesButton" layoutX="730.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleClearJoinTimesButton" text="clear selected time" />
-      <TextArea fx:id="eventInfoTextArea" layoutX="343.0" layoutY="224.0" prefHeight="76.0" prefWidth="299.0" />
+      <TextArea fx:id="eventInfoTextArea" layoutX="343.0" layoutY="224.0" prefHeight="76.0" prefWidth="299.0" wrapText="true" />
    </children>
 </AnchorPane>
