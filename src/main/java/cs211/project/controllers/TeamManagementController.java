@@ -14,6 +14,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 public class TeamManagementController {
@@ -78,12 +79,26 @@ public class TeamManagementController {
 
     @FXML
     public void handleEndActivityButton(){
-        activityList.findActivityByObject(selectedActivity).setActivityStatus("Ended");
-        activityListDatasource.writeData(activityList);
-        showActivity(activityList);
-        selectedActivity = null;
-        deleteActivityButton.setDisable(true);
-        endActivityButton.setDisable(true);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("End Activity");
+        alert.setContentText("Are you sure you want to end this activity?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            if (selectedActivity.getActivityStatus().equals("Ended")){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Error Dialog");
+                alert1.setHeaderText("Activity already ended");
+                alert1.setContentText("This activity has already ended.");
+                alert1.showAndWait();
+            }
+            activityList.setActivityStatusByUUID(selectedActivity.getActivityUUID(), "Ended");
+            activityListDatasource.writeData(activityList);
+            showActivity(activityList);
+            selectedActivity = null;
+            deleteActivityButton.setDisable(true);
+            endActivityButton.setDisable(true);
+        }
     }
 
     @FXML
@@ -107,16 +122,23 @@ public class TeamManagementController {
 
     @FXML
     public void handleRemoveActivityButton(){
-        activityList.removeActivity(selectedActivity);
-        activityListDatasource.writeData(activityList);
-        showActivity(activityList);
-        Datasource<TeamChatList> teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
-        TeamChatList teamChatList = teamChatListDatasource.readData();
-        teamChatList.deleteChatOfActivity(selectedActivity.getActivityUUID());
-        teamChatListDatasource.writeData(teamChatList);
-        selectedActivity = null;
-        deleteActivityButton.setDisable(true);
-        endActivityButton.setDisable(true);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Remove Activity");
+        alert.setContentText("Are you sure you want to remove this activity?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            activityList.removeActivity(selectedActivity);
+            activityListDatasource.writeData(activityList);
+            showActivity(activityList);
+            Datasource<TeamChatList> teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
+            TeamChatList teamChatList = teamChatListDatasource.readData();
+            teamChatList.deleteChatOfActivity(selectedActivity.getActivityUUID());
+            teamChatListDatasource.writeData(teamChatList);
+            selectedActivity = null;
+            deleteActivityButton.setDisable(true);
+            endActivityButton.setDisable(true);
+        }
     }
 
     public void showActivity(ActivityList activityList){

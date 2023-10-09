@@ -66,4 +66,8 @@ public class ActivityList {
     public void removeActivity(Activity activity) {
         this.activities.remove(activity);
     }
+
+    public void setActivityStatusByUUID(String activityUUID, String activityStatus){
+        findActivityByUUID(activityUUID).setActivityStatus(activityStatus);
+    }
 }
