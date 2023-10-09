@@ -181,7 +181,7 @@ public class UserInformationController {
     }
 
     @FXML
-    public void changeProfile() throws IOException {
+    public void changeProfile(){
         chooseFile();
 
         if(selectedImage != null) {
@@ -192,7 +192,12 @@ public class UserInformationController {
             String targetDirectoryPath = "data/profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
 
-            String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
+            String fileType = null;
+            try {
+                fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             String currentProfilePicName = currentUser.getProfilePictureName();
             Path existingProfilePicPath = targetDirectory.resolve(currentProfilePicName);
 
@@ -222,7 +227,11 @@ public class UserInformationController {
             }
             userListDataSource.writeData(userList);
 
-            FXRouter.goTo("mainPage", currentUser);
+            try {
+                FXRouter.goTo("mainPage", currentUser);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -237,7 +246,7 @@ public class UserInformationController {
     }
 
     @FXML
-    private void cancelChangeProfilePic() {
+    private void cancelChangeProfilePic(){
         selectedImage = null;
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
 
@@ -264,5 +273,11 @@ public class UserInformationController {
             }
         }
         userListDataSource.writeData(userList);
+
+        try {
+            FXRouter.goTo("mainPage", currentUser);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
