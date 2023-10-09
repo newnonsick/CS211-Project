@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="202.0" prefWidth="256.0" style="-fx-background-radius: 30;" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
+<AnchorPane prefHeight="202.0" prefWidth="256.0" style="-fx-background-radius: 30;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventElementController">
    <VBox alignment="CENTER" layoutY="-1.0" prefHeight="218.0" prefWidth="256.0">
       <children>
             <Label fx:id="eventNameLabel" text="Event name" textAlignment="CENTER">

@@ -118,12 +118,9 @@ public class TeamCommunicationController {
             teamChatListDatasource.writeData(teamChatList);
             update(currentUsername,text);
         }
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         Platform.runLater(() -> {
+            chatBoxScrollPane.applyCss();
+            chatBoxScrollPane.layout();
             chatBoxScrollPane.setVvalue(1.0);
         });
     }
@@ -149,12 +146,9 @@ public class TeamCommunicationController {
             }
             update(teamChat.getUsername(),teamChat.getMessage().replace("//comma//", ","));
         }
-        try {
-            TimeUnit.MILLISECONDS.sleep(250);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         Platform.runLater(() -> {
+            chatBoxScrollPane.applyCss();
+            chatBoxScrollPane.layout();
             chatBoxScrollPane.setVvalue(1.0);
         });
     }
@@ -241,6 +235,8 @@ public class TeamCommunicationController {
 
         chatBoxVBox.getChildren().addAll(hBoxMessage);
         Platform.runLater(() -> {
+            chatBoxScrollPane.applyCss();
+            chatBoxScrollPane.layout();
             chatBoxScrollPane.setVvalue(1.0);
         });
     }

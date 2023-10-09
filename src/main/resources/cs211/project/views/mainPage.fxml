@@ -99,7 +99,7 @@
             </VBox>
          </left>
          <center>
-            <StackPane fx:id="content" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" BorderPane.alignment="CENTER" />
+            <StackPane fx:id="content" prefHeight="800.0" prefWidth="1180.0" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
