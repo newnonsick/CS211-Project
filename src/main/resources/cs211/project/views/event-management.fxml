@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -102,9 +103,9 @@
          </font></Label>
       <Button fx:id="startTimeEditButton" layoutX="543.0" layoutY="423.0" mnemonicParsing="false" onAction="#handleStartTimeButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
       <Button fx:id="endTimeEditButton" layoutX="543.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleEndTimeButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
-      <TextField fx:id="eventInfoTextField" layoutX="342.0" layoutY="230.0" prefHeight="66.0" prefWidth="336.0" />
       <Button fx:id="startJoinTimeButton" layoutX="731.0" layoutY="548.0" mnemonicParsing="false" onAction="#handleStartJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="opening time" />
       <Button fx:id="closeJoinTimeButton" layoutX="731.0" layoutY="583.0" mnemonicParsing="false" onAction="#handleCloseJoinTimeButton" prefHeight="26.0" prefWidth="98.0" text="closing time" />
       <Button fx:id="clearJoinTimesButton" layoutX="730.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleClearJoinTimesButton" text="clear selected time" />
+      <TextArea fx:id="eventInfoTextArea" layoutX="343.0" layoutY="224.0" prefHeight="76.0" prefWidth="299.0" />
    </children>
 </AnchorPane>

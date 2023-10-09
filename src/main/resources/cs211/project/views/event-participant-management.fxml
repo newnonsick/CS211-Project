@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
@@ -63,7 +64,6 @@
          </font>
       </Label>
       <TextField fx:id="activityNameTextField" layoutX="715.0" layoutY="440.0" prefHeight="35.0" prefWidth="399.0" />
-      <TextField fx:id="activityInfoTextField" layoutX="715.0" layoutY="500.0" prefHeight="70.0" prefWidth="352.0" />
       <Button fx:id="removeActivityButton" layoutX="884.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleRemoveActivityPartiButton" text="Remove Activity">
          <font>
             <Font size="18.0" />
@@ -89,13 +89,14 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="startTimePicker" layoutX="723.0" layoutY="634.0" mnemonicParsing="false" onAction="#handleStartTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
-      <Button fx:id="endTimePicker" layoutX="723.0" layoutY="685.0" mnemonicParsing="false" onAction="#handleEndTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
+      <Button fx:id="startTimePicker" layoutX="716.0" layoutY="642.0" mnemonicParsing="false" onAction="#handleStartTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
+      <Button fx:id="endTimePicker" layoutX="716.0" layoutY="693.0" mnemonicParsing="false" onAction="#handleEndTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
       <Label layoutX="564.0" layoutY="591.0" text="Date">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <DatePicker fx:id="activityDatePicker" layoutX="723.0" layoutY="592.0" />
+      <DatePicker fx:id="activityDatePicker" layoutX="716.0" layoutY="600.0" />
+      <TextArea fx:id="activityInfoTextArea" layoutX="716.0" layoutY="492.0" prefHeight="90.0" prefWidth="399.0" />
    </children>
 </AnchorPane>

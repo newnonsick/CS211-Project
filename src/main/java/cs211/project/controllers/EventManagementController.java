@@ -24,7 +24,7 @@ public class EventManagementController {
     @FXML
     private TextField eventNameTextField;
     @FXML
-    private TextField eventInfoTextField;
+    private TextArea eventInfoTextArea;
     @FXML
     private ChoiceBox<String> eventChoiceBox;
     @FXML
@@ -102,7 +102,7 @@ public class EventManagementController {
     }
     public void showInformation(){
         eventNameTextField.setText(event.getName());
-        eventInfoTextField.setText(event.getInfo());
+        eventInfoTextArea.setText(event.getInfo());
         placeTextField.setText(event.getPlace());
         startDatePicker.setValue(event.getStartDate());
         endDatePicker.setValue(event.getEndDate());
@@ -218,7 +218,7 @@ public class EventManagementController {
 
         String newEventName = eventNameTextField.getText();
         event.setName(newEventName);
-        event.setInfo(eventInfoTextField.getText());
+        event.setInfo(eventInfoTextArea.getText());
         event.setCategory(eventChoiceBox.getValue());
         event.setPlace(placeTextField.getText());
         event.setStartDate(startDatePicker.getValue());
@@ -241,7 +241,7 @@ public class EventManagementController {
         }
 
         if (eventNameTextField.getText().isEmpty() ||
-                eventInfoTextField.getText().isEmpty() ||
+                eventInfoTextArea.getText().isEmpty() ||
                 placeTextField.getText().isEmpty() ||
                 eventChoiceBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
