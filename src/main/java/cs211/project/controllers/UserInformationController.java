@@ -7,14 +7,16 @@ import cs211.project.models.UserList;
 import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -260,4 +262,14 @@ public class UserInformationController {
         }
         userListDataSource.writeData(userList);
     }
+
+    @FXML
+    private void resetPassword() {
+        try {
+            FXRouterPane.goTo("reset-password");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
