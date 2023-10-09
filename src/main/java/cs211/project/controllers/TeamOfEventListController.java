@@ -28,7 +28,7 @@ public class TeamOfEventListController {
     private TeamParticipantList teamParticipantList;
     private String eventUUID;
     private String [] componentData;
-    private String currentUserName;
+    private String currentUsername;
     private LocalDate currentDate;
     private Event event;
     private Datasource<EventList> eventListDatasource;
@@ -44,7 +44,7 @@ public class TeamOfEventListController {
         eventList = eventListDatasource.readData();
         componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
-        currentUserName = componentData[1];
+        currentUsername = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
         eventNameLabel.setText(event.getName());
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
@@ -102,7 +102,7 @@ public class TeamOfEventListController {
                     Optional<ButtonType> result = alert.showAndWait();
 
                     if(result.get() == ButtonType.OK) {
-                        if (currentUserName.equals(team.getTeamOwnerUsername())){
+                        if (currentUsername.equals(team.getTeamOwnerUsername())){
                             Alert alert1 = new Alert(Alert.AlertType.ERROR);
                             alert1.setHeaderText("You are the owner of this team.");
                             alert1.showAndWait();
@@ -110,7 +110,7 @@ public class TeamOfEventListController {
                         }
                         Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
                         TeamParticipantList teamParticipantList = datasourceParticipant.readData();
-                        if (!teamParticipantList.addNewTeamParticipant(currentUserName, team.getEventUUID(), team.getTeamName())){
+                        if (!teamParticipantList.addNewTeamParticipant(currentUsername, team.getEventUUID(), team.getTeamName())){
                             Alert alert1 = new Alert(Alert.AlertType.ERROR);
                             alert1.setHeaderText("You have already joined this team.");
                             alert1.showAndWait();
@@ -118,7 +118,7 @@ public class TeamOfEventListController {
                         }
                         datasourceParticipant.writeData(teamParticipantList);
                         try {
-                            FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUserName});
+                            FXRouterPane.goTo("team-communication", new String[] {team.getEventUUID(), team.getTeamName(), currentUsername});
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

@@ -161,16 +161,27 @@ public class EventParticipantManagementController {
         }
     }
 
+
     public void handleRemoveActivityPartiButton(){
         if (selectedActivity == null) {
             return;
         }
-        activityList.getActivities().remove(selectedActivity);
-        activityListDatasource.writeData(activityList);
-        showActivity(activityList);
-        selectedActivity = null;
-        removeActivityButton.setDisable(true);
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remove Activity");
+        alert.setHeaderText("Are you sure you want to remove this activity?");
+        alert.setContentText("You won't be able to go back and change it.");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            activityList.removeActivity(selectedActivity);
+            activityListDatasource.writeData(activityList);
+            showActivity(activityList);
+            selectedActivity = null;
+            removeActivityButton.setDisable(true);
+        }
     }
+
     private void removeParticipant(String[] participantData) {
         eventParticipantTableView.getItems().remove(participantData);
         participantList.remove(participantData);

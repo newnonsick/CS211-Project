@@ -52,6 +52,10 @@ public class TeamParticipantList{
         return false;
     }
 
+    public void removeTeamParticipant(TeamParticipant teamParticipant) {
+        this.teamParticipants.remove(teamParticipant);
+    }
+
     public ArrayList<TeamParticipant> getTeamParticipants() {
         return teamParticipants;
     }

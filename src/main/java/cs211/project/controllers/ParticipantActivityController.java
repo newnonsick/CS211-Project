@@ -35,7 +35,7 @@ public class ParticipantActivityController {
     private Event event;
     EventList eventList;
     private String eventUUID;
-    private String currentUserName;
+    private String currentUsername;
     private String sourcePage;
     private ParticipantActivityListFileDatasource datasource;
     private EventListFileDatasource eventListFileDatasource;
@@ -45,7 +45,7 @@ public class ParticipantActivityController {
     public void initialize() {
         String[] componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
-        currentUserName = componentData[1];
+        currentUsername = componentData[1];
         sourcePage = componentData[2];
         eventListFileDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListFileDatasource.readData();
