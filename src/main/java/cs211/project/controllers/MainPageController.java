@@ -130,6 +130,7 @@ public class MainPageController {
         FXRouterPane.when("team-management", viewPath + "team-management.fxml");
         FXRouterPane.when("edit-participant", viewPath + "edit-participant.fxml");
         FXRouterPane.when("participant-activity",viewPath + "participant-activity.fxml");
+        FXRouterPane.when("reset-password", viewPath + "reset-password.fxml");
     }
     @FXML
     public void goToEventList()  {

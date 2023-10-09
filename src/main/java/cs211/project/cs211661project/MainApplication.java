@@ -1,6 +1,7 @@
 package cs211.project.cs211661project;
 
 import cs211.project.services.FXRouter;
+import cs211.project.services.FXRouterPane;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class MainApplication extends Application {
         FXRouter.when("login", viewPath + "login.fxml");
         FXRouter.when("adminPage", viewPath + "adminPage.fxml");
         FXRouter.when("creators", viewPath+"creators.fxml");
-
+        FXRouter.when("reset-password", viewPath + "reset-password.fxml");
     }
 
     public static void main(String[] args) {

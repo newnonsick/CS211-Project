@@ -8,10 +8,7 @@ import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -280,4 +277,14 @@ public class UserInformationController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    private void resetPassword() {
+        try {
+            FXRouter.goTo("reset-password", currentUser);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
