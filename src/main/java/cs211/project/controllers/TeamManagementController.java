@@ -107,20 +107,12 @@ public class TeamManagementController {
 
     @FXML
     public void handleRemoveActivityButton(){
-        activityList.getActivities().remove(selectedActivity);
+        activityList.removeActivity(selectedActivity);
         activityListDatasource.writeData(activityList);
         showActivity(activityList);
         Datasource<TeamChatList> teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
         TeamChatList teamChatList = teamChatListDatasource.readData();
-        ArrayList<TeamChat> removeTeamChats = new ArrayList<>();
-        for (TeamChat teamChat: teamChatList.getTeamChats()) {
-            if (teamChat.getActivityUUID().equals(selectedActivity.getActivityUUID())){
-                removeTeamChats.add(teamChat);
-            }
-        }
-        for (TeamChat teamChat: removeTeamChats) {
-            teamChatList.getTeamChats().remove(teamChat);
-        }
+        teamChatList.deleteChatOfActivity(selectedActivity.getActivityUUID());
         teamChatListDatasource.writeData(teamChatList);
         selectedActivity = null;
         deleteActivityButton.setDisable(true);

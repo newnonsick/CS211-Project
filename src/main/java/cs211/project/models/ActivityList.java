@@ -62,4 +62,8 @@ public class ActivityList {
         }
         return null;
     }
+
+    public void removeActivity(Activity activity) {
+        this.activities.remove(activity);
+    }
 }

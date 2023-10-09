@@ -165,7 +165,7 @@ public class EventParticipantManagementController {
         if (selectedActivity == null) {
             return;
         }
-        activityList.getActivities().remove(selectedActivity);
+        activityList.removeActivity(selectedActivity);
         activityListDatasource.writeData(activityList);
         showActivity(activityList);
         selectedActivity = null;

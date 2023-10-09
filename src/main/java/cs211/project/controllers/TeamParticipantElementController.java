@@ -90,7 +90,7 @@ public class TeamParticipantElementController {
                 alert2.showAndWait();
                 return;
             }
-            teamParticipantList.getTeamParticipants().remove(teamParticipant);
+            teamParticipantList.removeTeamParticipant(teamParticipant);
             teamParticipantListDatasource.writeData(teamParticipantList);
             if (teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(teamParticipant.getEventUUID(), teamParticipant.getTeamName()) == 0 || teamParticipant.getUsername().equals(team.getHeadOfTeamUsername())){
                 team.setHeadOfTeamUsername(currentUsername);

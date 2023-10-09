@@ -46,7 +46,7 @@ public class TeamCommunicationController {
     private String [] componentData;
     private String eventUUID;
     private String teamName;
-    private String currentUserName;
+    private String currentUsername;
     private Datasource<UserList> userListDatasource;
     private UserList userList;
     private Datasource<EventList> eventListDatasource;
@@ -68,10 +68,10 @@ public class TeamCommunicationController {
         componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
         teamName = componentData[1];
-        currentUserName = componentData[2];
+        currentUsername = componentData[2];
         team = teamList.findEventByEventUUIDAndTeamName(eventUUID, teamName);
         manageTeamButton.setVisible(false);
-        if (team.getHeadOfTeamUsername().equals(currentUserName) || team.getTeamOwnerUsername().equals(currentUserName)){
+        if (team.getHeadOfTeamUsername().equals(currentUsername) || team.getTeamOwnerUsername().equals(currentUsername)){
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
@@ -114,9 +114,9 @@ public class TeamCommunicationController {
         String text = sendMessageTextField.getText().trim();
         sendMessageTextField.clear();
         if (!text.isEmpty()){
-            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUserName, text.replace(",", "//comma//"), selectedActivity.getActivityUUID());
+            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUsername, text.replace(",", "//comma//"), selectedActivity.getActivityUUID());
             teamChatListDatasource.writeData(teamChatList);
-            update(currentUserName,text);
+            update(currentUsername,text);
         }
         try {
             TimeUnit.MILLISECONDS.sleep(500);
@@ -131,7 +131,7 @@ public class TeamCommunicationController {
     @FXML
     public void handleManageTeamButton(){
         try {
-            FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUserName});
+            FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUsername});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -172,7 +172,7 @@ public class TeamCommunicationController {
         VBox messageVBox = new VBox(-5);
         messageVBox.setAlignment(Pos.TOP_LEFT);
         Text usernameText = new Text();
-        if (!currentUserName.equals(username)){
+        if (!currentUsername.equals(username)){
             if (team.getTeamOwnerUsername().equals(username)){
                 usernameText = new Text(username + " (Owner)" + "\n");
             }
@@ -202,7 +202,7 @@ public class TeamCommunicationController {
         HBox hBoxMessage = new HBox(10);
 
         Pane pane = new Pane();
-        if(!currentUserName.equals(username)){
+        if(!currentUsername.equals(username)){
             if (beforeSend.equals(username)){
                 messageVBox.getChildren().remove(0);
                 flow.getStyleClass().add("textFlowFlipped");

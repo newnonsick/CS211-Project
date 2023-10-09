@@ -13,6 +13,15 @@ public class TeamChatList {
         teamChats.add(new TeamChat(eventUUID, teamName, username, message, activityUUID));
     }
 
+    public void deleteChatOfActivity(String activityUUID) {
+        for (int i = 0; i < this.teamChats.size(); i++) {
+            if (this.teamChats.get(i).getActivityUUID().equals(activityUUID)) {
+                this.teamChats.remove(i);
+                i--;
+            }
+        }
+    }
+
     public ArrayList<TeamChat> getTeamChats() {
         return teamChats;
     }
