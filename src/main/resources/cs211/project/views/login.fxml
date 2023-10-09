@@ -36,6 +36,7 @@
             <Button fx:id="loginButton" defaultButton="true" layoutX="215.0" layoutY="544.0" mnemonicParsing="false" onAction="#login" text="LOGIN" />
             <Hyperlink layoutX="49.0" layoutY="586.0" onAction="#goToRegister" text="Don't have an account?" textFill="#070000" />
             <Label fx:id="errorLabel" layoutX="49.0" layoutY="516.0" prefHeight="17.0" prefWidth="237.0" textFill="RED" />
+            <Button layoutX="49.0" layoutY="761.0" mnemonicParsing="false" onAction="#goToCreators" text="Creators" />
          </children>
       </AnchorPane>
       <Line endX="-100.0" endY="846.0" layoutX="900.0" layoutY="9.0" startX="-100.0" startY="-9.0" />
