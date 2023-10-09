@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class TeamManagementController {
@@ -111,11 +112,14 @@ public class TeamManagementController {
         showActivity(activityList);
         Datasource<TeamChatList> teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
         TeamChatList teamChatList = teamChatListDatasource.readData();
+        ArrayList<TeamChat> removeTeamChats = new ArrayList<>();
         for (TeamChat teamChat: teamChatList.getTeamChats()) {
             if (teamChat.getActivityUUID().equals(selectedActivity.getActivityUUID())){
-                teamChatList.getTeamChats().remove(teamChat);
-                break;
+                removeTeamChats.add(teamChat);
             }
+        }
+        for (TeamChat teamChat: removeTeamChats) {
+            teamChatList.getTeamChats().remove(teamChat);
         }
         teamChatListDatasource.writeData(teamChatList);
         selectedActivity = null;

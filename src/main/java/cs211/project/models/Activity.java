@@ -90,10 +90,11 @@ public class Activity {
         String eventOfActivityUUID = activity.getEventOfActivityUUID();
         String teamOfActivityName = activity.getTeamOfActivityName();
 
-        return
-                (activityName != null && activityName.equals(this.getActivityName())) &&
-                        (eventOfActivityUUID != null && eventOfActivityUUID.equals(this.getEventOfActivityUUID())) &&
-                        (teamOfActivityName != null && teamOfActivityName.equals(this.getTeamOfActivityName()));
+        if (this.teamOfActivityName != null){ //เป็น activity ของ team
+            return this.activityUUID.equals(activity.getActivityUUID());
+        } else { //เป็น activity ของ event
+            return this.activityName.equals(activityName) && this.eventOfActivityUUID.equals(eventOfActivityUUID);
+        }
     }
 
 }
