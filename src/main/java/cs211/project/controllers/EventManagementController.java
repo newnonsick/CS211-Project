@@ -179,6 +179,18 @@ public class EventManagementController {
     public void saveEventEditButton() {
         LocalDate startJoin = startJoinDatePicker.getValue();
         LocalDate closingJoin = closingJoinDatePicker.getValue();
+        LocalDate endDate = endDatePicker.getValue();
+
+        if (endDate != null && endDate.isBefore(LocalDate.now())) {
+            errorLabel.setText("End date of the event\ncan not be before the present day.");
+            errorLabel.setVisible(true);
+            return;
+        }
+        if (closingJoin != null && endDate != null && closingJoin.isAfter(endDate)) {
+            errorLabel.setText("Application closing day can not be\nafter the end date of the event.");
+            errorLabel.setVisible(true);
+            return;
+        }
 
         if (closingJoin != null && startJoin != null && closingJoin.isBefore(startJoin)) {
             errorLabel.setText("Start date must be before closing date.");
@@ -202,6 +214,7 @@ public class EventManagementController {
             errorLabel.setVisible(true);
             return;
         }
+
 
         String newEventName = eventNameTextField.getText();
         event.setName(newEventName);

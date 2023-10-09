@@ -85,9 +85,15 @@ public class Activity {
             return false;
         }
         Activity activity = (Activity) obj;
-        if (activity.getActivityName().equals(this.getActivityName()) && activity.getEventOfActivityUUID().equals(this.getEventOfActivityUUID()) && activity.getTeamOfActivityName().equals(this.getTeamOfActivityName())) {
-            return true;
-        }
-        return false;
+
+        String activityName = activity.getActivityName();
+        String eventOfActivityUUID = activity.getEventOfActivityUUID();
+        String teamOfActivityName = activity.getTeamOfActivityName();
+
+        return
+                (activityName != null && activityName.equals(this.getActivityName())) &&
+                        (eventOfActivityUUID != null && eventOfActivityUUID.equals(this.getEventOfActivityUUID())) &&
+                        (teamOfActivityName != null && teamOfActivityName.equals(this.getTeamOfActivityName()));
     }
+
 }
