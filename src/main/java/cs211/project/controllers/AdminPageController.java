@@ -1,20 +1,25 @@
 package cs211.project.controllers;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.LogUser;
 import cs211.project.models.User;
 import cs211.project.models.UserList;
-import cs211.project.services.Datasource;
-import cs211.project.services.FXRouterPane;
-import cs211.project.services.UserLogFileDataSource;
+import cs211.project.services.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +33,7 @@ public class AdminPageController {
     private Label nameLabel;
     private Datasource<UserList> datasource;
     private UserList usersLogList;
+    private boolean changePasswordOn;
     @FXML
     private ImageView profileImageView;
     @FXML
@@ -36,6 +42,12 @@ public class AdminPageController {
     Label usernameTagLabel;
     @FXML
     Label nameTagLabel;
+    @FXML
+    Pane changePasswordPane;
+    @FXML
+    PasswordField oldPasswordField;
+    @FXML
+    PasswordField newPasswordField;
 
     @FXML
     public void initialize() {
@@ -50,15 +62,10 @@ public class AdminPageController {
                     profileImageView.setImage(newValue.getProfilePicture());
                     usernameLabel.setText(newValue.getUsername());
                     nameLabel.setText(newValue.getName());
-                    usernameTagLabel.setVisible(true);
-                    nameTagLabel.setVisible(true);
-                }
-                else {
+                } else {
                     profileImageView.setImage(null);
                     usernameLabel.setText("");
                     nameLabel.setText("");
-                    usernameTagLabel.setVisible(false);
-                    nameTagLabel.setVisible(false);
                 }
             }
         });
@@ -84,9 +91,74 @@ public class AdminPageController {
         usersLogTableView.getColumns().add(timeColumn);
 
         usersLogTableView.getItems().clear();
-        for (User user: usersLogList.getUsers()) {
+        for (User user : usersLogList.getUsers()) {
             usersLogTableView.getItems().add(user);
         }
 
+    }
+
+    @FXML
+    public void changePasswordPaneToggle() {
+        Timeline timeline = new Timeline();
+        if (!changePasswordOn) {
+            double targetHeight = 165;
+
+            KeyValue keyValue = new KeyValue(changePasswordPane.prefHeightProperty(), targetHeight);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
+
+            timeline.getKeyFrames().add(keyFrame);
+            changePasswordPane.setVisible(true);
+            timeline.play();
+            changePasswordOn = true;
+        } else {
+            double targetHeight = 0;
+
+            KeyValue keyValue = new KeyValue(changePasswordPane.prefHeightProperty(), targetHeight);
+            KeyValue keyValue2 = new KeyValue(changePasswordPane.visibleProperty(), false);
+            KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
+            KeyFrame keyFrame2 = new KeyFrame(Duration.seconds(0.15), keyValue2);
+
+            timeline.getKeyFrames().add(keyFrame);
+            timeline.getKeyFrames().add(keyFrame2);
+            timeline.play();
+
+            changePasswordPane.setVisible(false);
+            changePasswordOn = false;
+        }
+    }
+
+    @FXML
+    public void changePassword() {
+        String oldPass = oldPasswordField.getText();
+        String newPass = newPasswordField.getText();
+        boolean correctPass = false;
+        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        UserList userList = userListDatasource.readData();
+        UserList updatePass = new UserList();
+        for (User user : userList.getUsers()) {
+            if (user.getUsername().equals("admin211")) {
+                BCrypt.Result result = BCrypt.verifyer().verify(oldPass.toCharArray(), user.getPassword());
+                if(result.verified) {
+                    user.setPassword(BCrypt.withDefaults().hashToString(12, newPass.toCharArray()));
+                    correctPass = true;
+                }
+                else {
+                    break;
+                }
+            }
+            updatePass.addUser(user);
+        }
+        if(correctPass) {
+            userListDatasource.writeData(updatePass);
+            try {
+                FXRouter.goTo("login");
+            }
+            catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            errorLabel.setText("Wrong Password!!");
+        }
     }
 }

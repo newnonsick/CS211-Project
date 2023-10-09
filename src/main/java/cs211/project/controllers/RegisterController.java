@@ -109,7 +109,7 @@ public class RegisterController {
             String targetDirectoryPath = "data" + File.separator + "profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
             String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-            //errorLabel.setText(fileType);
+
             Path targetFilePath = targetDirectory.resolve(username + "." + (fileType.substring(6)));
             try {
                 Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
