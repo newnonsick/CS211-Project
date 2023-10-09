@@ -46,6 +46,18 @@ public class User {
         }
     }
 
+    public Image getProfilePicture(double v, double v1, boolean b, boolean b1) {
+        if(this.profilePic.equals("default.png")) {
+            return new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm(), v, v1, b, b1);
+        }
+
+        else {
+            String filePath = "data/profile_picture/" + this.profilePic;
+            File file = new File(filePath);
+            return new Image(file.toURI().toString(), v, v1, b, b1);
+        }
+    }
+
     public String getProfilePictureName() {
         return this.profilePic;
     }

@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -94,7 +95,9 @@ public class UserInformationController {
     private void showUser() {
         nameLabel.setText(currentUser.getName());
         usernameLabel.setText("@" + currentUser.getUsername());
-        profileImageView.setImage(currentUser.getProfilePicture());
+        Circle clip = new Circle(70, 70, 70);
+        profileImageView.setClip(clip);
+        profileImageView.setImage(currentUser.getProfilePicture(140, 140, false, false));
         profileImageView.setFitHeight(140);
         profileImageView.setFitWidth(140);
     }
@@ -218,6 +221,8 @@ public class UserInformationController {
                 }
             }
             userListDataSource.writeData(userList);
+
+            FXRouter.goTo("mainPage", currentUser);
         }
     }
 

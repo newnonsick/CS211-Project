@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -42,12 +43,20 @@ public class MainPageController {
     ImageView myTeamsNavBarImage;
     @FXML
     ImageView userInfoNavBarImage;
+    @FXML
+    Label nameLabel;
+    @FXML
+    ImageView userImageView;
 
     private User currentUser;
 
     @FXML
     public void initialize() {
         currentUser = (User) FXRouter.getData();
+        Circle clip = new Circle(50, 50, 50);
+        userImageView.setClip(clip);
+        nameLabel.setText(currentUser.getName());
+        userImageView.setImage(currentUser.getProfilePicture(100, 100, false, false));
         changeStyleClassButton(eventButton);
         FXRouterPane.clearContent();
         FXRouterPane.bind(this, content, "Event Manager");
