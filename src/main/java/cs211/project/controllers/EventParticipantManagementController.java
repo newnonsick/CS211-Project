@@ -10,7 +10,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,13 +21,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class EventParticipantManagementController {
 
     @FXML private TableView eventParticipantTableView;
     @FXML private TableView activityParticipantTableView;
-    @FXML private Button goToEditParticipant;
     @FXML private Button removeActivityButton;
     @FXML private Button startTimePicker;
     @FXML private Button endTimePicker;
@@ -60,8 +57,8 @@ public class EventParticipantManagementController {
         eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
         eventList = eventListDatasource.readData();
         event = eventList.findEventByUUID(eventOfParticipantUUID);
-        eventNameLabel.setText(event.getEventName());
-        eventName2Label.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
+        eventName2Label.setText(event.getName());
         activityListDatasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         activityList = activityListDatasource.readData();
         participantDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
@@ -91,16 +88,12 @@ public class EventParticipantManagementController {
             throw new RuntimeException(e);
         }
     }
-    @FXML
-    public void goToEditParticipant() {
-    }
 
     @FXML
     public void handleStartTimePickerButton() {
         selectedStartTime = showCustomTimePickerDialog();
         if (selectedStartTime != null) {
-            System.out.println("Select Start Time: " + selectedStartTime);
-            startTimePicker.setText(selectedStartTime.toString());
+           startTimePicker.setText(selectedStartTime.toString());
         }
     }
 
@@ -108,7 +101,6 @@ public class EventParticipantManagementController {
     public void handleEndTimePickerButton() {
         selectedEndTime = showCustomTimePickerDialog();
         if (selectedEndTime != null) {
-            System.out.println("Select End Time: " + selectedEndTime);
             endTimePicker.setText(selectedEndTime.toString());
         }
     }
@@ -180,18 +172,13 @@ public class EventParticipantManagementController {
         removeActivityButton.setDisable(true);
     }
     private void removeParticipant(String[] participantData) {
-        // Remove from the TableView
         eventParticipantTableView.getItems().remove(participantData);
-
-        // Remove from the participantList
         participantList.remove(participantData);
-
-        // Update the CSV file
         participantDataSource.writeData(participantList);
     }
 
     public void showParticipants(List<String[]> participantList){
-        TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("รายชื่อผู้เข้าร่วม");
+        TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("Participant List");
         partiUsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
         ObservableList<String[]> filteredParticipants = FXCollections.observableArrayList();
         for (String[] participantData : participantList) {
@@ -199,6 +186,7 @@ public class EventParticipantManagementController {
                 filteredParticipants.add(participantData);
             }
         }
+
         TableColumn<String[], String> removeButtonColumn = new TableColumn<>("Remove");
         removeButtonColumn.setCellFactory(param -> new TableCell<>() {
             private final Button removeButton = new Button("Remove");
@@ -211,7 +199,15 @@ public class EventParticipantManagementController {
                 } else {
                     removeButton.setOnAction(event -> {
                         String[] participantData = getTableView().getItems().get(getIndex());
-                        removeParticipant(participantData);
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Remove Participant");
+                        alert.setHeaderText("Are you sure you want to remove this participant?");
+                        alert.setContentText("You won't be able to go back and change it.");
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            removeParticipant(participantData);
+                        }
                     });
                     setGraphic(removeButton);
                 }
@@ -229,20 +225,20 @@ public class EventParticipantManagementController {
     }
     public void showActivity(ActivityList activityList){
 
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("ชื่อกิจกรรม");
+        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Activity");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("รายละเอียดกิจกรรม");
+        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("Details");
         activityInfoColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
-        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("เวลาเริ่ม");
+        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("Start Time");
         activityStartColumn.setCellValueFactory(new PropertyValueFactory<>("activityStartTime"));
 
-        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("เวลาสิ้นสุด");
+        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("End Time");
         activityEndColumn.setCellValueFactory(new PropertyValueFactory<>("activityEndTime"));
 
-        TableColumn<Activity, String> activityDateColumn =  new TableColumn<>("วันที่");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy"); // Replace 'your-pattern-here' with the desired pattern
+        TableColumn<Activity, String> activityDateColumn =  new TableColumn<>("Date");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM  yyyy");
         activityDateColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getActivityDate().format(formatter))
         );

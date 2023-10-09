@@ -10,8 +10,9 @@ import javafx.scene.image.ImageView;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -43,34 +44,49 @@ public class EventInformationController {
         eventUUID = componentData[0];
         currentUserName = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
-        eventInfoLabel.setText(event.getEventInformation());
-        placeLabel.setText(event.getPlaceEvent());
+        eventNameLabel.setText(event.getName());
 
-        String pattern = "MMMM dd, yyyy";
-        startDateLabel.setText("" + event.getEventStartDate().format(DateTimeFormatter.ofPattern(pattern)));
-        endDateLabel.setText("" + event.getEventEndDate().format(DateTimeFormatter.ofPattern(pattern)));
+        eventInfoLabel.setWrapText(true);
+        eventInfoLabel.setText(event.getInfo());
+        eventInfoLabel.setPrefWidth(950);
+
+        placeLabel.setWrapText(true);
+        placeLabel.setText(event.getPlace());
+        placeLabel.setPrefWidth(500);
+
+        String pattern = "dd MMMM yyyy";
+        startDateLabel.setText(event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getStartTime() + " to");
+        endDateLabel.setText(event.getEndDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getEndTime());
 
         if (event.getMaxParticipants() == -1) {
-            maxParticipantsLabel.setText("ไม่จำกัดจำนวนผู้เข้าร่วม");
+            maxParticipantsLabel.setText("No Maximum Participants");
         } else {
             maxParticipantsLabel.setText("" + event.getMaxParticipants());
         }
 
         if (event.getStartJoinDate() == null) {
             startJoinDateLabel.setText("N/A");
+        } else if (event.getStartJoinTime() == null) {
+            startJoinDateLabel.setText(event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " to");
         } else {
-            startJoinDateLabel.setText("" + event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+            startJoinDateLabel.setText(event.getStartJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getStartJoinTime() + " to");
         }
-        if (event.getClosingJoinDate() == null) {
+
+        if (event.getCloseJoinDate() == null) {
             closingJoinDateLabel.setText("N/A");
+        } else if (event.getCloseJoinTime() == null) {
+            closingJoinDateLabel.setText(event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
         } else {
-            closingJoinDateLabel.setText("" + event.getClosingJoinDate().format(DateTimeFormatter.ofPattern(pattern)));
+            closingJoinDateLabel.setText(event.getCloseJoinDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getCloseJoinTime());
         }
-        categoryLabel.setText(event.getEventCategory());
-        String filePath = "data/eventPicture/" + event.getEventPicture();
+
+        categoryLabel.setText(event.getCategory());
+
+        String filePath = "data/eventPicture/" + event.getPicture();
         File file = new File(filePath);
         eventImageView.setImage(new Image(file.toURI().toString()));
+        eventImageView.setFitWidth(398);
+        eventImageView.setFitHeight(230);
 
         errorLabel.setText("");
     }
@@ -86,8 +102,34 @@ public class EventInformationController {
 
     @FXML
     private void joinEventButton() {
-        if (currentUserName.equals(event.getEventOwnerUsername())){
+        if (currentUserName.equals(event.getOwnerUsername())){
             errorLabel.setText("You can not join your own event.");
+            return;
+        }
+        ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
+        LocalDate currentDate = LocalDate.now(thaiTimeZone);
+         if (event.getEndDate().isBefore(currentDate)) {
+            errorLabel.setText("The event has ended.\nYou can not join.");
+            return;
+        }
+
+        LocalDateTime currentDateTime = LocalDateTime.now(thaiTimeZone);
+        LocalDateTime startJoinDateTime = (event.getStartJoinDate() != null && event.getStartJoinTime() != null)
+                ? LocalDateTime.of(event.getStartJoinDate(), event.getStartJoinTime())
+                : LocalDateTime.MIN;
+        LocalDateTime closeJoinDateTime = (event.getCloseJoinDate() != null && event.getCloseJoinTime() != null)
+                ? LocalDateTime.of(event.getCloseJoinDate(), event.getCloseJoinTime())
+                : LocalDateTime.MAX;
+
+        if (currentDateTime.isBefore(startJoinDateTime) || currentDateTime.isAfter(closeJoinDateTime)) {
+            errorLabel.setText("You can not join this event\noutside the specified joining period.");
+            return;
+        }
+
+        JoinEventFileDataSource joinDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
+        int currentParticipants = joinDataSource.countParticipantsForEvent(event.getEventUUID());
+        if (event.getMaxParticipants() != -1 && currentParticipants >= event.getMaxParticipants()) {
+            errorLabel.setText("The event has reached its maximum\nnumber of participants. You can not join.");
             return;
         }
 
@@ -161,12 +203,13 @@ public class EventInformationController {
                 throw new RuntimeException(e);
             }
         }
+        goToParticipantActivity();
     }
 
     @FXML
     private void goToParticipantActivity() {
         try {
-            FXRouterPane.goTo("participant-activity", new String[] { event.getEventUUID(), currentUserName});
+            FXRouterPane.goTo("participant-activity", new String[] { event.getEventUUID(), currentUserName, "eventInformation"});
         }
         catch (IOException e) {
             throw new RuntimeException(e);

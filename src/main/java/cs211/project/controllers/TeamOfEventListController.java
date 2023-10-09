@@ -11,7 +11,6 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 public class TeamOfEventListController {
@@ -47,7 +46,7 @@ public class TeamOfEventListController {
         eventUUID = componentData[0];
         currentUserName = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         showTeam();
@@ -61,7 +60,20 @@ public class TeamOfEventListController {
             if (!team.getEventUUID().equals(eventUUID)) {
                 continue;
             }
-            if (team.getClosingJoinDate().isBefore(currentDate)) {
+            if (team.getStartJoinDate().isEqual(currentDate)) {
+                if (team.getStartTime().isAfter(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getStartJoinDate().isAfter(currentDate)) {
+                continue;
+            }
+            else if (team.getClosingJoinDate().isEqual(currentDate)) {
+                if (team.getEndTime().isBefore(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if (column == 2) {
@@ -78,7 +90,7 @@ public class TeamOfEventListController {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUserName));
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getStartTime(), team.getClosingJoinDate(), team.getEndTime());
             if (teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(team.getEventUUID(), team.getTeamName()) >= team.getMaxParticipants()) {
                 anchorPane.getStyleClass().remove("element");
                 anchorPane.getStyleClass().add("team-full");
