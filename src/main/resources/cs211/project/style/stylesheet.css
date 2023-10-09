@@ -2,15 +2,13 @@
 
 .button {
     -fx-background-color: #FF8FAB;
+    /*-fx-font-family: "Angsana New";*/
 }
 
 .button:pressed {
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
-/*.upsize-button {*/
-/*    -fx-font-size: 40px;*/
-/*}*/
 .element{
     -fx-background-color: #FFFFFF;
 }
@@ -113,6 +111,10 @@
     -fx-background-radius: 30;
 }
 
+.scroll-pane{
+    -fx-background-color: transparent;
+}
+
 .button-with-icon{
     -fx-background-color: transparent;
     -fx-background-radius: 30;
@@ -124,6 +126,7 @@
 
 .table-view{
     -fx-background-color: transparent;
+    /*-fx-font-family: "Angsana New";*/
 }
 
 .column-header {
@@ -141,8 +144,8 @@
 
 .tab{
     -fx-background-color: #FFFFFF;
-    /*-fx-background-radius: 30;*/
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    /*-fx-font-family: "Angsana New";*/
 }
 
 .tab:selected{
@@ -168,4 +171,28 @@
 
 .menu-button .menu-item:hover {
     -fx-background-color: #FF8FAB;
+}
+
+.label {
+   /*-fx-font-family: "Angsana New";*/
+}
+
+.text-field{
+   /*-fx-font-family: "Angsana New";*/
+}
+
+.text-area{
+   /*-fx-font-family: "Angsana New";*/
+}
+
+.text-flow .text{
+   /*-fx-font-family: "Angsana New";*/
+}
+
+.text{
+   /*-fx-font-family: "Angsana New";*/
+}
+
+.hyperlink{
+   /*-fx-font-family: "Angsana New";*/
 }

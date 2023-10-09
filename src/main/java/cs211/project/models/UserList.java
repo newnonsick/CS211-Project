@@ -49,6 +49,9 @@ public class UserList {
         return null;
     }
 
+    public void setProfileImageByUsername(String username, String profileImage) {
+        findUserByUsername(username).setProfilePic(profileImage);
+    }
 
     public ArrayList<User> getUsers() {
         return this.users;

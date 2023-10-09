@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
     @FXML Label activityNameLabel;
-    @FXML Label activityDescriptionLabel;
     @FXML Label teamNameLabel;
     @FXML TableView activityTableView;
     @FXML TextField sendMessageTextField;
@@ -34,6 +33,7 @@ public class TeamCommunicationController {
     @FXML TableColumn activityNameColumn;
     @FXML TableColumn activityDescriptionColumn;
     @FXML TableColumn activityStatusColumn;
+    @FXML Text activityDescriptionText;
 
     private TeamChatList teamChatList;
     private Team team;
@@ -76,7 +76,7 @@ public class TeamCommunicationController {
         }
         teamNameLabel.setText(team.getTeamName());
         activityNameLabel.setText("");
-        activityDescriptionLabel.setText("");
+        activityDescriptionText.setText("");
         sendMessageButton.setDisable(true);
         sendMessageTextField.setDisable(true);
         showActivity(activityList);
@@ -93,17 +93,17 @@ public class TeamCommunicationController {
                     sendMessageTextField.setDisable(false);
                     if (newValue.getActivityStatus().equals("Ended")){
                         activityNameLabel.setText("");
-                        activityDescriptionLabel.setText("");
+                        activityDescriptionText.setText("");
                         return;
                     }
                     activityNameLabel.setText(newValue.getActivityName());
-                    activityDescriptionLabel.setText(newValue.getActivityInformation());
+                    activityDescriptionText.setText(newValue.getActivityInformation());
                 }
                 else{
                     sendMessageButton.setDisable(true);
                     sendMessageTextField.setDisable(true);
                     activityNameLabel.setText("");
-                    activityDescriptionLabel.setText("");
+                    activityDescriptionText.setText("");
                 }
             }
         });

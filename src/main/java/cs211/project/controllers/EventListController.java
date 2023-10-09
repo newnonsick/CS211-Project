@@ -287,7 +287,7 @@ public class EventListController {
     }
     @FXML
     public void handleAllCategoryButton() {
-        maxRow = 4;
+        maxRow = 3;
         selectedCategory = null;
         eventGrid.getChildren().clear();
         showList();

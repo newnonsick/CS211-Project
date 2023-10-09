@@ -24,6 +24,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 public class UserInformationController {
     @FXML private Label usernameLabel;
@@ -216,12 +217,13 @@ public class UserInformationController {
                 throw new RuntimeException(e);
             }
 
-            for (User user : userList.getUsers()) {
-                if (user.getUsername().equals(currentUser.getUsername())) {
-                    user.setProfilePic(newProfilePicFileName);
-                    break;
-                }
-            }
+//            for (User user : userList.getUsers()) {
+//                if (user.getUsername().equals(currentUser.getUsername())) {
+//                    user.setProfilePic(newProfilePicFileName);
+//                    break;
+//                }
+//            }
+            userList.setProfileImageByUsername(currentUser.getUsername(), newProfilePicFileName);
             userListDataSource.writeData(userList);
 
             try {
@@ -244,6 +246,14 @@ public class UserInformationController {
 
     @FXML
     private void cancelChangeProfilePic(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Profile Picture");
+        alert.setHeaderText("Are you sure to delete your profile picture?");
+        alert.setContentText("This action cannot be undone.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() != ButtonType.OK){
+            return;
+        }
         selectedImage = null;
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
 
@@ -263,12 +273,13 @@ public class UserInformationController {
         String profilePic = "default.png";
         currentUser.setProfilePic(profilePic);
 
-        for (User user : userList.getUsers()) {
-            if (user.getUsername().equals(currentUser.getUsername())) {
-                user.setProfilePic(profilePic);
-                break;
-            }
-        }
+//        for (User user : userList.getUsers()) {
+//            if (user.getUsername().equals(currentUser.getUsername())) {
+//                user.setProfilePic(profilePic);
+//                break;
+//            }
+//        }
+        userList.setProfileImageByUsername(currentUser.getUsername(), profilePic);
         userListDataSource.writeData(userList);
 
         try {
