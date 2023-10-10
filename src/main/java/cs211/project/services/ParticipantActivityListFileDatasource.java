@@ -1,15 +1,13 @@
 package cs211.project.services;
 
 import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
-import cs211.project.models.Event;
+import cs211.project.models.collections.ActivityList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
-import java.util.Collections;
 
 public class ParticipantActivityListFileDatasource implements Datasource<ActivityList> {
     private String directoryName;

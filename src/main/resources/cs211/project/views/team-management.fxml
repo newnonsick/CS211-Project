@@ -38,7 +38,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="625.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleAddActivityButton" text="Add Activity">
+      <Button fx:id="addActivityButton" layoutX="625.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleAddActivityButton" text="Add Activity">
          <font>
             <Font size="18.0" />
          </font>

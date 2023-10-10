@@ -1,10 +1,9 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 import cs211.project.models.User;
 import cs211.project.services.*;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -22,10 +21,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -71,7 +67,7 @@ public class CreateEventController {
     private void createEvent() throws IOException {
         String name = eventNameTextField.getText().trim();
         String image = "";
-        String info = eventInfoTextArea.getText().trim();
+        String info = eventInfoTextArea.getText().replace("\n", " ").replace(",", "//comma//").trim();
         String category = eventChoiceBox.getSelectionModel().getSelectedItem();;
         String place = placeTextField.getText().trim();
 

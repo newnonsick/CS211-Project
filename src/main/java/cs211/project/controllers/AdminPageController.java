@@ -3,7 +3,7 @@ package cs211.project.controllers;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.LogUser;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -13,12 +13,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 
 public class AdminPageController {

@@ -1,12 +1,9 @@
 package cs211.project.services;
-import cs211.project.models.Team;
-import cs211.project.models.TeamList;
 import cs211.project.models.TeamParticipant;
-import cs211.project.models.TeamParticipantList;
+import cs211.project.models.collections.TeamParticipantList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 
 public class TeamParticipantListFileDataSource implements Datasource<TeamParticipantList>{
     private String directoryName;

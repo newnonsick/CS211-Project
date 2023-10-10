@@ -1,7 +1,8 @@
 package cs211.project.controllers;
 
-import cs211.project.Main;
 import cs211.project.models.*;
+import cs211.project.models.collections.TeamList;
+import cs211.project.models.collections.TeamParticipantList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,10 +13,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 public class MyTeamListController {
 

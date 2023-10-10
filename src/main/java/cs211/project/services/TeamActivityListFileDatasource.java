@@ -1,7 +1,7 @@
 package cs211.project.services;
 
 import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
+import cs211.project.models.collections.ActivityList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -61,7 +61,7 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
                 String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 String activityName = data[2].trim();
-                String activityInfo = data[3].trim();
+                String activityInfo = data[3].trim().replace("//comma//", ",");
                 String activityStatus = data[4].trim();
                 String activityUUID = data[5].trim();
 
@@ -73,7 +73,7 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
         activities.sort(new TeamActivityStatusComparator());
         return activities;
     }
-    //addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation)
+
     @Override
     public void writeData(ActivityList activityList) {
         String filePath = directoryName + File.separator + fileName;
@@ -100,7 +100,7 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
                 String line = activity.getEventOfActivityUUID() + ","
                         + activity.getTeamOfActivityName() + ","
                         + activity.getActivityName() + ","
-                        + activity.getActivityInformation() + ","
+                        + activity.getActivityInformation().replace("\n", " ").replace(",", "//comma//") + ","
                         + activity.getActivityStatus() + ","
                         + activity.getActivityUUID();
                 buffer.append(line);

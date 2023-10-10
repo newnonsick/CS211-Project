@@ -1,9 +1,9 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
+import cs211.project.models.collections.ActivityList;
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouterPane;
 import cs211.project.services.ParticipantActivityListFileDatasource;

@@ -13,4 +13,6 @@ module cs211.project {
     opens cs211.project.models to javafx.fxml;
     exports cs211.project.services;
     opens cs211.project.services to javafx.fxml;
+    exports cs211.project.models.collections;
+    opens cs211.project.models.collections to javafx.fxml;
 }

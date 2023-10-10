@@ -1,8 +1,8 @@
 package cs211.project.controllers;
 
-import cs211.project.models.ActivityList;
+import cs211.project.models.collections.ActivityList;
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -290,12 +290,17 @@ public class EventManagementController {
         if (editedStartJoinTime != null) {
             event.setStartJoinTime(editedStartJoinTime);
         }
-
         if (editedCloseJoinTime != null) {
             event.setCloseJoinTime(editedCloseJoinTime);
         }
-        eventListDatasource.writeData(eventList);
+        if (editedStartJoinTime == null) {
+            event.setStartJoinTime(null);
+        }
+        if (editedCloseJoinTime == null) {
+            event.setCloseJoinTime(null);
+        }
 
+        eventListDatasource.writeData(eventList);
         backToYourCreatedEvents();
     }
     @FXML
@@ -344,7 +349,6 @@ public class EventManagementController {
 
         oldStartJoinTime = null;
         oldCloseJoinTime = null;
-
         clearJoinTimesButton.setDisable(true);
     }
 

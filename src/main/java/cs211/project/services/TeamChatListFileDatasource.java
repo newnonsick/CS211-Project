@@ -1,13 +1,10 @@
 package cs211.project.services;
 
-import cs211.project.models.Team;
 import cs211.project.models.TeamChat;
-import cs211.project.models.TeamChatList;
-import cs211.project.models.TeamList;
+import cs211.project.models.collections.TeamChatList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
@@ -66,7 +63,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 String username = data[2].trim();
-                String message = data[3].trim();
+                String message = data[3].trim().replace("//comma//", ",");
                 LocalDateTime time = LocalDateTime.parse(data[4].trim());
                 String activityUUID = data[5].trim();
 
@@ -103,7 +100,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 String line = teamChat.getEventUUID() + ","
                         + teamChat.getTeamName() + ","
                         + teamChat.getUsername() + ","
-                        + teamChat.getMessage() + ","
+                        + teamChat.getMessage().replace("\n", " ").replace(",", "//comma//") + ","
                         + teamChat.getTime() + ","
                         + teamChat.getActivityUUID();
                 buffer.append(line);

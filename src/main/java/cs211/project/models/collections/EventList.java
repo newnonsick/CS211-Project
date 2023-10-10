@@ -1,4 +1,6 @@
-package cs211.project.models;
+package cs211.project.models.collections;
+import cs211.project.models.Event;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

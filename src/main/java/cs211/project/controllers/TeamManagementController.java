@@ -1,6 +1,10 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
+import cs211.project.models.collections.ActivityList;
+import cs211.project.models.collections.TeamChatList;
+import cs211.project.models.collections.TeamList;
+import cs211.project.models.collections.TeamParticipantList;
 import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,7 +17,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +26,7 @@ public class TeamManagementController {
     @FXML ScrollPane participantListScrollPane;
     @FXML GridPane participantListGridPane;
     @FXML TableView activityTableView;
+    @FXML Button addActivityButton;
     @FXML Button deleteActivityButton;
     @FXML Button endActivityButton;
     @FXML TableColumn activityNameColumn;
@@ -43,6 +47,7 @@ public class TeamManagementController {
     private String teamName;
     @FXML
     public void initialize(){
+        addActivityButton.setDisable(true);
         deleteActivityButton.setDisable(true);
         endActivityButton.setDisable(true);
         componentData = (String[]) FXRouterPane.getData();
@@ -58,6 +63,25 @@ public class TeamManagementController {
         teamParticipantList = teamParticipantListDatasource.readData();
         showActivity(activityList);
         showParticipant();
+
+        activityNameTextField.setOnKeyReleased(event -> {
+            if (activityNameTextField.getText().isEmpty() || activityDescriptionTextArea.getText().isEmpty()){
+                addActivityButton.setDisable(true);
+            }
+            else{
+                addActivityButton.setDisable(false);
+            }
+        });
+
+        activityDescriptionTextArea.setOnKeyReleased(event -> {
+            if (activityNameTextField.getText().isEmpty() || activityDescriptionTextArea.getText().isEmpty()){
+                addActivityButton.setDisable(true);
+            }
+            else{
+                addActivityButton.setDisable(false);
+            }
+        });
+
 
         activityTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
             @Override
@@ -118,6 +142,7 @@ public class TeamManagementController {
             activityNameTextField.clear();
             activityDescriptionTextArea.clear();
         }
+        addActivityButton.setDisable(true);
     }
 
     @FXML

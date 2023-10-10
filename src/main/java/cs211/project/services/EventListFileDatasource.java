@@ -1,13 +1,12 @@
 package cs211.project.services;
 
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
 
 public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;
@@ -123,12 +122,21 @@ public class EventListFileDatasource implements Datasource<EventList> {
         eventList.sort(new EventNameComparator());
         try {
             for (Event event : eventList.getEvents()) {
-                String line = event.getName() + "," + event.getPicture() + "," + event.getInfo() + ","
-                        + event.getCategory()  + "," + event.getPlace() + "," + event.getStartDate() + ","
-                        + event.getEndDate() + "," + event.getStartTime() + "," + event.getEndTime() + ","
-                        + event.getOwnerUsername() + "," + event.getMaxParticipants() + ","
-                        + event.getStartJoinDate() + "," + event.getCloseJoinDate() + ","
-                        + event.getStartJoinTime() + "," + event.getCloseJoinTime() + ","
+                String line = event.getName() + ","
+                        + event.getPicture() + ","
+                        + event.getInfo().replace("//comma//", ",") + ","
+                        + event.getCategory()  + ","
+                        + event.getPlace() + ","
+                        + event.getStartDate() + ","
+                        + event.getEndDate() + ","
+                        + event.getStartTime() + ","
+                        + event.getEndTime() + ","
+                        + event.getOwnerUsername() + ","
+                        + event.getMaxParticipants() + ","
+                        + event.getStartJoinDate() + ","
+                        + event.getCloseJoinDate() + ","
+                        + event.getStartJoinTime() + ","
+                        + event.getCloseJoinTime() + ","
                         + event.getEventUUID();
                 buffer.append(line);
                 buffer.append("\n");
