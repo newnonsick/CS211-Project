@@ -66,7 +66,7 @@ public class LoginController {
                 }
             }
         }
-        errorLabel.setText("username or password is incorrect!");
+        errorLabel.setText("Username or password is incorrect!");
         usernameTextField.setText("");
         passwordTextField.setText("");
     }
