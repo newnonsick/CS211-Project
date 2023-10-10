@@ -2,6 +2,7 @@ package cs211.project.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class TeamChatList {
     ArrayList<TeamChat> teamChats;
@@ -25,6 +26,10 @@ public class TeamChatList {
 
     public ArrayList<TeamChat> getTeamChats() {
         return teamChats;
+    }
+
+    public void sort(){
+        Collections.sort(teamChats);
     }
 
 }

@@ -75,7 +75,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        teamChats.sort();
         return teamChats;
     }
 
@@ -97,7 +97,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-
+        teamChatList.sort();
         try {
             for (TeamChat teamChat : teamChatList.getTeamChats()) {
                 String line = teamChat.getEventUUID() + ","

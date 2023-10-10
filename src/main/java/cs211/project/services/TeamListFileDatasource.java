@@ -76,7 +76,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Collections.sort(teams.getTeams());
+        teams.sort(new TeamNameComparator());
         return teams;
     }
 
@@ -98,7 +98,7 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-        Collections.sort(teamList.getTeams());
+        teamList.sort(new TeamNameComparator());
         try {
             for (Team team : teamList.getTeams()) {
                 String line = team.getEventUUID() + "," +

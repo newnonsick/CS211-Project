@@ -2,7 +2,7 @@ package cs211.project.models;
 
 import java.time.LocalDateTime;
 
-public class TeamChat {
+public class TeamChat implements Comparable<TeamChat>{
     private String teamName;
     private String eventUUID;
     private String username;
@@ -41,5 +41,11 @@ public class TeamChat {
 
     public LocalDateTime getTime() {
         return time;
+    }
+
+
+    @Override
+    public int compareTo(TeamChat o) {
+        return this.time.compareTo(o.time);
     }
 }
