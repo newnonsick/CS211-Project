@@ -1,17 +1,17 @@
 package cs211.project.controllers;
 
+import cs211.project.models.Event;
+import cs211.project.models.collections.EventList;
 import cs211.project.models.collections.TeamList;
 import cs211.project.models.collections.TeamParticipantList;
-import cs211.project.services.Datasource;
-import cs211.project.services.FXRouterPane;
-import cs211.project.services.TeamListFileDatasource;
-import cs211.project.services.TeamParticipantListFileDataSource;
+import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 public class CreateTeamController {
     @FXML DatePicker startDateDatePicker;
@@ -26,11 +26,16 @@ public class CreateTeamController {
     private Datasource<TeamList> datasource;
     private String eventUUID;
     private String currentUsername;
+    private Datasource<EventList> eventListDatasource;
+    private EventList eventList;
+    private Event event;
 
     @FXML
     public void initialize() {
         datasource = new TeamListFileDatasource("data", "team_list.csv");
         teamList = datasource.readData();
+        eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListDatasource.readData();
         for (int i = 0; i < 24; i++) {
             MenuItem startHourMenuItem = new MenuItem(String.valueOf(i).length() == 2 ? String.valueOf(i) : "0" + String.valueOf(i));
             startHourMenuItem.setOnAction(event -> {
@@ -68,25 +73,52 @@ public class CreateTeamController {
             return;
         }
         try {
-            LocalTime startJoinTime = LocalTime.of(Integer.parseInt(startHourMenuButton.getText()), Integer.parseInt(startMinuteMenuButton.getText()));
-            LocalTime endJoinTime = LocalTime.of(Integer.parseInt(endHourMenuButton.getText()), Integer.parseInt(endMinuteMenuButton.getText()));
-            boolean isExist = teamList.addNewTeam(eventUUID, teamNameTextField.getText(), Integer.parseInt(numPeopleTextField.getText()), startDateDatePicker.getValue(), startJoinTime, endDateDatePicker.getValue(), endJoinTime, currentUsername, currentUsername);
-            if (!isExist) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("This Team is already exist");
-                alert.showAndWait();
-                return ;
-            }
+            int startHour = Integer.parseInt(startHourMenuButton.getText());
+            int startMinute = Integer.parseInt(startMinuteMenuButton.getText());
+            int endHour = Integer.parseInt(endHourMenuButton.getText());
+            int endMinute = Integer.parseInt(endMinuteMenuButton.getText());
+
+            LocalTime startJoinTime = LocalTime.of(startHour, startMinute);
+            LocalTime endJoinTime = LocalTime.of(endHour, endMinute);
+
             LocalDateTime startJoinDateTime = LocalDateTime.of(startDateDatePicker.getValue(), startJoinTime);
             LocalDateTime endJoinDateTime = LocalDateTime.of(endDateDatePicker.getValue(), endJoinTime);
+
             if (startJoinDateTime.isAfter(endJoinDateTime)) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setHeaderText("Start Join Date Time must be before End Join Date Time");
-                alert.showAndWait();
-                return ;
+                showAlert("Error", "Start Join Date Time must be before End Join Date Time");
+                return;
             }
+
+            LocalDateTime eventStartDateTime = LocalDateTime.of(event.getStartDate(), event.getStartTime());
+            LocalDateTime eventEndDateTime = LocalDateTime.of(event.getEndDate(), event.getEndTime());
+
+            if (startJoinDateTime.isBefore(eventStartDateTime) || endJoinDateTime.isAfter(eventEndDateTime)) {
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("Confirmation");
+                confirmationAlert.setHeaderText("The schedule is not in the event schedule");
+                confirmationAlert.setContentText("Do you want to auto adjust the schedule?");
+                Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    if (startJoinDateTime.isBefore(eventStartDateTime)) {
+                        startJoinDateTime = eventStartDateTime;
+                    }
+                    if (endJoinDateTime.isAfter(eventEndDateTime)) {
+                        endJoinDateTime = eventEndDateTime;
+                    }
+                } else {
+                    return;
+                }
+            }
+            boolean isExist = teamList.addNewTeam(eventUUID, teamNameTextField.getText(),
+                    Integer.parseInt(numPeopleTextField.getText()), startJoinDateTime.toLocalDate(),
+                    startJoinDateTime.toLocalTime(), endJoinDateTime.toLocalDate(), endJoinDateTime.toLocalTime(), currentUsername, currentUsername);
+
+            if (!isExist) {
+                showAlert("Error", "This Team is already exist");
+                return;
+            }
+
             datasource.writeData(teamList);
             Datasource<TeamParticipantList> datasourceParticipant = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
             TeamParticipantList teamParticipantList = datasourceParticipant.readData();
@@ -103,8 +135,16 @@ public class CreateTeamController {
         }
     }
 
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        alert.showAndWait();
+    }
+
     public void setEventUUID(String eventUUID) {
         this.eventUUID = eventUUID;
+        event = eventList.findEventByUUID(eventUUID);
     }
 
 
