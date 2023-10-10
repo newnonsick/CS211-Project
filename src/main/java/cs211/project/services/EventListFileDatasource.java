@@ -1,13 +1,12 @@
 package cs211.project.services;
 
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
 
 public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;

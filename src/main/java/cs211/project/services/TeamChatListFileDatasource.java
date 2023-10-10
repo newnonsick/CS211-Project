@@ -1,13 +1,10 @@
 package cs211.project.services;
 
-import cs211.project.models.Team;
 import cs211.project.models.TeamChat;
-import cs211.project.models.TeamChatList;
-import cs211.project.models.TeamList;
+import cs211.project.models.collections.TeamChatList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TeamChatListFileDatasource implements Datasource<TeamChatList>{

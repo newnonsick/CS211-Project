@@ -1,7 +1,7 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 import cs211.project.models.User;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
@@ -9,8 +9,6 @@ import cs211.project.services.FXRouterPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;

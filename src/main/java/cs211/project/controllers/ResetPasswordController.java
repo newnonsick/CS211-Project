@@ -2,15 +2,13 @@ package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.Datasource;
 import cs211.project.services.FXRouter;
-import cs211.project.services.FXRouterPane;
 import cs211.project.services.UserListFileDataSource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 

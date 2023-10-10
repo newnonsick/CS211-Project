@@ -1,7 +1,7 @@
 package cs211.project.services;
 
 import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
+import cs211.project.models.collections.ActivityList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

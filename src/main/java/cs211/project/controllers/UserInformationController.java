@@ -2,8 +2,8 @@ package cs211.project.controllers;
 
 import cs211.project.models.User;
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.EventList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

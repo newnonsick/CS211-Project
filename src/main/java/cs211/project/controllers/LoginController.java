@@ -2,10 +2,9 @@ package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;

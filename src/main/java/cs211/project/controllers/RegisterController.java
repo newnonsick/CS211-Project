@@ -2,12 +2,11 @@ package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.Datasource;
 import cs211.project.services.FXRouter;
 import cs211.project.services.UserListFileDataSource;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -17,13 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 
 public class RegisterController {
     @FXML

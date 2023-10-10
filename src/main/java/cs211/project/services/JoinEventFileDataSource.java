@@ -4,10 +4,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import cs211.project.models.Event;
-import cs211.project.models.EventList;
-import cs211.project.models.User;
-import cs211.project.models.UserList;
+
+import cs211.project.models.collections.EventList;
+import cs211.project.models.collections.UserList;
 
 public class JoinEventFileDataSource implements Datasource<List<String[]>> {
     private String directoryName;

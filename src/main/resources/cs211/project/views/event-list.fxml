@@ -93,7 +93,7 @@
                      </children></Pane>
                   <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">
                      <content>
-                        <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="644.0" prefWidth="873.0">
+                        <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="643.0" prefWidth="873.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

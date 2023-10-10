@@ -1,6 +1,7 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
+import cs211.project.models.collections.*;
 import cs211.project.services.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -14,15 +15,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
     @FXML Label activityNameLabel;

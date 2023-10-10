@@ -2,8 +2,7 @@ package cs211.project.services;
 
 import cs211.project.models.LogUser;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
-import javafx.scene.text.Text;
+import cs211.project.models.collections.UserList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

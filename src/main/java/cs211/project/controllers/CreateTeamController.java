@@ -1,17 +1,13 @@
 package cs211.project.controllers;
 
-import cs211.project.models.Team;
-import cs211.project.models.TeamList;
-import cs211.project.models.TeamParticipantList;
+import cs211.project.models.collections.TeamList;
+import cs211.project.models.collections.TeamParticipantList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 
 public class CreateTeamController {
     @FXML DatePicker startDateDatePicker;
