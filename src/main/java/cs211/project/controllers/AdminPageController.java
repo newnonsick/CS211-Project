@@ -108,6 +108,7 @@ public class AdminPageController {
             KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
 
             timeline.getKeyFrames().add(keyFrame);
+            changePasswordPane.setDisable(false);
             changePasswordPane.setVisible(true);
             timeline.play();
             changePasswordOn = true;
@@ -124,6 +125,7 @@ public class AdminPageController {
             timeline.play();
 
             changePasswordPane.setVisible(false);
+            changePasswordPane.setDisable(true);
             changePasswordOn = false;
         }
     }
@@ -165,11 +167,6 @@ public class AdminPageController {
 
     @FXML
     public void agreeToCaution() {
-        if(cautionChoiceBox.isSelected()) {
-            changePasswordButton.setDisable(false);
-        }
-        else {
-            changePasswordButton.setDisable(true);
-        }
+        changePasswordButton.setDisable(!cautionChoiceBox.isSelected());
     }
 }
