@@ -290,12 +290,17 @@ public class EventManagementController {
         if (editedStartJoinTime != null) {
             event.setStartJoinTime(editedStartJoinTime);
         }
-
         if (editedCloseJoinTime != null) {
             event.setCloseJoinTime(editedCloseJoinTime);
         }
-        eventListDatasource.writeData(eventList);
+        if (editedStartJoinTime == null) {
+            event.setStartJoinTime(null);
+        }
+        if (editedCloseJoinTime == null) {
+            event.setCloseJoinTime(null);
+        }
 
+        eventListDatasource.writeData(eventList);
         backToYourCreatedEvents();
     }
     @FXML
@@ -344,7 +349,6 @@ public class EventManagementController {
 
         oldStartJoinTime = null;
         oldCloseJoinTime = null;
-
         clearJoinTimesButton.setDisable(true);
     }
 
