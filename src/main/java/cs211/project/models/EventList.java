@@ -2,6 +2,8 @@ package cs211.project.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class EventList {
     private ArrayList<Event> events;
@@ -61,6 +63,14 @@ public class EventList {
 
     public ArrayList<Event> getEvents(){
         return events;
+    }
+
+    public void sort(){
+        Collections.sort(events);
+    }
+
+    public void sort(Comparator<Event> comparator){
+        Collections.sort(events, comparator);
     }
 
 }

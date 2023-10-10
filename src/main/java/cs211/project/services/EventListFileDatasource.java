@@ -98,7 +98,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Collections.sort(events.getEvents());
+        events.sort(new EventNameComparator());
         return events;
     }
 
@@ -120,7 +120,7 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-
+        eventList.sort(new EventNameComparator());
         try {
             for (Event event : eventList.getEvents()) {
                 String line = event.getName() + "," + event.getPicture() + "," + event.getInfo() + ","

@@ -2,6 +2,8 @@ package cs211.project.models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Activity {
     private String eventOfActivityUUID;
@@ -88,7 +90,6 @@ public class Activity {
 
         String activityName = activity.getActivityName();
         String eventOfActivityUUID = activity.getEventOfActivityUUID();
-        String teamOfActivityName = activity.getTeamOfActivityName();
 
         if (this.teamOfActivityName != null){ //เป็น activity ของ team
             return this.activityUUID.equals(activity.getActivityUUID());

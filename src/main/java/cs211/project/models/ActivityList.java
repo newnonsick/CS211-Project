@@ -3,6 +3,8 @@ package cs211.project.models;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ActivityList {
     ArrayList<Activity> activities;
@@ -69,5 +71,9 @@ public class ActivityList {
 
     public void setActivityStatusByUUID(String activityUUID, String activityStatus){
         findActivityByUUID(activityUUID).setActivityStatus(activityStatus);
+    }
+
+    public void sort(Comparator<Activity> activityComparator){
+        Collections.sort(activities, activityComparator);
     }
 }
