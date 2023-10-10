@@ -1,18 +1,21 @@
 package cs211.project.controllers;
 
-import cs211.project.models.*;
+import cs211.project.models.Team;
+import cs211.project.models.TeamParticipant;
+import cs211.project.models.User;
 import cs211.project.models.collections.TeamList;
 import cs211.project.models.collections.TeamParticipantList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 
 public class MyTeamListController {
@@ -55,7 +58,7 @@ public class MyTeamListController {
                 continue;
             }
             if (team.getStartJoinDate().isEqual(currentDate)) {
-                if (team.getStartTime().isAfter(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                if (team.getStartTime().isAfter(LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
                     continue;
                 }
             }
@@ -63,7 +66,7 @@ public class MyTeamListController {
                 continue;
             }
             else if (team.getClosingJoinDate().isEqual(currentDate)) {
-                if (team.getEndTime().isBefore(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                if (team.getEndTime().isBefore(LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
                     continue;
                 }
             }
@@ -105,7 +108,7 @@ public class MyTeamListController {
                 continue;
             }
             if (team.getClosingJoinDate().isEqual(currentDate)) {
-                if (team.getEndTime().isBefore(java.time.LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                if (team.getEndTime().isBefore(LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
                     continue;
                 }
             }

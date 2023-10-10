@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Optional;
 
@@ -92,7 +93,12 @@ public class EventTeamManagementContrller {
             if (!team.getEventUUID().equals(eventUUID)) {
                 continue;
             }
-            if (team.getClosingJoinDate().isBefore(currentDate)) {
+            if (team.getClosingJoinDate().isEqual(currentDate)) {
+                if (team.getEndTime().isBefore(LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 2) {

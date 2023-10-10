@@ -173,7 +173,7 @@ public class EventListController {
                 i++;
                 continue;
             }
-            if (event.getEndDate().isBefore(currentDate)) {
+            if (event.getEndDate().isBefore(currentDate) || event.getStartDate().isAfter(currentDate)) {
                 continue;
             }
             if(column == 3) {

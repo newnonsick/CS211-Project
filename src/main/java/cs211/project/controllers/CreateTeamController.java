@@ -2,11 +2,15 @@ package cs211.project.controllers;
 
 import cs211.project.models.collections.TeamList;
 import cs211.project.models.collections.TeamParticipantList;
-import cs211.project.services.*;
+import cs211.project.services.Datasource;
+import cs211.project.services.FXRouterPane;
+import cs211.project.services.TeamListFileDatasource;
+import cs211.project.services.TeamParticipantListFileDataSource;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class CreateTeamController {
@@ -71,6 +75,15 @@ public class CreateTeamController {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("This Team is already exist");
+                alert.showAndWait();
+                return ;
+            }
+            LocalDateTime startJoinDateTime = LocalDateTime.of(startDateDatePicker.getValue(), startJoinTime);
+            LocalDateTime endJoinDateTime = LocalDateTime.of(endDateDatePicker.getValue(), endJoinTime);
+            if (startJoinDateTime.isAfter(endJoinDateTime)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Start Join Date Time must be before End Join Date Time");
                 alert.showAndWait();
                 return ;
             }
