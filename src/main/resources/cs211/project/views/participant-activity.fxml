@@ -9,17 +9,17 @@
 
 <AnchorPane fx:id="eventNAmeLabel" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.ParticipantActivityController">
    <children>
-      <Label layoutX="122.0" layoutY="51.0" text="Activity schedule">
+      <Label layoutX="502.0" layoutY="95.0" text="Activity schedule">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventNameLabel" layoutX="122.0" layoutY="95.0" text="eventNameLabel">
+      <Label fx:id="eventNameLabel" layoutX="81.0" layoutY="94.0" text="eventNameLabel">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="33.0" layoutY="38.0" mnemonicParsing="false" onAction="#backToEventInformation" text="Back">
+      <Button layoutX="33.0" layoutY="33.0" mnemonicParsing="false" onAction="#backToEventInformation" text="Back">
          <font>
             <Font size="14.0" />
          </font>

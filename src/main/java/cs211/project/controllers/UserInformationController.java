@@ -217,12 +217,6 @@ public class UserInformationController {
                 throw new RuntimeException(e);
             }
 
-//            for (User user : userList.getUsers()) {
-//                if (user.getUsername().equals(currentUser.getUsername())) {
-//                    user.setProfilePic(newProfilePicFileName);
-//                    break;
-//                }
-//            }
             userList.setProfileImageByUsername(currentUser.getUsername(), newProfilePicFileName);
             userListDataSource.writeData(userList);
 
@@ -272,13 +266,6 @@ public class UserInformationController {
 
         String profilePic = "default.png";
         currentUser.setProfilePic(profilePic);
-
-//        for (User user : userList.getUsers()) {
-//            if (user.getUsername().equals(currentUser.getUsername())) {
-//                user.setProfilePic(profilePic);
-//                break;
-//            }
-//        }
         userList.setProfileImageByUsername(currentUser.getUsername(), profilePic);
         userListDataSource.writeData(userList);
 

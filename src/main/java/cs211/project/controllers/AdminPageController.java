@@ -11,10 +11,7 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,6 +45,10 @@ public class AdminPageController {
     PasswordField oldPasswordField;
     @FXML
     PasswordField newPasswordField;
+    @FXML
+    CheckBox cautionChoiceBox;
+    @FXML
+    Button changePasswordButton;
 
     @FXML
     public void initialize() {
@@ -159,6 +160,16 @@ public class AdminPageController {
         }
         else {
             errorLabel.setText("Wrong Password!!");
+        }
+    }
+
+    @FXML
+    public void agreeToCaution() {
+        if(cautionChoiceBox.isSelected()) {
+            changePasswordButton.setDisable(false);
+        }
+        else {
+            changePasswordButton.setDisable(true);
         }
     }
 }
