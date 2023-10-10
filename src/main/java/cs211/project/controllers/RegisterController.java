@@ -64,7 +64,7 @@ public class RegisterController {
             return;
         }
         if (!password.equals(password2)) {
-            errorLabel.setText("Please make sure to type the correct passwords");
+            errorLabel.setText("Please make sure to type the correct passwords.");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
@@ -87,7 +87,7 @@ public class RegisterController {
 
         for(User user : userList.getUsers()) {
             if(user.getUsername().equals(username)) {
-                errorLabel.setText("Username already exist!!");
+                errorLabel.setText("Username already exist!");
                 passwordTextField.setText("");
                 confirmPasswordTextField.setText("");
                 return;
