@@ -122,12 +122,21 @@ public class EventListFileDatasource implements Datasource<EventList> {
         eventList.sort(new EventNameComparator());
         try {
             for (Event event : eventList.getEvents()) {
-                String line = event.getName() + "," + event.getPicture() + "," + event.getInfo() + ","
-                        + event.getCategory()  + "," + event.getPlace() + "," + event.getStartDate() + ","
-                        + event.getEndDate() + "," + event.getStartTime() + "," + event.getEndTime() + ","
-                        + event.getOwnerUsername() + "," + event.getMaxParticipants() + ","
-                        + event.getStartJoinDate() + "," + event.getCloseJoinDate() + ","
-                        + event.getStartJoinTime() + "," + event.getCloseJoinTime() + ","
+                String line = event.getName() + ","
+                        + event.getPicture() + ","
+                        + event.getInfo().replace("//comma//", ",") + ","
+                        + event.getCategory()  + ","
+                        + event.getPlace() + ","
+                        + event.getStartDate() + ","
+                        + event.getEndDate() + ","
+                        + event.getStartTime() + ","
+                        + event.getEndTime() + ","
+                        + event.getOwnerUsername() + ","
+                        + event.getMaxParticipants() + ","
+                        + event.getStartJoinDate() + ","
+                        + event.getCloseJoinDate() + ","
+                        + event.getStartJoinTime() + ","
+                        + event.getCloseJoinTime() + ","
                         + event.getEventUUID();
                 buffer.append(line);
                 buffer.append("\n");

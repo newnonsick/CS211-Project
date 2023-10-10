@@ -115,7 +115,7 @@ public class TeamCommunicationController {
         sendMessageTextField.clear();
         if (!text.isEmpty()){
             LocalDateTime nowDateTime = LocalDateTime.now();
-            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUsername, text.replace(",", "//comma//"), nowDateTime, selectedActivity.getActivityUUID());
+            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUsername, text, nowDateTime, selectedActivity.getActivityUUID());
             teamChatListDatasource.writeData(teamChatList);
             update(currentUsername, text, nowDateTime);
         }
@@ -147,7 +147,7 @@ public class TeamCommunicationController {
             if (!teamChat.getEventUUID().equals(team.getEventUUID()) || !teamChat.getTeamName().equals(team.getTeamName()) || !teamChat.getActivityUUID().equals(selectedActivity.getActivityUUID())){
                 continue;
             }
-            update(teamChat.getUsername(), teamChat.getMessage().replace("//comma//", ","), teamChat.getTime());
+            update(teamChat.getUsername(), teamChat.getMessage(), teamChat.getTime());
         }
         Platform.runLater(() -> {
             chatBoxScrollPane.applyCss();

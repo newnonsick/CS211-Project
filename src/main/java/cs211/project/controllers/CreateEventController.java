@@ -67,7 +67,7 @@ public class CreateEventController {
     private void createEvent() throws IOException {
         String name = eventNameTextField.getText().trim();
         String image = "";
-        String info = eventInfoTextArea.getText().trim();
+        String info = eventInfoTextArea.getText().replace("\n", " ").replace(",", "//comma//").trim();
         String category = eventChoiceBox.getSelectionModel().getSelectedItem();;
         String place = placeTextField.getText().trim();
 
