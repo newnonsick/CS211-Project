@@ -18,7 +18,10 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class TeamCommunicationController {
@@ -43,6 +46,7 @@ public class TeamCommunicationController {
     private Datasource<ActivityList> activityListDatasource;
     private ActivityList activityList;
     private String beforeSend = "";
+    private String lastTimeUpdate = "";
     private String [] componentData;
     private String eventUUID;
     private String teamName;
@@ -92,9 +96,8 @@ public class TeamCommunicationController {
                     sendMessageButton.setDisable(false);
                     sendMessageTextField.setDisable(false);
                     if (newValue.getActivityStatus().equals("Ended")){
-                        activityNameLabel.setText("");
-                        activityDescriptionText.setText("");
-                        return;
+                        sendMessageButton.setDisable(true);
+                        sendMessageTextField.setDisable(true);
                     }
                     activityNameLabel.setText(newValue.getActivityName());
                     activityDescriptionText.setText(newValue.getActivityInformation());
@@ -114,9 +117,10 @@ public class TeamCommunicationController {
         String text = sendMessageTextField.getText().trim();
         sendMessageTextField.clear();
         if (!text.isEmpty()){
-            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUsername, text.replace(",", "//comma//"), selectedActivity.getActivityUUID());
+            LocalDateTime nowDateTime = LocalDateTime.now();
+            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUsername, text.replace(",", "//comma//"), nowDateTime, selectedActivity.getActivityUUID());
             teamChatListDatasource.writeData(teamChatList);
-            update(currentUsername,text);
+            update(currentUsername, text, nowDateTime);
         }
         Platform.runLater(() -> {
             chatBoxScrollPane.applyCss();
@@ -137,6 +141,8 @@ public class TeamCommunicationController {
 
     public void showChat(){
         chatBoxVBox.getChildren().clear();
+        beforeSend = "";
+        lastTimeUpdate = "";
         if (selectedActivity == null){
             return;
         }
@@ -144,7 +150,7 @@ public class TeamCommunicationController {
             if (!teamChat.getEventUUID().equals(team.getEventUUID()) || !teamChat.getTeamName().equals(team.getTeamName()) || !teamChat.getActivityUUID().equals(selectedActivity.getActivityUUID())){
                 continue;
             }
-            update(teamChat.getUsername(),teamChat.getMessage().replace("//comma//", ","));
+            update(teamChat.getUsername(), teamChat.getMessage().replace("//comma//", ","), teamChat.getTime());
         }
         Platform.runLater(() -> {
             chatBoxScrollPane.applyCss();
@@ -152,7 +158,7 @@ public class TeamCommunicationController {
             chatBoxScrollPane.setVvalue(1.0);
         });
     }
-    public void update(String username, String message){
+    public void update(String username, String message, LocalDateTime time){
         User user = userList.findUserByUsername(username);
         if (user == null){
             return;
@@ -165,19 +171,23 @@ public class TeamCommunicationController {
 
         VBox messageVBox = new VBox(-5);
         messageVBox.setAlignment(Pos.TOP_LEFT);
-        Text usernameText = new Text();
+        Text nameText = new Text();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String formattedTime =  time.format(formatter);
         if (!currentUsername.equals(username)){
+            String nameTextString;
             if (team.getTeamOwnerUsername().equals(username)){
-                usernameText = new Text(username + " (Owner)" + "\n");
+                nameTextString = user.getName() + " (Owner)" + " " + formattedTime + "\n";
             }
             else if (team.getHeadOfTeamUsername().equals(username)){
-                usernameText = new Text(username + " (Leader)" + "\n");
+                nameTextString = user.getName() + " (Leader)" + " " + formattedTime + "\n";
             }
             else{
-                usernameText = new Text(username + "\n");
+                nameTextString = user.getName() + " " + formattedTime + "\n";
             }
-            usernameText.getStyleClass().add("usernameText");
-            messageVBox.getChildren().add(usernameText);
+            nameText = new Text(nameTextString);
+            nameText.getStyleClass().add("usernameText");
+            messageVBox.getChildren().add(nameText);
             String path;
             if (user.getProfilePictureName().equals("default.png")){
                 path = getClass().getResource("/cs211/project/images/default.png").toExternalForm();
@@ -197,7 +207,7 @@ public class TeamCommunicationController {
 
         Pane pane = new Pane();
         if(!currentUsername.equals(username)){
-            if (beforeSend.equals(username)){
+            if (beforeSend.equals(username) && lastTimeUpdate.equals(formattedTime)){
                 messageVBox.getChildren().remove(0);
                 flow.getStyleClass().add("textFlowFlipped");
                 hBoxMessage.setAlignment(Pos.TOP_LEFT);
@@ -208,7 +218,7 @@ public class TeamCommunicationController {
             else{
                 Pane pane2 = new Pane();
                 pane2.setMinWidth(10);
-                pane.setMaxWidth(usernameText.getLayoutBounds().getWidth());
+                pane.setMaxWidth(nameText.getLayoutBounds().getWidth());
                 beforeSend = username;
                 messageVBox.getChildren().remove(1);
                 HBox tempHBox = new HBox();
@@ -221,12 +231,19 @@ public class TeamCommunicationController {
                 hBoxMessage.getChildren().add(img);
                 hBoxMessage.getChildren().add(messageVBox);
             }
-
+            lastTimeUpdate = formattedTime;
 
         }else{
             beforeSend = "";
+            lastTimeUpdate = "";
             flow.getStyleClass().add("textFlow");
             hBoxMessage.setAlignment(Pos.TOP_RIGHT);
+            HBox timeHBox = new HBox();
+            timeHBox.setAlignment(Pos.BOTTOM_RIGHT);
+            Text timeText = new Text(formattedTime.split(" ")[1] + " ");
+            timeText.getStyleClass().add("timeText");
+            timeHBox.getChildren().add(timeText);
+            hBoxMessage.getChildren().add(timeHBox);
             hBoxMessage.getChildren().add(flow);
             hBoxMessage.getChildren().add(pane);
         }

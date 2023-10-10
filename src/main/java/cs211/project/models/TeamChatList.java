@@ -1,5 +1,6 @@
 package cs211.project.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TeamChatList {
@@ -9,8 +10,8 @@ public class TeamChatList {
         teamChats = new ArrayList<>();
     }
 
-    public void addNewChat(String eventUUID, String teamName, String username, String message, String activityUUID) {
-        teamChats.add(new TeamChat(eventUUID, teamName, username, message, activityUUID));
+    public void addNewChat(String eventUUID, String teamName, String username, String message, LocalDateTime time, String activityUUID) {
+        teamChats.add(new TeamChat(eventUUID, teamName, username, message, time, activityUUID));
     }
 
     public void deleteChatOfActivity(String activityUUID) {

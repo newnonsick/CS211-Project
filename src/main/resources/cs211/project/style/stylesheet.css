@@ -2,7 +2,7 @@
 
 .button {
     -fx-background-color: #FF8FAB;
-    /*-fx-font-family: "Angsana New";*/
+    /*-fx-font-family: "Calibri";*/
 }
 
 .button:pressed {
@@ -94,6 +94,11 @@
     -fx-font-weight: 300;
 }
 
+.timeText{
+    -fx-fill: #212121;
+    -fx-font-size: 10px;
+}
+
 .catBox {
     -fx-background-color: #FF8FAB;
     -fx-background-radius: 20px;
@@ -126,7 +131,7 @@
 
 .table-view{
     -fx-background-color: transparent;
-    /*-fx-font-family: "Angsana New";*/
+    /*-fx-font-family: "Calibri";*/
 }
 
 .column-header {
@@ -145,7 +150,7 @@
 .tab{
     -fx-background-color: #FFFFFF;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
-    /*-fx-font-family: "Angsana New";*/
+    /*-fx-font-family: "Calibri";*/
 }
 
 .tab:selected{
@@ -174,25 +179,25 @@
 }
 
 .label {
-   /*-fx-font-family: "Angsana New";*/
+   /*-fx-font-family: "Calibri";*/
 }
 
 .text-field{
-   /*-fx-font-family: "Angsana New";*/
+   /*-fx-font-family: "Calibri";*/
 }
 
 .text-area{
-   /*-fx-font-family: "Angsana New";*/
+   /*-fx-font-family: "Calibri";*/
 }
 
 .text-flow .text{
-   /*-fx-font-family: "Angsana New";*/
+   /*-fx-font-family: "Calibri";*/
 }
 
 .text{
-   /*-fx-font-family: "Angsana New";*/
+   /*-fx-font-family: "Calibri";*/
 }
 
 .hyperlink{
-   /*-fx-font-family: "Angsana New";*/
+   /*-fx-font-family: "Calibri";*/
 }

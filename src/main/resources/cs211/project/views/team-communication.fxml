@@ -108,7 +108,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="195.0" prefWidth="469.0">
+                  <ScrollPane prefHeight="195.0" prefWidth="472.0">
                      <content>
                         <TextFlow prefHeight="193.0" prefWidth="428.0">
                            <children>

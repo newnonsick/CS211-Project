@@ -8,6 +8,7 @@ import cs211.project.models.TeamList;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
     private String directoryName;
@@ -66,9 +67,10 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 String teamName = data[1].trim();
                 String username = data[2].trim();
                 String message = data[3].trim();
-                String activityUUID = data[4].trim();
+                LocalDateTime time = LocalDateTime.parse(data[4].trim());
+                String activityUUID = data[5].trim();
 
-                teamChats.addNewChat(eventUUID, teamName, username, message, activityUUID);
+                teamChats.addNewChat(eventUUID, teamName, username, message, time, activityUUID);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -102,6 +104,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                         + teamChat.getTeamName() + ","
                         + teamChat.getUsername() + ","
                         + teamChat.getMessage() + ","
+                        + teamChat.getTime() + ","
                         + teamChat.getActivityUUID();
                 buffer.append(line);
                 buffer.append("\n");
