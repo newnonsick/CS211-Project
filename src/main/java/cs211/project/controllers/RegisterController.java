@@ -72,8 +72,8 @@ public class RegisterController {
             confirmPasswordTextField.setText("");
             return;
         }
-        if (username.contains(",")) {
-            errorLabel.setText("Comma \",\" is not allowed is username");
+        if (username.contains(",") || fullName.contains(",") || password.contains(",")) {
+            errorLabel.setText("Comma \",\" is not allowed.");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
