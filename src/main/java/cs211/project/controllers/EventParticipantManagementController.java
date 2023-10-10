@@ -1,18 +1,24 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Activity;
+import cs211.project.models.User;
 import cs211.project.models.collections.ActivityList;
 import cs211.project.models.Event;
 import cs211.project.models.collections.EventList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 import java.io.*;
@@ -47,6 +53,9 @@ public class EventParticipantManagementController {
     private String eventOfParticipantUUID;
     private Datasource<List<String[]>> participantDataSource;
     private List<String[]> participantList;
+    private Datasource<UserList> userListDatasource;
+    private UserList userList;
+
 
 
     public void initialize(){
@@ -61,6 +70,8 @@ public class EventParticipantManagementController {
         activityList = activityListDatasource.readData();
         participantDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
         participantList = participantDataSource.readData();
+        userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        userList = userListDatasource.readData();
         eventNameLabel.setText(event.getName());
         eventName2Label.setText(event.getName());
         showParticipants(participantList);
@@ -189,8 +200,12 @@ public class EventParticipantManagementController {
     }
 
     public void showParticipants(List<String[]> participantList){
-        TableColumn<String[], String> partiUsernameColumn = new TableColumn<>("Participant List");
-        partiUsernameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
+        TableColumn<String[], String> partiNameColumn = new TableColumn<>("Participant Name");
+        partiNameColumn.setCellValueFactory(cellData -> {
+            String username = cellData.getValue()[0];
+            User user = userList.findUserByUsername(username);
+            return new SimpleStringProperty(user != null ? user.getName() : "Unknown User");
+        });
         ObservableList<String[]> filteredParticipants = FXCollections.observableArrayList();
         for (String[] participantData : participantList) {
             if (participantData[1].equals(eventOfParticipantUUID)) {
@@ -221,18 +236,52 @@ public class EventParticipantManagementController {
                         }
                     });
                     setGraphic(removeButton);
+                    setAlignment(Pos.CENTER);
                 }
             }
         });
 
+        TableColumn<String[], ImageView> profilePictureColumn = new TableColumn<>("");
+        profilePictureColumn.setCellFactory(param -> new TableCell<>() {
+            @Override
+            protected void updateItem(ImageView item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(item);
+                    setAlignment(Pos.CENTER);
+                }
+            }
+        });
+        profilePictureColumn.setCellValueFactory(cellData -> {
+            String username = cellData.getValue()[0];
+            User user = userList.findUserByUsername(username);
+            if (user != null && user.getProfilePictureName() != null) {
+                String profilePicturePath;
+                if (user.getProfilePictureName().equals("default.png")) {
+                    profilePicturePath = getClass().getResource("/cs211/project/images/default.png").toExternalForm();
+                } else {
+                    profilePicturePath = new File("data" + File.separator + "profile_picture" + File.separator + user.getProfilePictureName()).toURI().toString();
+                }
+                ImageView imageView = new ImageView(new Image(profilePicturePath));
+                imageView.setFitWidth(40);
+                imageView.setFitHeight(40);
+                return new SimpleObjectProperty<>(imageView);
+            }
+            return new SimpleObjectProperty<>(null);
+        });
+
+
         eventParticipantTableView.setItems(filteredParticipants);
         eventParticipantTableView.getColumns().clear();
-        eventParticipantTableView.getColumns().add(partiUsernameColumn);
+        eventParticipantTableView.getColumns().add(profilePictureColumn);
+        eventParticipantTableView.getColumns().add(partiNameColumn);
         eventParticipantTableView.getColumns().add(removeButtonColumn);
 
-
-        partiUsernameColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(0.8));
-
+        profilePictureColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(0.2));
+        partiNameColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(0.5));
+        removeButtonColumn.prefWidthProperty().bind(eventParticipantTableView.widthProperty().multiply(0.3));
     }
     public void showActivity(ActivityList activityList){
 
