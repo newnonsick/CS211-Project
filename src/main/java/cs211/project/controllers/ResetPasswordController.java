@@ -46,6 +46,14 @@ public class ResetPasswordController {
             return;
         }
 
+        if (oldPassword.contains(",") || newPassword.contains(",")) {
+            errorLabel.setText("Comma \",\" is not allowed.");
+            oldPasswordTextField.setText("");
+            newPasswordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
+        }
+
         if (!newPassword.equals(confirmPassword)) {
             errorLabel.setText("New password and Confirm password does not match.");
             oldPasswordTextField.setText("");

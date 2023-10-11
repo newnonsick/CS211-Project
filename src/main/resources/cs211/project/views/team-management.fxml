@@ -53,16 +53,16 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="activityNameTextField" layoutX="762.0" layoutY="562.0" prefHeight="35.0" prefWidth="363.0" />
+      <TextField fx:id="activityNameTextField" layoutX="762.0" layoutY="562.0" prefHeight="35.0" prefWidth="363.0" promptText="Activity Name" />
       <Button fx:id="deleteActivityButton" layoutX="815.0" layoutY="732.0" mnemonicParsing="false" onAction="#handleRemoveActivityButton" text="Delete Activity">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <TextArea fx:id="activityDescriptionTextArea" layoutX="762.0" layoutY="614.0" prefHeight="102.0" prefWidth="363.0" wrapText="true" />
+      <TextArea fx:id="activityDescriptionTextArea" layoutX="762.0" layoutY="614.0" prefHeight="102.0" prefWidth="363.0" promptText="Activity Description" wrapText="true" />
       <ScrollPane fx:id="participantListScrollPane" layoutX="50.0" layoutY="97.0" prefHeight="609.0" prefWidth="500.0" styleClass="transparent">
          <content>
-            <GridPane fx:id="participantListGridPane" prefHeight="609.0" prefWidth="485.0" styleClass="transparent">
+            <GridPane fx:id="participantListGridPane" prefHeight="607.0" prefWidth="485.0" styleClass="transparent">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>

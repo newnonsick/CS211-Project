@@ -52,7 +52,6 @@ public class RegisterController {
 
     @FXML
     private void signUp() throws IOException {
-        //checking and register
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
