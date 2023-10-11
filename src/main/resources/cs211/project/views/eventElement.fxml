@@ -16,6 +16,11 @@
                <Font name="System Bold" size="18.0" />
             </font>
          </Label>
+         <Label fx:id="participantNumLabel" styleClass="part-box" text="partiNum" textFill="WHITE">
+            <font>
+               <Font size="14.0" />
+            </font>
+         </Label>
             <ImageView fx:id="eventImageView" fitHeight="129.0" fitWidth="176.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: white;">
       </ImageView>
          <Pane prefHeight="8.0" prefWidth="256.0" />

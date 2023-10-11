@@ -205,3 +205,10 @@
 .category-open-selected {
     -fx-background-color: lightgrey;
 }
+
+.part-box{
+    -fx-background-color: #FF8FAB;
+    -fx-background-radius: 20px;
+    -fx-padding: 5px;
+    -fx-text-fill: black;
+}

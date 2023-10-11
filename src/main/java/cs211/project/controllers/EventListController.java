@@ -5,6 +5,7 @@ import cs211.project.models.User;
 import cs211.project.models.collections.EventList;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
+import cs211.project.services.JoinEventFileDataSource;
 import cs211.project.services.FXRouterPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -26,11 +27,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.List;
 
 public class EventListController {
     private String[] eventList;
     private int maxRow = 3;
     private Datasource<EventList> datasource;
+    private JoinEventFileDataSource joinEventDataSource;
     private EventList eventListData;
     private LocalDate currentDate;
     private boolean isSearch;
@@ -74,6 +77,7 @@ public class EventListController {
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         datasource = new EventListFileDatasource("data", "eventList.csv");
+        joinEventDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
         eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
         eventList = eventListData.getEvents().stream()
@@ -198,6 +202,11 @@ public class EventListController {
 
             EventElementController event_ = fxmlLoader.getController();
             event_.setPage(event.getName(), event.getPicture(), event.getCategory());
+
+            int participantCount = joinEventDataSource.countParticipantsForEvent(event.getEventUUID());
+            int maxParti = event.getMaxParticipants();
+            event_.participantCount(participantCount, maxParti);
+
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
@@ -210,8 +219,8 @@ public class EventListController {
 
             GridPane.setMargin(anchorPane, new Insets(10));
         }
-
     }
+
 
     public void showList(String eventName) {
         eventGrid.getChildren().clear();

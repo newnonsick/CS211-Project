@@ -12,9 +12,21 @@ public class EventElementController {
     Label eventNameLabel;
     @FXML
     ImageView eventImageView;
-
+    @FXML
+    private Label participantNumLabel;
     @FXML
     Label categoryLabel;
+
+    public void participantCount(int currentParticipants, int maxParticipants) {
+        if (maxParticipants == -1) {
+            participantNumLabel.setText("UNLIMITED");
+        } else if (currentParticipants < maxParticipants) {
+            int available = maxParticipants - currentParticipants;
+            participantNumLabel.setText("Available: " + available);
+        } else {
+            participantNumLabel.setText("FULL");
+        }
+    }
 
     public void setPage(String name, String imgName, String category) {
         String filePath = "data"+ File.separator + "eventPicture" + File.separator + imgName;
