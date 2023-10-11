@@ -4,6 +4,7 @@ import cs211.project.services.FXRouter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,7 +19,7 @@ public class InstructionsController {
     @FXML
     public void initialize() {
         try {
-            Path path = Paths.get("data/instruction.txt");
+            Path path = Paths.get("data" + File.separator + "instruction.txt");
             String content = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
             instructionLabel.setText(content);
         } catch (IOException e) {
