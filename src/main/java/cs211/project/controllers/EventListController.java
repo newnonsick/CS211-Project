@@ -9,10 +9,13 @@ import cs211.project.services.FXRouterPane;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +27,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
+import java.util.Collection;
 
 public class EventListController {
     private String[] eventList;
@@ -59,6 +63,8 @@ public class EventListController {
     @FXML Button categoryPetButton;
     @FXML Button categoryEducationButton;
     @FXML Button categoryOtherButton;
+    @FXML
+    Button categoryOpenButton;
 
     boolean categoryOn = false;
 
@@ -265,6 +271,8 @@ public class EventListController {
             categoryPane.setVisible(true);
             timeline.play();
             categoryOn = true;
+            //categoryOpenButton.getStyleClass().clear();
+            categoryOpenButton.getStyleClass().add("category-open-selected");
         }
         else {
             double targetHeight = 0;
@@ -280,6 +288,8 @@ public class EventListController {
 
             categoryPane.setVisible(false);
             categoryOn = false;
+            categoryOpenButton.getStyleClass().remove("category-open-selected");
+
         }
 
     }

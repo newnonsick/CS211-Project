@@ -108,7 +108,7 @@
 }
 
 .category-button-selected {
-    -fx-background-color: #DCDCDC;
+    -fx-background-color: lightgrey;
 }
 
 .team-full{
@@ -200,4 +200,8 @@
 
 .hyperlink{
    /*-fx-font-family: "Calibri";*/
+}
+
+.category-open-selected {
+    -fx-background-color: lightgrey;
 }
