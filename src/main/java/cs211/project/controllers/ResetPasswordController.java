@@ -39,7 +39,7 @@ public class ResetPasswordController {
         errorLabel.setText("");
 
         if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-            errorLabel.setText("Please fill in the required information");
+            errorLabel.setText("Please fill in the required information.");
             oldPasswordTextField.setText("");
             newPasswordTextField.setText("");
             confirmPasswordTextField.setText("");
