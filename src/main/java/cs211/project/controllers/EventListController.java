@@ -179,7 +179,7 @@ public class EventListController {
                 i++;
                 continue;
             }
-            if (event.getEndDate().isBefore(currentDate) || event.getStartDate().isAfter(currentDate)) {
+            if (event.getEndDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 3) {
@@ -404,7 +404,5 @@ public class EventListController {
         categoryOtherButton.getStyleClass().remove("category-button-selected");
         button.getStyleClass().add("category-button-selected");
     }
-
-
 
 }
