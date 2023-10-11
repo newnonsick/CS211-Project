@@ -52,7 +52,6 @@ public class RegisterController {
 
     @FXML
     private void signUp() throws IOException {
-        //checking and register
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
@@ -64,11 +63,13 @@ public class RegisterController {
         }
         if (!password.equals(password2)) {
             errorLabel.setText("Please make sure to type the correct passwords.");
+            usernameTextField.setText("");
+            nameTextField.setText("");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
         }
-        if (username.equals("Default")) {
+        if (username.equals("default")) {
             errorLabel.setText("That user name is not allowed.");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
@@ -76,6 +77,8 @@ public class RegisterController {
         }
         if (username.contains(",") || fullName.contains(",") || password.contains(",")) {
             errorLabel.setText("Comma \",\" is not allowed.");
+            usernameTextField.setText("");
+            nameTextField.setText("");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
@@ -108,7 +111,6 @@ public class RegisterController {
             String targetDirectoryPath = "data" + File.separator + "profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
             String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-
             Path targetFilePath = targetDirectory.resolve(username + "." + (fileType.substring(6)));
             try {
                 Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
@@ -142,7 +144,7 @@ public class RegisterController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")+ "/Desktop"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg", "*.webp",  "*.jfif" , "*.pjpeg" , "*.pjp"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg"));
         Stage stage = (Stage) upLoadImageButton.getScene().getWindow();
         selectedImage = fileChooser.showOpenDialog(stage);
     }

@@ -132,6 +132,10 @@ public class AdminPageController {
     public void changePassword() {
         String oldPass = oldPasswordField.getText();
         String newPass = newPasswordField.getText();
+        if(oldPass.isEmpty() || newPass.isEmpty()) {
+            errorLabel.setText("Please fill in the required information.");
+            return;
+        }
         boolean correctPass = false;
         Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
         UserList userList = userListDatasource.readData();
@@ -140,6 +144,14 @@ public class AdminPageController {
             if (user.getUsername().equals("admin211")) {
                 BCrypt.Result result = BCrypt.verifyer().verify(oldPass.toCharArray(), user.getPassword());
                 if(result.verified) {
+                    if(newPass.equals(oldPass)) {
+                        errorLabel.setText("Your new password can not be the same as your current password.");
+                        return;
+                    }
+                    if(newPass.contains(",")) {
+                        errorLabel.setText("Comma \",\" is not allowed in password.");
+                        return;
+                    }
                     user.setPassword(BCrypt.withDefaults().hashToString(12, newPass.toCharArray()));
                     correctPass = true;
                 }
@@ -166,5 +178,15 @@ public class AdminPageController {
     @FXML
     public void agreeToCaution() {
         changePasswordButton.setDisable(!cautionChoiceBox.isSelected());
+    }
+
+    @FXML
+    public void logout() {
+        try {
+            FXRouter.goTo("login");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

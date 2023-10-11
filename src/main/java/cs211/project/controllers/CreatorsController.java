@@ -4,6 +4,7 @@ import cs211.project.services.FXRouter;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 
@@ -14,8 +15,12 @@ public class CreatorsController {
     @FXML private ImageView iceImageView;
 
     public void initialize() {
+//        setClipForImageView(tarnImageView);
+//        setClipForImageView(newImageView);
+//        setClipForImageView(nuttImageView);
+//        setClipForImageView(iceImageView);
         tarnImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
-        newImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
+        newImageView.setImage(new Image(getClass().getResource("/cs211/project/images/new.jpg").toExternalForm()));
         nuttImageView.setImage(new Image(getClass().getResource("/cs211/project/images/nutt.jpg").toExternalForm()));
         iceImageView.setImage(new Image(getClass().getResource("/cs211/project/images/ice.jpg").toExternalForm()));
 
@@ -27,6 +32,11 @@ public class CreatorsController {
         nuttImageView.setFitWidth(170);
         iceImageView.setFitHeight(170);
         iceImageView.setFitWidth(170);
+    }
+
+    private void setClipForImageView(ImageView imageView) {
+        Circle circle = new Circle(85, 85, 85);
+        imageView.setClip(circle);
     }
 
     @FXML
