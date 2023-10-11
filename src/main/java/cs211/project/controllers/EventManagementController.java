@@ -199,7 +199,7 @@ public class EventManagementController {
         }
 
         if (closingJoin != null && startJoin != null && closingJoin.isBefore(startJoin)) {
-            errorLabel.setText("Start date must be before closing date.");
+            errorLabel.setText("Application opening day must be before closing day.");
             errorLabel.setVisible(true);
             return;
         } else {
@@ -211,7 +211,7 @@ public class EventManagementController {
             return;
         }
         if ((editedStartJoinTime != null && startJoin == null) || (editedCloseJoinTime != null && closingJoin == null)) {
-            errorLabel.setText("application opening day and application closing day\nmust be provided to set times.");
+            errorLabel.setText("Application opening day and application closing day\nmust be provided to set times.");
             errorLabel.setVisible(true);
             return;
         }
@@ -273,7 +273,7 @@ public class EventManagementController {
         } else {
             int newMaxParticipants = Integer.parseInt(maxParticipantsText);
             if (newMaxParticipants < currentParticipants) {
-                errorLabel.setText("You cannot set max participants less than\nthe number of participants that have already joined the event.");
+                errorLabel.setText("You can not set max participants less than\nthe number of participants that have already joined the event.");
                 errorLabel.setVisible(true);
                 return;
             }
