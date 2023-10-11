@@ -74,7 +74,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="616.0" layoutY="692.0" mnemonicParsing="false" onAction="#eventPartiManagementButton" text="Participants Management">
+      <Button layoutX="527.0" layoutY="692.0" mnemonicParsing="false" onAction="#eventPartiManagementButton" text="Participants And Activity Management">
          <font>
             <Font size="18.0" />
          </font></Button>
