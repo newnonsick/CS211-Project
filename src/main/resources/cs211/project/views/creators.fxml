@@ -1,34 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1330.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" style="-fx-background-color: 00000;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.CreatorsController">
    <children>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="800.0" prefWidth="1330.0" vbarPolicy="ALWAYS">
-        <content>
-            <VBox>
-               <children>
-                  <Label text="Creators of This Program">
-                     <font>
-                        <Font name="Calibri" size="60.0" />
-                     </font>
-                  </Label>
-                  <Pane prefHeight="373.0" prefWidth="1310.0">
-                     <children>
-                        <ImageView fitHeight="136.0" fitWidth="143.0" layoutX="39.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label contentDisplay="TOP" layoutX="219.0" layoutY="43.0" prefHeight="107.0" prefWidth="133.0" text="นายจิรายุ โออุไร &#10;ชื่อเล่น ตาล &#10;รหัสนิสิต 6510405407" wrapText="true" />
-                     </children>
-                  </Pane>
-               </children>
-            </VBox>
-        </content>
-      </ScrollPane>
+      <Label layoutX="413.0" layoutY="90.0" text="Program Creater Information">
+         <font>
+            <Font name="Calibri Bold" size="45.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="tarnImageView" fitHeight="170.0" fitWidth="170.0" layoutX="82.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="newImageView" fitHeight="170.0" fitWidth="170.0" layoutX="369.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="nuttImageView" fitHeight="170.0" fitWidth="170.0" layoutX="653.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="iceImageView" fitHeight="170.0" fitWidth="170.0" layoutX="930.0" layoutY="269.0" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7d8e8" height="75.0" layoutX="54.0" layoutY="456.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="225.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7d8e8" height="75.0" layoutX="902.0" layoutY="456.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="225.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7d8e8" height="75.0" layoutX="342.0" layoutY="456.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="225.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c7d8e8" height="75.0" layoutX="626.0" layoutY="456.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" width="225.0" />
+      <Label layoutX="108.0" layoutY="456.0" text="Jirayu Oaurai&#10;NickName : Tarn&#10;ID : 6510405407&#10;" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="360.0" layoutY="456.0" text="Thitivath Mongkolgittichot&#10;NickName : New&#10;ID : 6510405440" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="669.0" layoutY="456.0" text="Pimmada Panngam&#10;NickName : Nutt&#10;ID : 6510405717" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="912.0" layoutY="456.0" text="Preangkwan Chatchadanukul&#10;NickName : Ice&#10;ID : 6510405725" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="25.0" layoutY="24.0" mnemonicParsing="false" onAction="#goToLogin" text="BACK">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
