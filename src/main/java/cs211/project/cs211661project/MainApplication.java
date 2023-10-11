@@ -23,7 +23,8 @@ public class MainApplication extends Application {
         FXRouter.when("mainPage", viewPath + "mainPage.fxml");
         FXRouter.when("login", viewPath + "login.fxml");
         FXRouter.when("adminPage", viewPath + "adminPage.fxml");
-        FXRouter.when("creators", viewPath+"creators.fxml");
+        FXRouter.when("creators", viewPath + "creators.fxml");
+        FXRouter.when("instructions", viewPath + "instructions.fxml");
         FXRouter.when("reset-password", viewPath + "reset-password.fxml");
     }
 

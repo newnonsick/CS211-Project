@@ -19,7 +19,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="33.0" layoutY="33.0" mnemonicParsing="false" onAction="#backToEventInformation" text="Back">
+      <Button layoutX="33.0" layoutY="33.0" mnemonicParsing="false" onAction="#backToEventInformation" text="BACK">
          <font>
             <Font size="14.0" />
          </font>
@@ -38,17 +38,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventDateLabel" layoutX="82.0" layoutY="222.0" text="eventDateLabel">
+      <Label fx:id="eventDateLabel" layoutX="83.0" layoutY="209.0" text="eventDateLabel">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="82.0" layoutY="262.0" text="Event Time">
+      <Label layoutX="82.0" layoutY="270.0" text="Event Time">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventTimeLabel" layoutX="82.0" layoutY="310.0" text="eventTimeLabel">
+      <Label fx:id="eventTimeLabel" layoutX="82.0" layoutY="297.0" text="eventTimeLabel">
          <font>
             <Font size="18.0" />
          </font>
@@ -58,17 +58,17 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventInfoLabel" layoutX="81.0" layoutY="522.0" text="eventInfoLabel">
+      <Label fx:id="eventInfoLabel" layoutX="82.0" layoutY="499.0" text="eventInfoLabel">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="82.0" layoutY="366.0" text="Event Location">
+      <Label layoutX="83.0" layoutY="354.0" text="Event Location">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="placeLabel" layoutX="81.0" layoutY="406.0" text="placeLabel">
+      <Label fx:id="placeLabel" layoutX="84.0" layoutY="381.0" text="placeLabel">
          <font>
             <Font size="18.0" />
          </font>

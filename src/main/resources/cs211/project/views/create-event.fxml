@@ -37,7 +37,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="eventNameTextField" layoutX="415.0" layoutY="100.0" prefHeight="25.0" prefWidth="384.0">
+      <TextField fx:id="eventNameTextField" alignment="CENTER" layoutX="415.0" layoutY="100.0" prefHeight="25.0" prefWidth="384.0" promptText="Enter the event name">
          <font>
             <Font size="14.0" />
          </font></TextField>
@@ -56,12 +56,12 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="placeTextField" layoutX="290.0" layoutY="558.0" prefHeight="30.0" prefWidth="216.0">
+      <TextField fx:id="placeTextField" alignment="CENTER" layoutX="290.0" layoutY="558.0" prefHeight="30.0" prefWidth="216.0" promptText="Enter the event location">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <DatePicker fx:id="startDatePicker" layoutX="394.0" layoutY="620.0" prefHeight="27.0" prefWidth="176.0" />
-      <DatePicker fx:id="endDatePicker" layoutX="394.0" layoutY="670.0" prefHeight="27.0" prefWidth="176.0" />
+      <DatePicker fx:id="startDatePicker" layoutX="394.0" layoutY="620.0" prefHeight="27.0" prefWidth="176.0" promptText="Add the event start date" />
+      <DatePicker fx:id="endDatePicker" layoutX="394.0" layoutY="670.0" prefHeight="27.0" prefWidth="176.0" promptText="Add the event end date" />
       <Button layoutX="948.0" layoutY="706.0" mnemonicParsing="false" onAction="#createEvent" prefHeight="35.0" prefWidth="124.0" text="Create Event">
          <font>
             <Font name="System Bold" size="16.0" />
@@ -86,7 +86,7 @@
       <ChoiceBox fx:id="eventChoiceBox" layoutX="306.0" layoutY="238.0" prefWidth="150.0" />
       <Button fx:id="startTimePicker" layoutX="589.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleStartTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
       <Button fx:id="endTimePicker" layoutX="589.0" layoutY="671.0" mnemonicParsing="false" onAction="#handleEndTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
-      <TextArea fx:id="eventInfoTextArea" layoutX="415.0" layoutY="145.0" prefHeight="72.0" prefWidth="409.0">
+      <TextArea fx:id="eventInfoTextArea" layoutX="415.0" layoutY="145.0" prefHeight="72.0" prefWidth="409.0" promptText="Enter the event description">
          <font>
             <Font size="14.0" />
          </font>

@@ -180,7 +180,13 @@ public class EventManagementController {
         LocalDate startJoin = startJoinDatePicker.getValue();
         LocalDate closingJoin = closingJoinDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
+        LocalDate startDate = startDatePicker.getValue();
 
+        if (endDate.isBefore(startDate)) {
+            errorLabel.setText("End date of the event\ncan not be before start date.");
+            errorLabel.setVisible(true);
+            return;
+        }
         if (endDate != null && endDate.isBefore(LocalDate.now())) {
             errorLabel.setText("End date of the event\ncan not be before the present day.");
             errorLabel.setVisible(true);

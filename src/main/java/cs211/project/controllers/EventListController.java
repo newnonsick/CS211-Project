@@ -403,6 +403,4 @@ public class EventListController {
         button.getStyleClass().add("category-button-selected");
     }
 
-
-
 }
