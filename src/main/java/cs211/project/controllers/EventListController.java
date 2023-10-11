@@ -251,6 +251,11 @@ public class EventListController {
 
             EventElementController event_ = fxmlLoader.getController();
             event_.setPage(event.getName(), event.getPicture(), event.getCategory());
+
+            int participantCount = joinEventDataSource.countParticipantsForEvent(event.getEventUUID());
+            int maxParti = event.getMaxParticipants();
+            event_.participantCount(participantCount, maxParti);
+
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
 //                    FXRouterPane.goTo("event-information", event.getEventName());
