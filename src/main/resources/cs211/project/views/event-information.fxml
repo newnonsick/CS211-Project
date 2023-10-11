@@ -75,9 +75,9 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBackToEventPage" text="Back">
+      <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBackToEventPage" text="BACK">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font size="16.0" />
          </font>
       </Button>
       <Button layoutX="157.0" layoutY="718.0" mnemonicParsing="false" onAction="#handleVisitTeamButton" text="Visit Our Teams">

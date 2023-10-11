@@ -46,6 +46,8 @@ public class RegisterController {
     public void initialize(){
         errorLabel.setText("");
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
+        profileImageView.setFitWidth(180);
+        profileImageView.setFitHeight(180);
     }
 
     @FXML
