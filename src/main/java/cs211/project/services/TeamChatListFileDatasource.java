@@ -100,7 +100,7 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 String line = teamChat.getEventUUID() + ","
                         + teamChat.getTeamName() + ","
                         + teamChat.getUsername() + ","
-                        + teamChat.getMessage().replace("\n", " ").replace(",", "//comma//") + ","
+                        + teamChat.getMessage().replace(",", "//comma//") + ","
                         + teamChat.getTime() + ","
                         + teamChat.getActivityUUID();
                 buffer.append(line);

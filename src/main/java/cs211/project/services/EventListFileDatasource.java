@@ -32,6 +32,10 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 throw new RuntimeException(e);
             }
         }
+        File pictureDirectory = new File(directoryName + File.separator + "eventPicture");
+        if (!pictureDirectory.exists()) {
+            pictureDirectory.mkdirs();
+        }
     }
 
     @Override

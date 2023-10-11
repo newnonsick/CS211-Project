@@ -19,7 +19,7 @@
                      <children>
                         <ScrollPane fx:id="teamListScrollPane" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
                            <content>
-                              <GridPane fx:id="teamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
+                              <GridPane fx:id="teamListGridPane" prefHeight="664.0" prefWidth="1030.0" styleClass="transparent">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -37,7 +37,7 @@
                      <children>
                         <ScrollPane fx:id="yourCreateTeamListScrollPane" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
                            <content>
-                              <GridPane fx:id="yourCreateTeamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
+                              <GridPane fx:id="yourCreateTeamListGridPane" prefHeight="664.0" prefWidth="1030.0" styleClass="transparent">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
