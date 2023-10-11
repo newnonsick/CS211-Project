@@ -94,5 +94,9 @@ public class UserListFileDataSource implements Datasource<UserList> {
                 throw new RuntimeException(e);
             }
         }
+        File pictureDirectory = new File(directoryName + File.separator + "profile_picture");
+        if (!pictureDirectory.exists()) {
+            pictureDirectory.mkdirs();
+        }
     }
 }
