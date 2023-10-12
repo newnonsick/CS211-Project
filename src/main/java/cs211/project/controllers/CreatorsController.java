@@ -15,11 +15,7 @@ public class CreatorsController {
     @FXML private ImageView iceImageView;
 
     public void initialize() {
-//        setClipForImageView(tarnImageView);
-//        setClipForImageView(newImageView);
-//        setClipForImageView(nuttImageView);
-//        setClipForImageView(iceImageView);
-        tarnImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
+        tarnImageView.setImage(new Image(getClass().getResource("/cs211/project/images/tarn.jpg").toExternalForm()));
         newImageView.setImage(new Image(getClass().getResource("/cs211/project/images/new.jpg").toExternalForm()));
         nuttImageView.setImage(new Image(getClass().getResource("/cs211/project/images/nutt.jpg").toExternalForm()));
         iceImageView.setImage(new Image(getClass().getResource("/cs211/project/images/ice.jpg").toExternalForm()));
