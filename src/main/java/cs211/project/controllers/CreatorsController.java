@@ -18,6 +18,15 @@ public class CreatorsController {
         newImageView.setImage(new Image(getClass().getResource("/cs211/project/images/new.jpg").toExternalForm()));
         nuttImageView.setImage(new Image(getClass().getResource("/cs211/project/images/nutt.jpg").toExternalForm()));
         iceImageView.setImage(new Image(getClass().getResource("/cs211/project/images/ice.jpg").toExternalForm()));
+
+        tarnImageView.setFitHeight(170);
+        tarnImageView.setFitWidth(170);
+        newImageView.setFitHeight(170);
+        newImageView.setFitWidth(170);
+        nuttImageView.setFitHeight(170);
+        nuttImageView.setFitWidth(170);
+        iceImageView.setFitHeight(170);
+        iceImageView.setFitWidth(170);
     }
 
     @FXML
