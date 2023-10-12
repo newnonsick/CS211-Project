@@ -44,16 +44,6 @@ public class EventList {
     }
 
 
-
-    public Event findEventByEventName(String eventName){
-        for (Event anEvent : this.events) {  //for-each loop
-            if (eventName.equals(anEvent.getName())) {
-                return anEvent;
-            }
-        }
-        return null;
-    }
-
     public Event findEventByUUID(String eventUUID){
         for (Event event : this.events) {
             if (eventUUID.equals(event.getEventUUID())) {

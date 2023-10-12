@@ -1,9 +1,7 @@
 package cs211.project.models;
-
-import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
+
 
 public class Team implements Comparable {
     private String headOfTeamUsername;

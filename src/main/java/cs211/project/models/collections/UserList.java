@@ -1,7 +1,5 @@
 package cs211.project.models.collections;
-
 import cs211.project.models.User;
-
 import java.util.ArrayList;
 
 public class UserList {
@@ -25,23 +23,6 @@ public class UserList {
     }
 
 
-    public boolean findUser(User user) {
-        for (User aUser : this.users) {
-            if (user.getUsername().equals(aUser.getUsername())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean findUser(String username) {
-        for (User aUser : this.users) {
-            if (username.equals(aUser.getUsername())) {
-                return true;
-            }
-        }
-        return false;
-    }
     public User getUser(String username) {
         for (User aUser : this.users) {
             if (username.equals(aUser.getUsername())) {

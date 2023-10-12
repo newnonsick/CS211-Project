@@ -1,13 +1,6 @@
 package cs211.project.models;
-
-import cs211.project.services.Datasource;
-import cs211.project.services.UserListFileDataSource;
 import javafx.scene.image.Image;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class User {
     private String username;

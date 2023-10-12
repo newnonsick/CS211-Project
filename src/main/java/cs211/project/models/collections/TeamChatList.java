@@ -1,7 +1,5 @@
 package cs211.project.models.collections;
-
 import cs211.project.models.TeamChat;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;

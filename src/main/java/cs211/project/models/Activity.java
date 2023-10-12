@@ -1,9 +1,7 @@
 package cs211.project.models;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
-import java.util.Comparator;
+
 
 public class Activity {
     private String eventOfActivityUUID;

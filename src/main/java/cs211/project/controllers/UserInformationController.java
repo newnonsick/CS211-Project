@@ -240,7 +240,7 @@ public class UserInformationController {
         }
     }
 
-    public void chooseFile() {
+    private void chooseFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         fileChooser.setInitialDirectory(new File("C:\\"));

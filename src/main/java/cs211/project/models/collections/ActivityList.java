@@ -1,7 +1,5 @@
 package cs211.project.models.collections;
-
 import cs211.project.models.Activity;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
