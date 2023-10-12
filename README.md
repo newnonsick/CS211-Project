@@ -5,6 +5,37 @@
 https://saacsos.notion.site/Project-CS211-2566-1c8e195c0ebd4071aea8f733692e3989?pvs=4
 
 ## วิธีการติดตั้งหรือรันโปรแกรม
+1. ติดตั้ง Java 17 หรือใหม่กว่า
+
+    [ ระบบปฏิบัติการ windows ]
+    - ดาวน์โหลด Java 17 ได้ที่ https://www.oracle.com/java/technologies/downloads/#jdk17-windows
+    - หรือทำตามคลิปตัวอย่าง 
+   
+        [ภาษาอังกฤษ] https://www.youtube.com/watch?v=ykAhL1IoQUM
+   
+        [ภาษาไทย] https://www.youtube.com/watch?v=5BYgF2UevMs
+   
+    [ ระบบปฏิบัติการ macos ]
+    - ดาวน์โหลด Java 17 ได้ที่ https://www.oracle.com/java/technologies/downloads/#jdk17-mac
+    - หรือทำตามคลิปตัวอย่าง 
+   
+        [ภาษาอังกฤษ] https://www.youtube.com/watch?v=hRThN2gal6U
+2. ดาวน์โหลดโปรแกรมจาก Github ได้ที่
+
+    //รอใส่
+3. แตกไฟล์ zip ที่ดาวน์โหลดมา จะได้โฟลเดอร์ชื่อ <ชื่อ Folder รอใส่> กดเข้าไปในโฟลเดอร์ <ชื่อ Folder รอใส่>
+4. รันไฟล์ <ชื่อไฟล์ รอใส่> ได้ 2 วิธี คือ
+
+   1. ดับเบิ้ลคลิกที่ไฟล์ <ชื่อไฟล์ รอใส่>
+   2. ถ้าใน windows เปิด Command Prompt หรือ PowerShell แล้วพิมพ์คำสั่ง
+        ```
+        java -jar <ชื่อไฟล์ รอใส่>
+        ```
+        ถ้าใน macos เปิด Terminal แล้วพิมพ์คำสั่ง
+        ```
+        java -jar <ชื่อไฟล์ รอใส่>
+        ```
+
 
 ## ตัวอย่างข้อมูลผู้ใช้ระบบ (username, password) 
    
