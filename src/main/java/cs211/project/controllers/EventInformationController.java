@@ -48,11 +48,11 @@ public class EventInformationController {
 
         eventInfoLabel.setWrapText(true);
         eventInfoLabel.setText(event.getInfo());
-        eventInfoLabel.setPrefWidth(950);
+        eventInfoLabel.setPrefWidth(940);
 
         placeLabel.setWrapText(true);
         placeLabel.setText(event.getPlace());
-        placeLabel.setPrefWidth(500);
+        placeLabel.setPrefWidth(440);
 
         String pattern = "dd MMMM yyyy";
         startDateLabel.setText(event.getStartDate().format(DateTimeFormatter.ofPattern(pattern)) + " @ " + event.getStartTime() + " to");

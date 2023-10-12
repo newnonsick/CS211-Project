@@ -9,33 +9,33 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventInformationController">
    <children>
-      <ImageView fx:id="eventImageView" fitHeight="230.0" fitWidth="398.0" layoutX="157.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="eventImageView" fitHeight="230.0" fitWidth="398.0" layoutX="157.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="eventNameLabel" layoutX="130.0" layoutY="59.0" text="eventNameLabel">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="eventInfoLabel" layoutX="130.0" layoutY="138.0" prefHeight="55.0" prefWidth="923.0" text="eventInfoLabel&#10;eventInfoLabel">
+      <Label fx:id="eventInfoLabel" layoutX="130.0" layoutY="131.0" prefHeight="88.0" prefWidth="923.0" text="eventInfoLabel&#10;eventInfoLabel&#10;eventInfoLabel">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="619.0" layoutY="201.0" text="Category">
+      <Label layoutX="619.0" layoutY="219.0" text="Category">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="619.0" layoutY="292.0" text="Location">
+      <Label layoutX="620.0" layoutY="298.0" text="Location">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="619.0" layoutY="386.0" text="Date And Time">
+      <Label layoutX="620.0" layoutY="392.0" text="Date And Time">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="621.0" layoutY="499.0" text="Max Participants">
+      <Label layoutX="622.0" layoutY="505.0" text="Max Participants">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -45,7 +45,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="maxParticipantsLabel" layoutX="620.0" layoutY="529.0" text="maxParticipantsLabel">
+      <Label fx:id="maxParticipantsLabel" layoutX="621.0" layoutY="535.0" text="maxParticipantsLabel">
          <font>
             <Font size="20.0" />
          </font>
@@ -55,17 +55,17 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="endDateLabel" layoutX="620.0" layoutY="446.0" text="endDateLabel">
+      <Label fx:id="endDateLabel" layoutX="621.0" layoutY="452.0" text="endDateLabel">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="startDateLabel" layoutX="620.0" layoutY="416.0" text="startDateLabel">
+      <Label fx:id="startDateLabel" layoutX="621.0" layoutY="422.0" text="startDateLabel">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="placeLabel" layoutX="619.0" layoutY="322.0" text="placeLabel">
+      <Label fx:id="placeLabel" layoutX="620.0" layoutY="328.0" text="placeLabel">
          <font>
             <Font size="20.0" />
          </font>
@@ -80,12 +80,12 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="157.0" layoutY="718.0" mnemonicParsing="false" onAction="#handleVisitTeamButton" text="Visit Our Teams">
+      <Button layoutX="157.0" layoutY="728.0" mnemonicParsing="false" onAction="#handleVisitTeamButton" text="Visit Our Teams">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Label fx:id="categoryLabel" layoutX="619.0" layoutY="231.0" text="categoryLabel">
+      <Label fx:id="categoryLabel" layoutX="619.0" layoutY="249.0" text="categoryLabel">
          <font>
             <Font size="20.0" />
          </font>
