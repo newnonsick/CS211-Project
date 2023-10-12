@@ -49,7 +49,7 @@
         <ImageView fx:id="profileImageView" fitHeight="180.0" fitWidth="180.0" layoutX="956.0" layoutY="107.0" pickOnBounds="true" smooth="false" />
         <Button fx:id="upLoadImageButton" layoutX="996.0" layoutY="307.0" mnemonicParsing="false" onAction="#upLoadImage" text="Upload image" />
         <Label layoutX="1094.0" layoutY="313.0" style="-fx-opacity: 50%;" text="*optional" />
-        <Button fx:id="cancelUploadButton" disable="true" layoutX="960.0" layoutY="307.0" mnemonicParsing="false" onAction="#cancelUpload" prefHeight="26.0" prefWidth="29.0" text="X" visible="false" />
+        <Button fx:id="cancelUploadButton" disable="true" layoutX="960.0" layoutY="307.0" mnemonicParsing="false" onAction="#cancelUpload" prefHeight="25.0" prefWidth="29.0" text="X" visible="false" />
         <Line endX="-100.0" endY="846.0" layoutX="900.0" layoutY="9.0" startX="-100.0" startY="-9.0" />
         <Pane layoutX="-8.0" layoutY="-7.0" prefHeight="878.0" prefWidth="808.0" style="-fx-background-color: ffebf5;" />
         <ImageView fitHeight="860.0" fitWidth="799.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">

@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -45,6 +46,8 @@ public class RegisterController {
     @FXML
     public void initialize(){
         errorLabel.setText("");
+        Circle circle = new Circle(90, 90, 90);
+        profileImageView.setClip(circle);
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
         profileImageView.setFitWidth(180);
         profileImageView.setFitHeight(180);
