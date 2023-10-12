@@ -84,7 +84,7 @@
       </Label>
       <DatePicker fx:id="activityDatePicker" layoutX="716.0" layoutY="600.0" />
       <TextArea fx:id="activityInfoTextArea" layoutX="716.0" layoutY="492.0" prefHeight="90.0" prefWidth="399.0" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="68.0" layoutY="181.0" prefHeight="502.0" prefWidth="412.0">
+      <ScrollPane layoutX="68.0" layoutY="181.0" prefHeight="502.0" prefWidth="412.0">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="502.0" prefWidth="412.0">
                <children>
