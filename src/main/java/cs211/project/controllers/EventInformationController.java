@@ -116,10 +116,10 @@ public class EventInformationController {
         LocalDateTime currentDateTime = LocalDateTime.now(thaiTimeZone);
         LocalDateTime startJoinDateTime = (event.getStartJoinDate() != null && event.getStartJoinTime() != null)
                 ? LocalDateTime.of(event.getStartJoinDate(), event.getStartJoinTime())
-                : LocalDateTime.MAX;
+                : LocalDateTime.MIN;
         LocalDateTime closeJoinDateTime = (event.getCloseJoinDate() != null && event.getCloseJoinTime() != null)
                 ? LocalDateTime.of(event.getCloseJoinDate(), event.getCloseJoinTime())
-                : LocalDateTime.MIN;
+                : LocalDateTime.MAX;
 
         if (currentDateTime.isBefore(startJoinDateTime) || currentDateTime.isAfter(closeJoinDateTime)) {
             errorLabel.setText("You can not join this event\noutside the specified joining period.");
