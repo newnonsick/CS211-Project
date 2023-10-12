@@ -61,7 +61,12 @@
                         <Image url="@../images/clock.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="remaindaysLabel" text="remaindays" />
+                  <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="259.0" spacing="5.0">
+                     <children>
+                        <Label fx:id="remaindaysLabel" text="remaindays" />
+                        <Label fx:id="eventRemaindaysLabel" text="eventRemaindays" />
+                     </children>
+                  </VBox>
                </children>
                <padding>
                   <Insets left="10.0" />

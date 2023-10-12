@@ -3,6 +3,7 @@ module cs211.project {
     requires javafx.fxml;
     requires bcrypt;
 
+
     exports cs211.project.controllers;
     opens cs211.project.controllers to javafx.fxml;
     exports cs211.project;
