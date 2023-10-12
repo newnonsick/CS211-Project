@@ -32,6 +32,7 @@ public class TeamElementController {
     ImageView eventImageView;
     @FXML
     Label participantsLabel;
+    @FXML Label eventRemaindaysLabel;
     private Datasource<EventList> eventListDatasource;
     private EventList eventList;
     private Event event;
@@ -54,9 +55,10 @@ public class TeamElementController {
         eventNameLabel.setText(event.getName());
         teamNameLabel.setText(teamName);
         maxParticipantsLabel.setText(String.valueOf(maxParticipants));
-        remaindaysLabel.setText(formattedStartJoinDate + " " + startJoinTime + " - " + formattedClosingJoinDate + " " + endJoinTime);
+        remaindaysLabel.setText("Team : " + formattedStartJoinDate + " " + startJoinTime + " - " + formattedClosingJoinDate + " " + endJoinTime);
         eventImageView.setImage(new Image(new File("data" + File.separator + "eventPicture" + File.separator + event.getPicture()).toURI().toString(), 130, 130, false, false));
         participantsLabel.setText(String.valueOf(teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(eventUUID, teamName)));
+        eventRemaindaysLabel.setText("Event : " + event.getStartDate().format(formatter) + " " + event.getStartTime() + " - " + event.getEndDate().format(formatter) + " " + event.getEndTime());
     }
 
 
