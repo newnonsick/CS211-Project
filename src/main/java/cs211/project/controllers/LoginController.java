@@ -15,13 +15,13 @@ import java.io.*;
 public class LoginController {
 
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
-    Label errorLabel;
+    private Label errorLabel;
     @FXML
-    Button loginButton;
+    private Button loginButton;
 
     public void initialize() {
         loginButton.setDisable(true);

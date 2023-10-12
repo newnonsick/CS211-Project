@@ -2,6 +2,7 @@ module cs211.project {
     requires javafx.controls;
     requires javafx.fxml;
     requires bcrypt;
+    requires java.desktop;
 
 
     exports cs211.project.controllers;

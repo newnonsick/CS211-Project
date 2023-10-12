@@ -21,17 +21,17 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class TeamManagementController {
-    @FXML TextField activityNameTextField;
-    @FXML TextArea activityDescriptionTextArea;
-    @FXML ScrollPane participantListScrollPane;
-    @FXML GridPane participantListGridPane;
-    @FXML TableView activityTableView;
-    @FXML Button addActivityButton;
-    @FXML Button deleteActivityButton;
-    @FXML Button endActivityButton;
-    @FXML TableColumn activityNameColumn;
-    @FXML TableColumn activityDescriptionColumn;
-    @FXML TableColumn activityStatusColumn;
+    @FXML private TextField activityNameTextField;
+    @FXML private TextArea activityDescriptionTextArea;
+    @FXML private ScrollPane participantListScrollPane;
+    @FXML private GridPane participantListGridPane;
+    @FXML private TableView activityTableView;
+    @FXML private Button addActivityButton;
+    @FXML private Button deleteActivityButton;
+    @FXML private Button endActivityButton;
+    @FXML private TableColumn activityNameColumn;
+    @FXML private TableColumn activityDescriptionColumn;
+    @FXML private TableColumn activityStatusColumn;
 
     private ActivityList activityList;
     private Datasource<ActivityList> activityListDatasource;

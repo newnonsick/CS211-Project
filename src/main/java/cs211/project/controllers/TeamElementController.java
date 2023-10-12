@@ -19,20 +19,20 @@ import java.time.format.DateTimeFormatter;
 
 public class TeamElementController {
     @FXML
-    Label eventNameLabel;
+    private Label eventNameLabel;
     @FXML
-    Label teamNameLabel;
+    private Label teamNameLabel;
     @FXML
-    Label maxParticipantsLabel;
+    private Label maxParticipantsLabel;
     @FXML
-    Label remaindaysLabel;
+    private Label remaindaysLabel;
     @FXML
-    AnchorPane selectTeamAnchorPane;
+    private AnchorPane selectTeamAnchorPane;
     @FXML
-    ImageView eventImageView;
+    private ImageView eventImageView;
     @FXML
-    Label participantsLabel;
-    @FXML Label eventRemaindaysLabel;
+    private Label participantsLabel;
+    @FXML private Label eventRemaindaysLabel;
     private Datasource<EventList> eventListDatasource;
     private EventList eventList;
     private Event event;

@@ -1,4 +1,5 @@
 package cs211.project.controllers;
+
 import cs211.project.models.User;
 import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
@@ -9,44 +10,42 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class MainPageController {
     @FXML
-    BorderPane window;
+    private BorderPane window;
     @FXML
-    StackPane content;
+    private StackPane content;
     @FXML
-    Button eventButton;
+    private Button eventButton;
     @FXML
-    Button createEventButton;
+    private Button createEventButton;
     @FXML
-    Button myEventButton;
+    private Button myEventButton;
     @FXML
-    Button myTeamButton;
+    private Button myTeamButton;
     @FXML
-    Button userInfoButton;
+    private Button userInfoButton;
     @FXML
-    ImageView eventNavBarImage;
+    private ImageView eventNavBarImage;
     @FXML
-    ImageView createEventNavBarImage;
+    private ImageView createEventNavBarImage;
     @FXML
-    ImageView myEventsNavBarImage;
+    private ImageView myEventsNavBarImage;
     @FXML
-    ImageView myTeamsNavBarImage;
+    private ImageView myTeamsNavBarImage;
     @FXML
-    ImageView userInfoNavBarImage;
+    private ImageView userInfoNavBarImage;
     @FXML
-    Label nameLabel;
+    private Label nameLabel;
     @FXML
-    ImageView userImageView;
+    private ImageView userImageView;
 
     private User currentUser;
     private ImageView currentNavBarImage;
@@ -69,7 +68,7 @@ public class MainPageController {
         }
         currentNavBarImage = eventNavBarImage;
         mouseIn(eventNavBarImage);
-        //Mouse In (Can't do with SceneBuilder. Somehow it does not work. I've tried.
+
         eventButton.setOnMouseEntered(event -> {
             mouseIn(eventNavBarImage);
         });
@@ -90,7 +89,7 @@ public class MainPageController {
             mouseIn(userInfoNavBarImage);
         });
 
-        //Mouse Out
+
         eventButton.setOnMouseExited(event -> {
             mouseOut(eventNavBarImage);
         });

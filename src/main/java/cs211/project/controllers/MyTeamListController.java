@@ -21,13 +21,13 @@ import java.time.ZoneId;
 public class MyTeamListController {
 
     @FXML
-    ScrollPane teamListScrollPane;
+    private ScrollPane teamListScrollPane;
     @FXML
-    GridPane teamListGridPane;
+    private GridPane teamListGridPane;
     @FXML
-    ScrollPane yourCreateTeamListScrollPane;
+    private ScrollPane yourCreateTeamListScrollPane;
     @FXML
-    GridPane yourCreateTeamListGridPane;
+    private GridPane yourCreateTeamListGridPane;
     private User currentUser;
     private Datasource<TeamList> datasourceTeam;
     private Datasource<TeamParticipantList> datasourceParticipant;

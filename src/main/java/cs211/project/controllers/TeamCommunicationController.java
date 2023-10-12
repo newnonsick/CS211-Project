@@ -22,18 +22,18 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TeamCommunicationController {
-    @FXML Label activityNameLabel;
-    @FXML Label teamNameLabel;
-    @FXML TableView activityTableView;
-    @FXML TextField sendMessageTextField;
-    @FXML Button manageTeamButton;
-    @FXML VBox chatBoxVBox;
-    @FXML ScrollPane chatBoxScrollPane;
-    @FXML Button sendMessageButton;
-    @FXML TableColumn activityNameColumn;
-    @FXML TableColumn activityDescriptionColumn;
-    @FXML TableColumn activityStatusColumn;
-    @FXML Text activityDescriptionText;
+    @FXML private Label activityNameLabel;
+    @FXML private Label teamNameLabel;
+    @FXML private TableView activityTableView;
+    @FXML private TextField sendMessageTextField;
+    @FXML private Button manageTeamButton;
+    @FXML private VBox chatBoxVBox;
+    @FXML private ScrollPane chatBoxScrollPane;
+    @FXML private Button sendMessageButton;
+    @FXML private TableColumn activityNameColumn;
+    @FXML private TableColumn activityDescriptionColumn;
+    @FXML private TableColumn activityStatusColumn;
+    @FXML private Text activityDescriptionText;
 
     private TeamChatList teamChatList;
     private Team team;

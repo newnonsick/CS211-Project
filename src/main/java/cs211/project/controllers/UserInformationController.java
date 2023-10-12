@@ -42,7 +42,7 @@ public class UserInformationController {
     private UserList userList;
     private Datasource<List<String[]>> joinEventDataSource;
     private List<String[]> joinEventData;
-    File selectedImage = null;
+    private File selectedImage = null;
 
     public void initialize() {
         currentUser = (User) FXRouter.getData();

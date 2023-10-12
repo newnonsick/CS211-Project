@@ -9,9 +9,9 @@ import java.io.File;
 
 public class EventElementController {
     @FXML
-    Label eventNameLabel;
+    private Label eventNameLabel;
     @FXML
-    ImageView eventImageView;
+    private ImageView eventImageView;
     @FXML
     private Label participantNumLabel;
     @FXML

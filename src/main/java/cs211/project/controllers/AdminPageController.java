@@ -32,21 +32,21 @@ public class AdminPageController {
     @FXML
     private ImageView profileImageView;
     @FXML
-    Label errorLabel;
+    private Label errorLabel;
     @FXML
-    Label usernameTagLabel;
+    private Label usernameTagLabel;
     @FXML
-    Label nameTagLabel;
+    private Label nameTagLabel;
     @FXML
-    Pane changePasswordPane;
+    private Pane changePasswordPane;
     @FXML
-    PasswordField oldPasswordField;
+    private PasswordField oldPasswordField;
     @FXML
-    PasswordField newPasswordField;
+    private PasswordField newPasswordField;
     @FXML
-    CheckBox cautionChoiceBox;
+    private CheckBox cautionChoiceBox;
     @FXML
-    Button changePasswordButton;
+    private Button changePasswordButton;
 
     @FXML
     public void initialize() {

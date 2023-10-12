@@ -23,17 +23,17 @@ import java.util.Locale;
 
 public class ParticipantActivityController {
     @FXML
-    Label eventNameLabel;
+    private Label eventNameLabel;
 
     @FXML
-    TableView<Activity> activityParticipantTableView;
+    private TableView<Activity> activityParticipantTableView;
     @FXML private Label eventDateLabel;
     @FXML private Label eventTimeLabel;
     @FXML private Label eventInfoLabel;
     @FXML private Label placeLabel;
 
     private Event event;
-    EventList eventList;
+    private EventList eventList;
     private String eventUUID;
     private String currentUsername;
     private String sourcePage;

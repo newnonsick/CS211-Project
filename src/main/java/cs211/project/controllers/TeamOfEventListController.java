@@ -19,11 +19,11 @@ import java.util.Optional;
 public class TeamOfEventListController {
 
     @FXML
-    ScrollPane teamScrollPane;
+    private ScrollPane teamScrollPane;
     @FXML
-    GridPane teamGridPane;
+    private GridPane teamGridPane;
     @FXML
-    Label eventNameLabel;
+    private Label eventNameLabel;
 
     private Datasource<TeamList> teamListDatasource;
     private Datasource<TeamParticipantList> teamParticipantListDatasource;

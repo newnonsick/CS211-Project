@@ -13,10 +13,10 @@ import javafx.scene.control.PasswordField;
 import java.io.IOException;
 
 public class ResetPasswordController {
-    @FXML PasswordField oldPasswordTextField;
-    @FXML PasswordField newPasswordTextField;
-    @FXML PasswordField confirmPasswordTextField;
-    @FXML Label errorLabel;
+    @FXML private PasswordField oldPasswordTextField;
+    @FXML private PasswordField newPasswordTextField;
+    @FXML private PasswordField confirmPasswordTextField;
+    @FXML private Label errorLabel;
     private User currentUser;
     private Datasource<UserList> userListDataSource;
     private UserList userList;

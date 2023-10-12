@@ -24,22 +24,22 @@ import java.nio.file.StandardCopyOption;
 
 public class RegisterController {
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
-    PasswordField confirmPasswordTextField;
+    private PasswordField confirmPasswordTextField;
     @FXML
-    TextField nameTextField;
+    private TextField nameTextField;
     @FXML
-    Label errorLabel;
+    private Label errorLabel;
     @FXML
-    Button upLoadImageButton;
+    private Button upLoadImageButton;
     @FXML
-    ImageView profileImageView;
+    private ImageView profileImageView;
     @FXML
-    Button cancelUploadButton;
-    File selectedImage = null;
+    private Button cancelUploadButton;
+    private File selectedImage = null;
     boolean upFile = false;
 
     @FXML

@@ -20,9 +20,9 @@ import java.time.ZoneId;
 import java.util.Optional;
 
 public class EventTeamManagementContrller {
-    @FXML GridPane teamListGridPane;
-    @FXML ScrollPane teamListScrollPane;
-    @FXML Label eventNameLabel;
+    @FXML private GridPane teamListGridPane;
+    @FXML private ScrollPane teamListScrollPane;
+    @FXML private Label eventNameLabel;
 
     private String eventUUID;
     private Datasource<TeamList> datasourceTeam;

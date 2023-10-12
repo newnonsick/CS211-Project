@@ -14,14 +14,14 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 public class CreateTeamController {
-    @FXML DatePicker startDateDatePicker;
-    @FXML  DatePicker endDateDatePicker;
-    @FXML TextField teamNameTextField;
-    @FXML TextField numPeopleTextField;
-    @FXML MenuButton startHourMenuButton;
-    @FXML MenuButton startMinuteMenuButton;
-    @FXML MenuButton endHourMenuButton;
-    @FXML MenuButton endMinuteMenuButton;
+    @FXML private DatePicker startDateDatePicker;
+    @FXML  private DatePicker endDateDatePicker;
+    @FXML private TextField teamNameTextField;
+    @FXML private TextField numPeopleTextField;
+    @FXML private MenuButton startHourMenuButton;
+    @FXML private MenuButton startMinuteMenuButton;
+    @FXML private MenuButton endHourMenuButton;
+    @FXML private MenuButton endMinuteMenuButton;
     private TeamList teamList;
     private Datasource<TeamList> datasource;
     private String eventUUID;

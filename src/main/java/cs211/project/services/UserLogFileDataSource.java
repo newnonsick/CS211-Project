@@ -47,7 +47,7 @@ public class UserLogFileDataSource implements Datasource<UserList> {
 
         String line = "";
         User temp = null;
-        try {  //more information hasn't been added yet
+        try {
             while ( (line = buffer.readLine()) != null ){
                 if (line.equals("")) continue;
                 String[] data = line.split(",");

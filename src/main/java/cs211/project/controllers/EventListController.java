@@ -5,8 +5,8 @@ import cs211.project.models.User;
 import cs211.project.models.collections.EventList;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
-import cs211.project.services.JoinEventFileDataSource;
 import cs211.project.services.FXRouterPane;
+import cs211.project.services.JoinEventFileDataSource;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.List;
 
 public class EventListController {
     private String[] eventList;
@@ -40,37 +39,36 @@ public class EventListController {
     private String selectedCategory;
     private User currentUser;
     @FXML
-    Pane categoryPane;
+    private Pane categoryPane;
     @FXML
-    TextField searchTextField;
+    private TextField searchTextField;
     @FXML
-    Button searchButton;
+    private Button searchButton;
     @FXML
-    GridPane eventGrid;
+    private GridPane eventGrid;
     @FXML
-    ScrollPane eventScrollPane;
-    @FXML Button allCategoryButton;
-    @FXML Button categoryExpoButton;
-    @FXML Button categoryFestivalButton;
-    @FXML Button categorySeminarButton;
-    @FXML Button categoryHouseButton;
-    @FXML Button categoryFoodButton;
-    @FXML Button categoryEntertainmentButton;
-    @FXML Button categoryConcertButton;
-    @FXML Button categoryTravelButton;
-    @FXML Button categoryArtButton;
-    @FXML Button categorySportButton;
-    @FXML Button categoryReligionButton;
-    @FXML Button categoryPetButton;
-    @FXML Button categoryEducationButton;
-    @FXML Button categoryOtherButton;
+    private ScrollPane eventScrollPane;
+    @FXML private Button allCategoryButton;
+    @FXML private Button categoryExpoButton;
+    @FXML private Button categoryFestivalButton;
+    @FXML private Button categorySeminarButton;
+    @FXML private Button categoryHouseButton;
+    @FXML private Button categoryFoodButton;
+    @FXML private Button categoryEntertainmentButton;
+    @FXML private Button categoryConcertButton;
+    @FXML private Button categoryTravelButton;
+    @FXML private Button categoryArtButton;
+    @FXML private Button categorySportButton;
+    @FXML private Button categoryReligionButton;
+    @FXML private Button categoryPetButton;
+    @FXML private Button categoryEducationButton;
+    @FXML private Button categoryOtherButton;
     @FXML
-    Button categoryOpenButton;
+    private Button categoryOpenButton;
 
-    boolean categoryOn = false;
+    private boolean categoryOn = false;
 
     public void initialize() {
-//        searchButton.setImage(new javafx.scene.image.Image("/cs211/project/images/search.png"));
         currentUser = (User) FXRouterPane.getData();
         allCategoryButton.getStyleClass().add("category-button-selected");
         isSearch = false;
@@ -105,9 +103,6 @@ public class EventListController {
                 }
             }
         });
-
-
-
     }
 
     @FXML
@@ -166,7 +161,6 @@ public class EventListController {
 
         if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText) && matchedSuggestion.indexOf(enteredText) != matchedSuggestion.length()-1) {
             searchTextField.setText(matchedSuggestion);
-//                searchTextField.selectRange(matchedSuggestion.lastIndexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
             searchTextField.selectRange(matchedSuggestion.length() ,matchedSuggestion.length());
         }
 
@@ -258,7 +252,6 @@ public class EventListController {
 
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-//                    FXRouterPane.goTo("event-information", event.getEventName());
                     FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -283,7 +276,6 @@ public class EventListController {
             categoryPane.setVisible(true);
             timeline.play();
             categoryOn = true;
-            //categoryOpenButton.getStyleClass().clear();
             categoryOpenButton.getStyleClass().add("category-open-selected");
         }
         else {

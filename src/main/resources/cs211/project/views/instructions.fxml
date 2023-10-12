@@ -34,6 +34,6 @@
             </TextFlow>
          </content>
       </ScrollPane>
-      <Hyperlink fx:id="hyperlink" layoutX="582.0" layoutY="102.0" text="Click to download full manual" />
+      <Hyperlink fx:id="downloadManualHyperlink" layoutX="582.0" layoutY="102.0" text="Click to download full manual" />
    </children>
 </AnchorPane>

@@ -33,15 +33,15 @@ public class TeamParticipantElementController {
     private String currentUsername;
 
     @FXML
-    ImageView profileImageView;
+    private ImageView profileImageView;
     @FXML
-    ImageView leaderImageView;
+    private ImageView leaderImageView;
     @FXML
-    Button removeParticipantButton;
+    private Button removeParticipantButton;
     @FXML
-    Button setLeaderButton;
+    private Button setLeaderButton;
     @FXML
-    Label nameLabel;
+    private Label nameLabel;
 
     public void initialize(){
         teamParticipantListDatasource = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
@@ -58,7 +58,6 @@ public class TeamParticipantElementController {
         user = userList.findUserByUsername(username);
         team = teamList.findEventByEventUUIDAndTeamName(eventOfTeamUUID, teamName);
         this.currentUsername = currentUsername;
-        //profile size 40 x 40
         Circle img = new Circle(20, 20, 20);
         profileImageView.setClip(img);
         String profilePicturePath;
