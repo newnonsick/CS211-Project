@@ -72,6 +72,18 @@ public class UserInformationController {
                 }
             }
         });
+        eventHistoryTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
+            @Override
+            public void changed(ObservableValue observable, Event oldValue, Event newValue) {
+                if (newValue != null) {
+                    try {
+                        FXRouterPane.goTo("participant-activity", new String[] {newValue.getEventUUID(), currentUser.getUsername(), "userInformation"});
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void checkFileIsExisted(String fileName) {
