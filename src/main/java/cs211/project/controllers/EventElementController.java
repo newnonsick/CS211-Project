@@ -19,12 +19,12 @@ public class EventElementController {
 
     public void participantCount(int currentParticipants, int maxParticipants) {
         if (maxParticipants == -1) {
-            participantNumLabel.setText("UNLIMITED");
+            participantNumLabel.setText("Available: UNLIMITED");
         } else if (currentParticipants < maxParticipants) {
             int available = maxParticipants - currentParticipants;
             participantNumLabel.setText("Available: " + available);
         } else {
-            participantNumLabel.setText("FULL");
+            participantNumLabel.setText("Available: FULL");
         }
     }
 

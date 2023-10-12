@@ -92,10 +92,14 @@ public class TeamManagementController {
                         endActivityButton.setDisable(false);
                     }
                     selectedActivity = newValue;
+                    activityNameTextField.setText(selectedActivity.getActivityName());
+                    activityDescriptionTextArea.setText(selectedActivity.getActivityInformation());
                 }
                 else{
                     deleteActivityButton.setDisable(true);
                     endActivityButton.setDisable(true);
+                    activityNameTextField.setText("");
+                    activityDescriptionTextArea.setText("");
                 }
             }
         });
@@ -190,7 +194,7 @@ public class TeamManagementController {
     public void showParticipant(){
         int row = 0;
         for (TeamParticipant teamParticipant: teamParticipantList.getTeamParticipants()) {
-            if (!teamParticipant.getEventUUID().equals(eventUUID) && !teamParticipant.getTeamName().equals(teamName)) {
+            if (!teamParticipant.getEventUUID().equals(eventUUID) || !teamParticipant.getTeamName().equals(teamName)) {
                 continue;
             }
             if (teamParticipant.getUsername().equals(team.getTeamOwnerUsername())){

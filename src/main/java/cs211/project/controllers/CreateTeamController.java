@@ -92,20 +92,15 @@ public class CreateTeamController {
             LocalDateTime eventStartDateTime = LocalDateTime.of(event.getStartDate(), event.getStartTime());
             LocalDateTime eventEndDateTime = LocalDateTime.of(event.getEndDate(), event.getEndTime());
 
-            if (startJoinDateTime.isBefore(eventStartDateTime) || endJoinDateTime.isAfter(eventEndDateTime)) {
+            if (endJoinDateTime.isAfter(eventEndDateTime)) {
                 Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 confirmationAlert.setTitle("Confirmation");
-                confirmationAlert.setHeaderText("The schedule is not in the event schedule");
-                confirmationAlert.setContentText("Do you want to auto adjust the schedule?");
+                confirmationAlert.setHeaderText("The end join date time is after the event end date time.");
+                confirmationAlert.setContentText("Do you want to set the end join date time to the event end date time?");
                 Optional<ButtonType> result = confirmationAlert.showAndWait();
 
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    if (startJoinDateTime.isBefore(eventStartDateTime)) {
-                        startJoinDateTime = eventStartDateTime;
-                    }
-                    if (endJoinDateTime.isAfter(eventEndDateTime)) {
-                        endJoinDateTime = eventEndDateTime;
-                    }
+                    endJoinDateTime = eventEndDateTime;
                 } else {
                     return;
                 }
