@@ -67,3 +67,13 @@ https://saacsos.notion.site/Project-CS211-2566-1c8e195c0ebd4071aea8f733692e3989?
    ทำ Controller ของหน้าที่รับผิดชอบ CreateTeamController, MyTeamListController, TeamCommunicationController, TeamElementController, TeamOfEventListController, TeamParticipantElement ให้สามารถทำงานได้ถูกต้อง และทำให้หน้า UI ของทุกๆหน้ามีความสวยงามและเป็นระเบียบขึ้น และเพิ่ม models ของ TeamParticipantList และ TeamParticipant และสร้าง teamParticipantListFileDataSource เพื่อให้อ่านและเขียนไฟล์ข้อมูลผู้เข้าร่วมทีมได้ และสร้าง models TeamChat และ TeamChatList และสร้าง teamChatListFileDataSource เพื่อให้อ่านและเขียนไฟล์ข้อมูลการสนทนาของทีมได้
  - การส่งโครงงานที่สมบูรณ์
    ทำให้ระบบสามารถทำงานได้ถูกต้อง และแก้ไขจุดบกพร่องต่างๆ ที่ใช้ในการสร้างทีมและการเข้าร่วมทีมให้ทำงานได้อย่างมีเสถียรภาพมากขึ้น และแก้ไขให้ทำงานได้ดียิ่งขึ้น และปรับปรุงรายละเอียดของโปรแกรมและแก้ไขข้อผิดพลาดในบางจุด และทำ UI ให้สวยงามและเป็นระเบียบมากขึ้น และเพิ่มการ sort ข้อมูลของ model ต่างๆโดยใช้ comparator
+
+#### นาย จิรายุ โออุไร (ตาล) 6510405407
+ - ความก้าวหน้าของระบบครั้งที่ 1
+   ทำส่วนของ FXRouterPane, เริ่มทำส่วนของการ Login และ Register ที่ใช้การได้, เริ่มทำหน้าเพจแรกและ Navigation Bar, เริ่มโครงหน้าของ Admin, DataSource ของ User
+ - ความก้าวหน้าของระบบครั้งที่ 2
+   อัปโหลดรูปโปรไฟล์, ส่วนของการโชว์หน้า Event List ให้แสดงออกมาเป็นตาราง, model user, model userlist, แก้ไขบัคและเพิ่มเติมส่วนต่างๆ
+ - ความก้าวหน้าของระบบครั้งที่ 3
+   การเก็บข้อมูลการ Login, ทำหน้า Admin Page จนใช้การได้อย่างเกือบสมบูรณ์, model LogUser, model LogUserList, DataSource ของ LogUser, Refactor โค้ดเพื่อให้ถูกหลักการเขียนโปรแกรมมากขึ้น, ส่วนของการค้นหา Event โดยใช้ Category, Animation ของ Navigation Bar
+ - การส่งโครงงานที่สมบูรณ์
+   ตกแต่งส่วนของที่ตนเคยรับผิดชอบ, แก้ไขบัคของส่วนต่างๆ, ปรับการแสดงผลตัวอักษรให้ไปปในทางเดียวกันมากขึ้น, เพิ่มฟังก์ชันให้ส่วนต่างๆ ได้แก่ ส่วนของ Admin, Register ซึ่งจะเกี่ยวกับการเข้าสู่ระบบและการเปลี่ยนรหัสผ่าน
