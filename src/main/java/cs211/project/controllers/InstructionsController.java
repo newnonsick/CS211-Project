@@ -30,8 +30,7 @@ public class InstructionsController {
             instructionText.setText("Error reading the instruction file.");
         }
         downloadManualHyperlink.setOnAction(e -> {
-            //รอเอา direct download link ของ pdf มาใส่
-            openLinkInBrowser("");
+            openLinkInBrowser("https://drive.google.com/uc?export=download&id=1rgjgU9F-Hn23BByTgdinOpmXwekISr3Q");
         });
 
     }
