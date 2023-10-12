@@ -2,7 +2,6 @@ package cs211.project.models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class Event implements Comparable {
     private String ownerUsername;
@@ -20,7 +19,6 @@ public class Event implements Comparable {
     private LocalDate closeJoinDate;
     private LocalTime startJoinTime;
     private LocalTime closeJoinTime;
-    private ArrayList<Activity> eventActivity;
     private String eventUUID;
 
     public Event(String name, String picture, String info, String category, String place,
