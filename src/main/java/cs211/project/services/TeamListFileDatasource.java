@@ -1,12 +1,12 @@
 package cs211.project.services;
 
 import cs211.project.models.Team;
-import cs211.project.models.TeamList;
+import cs211.project.models.collections.TeamList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Collections;
+import java.time.LocalTime;
 
 public class TeamListFileDatasource implements Datasource<TeamList>{
     private String directoryName;
@@ -64,16 +64,18 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 String teamName = data[1].trim();
                 int maxParticipants = Integer.parseInt(data[2].trim());
                 LocalDate startJoinDate = LocalDate.parse(data[3].trim());
-                LocalDate closingJoinDate = LocalDate.parse(data[4].trim());
-                String teamOwnerUsername = data[5].trim();
-                String headOfTeamUsername = data[6].trim();
+                LocalTime startJoinTime = LocalTime.parse(data[4].trim());
+                LocalDate closingJoinDate = LocalDate.parse(data[5].trim());
+                LocalTime endJoinTime = LocalTime.parse(data[6].trim());
+                String teamOwnerUsername = data[7].trim();
+                String headOfTeamUsername = data[8].trim();
 
-                teams.addNewTeam(eventUUID, teamName, maxParticipants,startJoinDate, closingJoinDate, teamOwnerUsername,headOfTeamUsername);
+                teams.addNewTeam(eventUUID, teamName, maxParticipants, startJoinDate, startJoinTime, closingJoinDate, endJoinTime, teamOwnerUsername, headOfTeamUsername);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Collections.sort(teams.getTeams());
+        teams.sort(new TeamNameComparator());
         return teams;
     }
 
@@ -95,10 +97,18 @@ public class TeamListFileDatasource implements Datasource<TeamList>{
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-        Collections.sort(teamList.getTeams());
+        teamList.sort(new TeamNameComparator());
         try {
             for (Team team : teamList.getTeams()) {
-                String line = team.getEventUUID() + "," + team.getTeamName() + "," + team.getMaxParticipants() + "," + team.getStartJoinDate() + "," + team.getClosingJoinDate() + "," + team.getTeamOwnerUsername() + "," + team.getHeadOfTeamUsername();
+                String line = team.getEventUUID() + "," +
+                        team.getTeamName() + "," +
+                        team.getMaxParticipants() + "," +
+                        team.getStartJoinDate() + "," +
+                        team.getStartTime() + "," +
+                        team.getClosingJoinDate() + "," +
+                        team.getEndTime() + "," +
+                        team.getTeamOwnerUsername() + "," +
+                        team.getHeadOfTeamUsername();
                 buffer.append(line);
                 buffer.append("\n");
             }

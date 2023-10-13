@@ -2,17 +2,17 @@ package cs211.project.controllers;
 
 import cs211.project.models.User;
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.EventList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -24,6 +24,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 public class UserInformationController {
     @FXML private Label usernameLabel;
@@ -41,7 +42,7 @@ public class UserInformationController {
     private UserList userList;
     private Datasource<List<String[]>> joinEventDataSource;
     private List<String[]> joinEventData;
-    File selectedImage = null;
+    private File selectedImage = null;
 
     public void initialize() {
         currentUser = (User) FXRouter.getData();
@@ -59,6 +60,30 @@ public class UserInformationController {
         showUser();
         showActiveTable(eventList);
         showHistoryTable(eventList);
+        activeEventTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
+            @Override
+            public void changed(ObservableValue observable, Event oldValue, Event newValue) {
+                if (newValue != null) {
+                    try {
+                        FXRouterPane.goTo("participant-activity", new String[] {newValue.getEventUUID(), currentUser.getUsername(), "userInformation"});
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        eventHistoryTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Event>() {
+            @Override
+            public void changed(ObservableValue observable, Event oldValue, Event newValue) {
+                if (newValue != null) {
+                    try {
+                        FXRouterPane.goTo("participant-activity", new String[] {newValue.getEventUUID(), currentUser.getUsername(), "userInformation"});
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void checkFileIsExisted(String fileName) {
@@ -79,22 +104,26 @@ public class UserInformationController {
 
     private void showUser() {
         nameLabel.setText(currentUser.getName());
-        usernameLabel.setText(currentUser.getUsername());
-        profileImageView.setImage(currentUser.getProfilePicture());
+        usernameLabel.setText("@" + currentUser.getUsername());
+        Circle clip = new Circle(70, 70, 70);
+        profileImageView.setClip(clip);
+        profileImageView.setImage(currentUser.getProfilePicture(140, 140, false, false));
+        profileImageView.setFitHeight(140);
+        profileImageView.setFitWidth(140);
     }
 
     private void showActiveTable(EventList eventList) {
         TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
-        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
-        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
+        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
-        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
-        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         eventNameColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.36));
         eventCategoryColumn.prefWidthProperty().bind(activeEventTableView.widthProperty().multiply(0.30));
@@ -113,7 +142,7 @@ public class UserInformationController {
             String eventUUID = data[1];
             if (username.equals(currentUser.getUsername())) {
                 event = eventList.findEventByUUID(eventUUID);
-                if (event.getEventEndDate().isAfter(currentDate)) {
+                if (event.getEndDate().isAfter(currentDate)) {
                     activeEventTableView.getItems().add(event);
                 } else {
                     activeEventTableView.getItems();
@@ -124,16 +153,16 @@ public class UserInformationController {
 
     private void showHistoryTable(EventList eventList) {
         TableColumn<Event, String> eventNameColumn = new TableColumn<>("Name");
-        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
+        eventNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Event, String> eventCategoryColumn = new TableColumn<>("Category");
-        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("eventCategory"));
+        eventCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
         TableColumn<Event, String> eventStartDateColumn = new TableColumn<>("Start Date");
-        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventStartDate"));
+        eventStartDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<Event, String> eventEndDateColumn = new TableColumn<>("End Date");
-        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("eventEndDate"));
+        eventEndDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         eventNameColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.36));
         eventCategoryColumn.prefWidthProperty().bind(eventHistoryTableView.widthProperty().multiply(0.30));
@@ -152,7 +181,7 @@ public class UserInformationController {
             String eventUUID = data[1];
             if (username.equals(currentUser.getUsername())) {
                 event = eventList.findEventByUUID(eventUUID);
-                if (event.getEventEndDate().isBefore(currentDate)) {
+                if (event.getEndDate().isBefore(currentDate)) {
                     eventHistoryTableView.getItems().add(event);
                 } else {
                     eventHistoryTableView.getItems();
@@ -162,7 +191,7 @@ public class UserInformationController {
     }
 
     @FXML
-    public void changeProfile() throws IOException {
+    public void changeProfile(){
         chooseFile();
 
         if(selectedImage != null) {
@@ -173,7 +202,12 @@ public class UserInformationController {
             String targetDirectoryPath = "data/profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
 
-            String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
+            String fileType = null;
+            try {
+                fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             String currentProfilePicName = currentUser.getProfilePictureName();
             Path existingProfilePicPath = targetDirectory.resolve(currentProfilePicName);
 
@@ -195,17 +229,18 @@ public class UserInformationController {
                 throw new RuntimeException(e);
             }
 
-            for (User user : userList.getUsers()) {
-                if (user.getUsername().equals(currentUser.getUsername())) {
-                    user.setProfilePic(newProfilePicFileName);
-                    break;
-                }
-            }
+            userList.setProfileImageByUsername(currentUser.getUsername(), newProfilePicFileName);
             userListDataSource.writeData(userList);
+
+            try {
+                FXRouter.goTo("mainPage", currentUser);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    public void chooseFile() {
+    private void chooseFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         fileChooser.setInitialDirectory(new File("C:\\"));
@@ -216,7 +251,15 @@ public class UserInformationController {
     }
 
     @FXML
-    private void cancelChangeProfilePic() {
+    private void cancelChangeProfilePic(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Profile Picture");
+        alert.setHeaderText("Are you sure to delete your profile picture?");
+        alert.setContentText("This action cannot be undone.");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() != ButtonType.OK){
+            return;
+        }
         selectedImage = null;
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
 
@@ -235,13 +278,23 @@ public class UserInformationController {
 
         String profilePic = "default.png";
         currentUser.setProfilePic(profilePic);
-
-        for (User user : userList.getUsers()) {
-            if (user.getUsername().equals(currentUser.getUsername())) {
-                user.setProfilePic(profilePic);
-                break;
-            }
-        }
+        userList.setProfileImageByUsername(currentUser.getUsername(), profilePic);
         userListDataSource.writeData(userList);
+
+        try {
+            FXRouter.goTo("mainPage", currentUser);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    @FXML
+    private void resetPassword() {
+        try {
+            FXRouter.goTo("reset-password", currentUser);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

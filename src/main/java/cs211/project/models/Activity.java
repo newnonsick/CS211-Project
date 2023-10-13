@@ -1,7 +1,7 @@
 package cs211.project.models;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
+
 
 public class Activity {
     private String eventOfActivityUUID;
@@ -12,13 +12,15 @@ public class Activity {
     private LocalTime activityStartTime;
     private LocalTime activityEndTime;
     private LocalDate activityDate;
+    private String activityUUID;
 
-    public Activity(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus) {
+    public Activity(String eventOfActivityUUID, String teamOfActivityName, String activityName, String activityInformation, String activityStatus, String activityUUID) {
         this.eventOfActivityUUID = eventOfActivityUUID;
         this.teamOfActivityName = teamOfActivityName;
         this.activityName = activityName;
         this.activityInformation = activityInformation;
         this.activityStatus = activityStatus;
+        this.activityUUID = activityUUID;
     }
 
     public Activity(String eventOfActivityUUID, String activityName, String activityInformation, LocalTime activityStartTime, LocalTime activityEndTime, LocalDate activityDate) {
@@ -72,4 +74,26 @@ public class Activity {
         }
         return false;
     }
+
+    public String getActivityUUID() {
+        return activityUUID;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Activity)) {
+            return false;
+        }
+        Activity activity = (Activity) obj;
+
+        String activityName = activity.getActivityName();
+        String eventOfActivityUUID = activity.getEventOfActivityUUID();
+
+        if (this.teamOfActivityName != null){ //เป็น activity ของ team
+            return this.activityUUID.equals(activity.getActivityUUID());
+        } else { //เป็น activity ของ event
+            return this.activityName.equals(activityName) && this.eventOfActivityUUID.equals(eventOfActivityUUID);
+        }
+    }
+
 }

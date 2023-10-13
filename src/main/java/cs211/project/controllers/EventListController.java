@@ -1,20 +1,21 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
 import cs211.project.models.User;
+import cs211.project.models.collections.EventList;
 import cs211.project.services.Datasource;
 import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouterPane;
+import cs211.project.services.JoinEventFileDataSource;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,50 +23,50 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-import java.io.*;
-import java.security.Key;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 public class EventListController {
     private String[] eventList;
-    private int maxRow = 4;
+    private int maxRow = 3;
     private Datasource<EventList> datasource;
+    private JoinEventFileDataSource joinEventDataSource;
     private EventList eventListData;
     private LocalDate currentDate;
     private boolean isSearch;
     private String selectedCategory;
     private User currentUser;
     @FXML
-    Pane categoryPane;
+    private Pane categoryPane;
     @FXML
-    TextField searchTextField;
+    private TextField searchTextField;
     @FXML
-    Button searchButton;
+    private Button searchButton;
     @FXML
-    GridPane eventGrid;
+    private GridPane eventGrid;
     @FXML
-    ScrollPane eventScrollPane;
-    @FXML Button allCategoryButton;
-    @FXML Button categoryExpoButton;
-    @FXML Button categoryFestivalButton;
-    @FXML Button categorySeminarButton;
-    @FXML Button categoryHouseButton;
-    @FXML Button categoryFoodButton;
-    @FXML Button categoryEntertainmentButton;
-    @FXML Button categoryConcertButton;
-    @FXML Button categoryTravelButton;
-    @FXML Button categoryArtButton;
-    @FXML Button categorySportButton;
-    @FXML Button categoryReligionButton;
-    @FXML Button categoryPetButton;
-    @FXML Button categoryEducationButton;
-    @FXML Button categoryOtherButton;
+    private ScrollPane eventScrollPane;
+    @FXML private Button allCategoryButton;
+    @FXML private Button categoryExpoButton;
+    @FXML private Button categoryFestivalButton;
+    @FXML private Button categorySeminarButton;
+    @FXML private Button categoryHouseButton;
+    @FXML private Button categoryFoodButton;
+    @FXML private Button categoryEntertainmentButton;
+    @FXML private Button categoryConcertButton;
+    @FXML private Button categoryTravelButton;
+    @FXML private Button categoryArtButton;
+    @FXML private Button categorySportButton;
+    @FXML private Button categoryReligionButton;
+    @FXML private Button categoryPetButton;
+    @FXML private Button categoryEducationButton;
+    @FXML private Button categoryOtherButton;
+    @FXML
+    private Button categoryOpenButton;
 
-    boolean categoryOn = false;
+    private boolean categoryOn = false;
 
     public void initialize() {
         currentUser = (User) FXRouterPane.getData();
@@ -74,30 +75,31 @@ public class EventListController {
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         datasource = new EventListFileDatasource("data", "eventList.csv");
+        joinEventDataSource = new JoinEventFileDataSource("data", "joinEventData.csv");
         eventListData = datasource.readData();
         searchTextField.setOnKeyReleased(this::handleAutoComplete);
         eventList = eventListData.getEvents().stream()
-                .map(Event::getEventName)
+                .map(Event::getName)
                 .toArray(String[]::new);
         Arrays.sort(eventList);
         showList();
-        eventScrollPane.vvalueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                // Calculate the maximum Vvalue (maximum scroll position)
-                double maxVvalue = eventScrollPane.getVmax();
+        eventScrollPane.vvalueProperty().addListener((observable, oldValue, newValue) -> {
+            // Calculate the maximum Vvalue (maximum scroll position)
+            double maxVvalue = eventScrollPane.getVmax();
 
-                // Calculate the current Vvalue (current scroll position)
-                double currentVvalue = newValue.doubleValue();
+            // Calculate the current Vvalue (current scroll position)
+            double currentVvalue = newValue.doubleValue();
 
-                if (selectedCategory == null && currentVvalue >= maxVvalue * 0.95 && !isSearch) {
-                    if (maxRow > (int) Math.round(eventListData.getEvents().size() / 3.0 )) {
-                        maxRow = (int) Math.round(eventListData.getEvents().size() / 3.0);
-                    }
-                    else if (maxRow < (int) Math.round(eventListData.getEvents().size() / 3.0 )){
-                        maxRow += 4;
-                        showList();
-                    }
+            if (selectedCategory == null && currentVvalue >= maxVvalue * 0.95 && !isSearch) {
+                int totalEvents = eventListData.getEvents().size();
+                int visibleRows = (int) Math.ceil((double) maxRow / 3);
+                int remainingEvents = totalEvents - visibleRows * 3;
+
+                if (remainingEvents > 0) {
+                    maxRow += 3;
+                    showList();
+                } else {
+                    maxRow = (int) Math.ceil((double) totalEvents / 3) * 3;
                 }
             }
         });
@@ -159,22 +161,21 @@ public class EventListController {
 
         if (totalMatched == 1 && matchedSuggestion != null && !matchedSuggestion.equals(enteredText) && matchedSuggestion.indexOf(enteredText) != matchedSuggestion.length()-1) {
             searchTextField.setText(matchedSuggestion);
-//                searchTextField.selectRange(matchedSuggestion.lastIndexOf(enteredText.charAt(enteredText.length() - 1)) + 1 ,matchedSuggestion.length());
             searchTextField.selectRange(matchedSuggestion.length() ,matchedSuggestion.length());
         }
 
     }
 
     public void showList() {
-        int row = maxRow - 4;
+        int row = maxRow - 3;
         int column = 0;
         int i = 0;
         for (Event event : eventListData.getEvents()) {
-            if (i < (maxRow - 4) * 3) {
+            if (i < (maxRow - 3) * 3) {
                 i++;
                 continue;
             }
-            if (event.getEventEndDate().isBefore(currentDate)) {
+            if (event.getEndDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 3) {
@@ -194,7 +195,12 @@ public class EventListController {
             }
 
             EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            event_.setPage(event.getName(), event.getPicture(), event.getCategory());
+
+            int participantCount = joinEventDataSource.countParticipantsForEvent(event.getEventUUID());
+            int maxParti = event.getMaxParticipants();
+            event_.participantCount(participantCount, maxParti);
+
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
@@ -207,21 +213,21 @@ public class EventListController {
 
             GridPane.setMargin(anchorPane, new Insets(10));
         }
-
     }
+
 
     public void showList(String eventName) {
         eventGrid.getChildren().clear();
         int row = 0;
         int column = 0;
         for (Event event : eventListData.getEvents()) {
-            if (eventName != "" && !event.getEventName().toLowerCase().contains(eventName.toLowerCase())) {
+            if (eventName != "" && !event.getName().toLowerCase().contains(eventName.toLowerCase())) {
                 continue;
             }
-            if (event.getEventEndDate().isBefore(currentDate)) {
+            if (event.getEndDate().isBefore(currentDate)) {
                 continue;
             }
-            if (selectedCategory != null && !event.getEventCategory().equals(selectedCategory)) {
+            if (selectedCategory != null && !event.getCategory().equals(selectedCategory)) {
                 continue;
             }
             if(column == 3) {
@@ -238,10 +244,14 @@ public class EventListController {
             }
 
             EventElementController event_ = fxmlLoader.getController();
-            event_.setPage(event.getEventName(), event.getEventPicture(), event.getEventCategory());
+            event_.setPage(event.getName(), event.getPicture(), event.getCategory());
+
+            int participantCount = joinEventDataSource.countParticipantsForEvent(event.getEventUUID());
+            int maxParti = event.getMaxParticipants();
+            event_.participantCount(participantCount, maxParti);
+
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
-//                    FXRouterPane.goTo("event-information", event.getEventName());
                     FXRouterPane.goTo("event-information", new String[] { event.getEventUUID(), currentUser.getUsername() });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -266,6 +276,7 @@ public class EventListController {
             categoryPane.setVisible(true);
             timeline.play();
             categoryOn = true;
+            categoryOpenButton.getStyleClass().add("category-open-selected");
         }
         else {
             double targetHeight = 0;
@@ -281,12 +292,14 @@ public class EventListController {
 
             categoryPane.setVisible(false);
             categoryOn = false;
+            categoryOpenButton.getStyleClass().remove("category-open-selected");
+
         }
 
     }
     @FXML
     public void handleAllCategoryButton() {
-        maxRow = 4;
+        maxRow = 3;
         selectedCategory = null;
         eventGrid.getChildren().clear();
         showList();
@@ -395,7 +408,5 @@ public class EventListController {
         categoryOtherButton.getStyleClass().remove("category-button-selected");
         button.getStyleClass().add("category-button-selected");
     }
-
-
 
 }

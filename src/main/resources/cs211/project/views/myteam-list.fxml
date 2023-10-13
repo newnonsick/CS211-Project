@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MyTeamListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.MyTeamListController">
     <children>
       <TabPane layoutX="68.0" layoutY="107.0" prefHeight="694.0" prefWidth="1045.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -19,7 +19,7 @@
                      <children>
                         <ScrollPane fx:id="teamListScrollPane" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
                            <content>
-                              <GridPane fx:id="teamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
+                              <GridPane fx:id="teamListGridPane" prefHeight="664.0" prefWidth="1030.0" styleClass="transparent">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -37,7 +37,7 @@
                      <children>
                         <ScrollPane fx:id="yourCreateTeamListScrollPane" prefHeight="666.0" prefWidth="1045.0" styleClass="transparent">
                            <content>
-                              <GridPane fx:id="yourCreateTeamListGridPane" prefHeight="666.0" prefWidth="1030.0" styleClass="transparent">
+                              <GridPane fx:id="yourCreateTeamListGridPane" prefHeight="664.0" prefWidth="1030.0" styleClass="transparent">
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

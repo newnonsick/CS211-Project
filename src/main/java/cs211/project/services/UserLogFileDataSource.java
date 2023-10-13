@@ -2,8 +2,7 @@ package cs211.project.services;
 
 import cs211.project.models.LogUser;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
-import javafx.scene.text.Text;
+import cs211.project.models.collections.UserList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -48,7 +47,7 @@ public class UserLogFileDataSource implements Datasource<UserList> {
 
         String line = "";
         User temp = null;
-        try {  //more information hasn't been added yet
+        try {
             while ( (line = buffer.readLine()) != null ){
                 if (line.equals("")) continue;
                 String[] data = line.split(",");

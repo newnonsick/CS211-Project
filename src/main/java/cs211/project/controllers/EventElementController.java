@@ -6,20 +6,30 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class EventElementController {
     @FXML
-    Label eventNameLabel;
+    private Label eventNameLabel;
     @FXML
-    ImageView eventImageView;
-
+    private ImageView eventImageView;
+    @FXML
+    private Label participantNumLabel;
     @FXML
     Label categoryLabel;
 
+    public void participantCount(int currentParticipants, int maxParticipants) {
+        if (maxParticipants == -1) {
+            participantNumLabel.setText("Available: UNLIMITED");
+        } else if (currentParticipants < maxParticipants) {
+            int available = maxParticipants - currentParticipants;
+            participantNumLabel.setText("Available: " + available);
+        } else {
+            participantNumLabel.setText("Available: FULL");
+        }
+    }
+
     public void setPage(String name, String imgName, String category) {
-        String filePath = "data/eventPicture/" + imgName;
+        String filePath = "data"+ File.separator + "eventPicture" + File.separator + imgName;
         File file = new File(filePath);
         Image eventImage = new Image(file.toURI().toString(),176,129,false,false);
         eventNameLabel.setText(name);

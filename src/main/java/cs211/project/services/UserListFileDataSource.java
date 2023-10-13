@@ -1,8 +1,7 @@
 package cs211.project.services;
 
-import cs211.project.models.Event;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -94,6 +93,10 @@ public class UserListFileDataSource implements Datasource<UserList> {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+        File pictureDirectory = new File(directoryName + File.separator + "profile_picture");
+        if (!pictureDirectory.exists()) {
+            pictureDirectory.mkdirs();
         }
     }
 }

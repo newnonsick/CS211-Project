@@ -1,29 +1,28 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
+import cs211.project.models.collections.EventList;
+import cs211.project.models.collections.TeamList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.Optional;
 
 public class EventTeamManagementContrller {
-    @FXML GridPane teamListGridPane;
-    @FXML ScrollPane teamListScrollPane;
-    @FXML Label eventNameLabel;
+    @FXML private GridPane teamListGridPane;
+    @FXML private ScrollPane teamListScrollPane;
+    @FXML private Label eventNameLabel;
 
     private String eventUUID;
     private Datasource<TeamList> datasourceTeam;
@@ -31,7 +30,6 @@ public class EventTeamManagementContrller {
     private TeamList teamList;
     private String[] componentData;
     private String currentUsername;
-    private Stage createTeamStage;
     private CreateTeamController createTeamController;
     private Datasource<EventList> datasourceEvent;
     private EventList eventList;
@@ -47,7 +45,7 @@ public class EventTeamManagementContrller {
         eventUUID = componentData[0];
         currentUsername = componentData[1];
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
         ZoneId thaiTimeZone = ZoneId.of("Asia/Bangkok");
         currentDate = LocalDate.now(thaiTimeZone);
         showTeamList();
@@ -58,19 +56,34 @@ public class EventTeamManagementContrller {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/cs211/project/views/create-team.fxml"));
         try {
             Parent root = loader.load();
-            createTeamStage = new Stage();
-            createTeamStage.initStyle(StageStyle.UTILITY);
-            createTeamStage.setTitle("Create Team");
+            Dialog<Boolean> createTeamDialog = new Dialog<>();
+            createTeamDialog.setTitle("Create Team");
+
+            createTeamDialog.getDialogPane().setContent(root);
+
             createTeamController = loader.getController();
             createTeamController.setEventUUID(eventUUID);
-            createTeamController.setCreateTeamStage(createTeamStage);
             createTeamController.setCurrentUsername(currentUsername);
-            Scene scene = new Scene(root);
-            createTeamStage.setScene(scene);
-            createTeamStage.showAndWait();
+            ButtonType createTeamButtonType = new ButtonType("Create Team", ButtonBar.ButtonData.OK_DONE);
+            createTeamDialog.getDialogPane().getButtonTypes().addAll(createTeamButtonType);
+
+            createTeamDialog.setResultConverter(dialogButton -> {
+                if (dialogButton == createTeamButtonType) {
+                    return true;
+                }
+                return false;
+            });
+
+            Optional<Boolean> result = createTeamDialog.showAndWait();
+
+            if (result.isPresent() && result.get()) {
+                createTeamController.createTeam();
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public void showTeamList(){
@@ -80,7 +93,12 @@ public class EventTeamManagementContrller {
             if (!team.getEventUUID().equals(eventUUID)) {
                 continue;
             }
-            if (team.getClosingJoinDate().isBefore(currentDate)) {
+            if (team.getClosingJoinDate().isEqual(currentDate)) {
+                if (team.getEndTime().isBefore(LocalTime.now(ZoneId.of("Asia/Bangkok")))) {
+                    continue;
+                }
+            }
+            else if (team.getClosingJoinDate().isBefore(currentDate)) {
                 continue;
             }
             if(column == 2) {
@@ -97,7 +115,7 @@ public class EventTeamManagementContrller {
             }
 
             TeamElementController team_ = fxmlLoader.getController();
-            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getClosingJoinDate(), team.getTeamOwnerUsername().equals(currentUsername));
+            team_.setPage(team.getEventUUID(), team.getTeamName(), team.getMaxParticipants(), team.getStartJoinDate(), team.getStartTime(), team.getClosingJoinDate(), team.getEndTime());
             anchorPane.setOnMouseClicked(event1 -> {
                 try {
                     FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUsername});

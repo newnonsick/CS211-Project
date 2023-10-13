@@ -4,114 +4,101 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventInformationController">
    <children>
-      <ImageView fx:id="eventImageView" fitHeight="182.0" fitWidth="551.0" layoutX="309.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="eventNameLabel" layoutX="225.0" layoutY="41.0" text="eventNameLabel">
+      <ImageView fx:id="eventImageView" fitHeight="230.0" fitWidth="398.0" layoutX="157.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="eventNameLabel" layoutX="130.0" layoutY="59.0" text="eventNameLabel">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="291.0" text="รายละเอียด">
+      <Label fx:id="eventInfoLabel" layoutX="130.0" layoutY="131.0" prefHeight="88.0" prefWidth="923.0" text="eventInfoLabel&#10;eventInfoLabel&#10;eventInfoLabel">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="eventInfoLabel" layoutX="500.0" layoutY="291.0" text="eventInfoLabel">
+      <Label layoutX="619.0" layoutY="219.0" text="Category">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="376.0" text="หมวดหมู่">
+      <Label layoutX="620.0" layoutY="298.0" text="Location">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="426.0" text="สถานที่จัดอีเวนต์">
+      <Label layoutX="620.0" layoutY="392.0" text="Date And Time">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="476.0" text="กำหนดการเริ่มอีเวนต์">
+      <Label layoutX="622.0" layoutY="505.0" text="Max Participants">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="526.0" text="กำหนดการสิ้นสุดอีเวนต์">
+      <Label layoutX="619.0" layoutY="586.0" text="Event Registration Date">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="576.0" text="จำนวนผู้เข้าร่วมอีเวนต์สูงสุด">
+      <Label fx:id="maxParticipantsLabel" layoutX="621.0" layoutY="535.0" text="maxParticipantsLabel">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="626.0" text="ระยะเวลาการเปิดรับผู้เข้าร่วม">
+      <Label fx:id="closingJoinDateLabel" layoutX="620.0" layoutY="646.0" text="closingJoinDateLabel">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="maxParticipantsLabel" layoutX="500.0" layoutY="576.0" text="maxParticipantsLabel">
+      <Label fx:id="endDateLabel" layoutX="621.0" layoutY="452.0" text="endDateLabel">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="closingJoinDateLabel" layoutX="501.0" layoutY="672.0" text="closingJoinDateLabel">
+      <Label fx:id="startDateLabel" layoutX="621.0" layoutY="422.0" text="startDateLabel">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="endDateLabel" layoutX="500.0" layoutY="526.0" text="endDateLabel">
+      <Label fx:id="placeLabel" layoutX="620.0" layoutY="328.0" prefHeight="62.0" prefWidth="425.0" text="placeLabel">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="startDateLabel" layoutX="500.0" layoutY="476.0" text="startDateLabel">
+      <Button layoutX="973.0" layoutY="684.0" mnemonicParsing="false" onAction="#joinEventButton" text="JOIN NOW!">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
-      </Label>
-      <Label fx:id="placeLabel" layoutX="500.0" layoutY="426.0" text="placeLabel">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button layoutX="973.0" layoutY="718.0" mnemonicParsing="false" onAction="#joinEventButton" text="JOIN NOW!">
+      </Button>
+      <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBackToEventPage" text="BACK">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="998.0" layoutY="46.0" mnemonicParsing="false" onAction="#handleBackToEventPage" text="Back">
+      <Button layoutX="157.0" layoutY="684.0" mnemonicParsing="false" onAction="#handleVisitTeamButton" text="Visit Our Teams">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="237.0" layoutY="718.0" mnemonicParsing="false" onAction="#handleVisitTeamButton" text="Visit Our Teams">
+      <Label fx:id="categoryLabel" layoutX="619.0" layoutY="249.0" text="categoryLabel">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="startJoinDateLabel" layoutX="619.0" layoutY="616.0" text="startJoinDateLabel">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Line endX="870.0" layoutX="181.0" layoutY="118.0" startX="-50.0" strokeWidth="3.0" />
+      <Label fx:id="errorLabel" layoutX="885.0" layoutY="676.0" text="errorLabel" textAlignment="RIGHT" textFill="RED">
          <font>
             <Font size="16.0" />
-         </font>
-      </Button>
-      <Label fx:id="categoryLabel" layoutX="499.0" layoutY="376.0" text="categoryLabel">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="errorLabel" layoutX="1005.0" layoutY="686.0" text="errorLabel" textAlignment="RIGHT" textFill="RED">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="237.0" layoutY="672.0" text="ระยะเวลาการปิดรับผู้เข้าร่วม">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="startJoinDateLabel" layoutX="499.0" layoutY="626.0" text="startJoinDateLabel">
-         <font>
-            <Font size="18.0" />
          </font>
       </Label>
    </children>

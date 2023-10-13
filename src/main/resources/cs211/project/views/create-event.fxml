@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,72 +12,84 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.CreateEventController">
    <children>
-      <Label layoutX="237.0" layoutY="37.0" text="Create Event">
+      <Label layoutX="126.0" layoutY="35.0" text="Create Your Event">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="100.0" text="ชื่อ">
+      <Label layoutX="190.0" layoutY="100.0" text="Event Name">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="143.0" text="รายละเอียด">
+      <Label layoutX="190.0" layoutY="151.0" text="Event Description">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="235.0" text="หมวดหมู่">
+      <Label layoutX="190.0" layoutY="235.0" text="Category">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="290.0" text="อัพโหลดรูป">
+      <Label layoutX="190.0" layoutY="289.0" text="Event Picture">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="eventNameTextField" layoutX="350.0" layoutY="103.0" prefHeight="25.0" prefWidth="384.0" />
-      <TextField fx:id="eventInfoTextField" layoutX="350.0" layoutY="143.0" prefHeight="75.0" prefWidth="384.0" />
-      <Label layoutX="237.0" layoutY="570.0" text="สถานที่จัดอีเวนต์">
+      <TextField fx:id="eventNameTextField" alignment="CENTER" layoutX="415.0" layoutY="100.0" prefHeight="25.0" prefWidth="384.0" promptText="Enter the event name">
          <font>
-            <Font size="20.0" />
+            <Font size="14.0" />
+         </font></TextField>
+      <Label layoutX="190.0" layoutY="558.0" text="Location">
+         <font>
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="620.0" text="กำหนดการเริ่มอีเวนต์">
+      <Label layoutX="190.0" layoutY="618.0" text="Start Date And Time">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="670.0" text="กำหนดการสิ้นสุดอีเวนต์">
+      <Label layoutX="190.0" layoutY="668.0" text="End Date And Time">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="placeTextField" layoutX="441.0" layoutY="573.0" prefHeight="25.0" prefWidth="176.0" />
-      <DatePicker fx:id="startDatePicker" layoutX="441.0" layoutY="622.0" prefHeight="27.0" prefWidth="176.0" />
-      <DatePicker fx:id="endDatePicker" layoutX="441.0" layoutY="672.0" prefHeight="27.0" prefWidth="176.0" />
-      <Button layoutX="948.0" layoutY="707.0" mnemonicParsing="false" onAction="#createEvent" text="Create Event">
+      <TextField fx:id="placeTextField" alignment="CENTER" layoutX="290.0" layoutY="558.0" prefHeight="30.0" prefWidth="216.0" promptText="Enter the event location">
+         <font>
+            <Font size="14.0" />
+         </font></TextField>
+      <DatePicker fx:id="startDatePicker" layoutX="394.0" layoutY="620.0" prefHeight="27.0" prefWidth="176.0" promptText="Add the event start date" />
+      <DatePicker fx:id="endDatePicker" layoutX="394.0" layoutY="670.0" prefHeight="27.0" prefWidth="176.0" promptText="Add the event end date" />
+      <Button layoutX="948.0" layoutY="706.0" mnemonicParsing="false" onAction="#createEvent" prefHeight="35.0" prefWidth="124.0" text="Create Event">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Button>
+      <Label fx:id="errorLabel" layoutX="1000.0" layoutY="672.0" text="errorLabel" textAlignment="RIGHT" textFill="RED">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="uploadImageButton" layoutX="336.0" layoutY="286.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Label fx:id="errorLabel" layoutX="987.0" layoutY="673.0" text="errorLabel" textFill="RED">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Button fx:id="uploadImageButton" layoutX="363.0" layoutY="288.0" mnemonicParsing="false" onAction="#uploadImage" text="Upload">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <ImageView fx:id="eventImageView" fitHeight="190.0" fitWidth="417.0" layoutX="396.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="eventImageErrorLabel" layoutX="442.0" layoutY="305.0" text="eventImageErrorLabel" textFill="RED">
+      <ImageView fx:id="eventImageView" fitHeight="190.0" fitWidth="417.0" layoutX="398.0" layoutY="344.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="eventImageErrorLabel" layoutX="415.0" layoutY="303.0" text="eventImageErrorLabel" textFill="RED">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="eventChoiceBox" layoutX="350.0" layoutY="238.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="eventChoiceBox" layoutX="306.0" layoutY="238.0" prefWidth="150.0" />
+      <Button fx:id="startTimePicker" layoutX="589.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleStartTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="Start Time" />
+      <Button fx:id="endTimePicker" layoutX="589.0" layoutY="671.0" mnemonicParsing="false" onAction="#handleEndTimePickerButton" prefHeight="26.0" prefWidth="98.0" text="End Time" />
+      <TextArea fx:id="eventInfoTextArea" layoutX="415.0" layoutY="145.0" prefHeight="72.0" prefWidth="409.0" promptText="Enter the event description">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>

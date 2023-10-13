@@ -2,58 +2,59 @@ package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.Datasource;
 import cs211.project.services.FXRouter;
 import cs211.project.services.UserListFileDataSource;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 
 public class RegisterController {
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
-    PasswordField confirmPasswordTextField;
+    private PasswordField confirmPasswordTextField;
     @FXML
-    TextField nameTextField;
+    private TextField nameTextField;
     @FXML
-    Label errorLabel;
+    private Label errorLabel;
     @FXML
-    Button upLoadImageButton;
+    private Button upLoadImageButton;
     @FXML
-    ImageView profileImageView;
+    private ImageView profileImageView;
     @FXML
-    Button cancelUploadButton;
-    File selectedImage = null;
+    private Button cancelUploadButton;
+    private File selectedImage = null;
     boolean upFile = false;
 
     @FXML
     public void initialize(){
         errorLabel.setText("");
+        Circle circle = new Circle(90, 90, 90);
+        profileImageView.setClip(circle);
         profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
+        profileImageView.setFitWidth(180);
+        profileImageView.setFitHeight(180);
     }
 
     @FXML
     private void signUp() throws IOException {
-        //checking and register
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
@@ -64,19 +65,23 @@ public class RegisterController {
             return;
         }
         if (!password.equals(password2)) {
-            errorLabel.setText("Please make sure to type the correct passwords");
+            errorLabel.setText("Please make sure to type the correct passwords.");
+            usernameTextField.setText("");
+            nameTextField.setText("");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
         }
-        if (username.equals("Default")) {
+        if (username.equals("default")) {
             errorLabel.setText("That user name is not allowed.");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
         }
-        if (username.contains(",")) {
-            errorLabel.setText("Comma \",\" is not allowed is username");
+        if (username.contains(",") || fullName.contains(",") || password.contains(",")) {
+            errorLabel.setText("Comma \",\" is not allowed.");
+            usernameTextField.setText("");
+            nameTextField.setText("");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
@@ -87,7 +92,7 @@ public class RegisterController {
 
         for(User user : userList.getUsers()) {
             if(user.getUsername().equals(username)) {
-                errorLabel.setText("Username already exist!!");
+                errorLabel.setText("Username already exist!");
                 passwordTextField.setText("");
                 confirmPasswordTextField.setText("");
                 return;
@@ -106,10 +111,9 @@ public class RegisterController {
         if(selectedImage != null) {
             //upload the profile picture
             String selectedImagePath = selectedImage.getAbsolutePath();
-            String targetDirectoryPath = "data/profile_picture";
+            String targetDirectoryPath = "data" + File.separator + "profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
             String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-            //errorLabel.setText(fileType);
             Path targetFilePath = targetDirectory.resolve(username + "." + (fileType.substring(6)));
             try {
                 Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
@@ -143,7 +147,7 @@ public class RegisterController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")+ "/Desktop"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg", "*.webp",  "*.jfif" , "*.pjpeg" , "*.pjp"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg"));
         Stage stage = (Stage) upLoadImageButton.getScene().getWindow();
         selectedImage = fileChooser.showOpenDialog(stage);
     }

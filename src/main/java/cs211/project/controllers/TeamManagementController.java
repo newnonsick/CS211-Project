@@ -1,6 +1,10 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
+import cs211.project.models.collections.ActivityList;
+import cs211.project.models.collections.TeamChatList;
+import cs211.project.models.collections.TeamList;
+import cs211.project.models.collections.TeamParticipantList;
 import cs211.project.services.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,15 +17,21 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 public class TeamManagementController {
-    @FXML TextField avtivityNameTextField;
-    @FXML TextArea activityDescriptionTextArea;
-    @FXML ScrollPane participantListScrollPane;
-    @FXML GridPane participantListGridPane;
-    @FXML TableView activityTableView;
-    @FXML Button deleteActivityButton;
-    @FXML Button endActivityButton;
+    @FXML private TextField activityNameTextField;
+    @FXML private TextArea activityDescriptionTextArea;
+    @FXML private ScrollPane participantListScrollPane;
+    @FXML private GridPane participantListGridPane;
+    @FXML private TableView activityTableView;
+    @FXML private Button addActivityButton;
+    @FXML private Button deleteActivityButton;
+    @FXML private Button endActivityButton;
+    @FXML private TableColumn activityNameColumn;
+    @FXML private TableColumn activityDescriptionColumn;
+    @FXML private TableColumn activityStatusColumn;
 
     private ActivityList activityList;
     private Datasource<ActivityList> activityListDatasource;
@@ -37,6 +47,7 @@ public class TeamManagementController {
     private String teamName;
     @FXML
     public void initialize(){
+        addActivityButton.setDisable(true);
         deleteActivityButton.setDisable(true);
         endActivityButton.setDisable(true);
         componentData = (String[]) FXRouterPane.getData();
@@ -53,6 +64,25 @@ public class TeamManagementController {
         showActivity(activityList);
         showParticipant();
 
+        activityNameTextField.setOnKeyReleased(event -> {
+            if (activityNameTextField.getText().isEmpty() || activityDescriptionTextArea.getText().isEmpty()){
+                addActivityButton.setDisable(true);
+            }
+            else{
+                addActivityButton.setDisable(false);
+            }
+        });
+
+        activityDescriptionTextArea.setOnKeyReleased(event -> {
+            if (activityNameTextField.getText().isEmpty() || activityDescriptionTextArea.getText().isEmpty()){
+                addActivityButton.setDisable(true);
+            }
+            else{
+                addActivityButton.setDisable(false);
+            }
+        });
+
+
         activityTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
             @Override
             public void changed(ObservableValue observable, Activity oldValue, Activity newValue) {
@@ -62,10 +92,14 @@ public class TeamManagementController {
                         endActivityButton.setDisable(false);
                     }
                     selectedActivity = newValue;
+                    activityNameTextField.setText(selectedActivity.getActivityName());
+                    activityDescriptionTextArea.setText(selectedActivity.getActivityInformation());
                 }
                 else{
                     deleteActivityButton.setDisable(true);
                     endActivityButton.setDisable(true);
+                    activityNameTextField.setText("");
+                    activityDescriptionTextArea.setText("");
                 }
             }
         });
@@ -73,57 +107,81 @@ public class TeamManagementController {
 
     @FXML
     public void handleEndActivityButton(){
-        activityList.findActivityByObject(selectedActivity).setActivityStatus("Ended");
-        activityListDatasource.writeData(activityList);
-        showActivity(activityList);
-        selectedActivity = null;
-        deleteActivityButton.setDisable(true);
-        endActivityButton.setDisable(true);
-    }
-
-    @FXML
-    public void handleAddActivityButton(){
-        String activityName = avtivityNameTextField.getText();
-        String activityDescription = activityDescriptionTextArea.getText();
-        if (!activityName.isEmpty() && !activityDescription.isEmpty()){
-            activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("End Activity");
+        alert.setContentText("Are you sure you want to end this activity?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            if (selectedActivity.getActivityStatus().equals("Ended")){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Error Dialog");
+                alert1.setHeaderText("Activity already ended");
+                alert1.setContentText("This activity has already ended.");
+                alert1.showAndWait();
+            }
+            activityList.setActivityStatusByUUID(selectedActivity.getActivityUUID(), "Ended");
             activityListDatasource.writeData(activityList);
             showActivity(activityList);
-            avtivityNameTextField.clear();
-            activityDescriptionTextArea.clear();
+            selectedActivity = null;
+            deleteActivityButton.setDisable(true);
+            endActivityButton.setDisable(true);
         }
     }
 
     @FXML
+    public void handleAddActivityButton(){
+        String activityName = activityNameTextField.getText();
+        String activityDescription = activityDescriptionTextArea.getText();
+        UUID uuid = UUID.randomUUID();
+        String activityUUID = uuid.toString();
+        while (activityList.findActivityByUUID(activityUUID) != null){
+            uuid = UUID.randomUUID();
+            activityUUID = uuid.toString();
+        }
+        if (!activityName.isEmpty() && !activityDescription.isEmpty()){
+            activityList.addNewActivityTeam(eventUUID, teamName, activityName, activityDescription, "In Progress", activityUUID);
+            activityListDatasource.writeData(activityList);
+            showActivity(activityList);
+            activityNameTextField.clear();
+            activityDescriptionTextArea.clear();
+        }
+        addActivityButton.setDisable(true);
+    }
+
+    @FXML
     public void handleRemoveActivityButton(){
-        activityList.getActivities().remove(selectedActivity);
-        activityListDatasource.writeData(activityList);
-        showActivity(activityList);
-        selectedActivity = null;
-        deleteActivityButton.setDisable(true);
-        endActivityButton.setDisable(true);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Remove Activity");
+        alert.setContentText("Are you sure you want to remove this activity?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            activityList.removeActivity(selectedActivity);
+            activityListDatasource.writeData(activityList);
+            showActivity(activityList);
+            Datasource<TeamChatList> teamChatListDatasource = new TeamChatListFileDatasource("data", "team_chat_list.csv");
+            TeamChatList teamChatList = teamChatListDatasource.readData();
+            teamChatList.deleteChatOfActivity(selectedActivity.getActivityUUID());
+            teamChatListDatasource.writeData(teamChatList);
+            selectedActivity = null;
+            deleteActivityButton.setDisable(true);
+            endActivityButton.setDisable(true);
+        }
     }
 
     public void showActivity(ActivityList activityList){
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInformationColumn = new TableColumn<>("Description");
-        activityInformationColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
+        activityDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
-        TableColumn<Activity, String> activityStatusColumn = new TableColumn<>("Status");
         activityStatusColumn.setCellValueFactory(new PropertyValueFactory<>("activityStatus"));
 
         activityTableView.getColumns().clear();
         activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getColumns().add(activityNameColumn);
-        activityTableView.getColumns().add(activityInformationColumn);
+        activityTableView.getColumns().add(activityDescriptionColumn);
         activityTableView.getItems().clear();
-
-        if (activityList.getActivities().size() == 0){
-            activityInformationColumn.setPrefWidth(activityTableView.getPrefWidth() - activityNameColumn.getPrefWidth() - activityStatusColumn.getPrefWidth());
-            return;
-        }
 
 
         for (Activity activity : activityList.getActivities()) {
@@ -136,7 +194,7 @@ public class TeamManagementController {
     public void showParticipant(){
         int row = 0;
         for (TeamParticipant teamParticipant: teamParticipantList.getTeamParticipants()) {
-            if (!teamParticipant.getEventUUID().equals(eventUUID) && teamParticipant.getTeamName().equals(teamName)) {
+            if (!teamParticipant.getEventUUID().equals(eventUUID) || !teamParticipant.getTeamName().equals(teamName)) {
                 continue;
             }
             if (teamParticipant.getUsername().equals(team.getTeamOwnerUsername())){

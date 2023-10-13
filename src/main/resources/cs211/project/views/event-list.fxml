@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.EventListController">
    <children>
       <Pane layoutX="146.0">
          <children>
@@ -24,14 +26,39 @@
                   <Font name="System Bold" size="43.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" layoutY="100.0" prefHeight="38.0" prefWidth="890.0" spacing="10.0" styleClass="search-box">
+            <HBox alignment="CENTER" layoutY="100.0" prefHeight="38.0" prefWidth="890.0" spacing="10.0">
                <children>
-                  <TextField fx:id="searchTextField" prefHeight="36.0" prefWidth="719.0" promptText="Search" styleClass="transparent" />
-                  <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="26.0" prefWidth="55.0" styleClass="search-button" text="Search" />
-                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#categoryPaneOpen" prefWidth="64.0" styleClass="search-button" text="Category" />
+                  <HBox alignment="CENTER" prefHeight="38.0" prefWidth="890.0" spacing="10.0" styleClass="search-box">
+                     <children>
+                        <TextField fx:id="searchTextField" prefHeight="36.0" prefWidth="760.0" promptText="Search" styleClass="transparent" />
+                        <Button fx:id="searchButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSearchButton" prefHeight="36.0" prefWidth="35.0" styleClass="button-with-icon">
+                           <graphic>
+                              <ImageView fitHeight="21.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/transparency.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button fx:id="categoryOpenButton" minWidth="-Infinity" mnemonicParsing="false" onAction="#categoryPaneOpen" prefHeight="38.0" prefWidth="38.0" styleClass="button-with-icon" stylesheets="@../style/stylesheet.css">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/options-lines.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="1.0" />
+                     </font></Button>
                </children>
             </HBox>
-            <VBox layoutY="136.8000030517578">
+            <VBox layoutY="137.0" prefHeight="664.0" prefWidth="888.0">
                <children>
                   <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="19.0" prefWidth="888.0" />
                   <Pane fx:id="categoryPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="0.0" prefWidth="888.0" visible="false">
@@ -66,7 +93,7 @@
                      </children></Pane>
                   <ScrollPane fx:id="eventScrollPane" hbarPolicy="NEVER" prefHeight="664.0" prefWidth="888.0" styleClass="transparent">
                      <content>
-                        <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="664.0" prefWidth="873.0">
+                        <GridPane fx:id="eventGrid" alignment="TOP_CENTER" prefHeight="643.0" prefWidth="873.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

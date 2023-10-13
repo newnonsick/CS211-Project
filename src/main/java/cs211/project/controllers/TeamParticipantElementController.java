@@ -1,6 +1,9 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
+import cs211.project.models.collections.TeamList;
+import cs211.project.models.collections.TeamParticipantList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -30,15 +33,15 @@ public class TeamParticipantElementController {
     private String currentUsername;
 
     @FXML
-    ImageView profileImageView;
+    private ImageView profileImageView;
     @FXML
-    ImageView leaderImageView;
+    private ImageView leaderImageView;
     @FXML
-    Button removeParticipantButton;
+    private Button removeParticipantButton;
     @FXML
-    Button setLeaderButton;
+    private Button setLeaderButton;
     @FXML
-    Label nameLabel;
+    private Label nameLabel;
 
     public void initialize(){
         teamParticipantListDatasource = new TeamParticipantListFileDataSource("data", "team_participant_list.csv");
@@ -55,11 +58,15 @@ public class TeamParticipantElementController {
         user = userList.findUserByUsername(username);
         team = teamList.findEventByEventUUIDAndTeamName(eventOfTeamUUID, teamName);
         this.currentUsername = currentUsername;
-        //profile size 40 x 40
         Circle img = new Circle(20, 20, 20);
         profileImageView.setClip(img);
-        File file = new File("data" + File.separator + "profile_picture" + File.separator + user.getProfilePicture());
-        profileImageView.setImage(new Image(file.toURI().toString(), 40, 40, false, false));
+        String profilePicturePath;
+        if (user.getProfilePictureName().equals("default.png")){
+            profilePicturePath = getClass().getResource("/cs211/project/images/default.png").toExternalForm();
+        }else{
+            profilePicturePath = new File("data" + File.separator + "profile_picture" + File.separator + user.getProfilePictureName()).toURI().toString();
+        }
+        profileImageView.setImage(new Image(profilePicturePath, 40, 40, false, false));
         nameLabel.setText(user.getName());
         if (team.getHeadOfTeamUsername().equals(teamParticipant.getUsername())){
             setLeaderButton.setDisable(true);
@@ -85,7 +92,7 @@ public class TeamParticipantElementController {
                 alert2.showAndWait();
                 return;
             }
-            teamParticipantList.getTeamParticipants().remove(teamParticipant);
+            teamParticipantList.removeTeamParticipant(teamParticipant);
             teamParticipantListDatasource.writeData(teamParticipantList);
             if (teamParticipantList.getTeamParticipantCountByEventUUIDAndTeamName(teamParticipant.getEventUUID(), teamParticipant.getTeamName()) == 0 || teamParticipant.getUsername().equals(team.getHeadOfTeamUsername())){
                 team.setHeadOfTeamUsername(currentUsername);

@@ -1,17 +1,15 @@
 package cs211.project.controllers;
 
 import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
+import cs211.project.models.collections.ActivityList;
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
-import cs211.project.services.Datasource;
+import cs211.project.models.collections.EventList;
 import cs211.project.services.EventListFileDatasource;
 import cs211.project.services.FXRouterPane;
 import cs211.project.services.ParticipantActivityListFileDatasource;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -21,53 +19,73 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class ParticipantActivityController {
     @FXML
-    Label eventNameLabel;
+    private Label eventNameLabel;
 
     @FXML
-    TableView<Activity> activityParticipantTableView;
+    private TableView<Activity> activityParticipantTableView;
+    @FXML private Label eventDateLabel;
+    @FXML private Label eventTimeLabel;
+    @FXML private Label eventInfoLabel;
+    @FXML private Label placeLabel;
 
     private Event event;
-    EventList eventList;
+    private EventList eventList;
     private String eventUUID;
-    private String currentUserName;
+    private String currentUsername;
+    private String sourcePage;
     private ParticipantActivityListFileDatasource datasource;
+    private EventListFileDatasource eventListFileDatasource;
 
 
     @FXML
     public void initialize() {
         String[] componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
-        currentUserName = componentData[1];
-        Datasource<EventList> eventListDatasource = new EventListFileDatasource("data", "eventList.csv");
-        eventList = eventListDatasource.readData();
+        currentUsername = componentData[1];
+        sourcePage = componentData[2];
+        eventListFileDatasource = new EventListFileDatasource("data", "eventList.csv");
+        eventList = eventListFileDatasource.readData();
         datasource = new ParticipantActivityListFileDatasource("data", "participant_activity_list.csv");
         ActivityList activityList = datasource.readData();
         event = eventList.findEventByUUID(eventUUID);
-        eventNameLabel.setText(event.getEventName());
+        eventNameLabel.setText(event.getName());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("th", "TH"));
+        String strStartDate = event.getStartDate().format(formatter);
+        String strEndDate = event.getEndDate().format(formatter);
+        eventDateLabel.setText(strStartDate + " - " + strEndDate);
+        eventTimeLabel.setText(event.getStartTime() + " - " + event.getEndTime());
+        placeLabel.setWrapText(true);
+        placeLabel.setText(event.getPlace());
+        placeLabel.setPrefWidth(400);
+        eventInfoLabel.setWrapText(true);
+        eventInfoLabel.setText(event.getInfo());
+        eventInfoLabel.setPrefWidth(400);
         showActivities(activityList);
     }
 
 
     public void showActivities(ActivityList activityList) {
 
-        TableColumn<Activity, String> activityDateColumn = new TableColumn<>("วันที่");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        TableColumn<Activity, String> activityDateColumn = new TableColumn<>("Date");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
         activityDateColumn.setCellValueFactory(cellData ->
                 new SimpleStringProperty(cellData.getValue().getActivityDate().format(formatter))
         );
-        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("เวลาเริ่ม");
+        TableColumn<Activity, LocalTime> activityStartColumn = new TableColumn<>("Start Time");
         activityStartColumn.setCellValueFactory(new PropertyValueFactory<>("activityStartTime"));
 
-        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("เวลาสิ้นสุด");
+        TableColumn<Activity, LocalTime> activityEndColumn = new TableColumn<>("End Time");
         activityEndColumn.setCellValueFactory(new PropertyValueFactory<>("activityEndTime"));
 
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("ชื่อกิจกรรม");
+        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Activity");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("รายละเอียดกิจกรรม");
+        TableColumn<Activity, String> activityInfoColumn = new TableColumn<>("Details");
         activityInfoColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
         //Sort Date and Time
@@ -106,7 +124,11 @@ public class ParticipantActivityController {
 
     public void backToEventInformation() {
         try {
-            FXRouterPane.goTo("event-information");
+            if ("userInformation".equals(sourcePage)) {
+                FXRouterPane.goTo("user-information");
+            } else if ("eventInformation".equals(sourcePage)) {
+                FXRouterPane.goTo("event-information");
+            }
         }
         catch (IOException e) {
             throw new RuntimeException(e);

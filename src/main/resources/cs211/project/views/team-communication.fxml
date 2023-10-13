@@ -6,29 +6,33 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" stylesheets="@../style/stylesheet.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.TeamCommunicationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.TeamCommunicationController">
    <children>
       <HBox layoutX="1.0" prefHeight="89.0" prefWidth="1180.0">
          <children>
             <Pane prefHeight="89.0" prefWidth="45.0" />
-            <VBox prefHeight="89.0" prefWidth="85.0">
+            <VBox prefHeight="89.0" prefWidth="106.0">
                <children>
                   <Pane prefHeight="41.0" prefWidth="85.0" />
-                  <Label text="กิจกรรม">
+                  <Label text="Activities">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="89.0" prefWidth="949.0">
+            <VBox alignment="TOP_CENTER" prefHeight="89.0" prefWidth="879.0">
                <children>
                   <Pane prefHeight="15.0" prefWidth="949.0" />
                   <Label fx:id="teamNameLabel" alignment="CENTER" text="teamNameLabel">
@@ -38,10 +42,10 @@
                   </Label>
                </children>
             </VBox>
-            <VBox prefHeight="89.0" prefWidth="85.0">
+            <VBox prefHeight="89.0" prefWidth="117.0">
                <children>
                   <Pane prefHeight="41.0" prefWidth="85.0" />
-                  <Button fx:id="manageTeamButton" mnemonicParsing="false" onAction="#handleManageTeamButton" text="จัดการทีม">
+                  <Button fx:id="manageTeamButton" mnemonicParsing="false" onAction="#handleManageTeamButton" prefHeight="30.0" prefWidth="117.0" text="Manage Team">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -52,46 +56,74 @@
          </children>
       </HBox>
       <Line endX="100.0" endY="800.0" layoutX="586.0" layoutY="2.0" startX="100.0" startY="90.0" translateX="1.0" translateY="1.0" />
-      <TableView fx:id="activityTableView" layoutX="46.0" layoutY="88.0" prefHeight="450.0" prefWidth="615.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
       <HBox alignment="CENTER_RIGHT" layoutX="699.0" layoutY="654.0" prefHeight="35.0" prefWidth="450.0" styleClass="search-box">
          <children>
-            <TextField fx:id="sendMessageTextField" prefHeight="35.0" prefWidth="380.0" promptText="พิมพ์ข้อความ..." styleClass="transparent" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="39.0" prefWidth="51.0" styleClass="radius" text="ส่ง">
+            <TextField fx:id="sendMessageTextField" prefHeight="35.0" prefWidth="380.0" promptText="Type Here..." styleClass="transparent" />
+            <Button fx:id="sendMessageButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSendMessageButton" prefHeight="39.0" prefWidth="51.0" styleClass="transparent">
                <font>
-                  <Font size="18.0" />
+                  <Font size="1.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/send.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </HBox>
-      <Label layoutX="46.0" layoutY="560.0" text="ชื่อกิจกรรม">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label layoutX="46.0" layoutY="609.0" text="รายละเอียดกิจกรรม">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="avtivityNameLabel" layoutX="152.0" layoutY="560.0" text="activityNameLabel">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="activityDescriptionLabel" layoutX="194.0" layoutY="609.0" prefHeight="27.0" prefWidth="469.0" text="activityDescriptionLabel" wrapText="true">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
       <ScrollPane fx:id="chatBoxScrollPane" hbarPolicy="NEVER" layoutX="699.0" layoutY="88.0" prefHeight="566.0" prefWidth="450.0" styleClass="transparent" vvalue="1.0">
          <content>
             <VBox fx:id="chatBoxVBox" prefHeight="566.0" prefWidth="435.0" />
          </content>
       </ScrollPane>
+      <VBox layoutX="46.0" layoutY="88.0" prefHeight="711.0" prefWidth="615.0" spacing="20.0">
+         <children>
+            <TableView fx:id="activityTableView" prefHeight="450.0" prefWidth="615.0">
+               <columns>
+                  <TableColumn fx:id="activityStatusColumn" prefWidth="75.0" text="Status" />
+                  <TableColumn fx:id="activityNameColumn" prefWidth="147.0" text="Name" />
+                  <TableColumn fx:id="activityDescriptionColumn" prefWidth="391.0" text="Description" />
+               </columns>
+            </TableView>
+            <HBox prefHeight="27.0" prefWidth="615.0" spacing="15.0">
+               <children>
+                  <Label text="Activity Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="activityNameLabel" text="activityNameLabel">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="195.0" prefWidth="615.0" spacing="15.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="179.0" text="Activity Description">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane prefHeight="195.0" prefWidth="472.0">
+                     <content>
+                        <TextFlow prefHeight="193.0" prefWidth="428.0">
+                           <children>
+                              <Text fx:id="activityDescriptionText" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="text" text="activityDescriptionText">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </TextFlow>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

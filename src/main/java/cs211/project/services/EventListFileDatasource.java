@@ -1,15 +1,12 @@
 package cs211.project.services;
 
 import cs211.project.models.Event;
-import cs211.project.models.EventList;
+import cs211.project.models.collections.EventList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
+import java.time.LocalTime;
 
 public class EventListFileDatasource implements Datasource<EventList> {
     private String directoryName;
@@ -21,7 +18,6 @@ public class EventListFileDatasource implements Datasource<EventList> {
         checkFileIsExisted();
     }
 
-    // check if file exists (if not, creat a new file)
     private void checkFileIsExisted() {
         File file = new File(directoryName);
         if (!file.exists()) {
@@ -36,8 +32,11 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 throw new RuntimeException(e);
             }
         }
+        File pictureDirectory = new File(directoryName + File.separator + "eventPicture");
+        if (!pictureDirectory.exists()) {
+            pictureDirectory.mkdirs();
+        }
     }
-
 
     @Override
     public EventList readData() {
@@ -45,7 +44,6 @@ public class EventListFileDatasource implements Datasource<EventList> {
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
-        // เตรียม object ที่ใช้ในการอ่านไฟล์
         FileInputStream fileInputStream = null;
 
         try {
@@ -61,36 +59,49 @@ public class EventListFileDatasource implements Datasource<EventList> {
         BufferedReader buffer = new BufferedReader(inputStreamReader);
 
         String line = "";
-        try {  //more information hasn't been added yet
+        try {
             while ( (line = buffer.readLine()) != null ){
                 if (line.equals("")) continue;
                 String[] data = line.split(",");
-                String eventName = data[0].trim();
-                String eventPicture = data[1].trim();
-                String eventInformation = data[2].trim();
-                String eventCategory = data[3].trim();
-                String placeEvent = data[4].trim();
-                LocalDate eventStartDate = LocalDate.parse(data[5].trim());
-                LocalDate eventEndDate = LocalDate.parse(data[6].trim());
-                String eventOwnerUsername = data[7].trim();
-                int maxParticipants = data.length > 8 && !data[8].trim().equals("-1") ? Integer.parseInt(data[8].trim()) : -1;
+                String name = data[0].trim();
+                String picture = data[1].trim();
+                String info = data[2].trim();
+                String category = data[3].trim();
+                String place = data[4].trim();
+                LocalDate startDate = LocalDate.parse(data[5].trim());
+                LocalDate endDate = LocalDate.parse(data[6].trim());
+                LocalTime startTime = LocalTime.parse(data[7].trim());
+                LocalTime endTime = LocalTime.parse(data[8].trim());
+                String ownerUsername = data[9].trim();
+                int maxParticipants = data.length > 10 && !data[10].trim().equals("-1") ? Integer.parseInt(data[10].trim()) : -1;
                 LocalDate startJoinDate = null;
-                if (data.length > 9 && !data[9].trim().isEmpty() && !data[9].trim().equalsIgnoreCase("null")) {
-                    startJoinDate = LocalDate.parse(data[9].trim());
+                if (data.length > 11 && !data[11].trim().isEmpty() && !data[11].trim().equalsIgnoreCase("null")) {
+                    startJoinDate = LocalDate.parse(data[11].trim());
                 }
 
-                LocalDate closingJoinDate = null;
-                if (data.length > 10 && !data[10].trim().isEmpty() && !data[10].trim().equalsIgnoreCase("null")) {
-                    closingJoinDate = LocalDate.parse(data[10].trim());
+                LocalDate closeJoinDate = null;
+                if (data.length > 12 && !data[12].trim().isEmpty() && !data[12].trim().equalsIgnoreCase("null")) {
+                    closeJoinDate = LocalDate.parse(data[12].trim());
                 }
-                String eventUUID = data.length > 11 ? data[11].trim() : null;
+                LocalTime startJoinTime = null;
+                if (data.length > 13 && !data[13].trim().isEmpty() && !data[13].trim().equalsIgnoreCase("null")) {
+                    startJoinTime = LocalTime.parse(data[13].trim());
+                }
 
-                events.addEvent(eventName, eventPicture, eventInformation, eventCategory, placeEvent, eventStartDate, eventEndDate, eventOwnerUsername, maxParticipants, startJoinDate, closingJoinDate, eventUUID);
+                LocalTime closeJoinTime = null;
+                if (data.length > 14 && !data[14].trim().isEmpty() && !data[14].trim().equalsIgnoreCase("null")) {
+                    closeJoinTime = LocalTime.parse(data[14].trim());
+                }
+                String eventUUID = data.length > 15 ? data[15].trim() : null;
+
+                events.addEvent(name, picture, info, category, place, startDate, endDate, startTime, endTime,
+                        ownerUsername, maxParticipants, startJoinDate, closeJoinDate,
+                        startJoinTime, closeJoinTime, eventUUID);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Collections.sort(events.getEvents());
+        events.sort(new EventNameComparator());
         return events;
     }
 
@@ -112,13 +123,25 @@ public class EventListFileDatasource implements Datasource<EventList> {
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-
+        eventList.sort(new EventNameComparator());
         try {
             for (Event event : eventList.getEvents()) {
-                String line = event.getEventName() + "," + event.getEventPicture() + ","
-                        + event.getEventInformation() + "," + event.getEventCategory()  + "," +
-                        event.getPlaceEvent() + "," + event.getEventStartDate() + "," +
-                        event.getEventEndDate() + "," + event.getEventOwnerUsername() + "," + event.getMaxParticipants() + "," + event.getStartJoinDate() + "," + event.getClosingJoinDate() + "," + event.getEventUUID();
+                String line = event.getName() + ","
+                        + event.getPicture() + ","
+                        + event.getInfo().replace("//comma//", ",") + ","
+                        + event.getCategory()  + ","
+                        + event.getPlace() + ","
+                        + event.getStartDate() + ","
+                        + event.getEndDate() + ","
+                        + event.getStartTime() + ","
+                        + event.getEndTime() + ","
+                        + event.getOwnerUsername() + ","
+                        + event.getMaxParticipants() + ","
+                        + event.getStartJoinDate() + ","
+                        + event.getCloseJoinDate() + ","
+                        + event.getStartJoinTime() + ","
+                        + event.getCloseJoinTime() + ","
+                        + event.getEventUUID();
                 buffer.append(line);
                 buffer.append("\n");
             }

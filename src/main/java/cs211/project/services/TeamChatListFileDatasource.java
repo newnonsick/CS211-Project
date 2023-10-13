@@ -1,13 +1,11 @@
 package cs211.project.services;
 
-import cs211.project.models.Team;
 import cs211.project.models.TeamChat;
-import cs211.project.models.TeamChatList;
-import cs211.project.models.TeamList;
+import cs211.project.models.collections.TeamChatList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
     private String directoryName;
@@ -65,14 +63,16 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 String username = data[2].trim();
-                String message = data[3].trim();
+                String message = data[3].trim().replace("//comma//", ",");
+                LocalDateTime time = LocalDateTime.parse(data[4].trim());
+                String activityUUID = data[5].trim();
 
-                teamChats.addNewChat(eventUUID, teamName, username, message);
+                teamChats.addNewChat(eventUUID, teamName, username, message, time, activityUUID);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
+        teamChats.sort();
         return teamChats;
     }
 
@@ -94,10 +94,15 @@ public class TeamChatListFileDatasource implements Datasource<TeamChatList>{
                 StandardCharsets.UTF_8
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
-
+        teamChatList.sort();
         try {
             for (TeamChat teamChat : teamChatList.getTeamChats()) {
-                String line = teamChat.getEventUUID() + "," + teamChat.getTeamName() + "," + teamChat.getUsername() + "," + teamChat.getMessage();
+                String line = teamChat.getEventUUID() + ","
+                        + teamChat.getTeamName() + ","
+                        + teamChat.getUsername() + ","
+                        + teamChat.getMessage().replace(",", "//comma//") + ","
+                        + teamChat.getTime() + ","
+                        + teamChat.getActivityUUID();
                 buffer.append(line);
                 buffer.append("\n");
             }

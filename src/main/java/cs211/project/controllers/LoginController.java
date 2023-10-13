@@ -2,34 +2,43 @@ package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import cs211.project.models.User;
-import cs211.project.models.UserList;
+import cs211.project.models.collections.UserList;
 import cs211.project.services.*;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import java.nio.charset.StandardCharsets;
 import java.io.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
 
 public class LoginController {
-    private String directoryName = "data";
-    private String fileName = "userData.csv";
-    private String filePath = directoryName + File.separator + fileName;
-    private String loginFilePath = directoryName + File.separator + "logInfo.csv";
+
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
-    Label errorLabel;
+    private Label errorLabel;
+    @FXML
+    private Button loginButton;
 
     public void initialize() {
+        loginButton.setDisable(true);
+        usernameTextField.setOnKeyReleased(event -> {
+            if (!usernameTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty()) {
+                loginButton.setDisable(false);
+            } else {
+                loginButton.setDisable(true);
+            }
+        });
+        passwordTextField.setOnKeyReleased(event -> {
+            if (!usernameTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty()) {
+                loginButton.setDisable(false);
+            } else {
+                loginButton.setDisable(true);
+            }
+        });
     }
 
 
@@ -56,7 +65,7 @@ public class LoginController {
                 }
             }
         }
-        errorLabel.setText("username or password is incorrect!");
+        errorLabel.setText("Username or password is incorrect!");
         usernameTextField.setText("");
         passwordTextField.setText("");
     }
@@ -70,4 +79,21 @@ public class LoginController {
         }
     }
 
+    @FXML
+    private void goToCreators() {
+        try {
+            FXRouter.goTo("creators");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void goToInstructions() {
+        try {
+            FXRouter.goTo("instructions");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

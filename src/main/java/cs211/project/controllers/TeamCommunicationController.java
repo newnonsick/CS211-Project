@@ -1,6 +1,7 @@
 package cs211.project.controllers;
 
 import cs211.project.models.*;
+import cs211.project.models.collections.*;
 import cs211.project.services.*;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -14,21 +15,25 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TeamCommunicationController {
-    @FXML Label avtivityNameLabel;
-    @FXML Label activityDescriptionLabel;
-    @FXML Label teamNameLabel;
-    @FXML TableView activityTableView;
-    @FXML TextField sendMessageTextField;
-    @FXML Button manageTeamButton;
-    @FXML VBox chatBoxVBox;
-    @FXML ScrollPane chatBoxScrollPane;
+    @FXML private Label activityNameLabel;
+    @FXML private Label teamNameLabel;
+    @FXML private TableView activityTableView;
+    @FXML private TextField sendMessageTextField;
+    @FXML private Button manageTeamButton;
+    @FXML private VBox chatBoxVBox;
+    @FXML private ScrollPane chatBoxScrollPane;
+    @FXML private Button sendMessageButton;
+    @FXML private TableColumn activityNameColumn;
+    @FXML private TableColumn activityDescriptionColumn;
+    @FXML private TableColumn activityStatusColumn;
+    @FXML private Text activityDescriptionText;
 
     private TeamChatList teamChatList;
     private Team team;
@@ -38,14 +43,16 @@ public class TeamCommunicationController {
     private Datasource<ActivityList> activityListDatasource;
     private ActivityList activityList;
     private String beforeSend = "";
+    private String lastTimeUpdate = "";
     private String [] componentData;
     private String eventUUID;
     private String teamName;
-    private String currentUserName;
+    private String currentUsername;
     private Datasource<UserList> userListDatasource;
     private UserList userList;
     private Datasource<EventList> eventListDatasource;
     private EventList eventList;
+    private Activity selectedActivity;
 
     @FXML
     public void initialize(){
@@ -62,33 +69,41 @@ public class TeamCommunicationController {
         componentData = (String[]) FXRouterPane.getData();
         eventUUID = componentData[0];
         teamName = componentData[1];
-        currentUserName = componentData[2];
+        currentUsername = componentData[2];
         team = teamList.findEventByEventUUIDAndTeamName(eventUUID, teamName);
         manageTeamButton.setVisible(false);
-        if (team.getHeadOfTeamUsername().equals(currentUserName) || team.getTeamOwnerUsername().equals(currentUserName)){
+        if (team.getHeadOfTeamUsername().equals(currentUsername) || team.getTeamOwnerUsername().equals(currentUsername)){
             manageTeamButton.setVisible(true);
         }
         teamNameLabel.setText(team.getTeamName());
-        avtivityNameLabel.setText("");
-        activityDescriptionLabel.setText("");
+        activityNameLabel.setText("");
+        activityDescriptionText.setText("");
+        sendMessageButton.setDisable(true);
+        sendMessageTextField.setDisable(true);
         showActivity(activityList);
-        newShowChat();
+        showChat();
 
         activityTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Activity>() {
             @Override
             public void changed(ObservableValue observable, Activity oldValue, Activity newValue) {
+                selectedActivity = newValue;
+                sendMessageTextField.clear();
+                showChat();
                 if (newValue != null) {
+                    sendMessageButton.setDisable(false);
+                    sendMessageTextField.setDisable(false);
                     if (newValue.getActivityStatus().equals("Ended")){
-                        avtivityNameLabel.setText("");
-                        activityDescriptionLabel.setText("");
-                        return;
+                        sendMessageButton.setDisable(true);
+                        sendMessageTextField.setDisable(true);
                     }
-                    avtivityNameLabel.setText(newValue.getActivityName());
-                    activityDescriptionLabel.setText(newValue.getActivityInformation());
+                    activityNameLabel.setText(newValue.getActivityName());
+                    activityDescriptionText.setText(newValue.getActivityInformation());
                 }
                 else{
-                    avtivityNameLabel.setText("");
-                    activityDescriptionLabel.setText("");
+                    sendMessageButton.setDisable(true);
+                    sendMessageTextField.setDisable(true);
+                    activityNameLabel.setText("");
+                    activityDescriptionText.setText("");
                 }
             }
         });
@@ -99,16 +114,14 @@ public class TeamCommunicationController {
         String text = sendMessageTextField.getText().trim();
         sendMessageTextField.clear();
         if (!text.isEmpty()){
-            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUserName, text.replace(",", "//comma//"));
+            LocalDateTime nowDateTime = LocalDateTime.now();
+            teamChatList.addNewChat(team.getEventUUID(), team.getTeamName(), currentUsername, text, nowDateTime, selectedActivity.getActivityUUID());
             teamChatListDatasource.writeData(teamChatList);
-            update(currentUserName,text);
-        }
-        try {
-            TimeUnit.MILLISECONDS.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            update(currentUsername, text, nowDateTime);
         }
         Platform.runLater(() -> {
+            chatBoxScrollPane.applyCss();
+            chatBoxScrollPane.layout();
             chatBoxScrollPane.setVvalue(1.0);
         });
     }
@@ -116,31 +129,33 @@ public class TeamCommunicationController {
     @FXML
     public void handleManageTeamButton(){
         try {
-            FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUserName});
+            FXRouterPane.goTo("team-management", new String[] {team.getEventUUID(), team.getTeamName(), currentUsername});
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public void newShowChat(){
+    public void showChat(){
         chatBoxVBox.getChildren().clear();
+        beforeSend = "";
+        lastTimeUpdate = "";
+        if (selectedActivity == null){
+            return;
+        }
         for (TeamChat teamChat : teamChatList.getTeamChats()) {
-            if (!teamChat.getEventUUID().equals(team.getEventUUID()) || !teamChat.getTeamName().equals(team.getTeamName())) {
+            if (!teamChat.getEventUUID().equals(team.getEventUUID()) || !teamChat.getTeamName().equals(team.getTeamName()) || !teamChat.getActivityUUID().equals(selectedActivity.getActivityUUID())){
                 continue;
             }
-            update(teamChat.getUsername(),teamChat.getMessage().replace("//comma//", ","));
-        }
-        try {
-            TimeUnit.MILLISECONDS.sleep(250);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            update(teamChat.getUsername(), teamChat.getMessage(), teamChat.getTime());
         }
         Platform.runLater(() -> {
+            chatBoxScrollPane.applyCss();
+            chatBoxScrollPane.layout();
             chatBoxScrollPane.setVvalue(1.0);
         });
     }
-    public void update(String username,String message){
+    public void update(String username, String message, LocalDateTime time){
         User user = userList.findUserByUsername(username);
         if (user == null){
             return;
@@ -153,21 +168,30 @@ public class TeamCommunicationController {
 
         VBox messageVBox = new VBox(-5);
         messageVBox.setAlignment(Pos.TOP_LEFT);
-        Text usernameText = new Text();
-        if (!currentUserName.equals(username)){
-            if (team.getHeadOfTeamUsername().equals(username)){
-                usernameText = new Text(username + " (Leader)" + "\n");
+        Text nameText = new Text();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String formattedTime =  time.format(formatter);
+        if (!currentUsername.equals(username)){
+            String nameTextString;
+            if (team.getTeamOwnerUsername().equals(username)){
+                nameTextString = user.getName() + " (Owner)" + " " + formattedTime + "\n";
             }
-            else if (team.getTeamOwnerUsername().equals(username)){
-                usernameText = new Text(username + " (Owner)" + "\n");
+            else if (team.getHeadOfTeamUsername().equals(username)){
+                nameTextString = user.getName() + " (Leader)" + " " + formattedTime + "\n";
             }
             else{
-                usernameText = new Text(username + "\n");
+                nameTextString = user.getName() + " " + formattedTime + "\n";
             }
-            usernameText.getStyleClass().add("usernameText");
-            messageVBox.getChildren().add(usernameText);
-
-            String path = new File("data/profile_picture/" + user.getProfilePicture()).toURI().toString();
+            nameText = new Text(nameTextString);
+            nameText.getStyleClass().add("usernameText");
+            messageVBox.getChildren().add(nameText);
+            String path;
+            if (user.getProfilePictureName().equals("default.png")){
+                path = getClass().getResource("/cs211/project/images/default.png").toExternalForm();
+            }
+            else{
+                path = new File("data/profile_picture/" + user.getProfilePictureName()).toURI().toString();
+            }
             img.setFill(new ImagePattern(new Image(path, 32, 32, false, false)));
 
         }
@@ -179,8 +203,8 @@ public class TeamCommunicationController {
         HBox hBoxMessage = new HBox(10);
 
         Pane pane = new Pane();
-        if(!currentUserName.equals(username)){
-            if (beforeSend.equals(username)){
+        if(!currentUsername.equals(username)){
+            if (beforeSend.equals(username) && lastTimeUpdate.equals(formattedTime)){
                 messageVBox.getChildren().remove(0);
                 flow.getStyleClass().add("textFlowFlipped");
                 hBoxMessage.setAlignment(Pos.TOP_LEFT);
@@ -191,7 +215,7 @@ public class TeamCommunicationController {
             else{
                 Pane pane2 = new Pane();
                 pane2.setMinWidth(10);
-                pane.setMaxWidth(usernameText.getLayoutBounds().getWidth());
+                pane.setMaxWidth(nameText.getLayoutBounds().getWidth());
                 beforeSend = username;
                 messageVBox.getChildren().remove(1);
                 HBox tempHBox = new HBox();
@@ -204,12 +228,19 @@ public class TeamCommunicationController {
                 hBoxMessage.getChildren().add(img);
                 hBoxMessage.getChildren().add(messageVBox);
             }
-
+            lastTimeUpdate = formattedTime;
 
         }else{
             beforeSend = "";
+            lastTimeUpdate = "";
             flow.getStyleClass().add("textFlow");
             hBoxMessage.setAlignment(Pos.TOP_RIGHT);
+            HBox timeHBox = new HBox();
+            timeHBox.setAlignment(Pos.BOTTOM_RIGHT);
+            Text timeText = new Text(formattedTime.split(" ")[1] + " ");
+            timeText.getStyleClass().add("timeText");
+            timeHBox.getChildren().add(timeText);
+            hBoxMessage.getChildren().add(timeHBox);
             hBoxMessage.getChildren().add(flow);
             hBoxMessage.getChildren().add(pane);
         }
@@ -218,6 +249,8 @@ public class TeamCommunicationController {
 
         chatBoxVBox.getChildren().addAll(hBoxMessage);
         Platform.runLater(() -> {
+            chatBoxScrollPane.applyCss();
+            chatBoxScrollPane.layout();
             chatBoxScrollPane.setVvalue(1.0);
         });
     }
@@ -226,25 +259,18 @@ public class TeamCommunicationController {
 
 
     public void showActivity(ActivityList activityList){
-        TableColumn<Activity, String> activityNameColumn = new TableColumn<>("Name");
         activityNameColumn.setCellValueFactory(new PropertyValueFactory<>("activityName"));
 
-        TableColumn<Activity, String> activityInformationColumn = new TableColumn<>("Description");
-        activityInformationColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
+        activityDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("activityInformation"));
 
-        TableColumn<Activity, String> activityStatusColumn = new TableColumn<>("Status");
         activityStatusColumn.setCellValueFactory(new PropertyValueFactory<>("activityStatus"));
 
         activityTableView.getColumns().clear();
         activityTableView.getColumns().add(activityStatusColumn);
         activityTableView.getColumns().add(activityNameColumn);
-        activityTableView.getColumns().add(activityInformationColumn);
+        activityTableView.getColumns().add(activityDescriptionColumn);
         activityTableView.getItems().clear();
 
-        if (activityList.getActivities().size() == 0){
-            activityInformationColumn.setPrefWidth(activityTableView.getPrefWidth() - activityNameColumn.getPrefWidth() - activityStatusColumn.getPrefWidth());
-            return;
-        }
 
 
         for (Activity activity : activityList.getActivities()) {

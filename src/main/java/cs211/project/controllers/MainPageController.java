@@ -1,4 +1,5 @@
 package cs211.project.controllers;
+
 import cs211.project.models.User;
 import cs211.project.services.FXRouter;
 import cs211.project.services.FXRouterPane;
@@ -9,46 +10,55 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 import java.io.IOException;
 
 public class MainPageController {
     @FXML
-    BorderPane window;
+    private BorderPane window;
     @FXML
-    StackPane content;
+    private StackPane content;
     @FXML
-    Button eventButton;
+    private Button eventButton;
     @FXML
-    Button createEventButton;
+    private Button createEventButton;
     @FXML
-    Button myEventButton;
+    private Button myEventButton;
     @FXML
-    Button myTeamButton;
+    private Button myTeamButton;
     @FXML
-    Button userInfoButton;
+    private Button userInfoButton;
     @FXML
-    ImageView eventNavBarImage;
+    private ImageView eventNavBarImage;
     @FXML
-    ImageView createEventNavBarImage;
+    private ImageView createEventNavBarImage;
     @FXML
-    ImageView myEventsNavBarImage;
+    private ImageView myEventsNavBarImage;
     @FXML
-    ImageView myTeamsNavBarImage;
+    private ImageView myTeamsNavBarImage;
     @FXML
-    ImageView userInfoNavBarImage;
+    private ImageView userInfoNavBarImage;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private ImageView userImageView;
 
     private User currentUser;
+    private ImageView currentNavBarImage;
 
     @FXML
     public void initialize() {
         currentUser = (User) FXRouter.getData();
+        Circle clip = new Circle(50, 50, 50);
+        userImageView.setClip(clip);
+        nameLabel.setText(currentUser.getName());
+        userImageView.setImage(currentUser.getProfilePicture(100, 100, false, false));
         changeStyleClassButton(eventButton);
+        FXRouterPane.clearContent();
         FXRouterPane.bind(this, content, "Event Manager");
         configRoute();
         try {
@@ -56,7 +66,9 @@ public class MainPageController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        //Mouse In (Can't do with SceneBuilder. Somehow it does not work. I've tried.
+        currentNavBarImage = eventNavBarImage;
+        mouseIn(eventNavBarImage);
+
         eventButton.setOnMouseEntered(event -> {
             mouseIn(eventNavBarImage);
         });
@@ -77,7 +89,7 @@ public class MainPageController {
             mouseIn(userInfoNavBarImage);
         });
 
-        //Mouse Out
+
         eventButton.setOnMouseExited(event -> {
             mouseOut(eventNavBarImage);
         });
@@ -117,11 +129,13 @@ public class MainPageController {
         FXRouterPane.when("team-management", viewPath + "team-management.fxml");
         FXRouterPane.when("edit-participant", viewPath + "edit-participant.fxml");
         FXRouterPane.when("participant-activity",viewPath + "participant-activity.fxml");
+        FXRouterPane.when("reset-password", viewPath + "reset-password.fxml");
     }
     @FXML
     public void goToEventList()  {
         try {
             changeStyleClassButton(eventButton);
+            changeCurrentNavBarImage(eventNavBarImage);
             FXRouterPane.goTo("event-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -132,6 +146,7 @@ public class MainPageController {
     public void goToCreateEvent()  {
         try {
             changeStyleClassButton(createEventButton);
+            changeCurrentNavBarImage(createEventNavBarImage);
             FXRouterPane.goTo("create-event", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -142,6 +157,7 @@ public class MainPageController {
     public void goToMyEvents()  {
         try {
             changeStyleClassButton(myEventButton);
+            changeCurrentNavBarImage(myEventsNavBarImage);
             FXRouterPane.goTo("my-events", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -152,6 +168,7 @@ public class MainPageController {
     public void goToUserInformation()  {
         try {
             changeStyleClassButton(userInfoButton);
+            changeCurrentNavBarImage(userInfoNavBarImage);
             FXRouterPane.goTo("user-information", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -162,6 +179,7 @@ public class MainPageController {
     public void handleMyTeamButton(){
         try {
             changeStyleClassButton(myTeamButton);
+            changeCurrentNavBarImage(myTeamsNavBarImage);
             FXRouterPane.goTo("myteam-list", currentUser);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -180,7 +198,7 @@ public class MainPageController {
     public void mouseIn(ImageView imageView) {
         Timeline timeline = new Timeline();
         imageView.setVisible(true);
-        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 50);
+        KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 25);
 
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15), keyValue);
 
@@ -189,6 +207,9 @@ public class MainPageController {
     }
 
     public void mouseOut(ImageView imageView) {
+        if (currentNavBarImage != null && currentNavBarImage.equals(imageView)) {
+            return;
+        }
         Timeline timeline = new Timeline();
 
         KeyValue keyValue = new KeyValue(imageView.fitWidthProperty(), 1);
@@ -200,6 +221,22 @@ public class MainPageController {
         timeline.getKeyFrames().add(keyFrame2);
         timeline.play();
     }
-    
+
+    @FXML
+    public void logout() {
+        try {
+            FXRouter.goTo("login");
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void changeCurrentNavBarImage(ImageView imageView) {
+        ImageView oldImageView = currentNavBarImage;
+        currentNavBarImage = imageView;
+        if (oldImageView != null) {
+            mouseOut(oldImageView);
+        }
+    }
 
 }

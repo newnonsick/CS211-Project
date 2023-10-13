@@ -1,14 +1,10 @@
 package cs211.project.services;
 
 import cs211.project.models.Activity;
-import cs211.project.models.ActivityList;
-import cs211.project.models.TeamChat;
-import cs211.project.models.TeamChatList;
+import cs211.project.models.collections.ActivityList;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.Comparator;
 
 public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
     private String directoryName;
@@ -65,32 +61,19 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
                 String eventUUID = data[0].trim();
                 String teamName = data[1].trim();
                 String activityName = data[2].trim();
-                String activityInfo = data[3].trim();
+                String activityInfo = data[3].trim().replace("//comma//", ",");
                 String activityStatus = data[4].trim();
+                String activityUUID = data[5].trim();
 
-                activities.addNewActivityTeam(eventUUID, teamName, activityName, activityInfo, activityStatus);
+                activities.addNewActivityTeam(eventUUID, teamName, activityName, activityInfo, activityStatus, activityUUID);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Collections.sort(activities.getActivities(), new Comparator<Activity>() {
-            @Override
-            public int compare(Activity o1, Activity o2) {
-                if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
-                    return 0;
-                }
-                if (o1.getActivityStatus().equals("Ended")){
-                    return 1;
-                }
-                if (o2.getActivityStatus().equals("Ended")){
-                    return -1;
-                }
-                return o1.getActivityName().compareTo(o2.getActivityName());
-            }
-        });
+        activities.sort(new TeamActivityStatusComparator());
         return activities;
     }
-    //addNewActivityTeam(String eventOfActivityName, String teamOfActivityName, String activityName, String activityInformation)
+
     @Override
     public void writeData(ActivityList activityList) {
         String filePath = directoryName + File.separator + fileName;
@@ -110,25 +93,16 @@ public class TeamActivityListFileDatasource implements Datasource<ActivityList>{
         );
         BufferedWriter buffer = new BufferedWriter(outputStreamWriter);
 
-        Collections.sort(activityList.getActivities(), new Comparator<Activity>() {
-            @Override
-            public int compare(Activity o1, Activity o2) {
-                if (o1.getActivityStatus().equals("Ended") && o2.getActivityStatus().equals("Ended")){
-                        return 0;
-                    }
-                if (o1.getActivityStatus().equals("Ended")){
-                    return 1;
-                }
-                if (o2.getActivityStatus().equals("Ended")){
-                    return -1;
-                }
-                return o1.getActivityName().compareTo(o2.getActivityName());
-            }
-        });
+        activityList.sort(new TeamActivityStatusComparator());
 
         try {
             for (Activity activity : activityList.getActivities()) {
-                String line = activity.getEventOfActivityUUID() + "," + activity.getTeamOfActivityName() + "," + activity.getActivityName() + "," + activity.getActivityInformation() + "," + activity.getActivityStatus();
+                String line = activity.getEventOfActivityUUID() + ","
+                        + activity.getTeamOfActivityName() + ","
+                        + activity.getActivityName() + ","
+                        + activity.getActivityInformation().replace("\n", " ").replace(",", "//comma//") + ","
+                        + activity.getActivityStatus() + ","
+                        + activity.getActivityUUID();
                 buffer.append(line);
                 buffer.append("\n");
             }

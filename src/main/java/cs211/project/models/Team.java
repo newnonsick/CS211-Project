@@ -1,8 +1,7 @@
 package cs211.project.models;
-
-import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalTime;
+
 
 public class Team implements Comparable {
     private String headOfTeamUsername;
@@ -10,15 +9,19 @@ public class Team implements Comparable {
     private String teamName;
     private int maxParticipants;
     private LocalDate startJoinDate;
+    private LocalTime startJoinTime;
     private LocalDate closingJoinDate;
+    private LocalTime endJoinTime;
     private String teamOwnerUsername;
 
-    public Team(String eventUUID, String teamName, int maxParticipants, LocalDate startJoinDate, LocalDate closingJoinDate, String teamOwnerUsername,String headOfTeamUsername) {
+    public Team(String eventUUID, String teamName, int maxParticipants, LocalDate startJoinDate, LocalTime startJoinTime, LocalDate closingJoinDate, LocalTime endJoinTime, String teamOwnerUsername, String headOfTeamUsername) {
         this.eventUUID = eventUUID;
         this.teamName = teamName;
         this.maxParticipants = maxParticipants;
         this.startJoinDate = startJoinDate;
+        this.startJoinTime = startJoinTime;
         this.closingJoinDate = closingJoinDate;
+        this.endJoinTime = endJoinTime;
         this.teamOwnerUsername = teamOwnerUsername;
         this.headOfTeamUsername = headOfTeamUsername;
     }
@@ -48,7 +51,13 @@ public class Team implements Comparable {
 
     public String getTeamOwnerUsername() {return teamOwnerUsername;}
 
+    public LocalTime getStartTime() {
+        return startJoinTime;
+    }
 
+    public LocalTime getEndTime() {
+        return endJoinTime;
+    }
 
     public void setHeadOfTeamUsername(String headOfTeamUsername) {
         this.headOfTeamUsername = headOfTeamUsername;
