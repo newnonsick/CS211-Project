@@ -25,7 +25,7 @@ https://saacsos.notion.site/Project-CS211-2566-1c8e195c0ebd4071aea8f733692e3989?
    
    Release 4.0.0 Event-Manager.zip
    
-   หรือ //รอใส่ลิงก์
+   หรือ https://github.com/CS211-661/cs211-661-project-the-rookies-team/releases/download/4.0.0/Event-Manager.zip
 3. แตกไฟล์ zip ที่ดาวน์โหลดมา ถ้าได้เป็นโฟลเดอร์ให้เข้าไปในโฟลเดอร์ที่แตก zip มา
    
    จะเห็นว่ามี 2 อย่างคือ
@@ -35,14 +35,14 @@ https://saacsos.notion.site/Project-CS211-2566-1c8e195c0ebd4071aea8f733692e3989?
 ### วิธีการรันโปรแกรม
 1. รันโปรแกรมได้ 2 วิธี คือ
 
-   1. ดับเบิลคลิกที่ไฟล์ <ชื่อไฟล์ รอใส่>
+   1. ดับเบิลคลิกที่ไฟล์ Event-Manager.jar
    2. ถ้าใน windows เปิด Command Prompt หรือ PowerShell แล้วพิมพ์คำสั่ง
         ```
-        java -jar Event-Manager
+        java -jar Event-Manager.jar
         ```
         ถ้าใน macos เปิด Terminal แล้วพิมพ์คำสั่ง
         ```
-        java -jar Event-Manager
+        java -jar Event-Manager.jar
         ```
 
 
