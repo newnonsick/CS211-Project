@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,44 +11,52 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1180.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cs211.project.controllers.UserInformationController">
    <children>
-      <Label layoutX="237.0" layoutY="35.0" text="User Information">
+      <Label layoutX="88.0" layoutY="40.0" text="User Information">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label fx:id="usernameLabel" layoutX="859.0" layoutY="58.0" text="usernameLabel">
+      <Label fx:id="usernameLabel" layoutX="90.0" layoutY="168.0" text="usernameLabel" textAlignment="CENTER">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="nameLabel" layoutX="237.0" layoutY="84.0" text="nameLabel">
+      <Label fx:id="nameLabel" layoutX="88.0" layoutY="136.0" text="nameLabel">
          <font>
             <Font size="22.0" />
          </font>
       </Label>
-      <Label layoutX="237.0" layoutY="154.0" text="อีเวนต์ที่กำลังเข้าร่วม">
+      <Label layoutX="88.0" layoutY="227.0" text="Your Upcoming Events">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="639.0" layoutY="154.0" text="อีเวนต์ที่เคยเข้าร่วม">
+      <Label layoutX="611.0" layoutY="227.0" text="Your Past Events">
          <font>
-            <Font size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Line endX="344.4518737792969" layoutX="480.0" layoutY="424.0" rotate="90.0" startX="-100.0" />
-      <TableView fx:id="activeEventTableView" layoutX="234.0" layoutY="201.0" prefHeight="445.0" prefWidth="334.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
-      <TableView fx:id="eventHistoryTableView" layoutX="639.0" layoutY="201.0" prefHeight="445.0" prefWidth="334.0">
-         <columns>
-            <TableColumn prefWidth="75.0" text="C1" />
-            <TableColumn prefWidth="75.0" text="C2" />
-         </columns>
-      </TableView>
-      <ImageView fx:id="profileImageView" fitHeight="130.0" fitWidth="130.0" layoutX="991.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true" />
+      <Line endX="344.4518737792969" layoutX="452.0" layoutY="496.0" rotate="90.0" startX="-100.0" strokeWidth="2.0" />
+      <TableView fx:id="activeEventTableView" layoutX="88.0" layoutY="274.0" prefHeight="445.0" prefWidth="450.0" />
+      <TableView fx:id="eventHistoryTableView" layoutX="611.0" layoutY="274.0" prefHeight="445.0" prefWidth="450.0" />
+      <ImageView fx:id="profileImageView" fitHeight="140.0" fitWidth="140.0" layoutX="952.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="changeProfileButton" layoutX="1011.0" layoutY="195.0" mnemonicParsing="false" onAction="#changeProfile" text="Change">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button fx:id="cancelButton" layoutX="979.0" layoutY="195.0" mnemonicParsing="false" onAction="#cancelChangeProfilePic" text="X">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Label layoutX="88.0" layoutY="96.0" text="Welcome !">
+         <font>
+            <Font name="System Italic" size="22.0" />
+         </font>
+      </Label>
+      <Hyperlink layoutX="953.0" layoutY="228.0" onAction="#resetPassword" text="Reset your password" textFill="#070000">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Hyperlink>
    </children>
 </AnchorPane>

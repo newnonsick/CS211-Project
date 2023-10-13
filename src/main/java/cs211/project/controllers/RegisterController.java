@@ -1,7 +1,11 @@
 package cs211.project.controllers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import cs211.project.models.User;
+import cs211.project.models.collections.UserList;
+import cs211.project.services.Datasource;
 import cs211.project.services.FXRouter;
+import cs211.project.services.UserListFileDataSource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,129 +13,107 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.nio.charset.StandardCharsets;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 
 public class RegisterController {
     @FXML
-    TextField usernameTextField;
+    private TextField usernameTextField;
     @FXML
-    PasswordField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
-    PasswordField confirmPasswordTextField;
+    private PasswordField confirmPasswordTextField;
     @FXML
-    TextField nameTextField;
+    private TextField nameTextField;
     @FXML
-    Label errorLabel;
+    private Label errorLabel;
     @FXML
-    Button upLoadImageButton;
+    private Button upLoadImageButton;
     @FXML
-    ImageView profileImageView;
+    private ImageView profileImageView;
     @FXML
-    Button cancelUploadButton;
-    File selectedImage = null;
+    private Button cancelUploadButton;
+    private File selectedImage = null;
+    boolean upFile = false;
 
     @FXML
     public void initialize(){
         errorLabel.setText("");
+        Circle circle = new Circle(90, 90, 90);
+        profileImageView.setClip(circle);
+        profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
+        profileImageView.setFitWidth(180);
+        profileImageView.setFitHeight(180);
     }
 
     @FXML
     private void signUp() throws IOException {
-        //Possible future bug fix : making it impossible to create an account id "Default"
-        //checking and register
         String username = usernameTextField.getText();
         String password = passwordTextField.getText();
         String password2 = confirmPasswordTextField.getText();
         String fullName = nameTextField.getText();
-        String filePath = "data/userData.csv";
-        File file = new File(filePath);
-        FileInputStream fileInputStream = null;
+        String profilePic = "";
         if(username.isEmpty() || password.isEmpty() || password2.isEmpty() || fullName.isEmpty()) {
             errorLabel.setText("Please fill in the information.");
             return;
         }
         if (!password.equals(password2)) {
-            errorLabel.setText("Please make sure to type the correct passwords");
+            errorLabel.setText("Please make sure to type the correct passwords.");
+            usernameTextField.setText("");
+            nameTextField.setText("");
             passwordTextField.setText("");
             confirmPasswordTextField.setText("");
             return;
         }
-        try {
-            fileInputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        if (username.equals("default")) {
+            errorLabel.setText("That user name is not allowed.");
+            passwordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
         }
-        InputStreamReader inputStreamReader = new InputStreamReader(
-                fileInputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedReader bufferRead = new BufferedReader(inputStreamReader);
-        ArrayList<String> userPass = new ArrayList<String>();
-        String line = "";
+        if (username.contains(",") || fullName.contains(",") || password.contains(",")) {
+            errorLabel.setText("Comma \",\" is not allowed.");
+            usernameTextField.setText("");
+            nameTextField.setText("");
+            passwordTextField.setText("");
+            confirmPasswordTextField.setText("");
+            return;
+        }
+
+        Datasource<UserList> userListDatasource = new UserListFileDataSource("data", "userData.csv");
+        UserList userList = userListDatasource.readData();
+
+        for(User user : userList.getUsers()) {
+            if(user.getUsername().equals(username)) {
+                errorLabel.setText("Username already exist!");
+                passwordTextField.setText("");
+                confirmPasswordTextField.setText("");
+                return;
+            }
+        }
+
         String encryptPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-
-        try {
-            while ((line = bufferRead.readLine()) != null) {
-                if (line.equals("")) continue;
-
-                String[] data = line.split(",");
-
-                String id = data[0].trim();
-                if (id.equals(username)) {
-                    errorLabel.setText("Username already exist!");
-                    usernameTextField.setText("");
-                    return;
-                }
-                userPass.add(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if(!upFile) {
+            profilePic = "default.png";
         }
-        FileOutputStream fileOutputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+        else {
+            profilePic = username + "." + (Files.probeContentType(Paths.get(selectedImage.getAbsolutePath())).substring(6));
         }
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-                fileOutputStream,
-                StandardCharsets.UTF_8
-        );
-        BufferedWriter bufferWrite = new BufferedWriter(outputStreamWriter);
-        String newAcc = username + "," + encryptPassword + "," + fullName;
-        try {
-            for(String acc : userPass) {
-                bufferWrite.append(acc);
-                bufferWrite.append('\n');
-            }
-            bufferWrite.append(newAcc);
-            bufferWrite.append('\n');
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                bufferWrite.flush();
-                bufferWrite.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        userList.addUser(new User(username, encryptPassword, fullName, profilePic));
+        userListDatasource.writeData(userList);
         if(selectedImage != null) {
             //upload the profile picture
             String selectedImagePath = selectedImage.getAbsolutePath();
-            String targetDirectoryPath = "data/profile_picture";
+            String targetDirectoryPath = "data" + File.separator + "profile_picture";
             Path targetDirectory = Path.of(targetDirectoryPath);
             String fileType = Files.probeContentType(Paths.get(selectedImage.getAbsolutePath()));
-            //errorLabel.setText(fileType);
             Path targetFilePath = targetDirectory.resolve(username + "." + (fileType.substring(6)));
             try {
                 Files.copy(Path.of(selectedImagePath), targetFilePath, StandardCopyOption.REPLACE_EXISTING);
@@ -139,7 +121,6 @@ public class RegisterController {
                 throw new RuntimeException(e);
             }
         }
-
         goToLogin();
     }
     @FXML
@@ -160,24 +141,23 @@ public class RegisterController {
         }
         cancelUploadButton.setVisible(true);
         cancelUploadButton.setDisable(false);
+        upFile = true;
     }
     private void choosePhotoFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open a file");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")+ "/Desktop"));
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg", "*.webp",  "*.jfif" , "*.pjpeg" , "*.pjp"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("All image files","*.jpg","*.png", "*.jpeg"));
         Stage stage = (Stage) upLoadImageButton.getScene().getWindow();
         selectedImage = fileChooser.showOpenDialog(stage);
     }
     @FXML
     private void cancelUpload() {
-        String filePath = "data/profile_picture/default.png";
-        File file = new File(filePath);
         selectedImage = null;
-        Image image = new Image(file.toURI().toString());
-        profileImageView.setImage(image);
+        profileImageView.setImage(new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm()));
         cancelUploadButton.setDisable(true);
         cancelUploadButton.setVisible(false);
+        upFile = false;
     }
 }
 

@@ -1,48 +1,59 @@
 package cs211.project.models;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import javafx.scene.image.Image;
+import java.io.File;
 
 public class User {
     private String username;
     private String name;
+    private String profilePic;
+    private String password;
 
-    //We will later make it using only username and then read data from csv file to fill the rest
-    public User(String username) {
-        if(checkUserExistence(username)) {
-            this.username = username;
-        }
+    public User(String username, String password,String name, String pic) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.profilePic = pic;
     }
 
     public String getUsername() {
         return this.username;
+    }
+    public String getPassword() {return this.password;}
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public static boolean checkUserExistence(String username) {
-        try {
-            FileReader fileReader = new FileReader("data/userData.csv");
-            BufferedReader buffer = new BufferedReader(fileReader);
-            String line = "";
-            try {
-                while ((line = buffer.readLine()) != null) {
-                    if (line.isEmpty()) continue;
-                    String[] data = line.split(",");
-                    String usernameInData = data[0].trim();
-                    if (username.equals(usernameInData)) {
-                        return true;
-                    }
-                }
-                return false;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public Image getProfilePicture() {
+        if(this.profilePic.equals("default.png")) {
+            return new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm());
+        }
+
+        else {
+            String filePath = "data/profile_picture/" + this.profilePic;
+            File file = new File(filePath);
+            return (new Image(file.toURI().toString()));
         }
     }
+
+    public Image getProfilePicture(double v, double v1, boolean b, boolean b1) {
+        if(this.profilePic.equals("default.png")) {
+            return new Image(getClass().getResource("/cs211/project/images/default.png").toExternalForm(), v, v1, b, b1);
+        }
+
+        else {
+            String filePath = "data/profile_picture/" + this.profilePic;
+            File file = new File(filePath);
+            return new Image(file.toURI().toString(), v, v1, b, b1);
+        }
+    }
+
+    public String getProfilePictureName() {
+        return this.profilePic;
+    }
+
+    public void setProfilePic(String profilePic) { this.profilePic = profilePic; }
 }

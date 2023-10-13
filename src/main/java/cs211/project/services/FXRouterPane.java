@@ -33,6 +33,9 @@ public final class FXRouterPane {
     private FXRouterPane() {
     }
 
+    public static void clearContent() {
+        content = null;
+    }
     public static void bind(Object ref, StackPane cnt) {
         checkInstances(ref, cnt);
     }
