@@ -23,13 +23,13 @@ https://saacsos.notion.site/Project-CS211-2566-1c8e195c0ebd4071aea8f733692e3989?
         [ภาษาอังกฤษ] https://www.youtube.com/watch?v=hRThN2gal6U
 2. ดาวน์โหลดโปรแกรมจาก Github ได้ที่
    
-   Release 4.0.0 <ชื่อไฟล์.zip>
+   Release 4.0.0 Event-Manager.zip
    
    หรือ //รอใส่ลิงก์
 3. แตกไฟล์ zip ที่ดาวน์โหลดมา ถ้าได้เป็นโฟลเดอร์ให้เข้าไปในโฟลเดอร์ที่แตก zip มา
    
    จะเห็นว่ามี 2 อย่างคือ
-   1. ไฟล์ <ชื่อไฟล์ รอใส่>.jar
+   1. ไฟล์ Event-Manager.jar
    2. โฟลเดอร์ data (เป็นโฟลเดอร์ที่เก็บข้อมูลของโปรแกรม)
 
 ### วิธีการรันโปรแกรม
@@ -38,11 +38,11 @@ https://saacsos.notion.site/Project-CS211-2566-1c8e195c0ebd4071aea8f733692e3989?
    1. ดับเบิลคลิกที่ไฟล์ <ชื่อไฟล์ รอใส่>
    2. ถ้าใน windows เปิด Command Prompt หรือ PowerShell แล้วพิมพ์คำสั่ง
         ```
-        java -jar <ชื่อไฟล์ รอใส่>
+        java -jar Event-Manager
         ```
         ถ้าใน macos เปิด Terminal แล้วพิมพ์คำสั่ง
         ```
-        java -jar <ชื่อไฟล์ รอใส่>
+        java -jar Event-Manager
         ```
 
 
