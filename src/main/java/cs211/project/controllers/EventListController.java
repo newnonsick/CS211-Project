@@ -113,7 +113,7 @@ public class EventListController {
             showList(searchTextField.getText());
             isSearch = true;
         } else if (isSearch){
-            maxRow = 4;
+            maxRow = 3;
             eventScrollPane.setVvalue(0);
             eventGrid.getChildren().clear();
             if (selectedCategory != null) {

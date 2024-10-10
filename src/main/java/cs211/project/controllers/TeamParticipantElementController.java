@@ -69,7 +69,6 @@ public class TeamParticipantElementController {
         profileImageView.setImage(new Image(profilePicturePath, 40, 40, false, false));
         nameLabel.setText(user.getName());
         if (team.getHeadOfTeamUsername().equals(teamParticipant.getUsername())){
-            setLeaderButton.setDisable(true);
             leaderImageView.setVisible(true);
         }
         if (!team.getTeamOwnerUsername().equals(currentUsername)){
@@ -109,6 +108,23 @@ public class TeamParticipantElementController {
 
     @FXML
     public void handleSetLeaderButton(){
+        if (team.getHeadOfTeamUsername().equals(teamParticipant.getUsername())){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Set to normal participant");
+            alert.setHeaderText("Are you sure to set this participant as normal participant?");
+            alert.setContentText("This action cannot be undone.");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                team.setHeadOfTeamUsername(team.getTeamOwnerUsername());
+                teamListDatasource.writeData(teamList);
+                try {
+                    FXRouterPane.goTo("team-management", new String[]{teamParticipant.getEventUUID(), teamParticipant.getTeamName(), currentUsername});
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Set Leader");
         alert.setHeaderText("Are you sure to set this participant as leader?");
